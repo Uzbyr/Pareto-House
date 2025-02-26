@@ -25,9 +25,9 @@ export default {
         foreground: "hsl(var(--foreground))",
         pareto: {
           pink: {
-            DEFAULT: "#D6BCFA",
-            light: "#E9D8FD",
-            dark: "#B794F4"
+            DEFAULT: "#7E69AB",
+            light: "#D6BCFA",
+            dark: "#6E59A5"
           },
           black: "#000000",
         },
@@ -58,3 +58,4 @@ export default {
   },
   plugins: [require("tailwindcss-animate")],
 } satisfies Config;
+
