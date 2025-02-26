@@ -17,13 +17,13 @@ const mentors: Mentor[] = [
     name: "Edward Lando",
     linkedIn: "https://www.linkedin.com/in/edwardlando/",
     description: "Serial entrepreneur and investor, co-founder of Pareto Holdings",
-    imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png"
+    imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png"
   },
   {
     name: "Ben Cambier",
     linkedIn: "https://www.linkedin.com/in/jbenjamin-cambier/",
     description: "Early-stage investor and founder",
-    imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png"
+    imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png"
   },
   {
     name: "Abhi Ramesh",
