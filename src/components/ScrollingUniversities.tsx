@@ -32,6 +32,18 @@ const universities = [
     logo: "/lovable-uploads/1e82e7c3-b0d7-46c2-9617-e71656983faf.png"
   },
   {
+    name: "UPenn",
+    logo: "/lovable-uploads/639d6664-1e4c-4271-b379-22578efad7cd.png"
+  },
+  {
+    name: "Tokyo",
+    logo: "/lovable-uploads/5499de8b-c156-42fc-bee3-6f961d4b6416.png"
+  },
+  {
+    name: "Trinity",
+    logo: "/lovable-uploads/c1b420b7-10c1-4607-b040-e8e1c5735d01.png"
+  },
+  {
     name: "HEC Paris",
     logo: "/lovable-uploads/d6f46fa9-133c-482c-9601-30f374bbda05.png"
   },
