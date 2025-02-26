@@ -17,7 +17,7 @@ const universities = [
   },
   {
     name: "Oxford",
-    logo: "/lovable-uploads/d7254db8-1bb2-47c2-817b-e3df60e4a8b2.png"
+    logo: "/lovable-uploads/06213398-3d3d-4ec2-a70f-62f3daa88e87.png"
   },
   {
     name: "Polytechnique",
