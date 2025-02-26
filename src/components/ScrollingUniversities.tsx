@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -24,7 +25,7 @@ const universities = [
   },
   {
     name: "Polytechnique",
-    logo: "/lovable-uploads/f7ee5c26-25b3-4372-986c-7491cbabc323.png"
+    logo: "/lovable-uploads/23696d54-df61-4849-b11d-672c211d8645.png"
   },
   {
     name: "TUT",
@@ -57,6 +58,26 @@ const universities = [
   {
     name: "Princeton",
     logo: "/lovable-uploads/36e958d6-20f5-4981-ab4f-23e535ca6dc9.png"
+  },
+  {
+    name: "ETH Zurich",
+    logo: "/lovable-uploads/87b0149e-15e2-4871-ba97-bbf9c6f06da9.png"
+  },
+  {
+    name: "ENS",
+    logo: "/lovable-uploads/a73516a2-47d3-4690-b3a0-53742c3d4fe2.png"
+  },
+  {
+    name: "LSE",
+    logo: "/lovable-uploads/55b7a62f-2ce9-4125-9193-e07f7d4dd935.png"
+  },
+  {
+    name: "UCL",
+    logo: "/lovable-uploads/2e41b636-d255-447a-b501-8233d5c5ed39.png"
+  },
+  {
+    name: "ESSEC",
+    logo: "/lovable-uploads/d632a680-9cfd-42ca-977b-de196318580c.png"
   }
 ];
 
@@ -115,3 +136,4 @@ const ScrollingUniversities = () => {
 };
 
 export default ScrollingUniversities;
+
