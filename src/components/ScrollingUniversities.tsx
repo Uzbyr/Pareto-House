@@ -50,21 +50,21 @@ const ScrollingUniversities = () => {
 
   return (
     <div className="relative overflow-hidden py-10">
-      <div className="flex animate-[scroll_20s_linear_infinite] space-x-8">
+      <div className="flex animate-[scroll_20s_linear_infinite] space-x-12">
         {universities.concat(universities).map((uni, index) => (
           <div
             key={`${uni.name}-${index}`}
-            className="flex flex-col items-center justify-center w-32 h-32"
+            className="flex flex-col items-center justify-center w-48 h-48"
           >
-            <div className="bg-white/10 p-4 rounded-lg w-full h-full flex items-center justify-center">
+            <div className="bg-white/10 p-6 rounded-lg w-full h-full flex items-center justify-center">
               <img
                 src={uni.logo}
                 alt={`${uni.name} logo`}
                 onError={() => handleImageError(uni.name)}
-                className={`max-w-full max-h-full object-contain filter brightness-0 invert opacity-50 hover:opacity-100 transition-opacity ${
+                className={`max-w-full max-h-full object-contain opacity-50 hover:opacity-100 transition-opacity ${
                   imageLoadErrors[uni.name] ? 'hidden' : ''
                 }`}
-                style={{ minWidth: '24px', minHeight: '24px' }}
+                style={{ minWidth: '32px', minHeight: '32px' }}
               />
               {imageLoadErrors[uni.name] && (
                 <div className="text-xs text-white/50">{uni.name}</div>
