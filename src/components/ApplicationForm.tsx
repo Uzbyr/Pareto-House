@@ -6,8 +6,13 @@ const ApplicationForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     school: "",
+    graduationYear: "",
+    major: "",
     linkedin: "",
     twitter: "",
+    heardFrom: "",
+    knowsFellow: "no",
+    fellowName: "",
   });
   const [resume, setResume] = useState<File | null>(null);
   const [video, setVideo] = useState<File | null>(null);
@@ -28,6 +33,13 @@ const ApplicationForm = () => {
       setVideo(file);
     }
   };
+
+  const heardFromOptions = [
+    "From a friend",
+    "LinkedIn/Twitter",
+    "From an event",
+    "From student societies"
+  ];
 
   return (
     <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6 text-left">
@@ -58,6 +70,102 @@ const ApplicationForm = () => {
             value={formData.school}
             onChange={(e) => setFormData({ ...formData, school: e.target.value })}
           />
+        </div>
+
+        <div>
+          <label htmlFor="graduationYear" className="block text-sm font-medium text-pareto-pink mb-1">
+            Year of Graduation
+          </label>
+          <input
+            type="number"
+            id="graduationYear"
+            required
+            min={new Date().getFullYear()}
+            max={new Date().getFullYear() + 6}
+            className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+            value={formData.graduationYear}
+            onChange={(e) => setFormData({ ...formData, graduationYear: e.target.value })}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="major" className="block text-sm font-medium text-pareto-pink mb-1">
+            Major
+          </label>
+          <input
+            type="text"
+            id="major"
+            required
+            className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+            value={formData.major}
+            onChange={(e) => setFormData({ ...formData, major: e.target.value })}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="heardFrom" className="block text-sm font-medium text-pareto-pink mb-1">
+            How have you heard about the Pareto Fellowship?
+          </label>
+          <select
+            id="heardFrom"
+            required
+            className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+            value={formData.heardFrom}
+            onChange={(e) => setFormData({ ...formData, heardFrom: e.target.value })}
+          >
+            <option value="">Select an option</option>
+            {heardFromOptions.map((option) => (
+              <option key={option} value={option}>{option}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="space-y-3">
+          <div>
+            <label className="block text-sm font-medium text-pareto-pink mb-1">
+              Do you know a Pareto Fellow?
+            </label>
+            <div className="flex gap-4">
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="knowsFellow"
+                  value="yes"
+                  checked={formData.knowsFellow === "yes"}
+                  onChange={(e) => setFormData({ ...formData, knowsFellow: e.target.value })}
+                  className="mr-2"
+                />
+                Yes
+              </label>
+              <label className="flex items-center">
+                <input
+                  type="radio"
+                  name="knowsFellow"
+                  value="no"
+                  checked={formData.knowsFellow === "no"}
+                  onChange={(e) => setFormData({ ...formData, knowsFellow: e.target.value })}
+                  className="mr-2"
+                />
+                No
+              </label>
+            </div>
+          </div>
+          
+          {formData.knowsFellow === "yes" && (
+            <div>
+              <label htmlFor="fellowName" className="block text-sm font-medium text-pareto-pink mb-1">
+                Which Pareto Fellow do you know?
+              </label>
+              <input
+                type="text"
+                id="fellowName"
+                required
+                className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+                value={formData.fellowName}
+                onChange={(e) => setFormData({ ...formData, fellowName: e.target.value })}
+              />
+            </div>
+          )}
         </div>
 
         <div>

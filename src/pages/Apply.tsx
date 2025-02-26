@@ -15,17 +15,17 @@ const Apply = () => {
           transition={{ delay: 0.2 }}
           className="max-w-4xl mx-auto"
         >
-          <div className="flex items-center justify-between mb-8">
+          <div className="mb-8">
             <button
               onClick={() => navigate("/")}
-              className="px-6 py-2 bg-pareto-pink text-black font-semibold hover:bg-white transition-colors duration-300 rounded"
+              className="px-4 py-2 bg-pareto-pink text-black font-semibold hover:bg-white transition-colors duration-300 rounded text-sm"
             >
               ← Back to Homepage
             </button>
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold"
+              className="text-4xl font-bold text-center mt-8"
             >
               Apply to Pareto Fellowship
             </motion.h1>
