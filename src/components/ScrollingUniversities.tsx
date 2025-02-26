@@ -5,7 +5,7 @@ import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 const universities = [
   {
     name: "Stanford",
-    logo: "/lovable-uploads/3297876c-3e72-4a19-b170-1e3257661239.png"
+    logo: "/lovable-uploads/0bcac760-dba5-4f81-a509-d2e67627f952.png"
   },
   {
     name: "Berkeley",
