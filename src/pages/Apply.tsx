@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
-import { ExternalLink } from "lucide-react";
+import ApplicationForm from "../components/ApplicationForm";
 
 const Apply = () => {
   const navigate = useNavigate();
@@ -25,34 +25,12 @@ const Apply = () => {
             <motion.h1
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold text-center mt-8 mb-6"
+              className="text-4xl font-bold text-center mt-8"
             >
               Apply to Pareto Fellowship
             </motion.h1>
-            <motion.p 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3 }}
-              className="text-center text-lg text-gray-300 mb-12"
-            >
-              Please click below to fill out our application form
-            </motion.p>
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.4 }}
-              className="flex justify-center"
-            >
-              <a
-                href="YOUR_TYPEFORM_URL_HERE"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black font-semibold hover:bg-white transition-colors duration-300"
-              >
-                Apply Now <ExternalLink className="w-4 h-4" />
-              </a>
-            </motion.div>
           </div>
+          <ApplicationForm />
         </motion.div>
       </div>
     </div>
