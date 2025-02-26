@@ -1,13 +1,10 @@
 
 import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
-import ApplicationForm from "../components/ApplicationForm";
 import { ExternalLink } from "lucide-react";
-import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const Index = () => {
-  const [showForm, setShowForm] = useState(false);
-
   return (
     <div className="min-h-screen bg-pareto-black text-white font-inter">
       <div className="container mx-auto px-4 py-12">
@@ -51,15 +48,18 @@ const Index = () => {
               <span>Pareto Website</span>
               <ExternalLink size={20} />
             </motion.a>
-            <motion.button
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.7 }}
-              onClick={() => setShowForm(true)}
-              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-pareto-pink transition-colors duration-300"
             >
-              Apply Now
-            </motion.button>
+              <Link
+                to="/apply"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-pareto-pink transition-colors duration-300"
+              >
+                Apply Now
+              </Link>
+            </motion.div>
           </div>
         </div>
 
@@ -75,19 +75,6 @@ const Index = () => {
           </h2>
           <ScrollingUniversities />
         </motion.div>
-
-        {/* Application Form Section */}
-        {showForm && (
-          <motion.div
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ delay: 0.2 }}
-            className="py-16"
-          >
-            <h2 className="text-2xl font-bold mb-8 text-center">Apply Now</h2>
-            <ApplicationForm />
-          </motion.div>
-        )}
       </div>
     </div>
   );
