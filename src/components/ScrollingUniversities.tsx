@@ -14,6 +14,14 @@ const universities = [
   {
     name: "Harvard",
     logo: "/lovable-uploads/af8f7d52-4e24-48ee-a709-b2505ca9dba9.png"
+  },
+  {
+    name: "Oxford",
+    logo: "/lovable-uploads/d7254db8-1bb2-47c2-817b-e3df60e4a8b2.png"
+  },
+  {
+    name: "Polytechnique",
+    logo: "/lovable-uploads/f7ee5c26-25b3-4372-986c-7491cbabc323.png"
   }
 ];
 
