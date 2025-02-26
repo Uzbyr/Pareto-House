@@ -6,8 +6,12 @@ const ApplicationForm = () => {
   const [formData, setFormData] = useState({
     name: "",
     school: "",
+    graduationYear: "",
+    major: "",
     linkedin: "",
     twitter: "",
+    knowsParetoFellow: "no",
+    fellowName: "",
   });
   const [resume, setResume] = useState<File | null>(null);
   const [video, setVideo] = useState<File | null>(null);
@@ -61,6 +65,34 @@ const ApplicationForm = () => {
         </div>
 
         <div>
+          <label htmlFor="graduationYear" className="block text-sm font-medium text-pareto-pink mb-1">
+            Graduation Year
+          </label>
+          <input
+            type="text"
+            id="graduationYear"
+            required
+            className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+            value={formData.graduationYear}
+            onChange={(e) => setFormData({ ...formData, graduationYear: e.target.value })}
+          />
+        </div>
+
+        <div>
+          <label htmlFor="major" className="block text-sm font-medium text-pareto-pink mb-1">
+            Major
+          </label>
+          <input
+            type="text"
+            id="major"
+            required
+            className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+            value={formData.major}
+            onChange={(e) => setFormData({ ...formData, major: e.target.value })}
+          />
+        </div>
+
+        <div>
           <label htmlFor="linkedin" className="block text-sm font-medium text-pareto-pink mb-1">
             LinkedIn URL
           </label>
@@ -76,15 +108,59 @@ const ApplicationForm = () => {
 
         <div>
           <label htmlFor="twitter" className="block text-sm font-medium text-pareto-pink mb-1">
-            Twitter Handle
+            Twitter URL (optional)
           </label>
           <input
-            type="text"
+            type="url"
             id="twitter"
             className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
             value={formData.twitter}
             onChange={(e) => setFormData({ ...formData, twitter: e.target.value })}
           />
+        </div>
+
+        <div>
+          <label className="block text-sm font-medium text-pareto-pink mb-1">
+            Do you know a Pareto Fellow?
+          </label>
+          <div className="flex gap-4 mb-2">
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name="knowsParetoFellow"
+                value="yes"
+                checked={formData.knowsParetoFellow === "yes"}
+                onChange={(e) => setFormData({ ...formData, knowsParetoFellow: e.target.value })}
+                className="mr-2"
+              />
+              Yes
+            </label>
+            <label className="inline-flex items-center">
+              <input
+                type="radio"
+                name="knowsParetoFellow"
+                value="no"
+                checked={formData.knowsParetoFellow === "no"}
+                onChange={(e) => setFormData({ ...formData, knowsParetoFellow: e.target.value })}
+                className="mr-2"
+              />
+              No
+            </label>
+          </div>
+          {formData.knowsParetoFellow === "yes" && (
+            <div>
+              <label htmlFor="fellowName" className="block text-sm font-medium text-pareto-pink mb-1">
+                Fellow's Name
+              </label>
+              <input
+                type="text"
+                id="fellowName"
+                className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white"
+                value={formData.fellowName}
+                onChange={(e) => setFormData({ ...formData, fellowName: e.target.value })}
+              />
+            </div>
+          )}
         </div>
 
         <div>
