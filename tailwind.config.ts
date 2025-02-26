@@ -20,6 +20,7 @@ export default {
     },
     extend: {
       colors: {
+        border: "hsl(var(--border))",
         pareto: {
           pink: "#D6BCFA",
           black: "#000000",
