@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
@@ -55,7 +54,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <motion.div 
-        className="container mx-auto px-4 pt-32 pb-20"
+        className="container mx-auto px-4 pt-40 md:pt-48 pb-20"
         variants={container}
         initial="hidden"
         animate="show"
@@ -96,7 +95,7 @@ const Index = () => {
           {/* Stats Section */}
           <motion.div
             variants={item}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20"
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-32"
           >
             {[
               { number: "500+", label: "Fellows" },
@@ -119,7 +118,7 @@ const Index = () => {
         {/* Universities Section */}
         <motion.div
           variants={item}
-          className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-white/5 rounded-lg"
+          className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-white/5 rounded-lg mt-20"
         >
           <div className="absolute inset-0 bg-gradient-to-r from-pareto-black via-transparent to-pareto-black z-10 pointer-events-none" />
           <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
