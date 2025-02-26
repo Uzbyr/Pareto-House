@@ -9,6 +9,7 @@ interface Mentor {
   twitter?: string;
   description?: string;
   imagePlaceholder?: string;
+  imageUrl?: string;
 }
 
 const mentors: Mentor[] = [
@@ -64,7 +65,7 @@ const mentors: Mentor[] = [
     name: "Arthur Querou",
     linkedIn: "https://www.linkedin.com/in/arthurquerou/",
     description: "Founder & CEO at PlayPlay",
-    imagePlaceholder: "AQ"
+    imageUrl: "/lovable-uploads/8545216b-c853-4042-b152-cada13843026.png"
   }
 ];
 
@@ -117,9 +118,19 @@ const Mentors = () => {
               className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
             >
               <div className="flex items-start gap-4">
-                <div className="w-16 h-16 rounded-full bg-pareto-pink flex items-center justify-center text-black font-bold text-xl">
-                  {mentor.imagePlaceholder}
-                </div>
+                {mentor.imageUrl ? (
+                  <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
+                    <img 
+                      src={mentor.imageUrl} 
+                      alt={mentor.name}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-16 h-16 rounded-full bg-pareto-pink flex items-center justify-center text-black font-bold text-xl">
+                    {mentor.imagePlaceholder}
+                  </div>
+                )}
                 <div className="flex-1">
                   <h3 className="text-xl font-semibold mb-2">{mentor.name}</h3>
                   {mentor.description && (
