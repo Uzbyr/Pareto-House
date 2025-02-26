@@ -22,6 +22,26 @@ const universities = [
   {
     name: "Polytechnique",
     logo: "/lovable-uploads/f7ee5c26-25b3-4372-986c-7491cbabc323.png"
+  },
+  {
+    name: "Caltech",
+    logo: "/lovable-uploads/4862da00-6b20-4aef-be8d-545282be5203.png"
+  },
+  {
+    name: "CentraleSupelec",
+    logo: "/lovable-uploads/00898750-1228-442b-a5e9-602fcbc9e19c.png"
+  },
+  {
+    name: "Columbia",
+    logo: "/lovable-uploads/1a47ecb9-067b-488b-bb66-f81cdf1508b2.png"
+  },
+  {
+    name: "MIT",
+    logo: "/lovable-uploads/69c9668d-654a-47ff-a45a-f9257955aab3.png"
+  },
+  {
+    name: "Princeton",
+    logo: "/lovable-uploads/36e958d6-20f5-4981-ab4f-23e535ca6dc9.png"
   }
 ];
 
