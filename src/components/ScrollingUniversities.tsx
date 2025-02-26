@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -108,12 +107,10 @@ const ScrollingUniversities = () => {
     }));
   };
 
-  // Pause auto-scroll on hover/touch
   const handleInteraction = () => {
     setIsAutoScrolling(false);
   };
 
-  // Resume auto-scroll when not interacting
   const handleInteractionEnd = () => {
     setIsAutoScrolling(true);
   };
@@ -129,7 +126,7 @@ const ScrollingUniversities = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_20s_linear_infinite]' : ''}`}
+          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_40s_linear_infinite]' : ''}`}
         >
           {universities.concat(universities).map((uni, index) => (
             <div
@@ -143,7 +140,8 @@ const ScrollingUniversities = () => {
                 onLoad={() => handleImageLoad(uni.name)}
                 className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${
                   imageLoadErrors[uni.name] ? 'hidden' : ''
-                } ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}`}
+                } ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
+                  ${uni.name === 'Stanford' ? 'brightness-125' : ''}`}
               />
               {imageLoadErrors[uni.name] && (
                 <div className="text-xs text-white/50">{uni.name}</div>
@@ -158,4 +156,3 @@ const ScrollingUniversities = () => {
 };
 
 export default ScrollingUniversities;
-

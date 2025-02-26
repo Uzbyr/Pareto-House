@@ -33,6 +33,14 @@ const Footer = () => {
               </a>
             </div>
           </div>
+          <a
+            href="https://www.youtube.com/watch?v=lc8ourcIe10"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="text-pareto-pink hover:opacity-80 transition-opacity text-sm underline decoration-1 underline-offset-4"
+          >
+            Build brutally, or don't.
+          </a>
           <p className="text-black/70 dark:text-white/70 text-sm">
             Any questions? Text{" "}
             <a
