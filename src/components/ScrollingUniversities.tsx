@@ -54,13 +54,13 @@ const ScrollingUniversities = () => {
         {universities.concat(universities).map((uni, index) => (
           <div
             key={`${uni.name}-${index}`}
-            className="flex items-center justify-center h-16"
+            className="flex items-center justify-center h-32"
           >
             <img
               src={uni.logo}
               alt={`${uni.name} logo`}
               onError={() => handleImageError(uni.name)}
-              className={`h-full w-auto object-contain opacity-50 hover:opacity-100 transition-opacity ${
+              className={`h-full w-auto object-contain hover:opacity-80 transition-opacity ${
                 imageLoadErrors[uni.name] ? 'hidden' : ''
               }`}
             />
