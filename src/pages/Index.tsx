@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
@@ -24,7 +25,7 @@ const Index = () => {
     <div className="min-h-screen bg-pareto-black text-white font-inter">
       {/* Navigation */}
       <nav className="fixed w-full top-0 z-50 bg-pareto-black/80 backdrop-blur-md border-b border-white/10">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <motion.img
               initial={{ opacity: 0 }}
@@ -32,7 +33,7 @@ const Index = () => {
               transition={{ duration: 0.5 }}
               src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
               alt="Pareto Logo"
-              className="w-40 md:w-48"
+              className="w-36 md:w-44"
             />
             <div className="flex gap-6">
               <Link
@@ -54,7 +55,7 @@ const Index = () => {
 
       {/* Hero Section */}
       <motion.div 
-        className="container mx-auto px-4 pt-40 md:pt-48 pb-20"
+        className="container mx-auto px-4 pt-48 md:pt-52 pb-20"
         variants={container}
         initial="hidden"
         animate="show"
@@ -98,10 +99,10 @@ const Index = () => {
             className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-32"
           >
             {[
-              { number: "500+", label: "Fellows" },
-              { number: "50+", label: "Universities" },
-              { number: "$1M+", label: "in Opportunities" },
-              { number: "100%", label: "Success Rate" },
+              { number: "50", label: "Fellows Per Batch" },
+              { number: "30+", label: "Universities" },
+              { number: "$100K", label: "Potential Check" },
+              { number: "50+", label: "Tech Partners" },
             ].map((stat, index) => (
               <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-pareto-pink mb-2">
