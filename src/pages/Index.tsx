@@ -1,7 +1,7 @@
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, Gift } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 
@@ -63,6 +63,12 @@ const Index = () => {
                   Mentors
                 </Link>
                 <Link
+                  to="/perks"
+                  className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
+                >
+                  Perks
+                </Link>
+                <Link
                   to="/faq"
                   className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
                 >
@@ -83,9 +89,9 @@ const Index = () => {
             <motion.div variants={childVariants} className="mb-8">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
                 The Most Ambitious{" "}
-                <span className="relative group">
+                <span className="relative inline-block group">
                   <span className="text-pareto-pink">Undergraduate</span>
-                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-pareto-pink transform scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></span>
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-pareto-pink transform scale-x-0 transition-all duration-500 origin-left group-hover:scale-x-100 group-hover:h-1"></span>
                 </span>{" "}
                 Community
               </h1>
@@ -105,6 +111,13 @@ const Index = () => {
               >
                 Apply Now
                 <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              </Link>
+              <Link
+                to="/perks"
+                className="group inline-flex items-center gap-2 px-8 py-4 bg-white/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/10 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"
+              >
+                View Perks
+                <Gift className="w-5 h-5 transition-transform group-hover:scale-110" />
               </Link>
               <a
                 href="https://www.pareto20.com"
