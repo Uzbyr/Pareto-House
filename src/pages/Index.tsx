@@ -6,16 +6,16 @@ import { Link } from "react-router-dom";
 const Index = () => {
   return (
     <div className="h-screen bg-pareto-black text-white font-inter overflow-hidden">
-      <div className="container mx-auto px-4 py-6 h-full flex flex-col">
+      <div className="container mx-auto px-4 py-2 h-full flex flex-col">
         {/* Navigation */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-4">
           <motion.img
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
             alt="Pareto Logo"
-            className="w-40 md:w-48" /* Increased size by 20% */
+            className="w-40 md:w-48"
           />
           <div className="flex gap-6">
             <Link
@@ -34,7 +34,7 @@ const Index = () => {
         </div>
 
         {/* Hero Section */}
-        <div className="flex flex-col items-center justify-center flex-grow">
+        <div className="flex flex-col items-center justify-center flex-grow max-h-[60vh]">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -84,9 +84,9 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="py-4"
+          className="py-2"
         >
-          <h2 className="text-sm uppercase tracking-widest mb-4 text-pareto-pink text-center">
+          <h2 className="text-sm uppercase tracking-widest mb-2 text-pareto-pink text-center">
             TARGET UNIVERSITIES
           </h2>
           <ScrollingUniversities />
