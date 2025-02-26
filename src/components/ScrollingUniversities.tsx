@@ -71,14 +71,14 @@ const ScrollingUniversities = () => {
           return (
             <div
               key={`${uni.name}-${index}`}
-              className="flex items-center justify-center h-32 min-w-[150px]"
+              className="flex items-center justify-center h-28 min-w-[128px]"
             >
               <img
                 src={uni.logo}
                 alt={`${uni.name} logo`}
                 onError={() => handleImageError(uni.name)}
                 onLoad={() => handleImageLoad(uni.name)}
-                className={`h-full w-auto object-contain hover:opacity-80 transition-opacity ${
+                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${
                   imageLoadErrors[uni.name] ? 'hidden' : ''
                 }`}
               />
