@@ -43,13 +43,12 @@ const ScrollingUniversities = () => {
       ...prev,
       [uniName]: true
     }));
+    // When an image loads successfully, make sure to remove any error state
+    setImageLoadErrors(prev => ({
+      ...prev,
+      [uniName]: false
+    }));
   };
-
-  useEffect(() => {
-    // Log the current state of loaded and errored images
-    console.log('Current image load errors:', imageLoadErrors);
-    console.log('Successfully loaded images:', loadedImages);
-  }, [imageLoadErrors, loadedImages]);
 
   return (
     <div className="relative overflow-hidden py-10">
