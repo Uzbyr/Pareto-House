@@ -57,13 +57,13 @@ const Index = () => {
 
       {/* Hero Section */}
       <motion.div 
-        className="container mx-auto px-4 pt-48 md:pt-52 pb-20"
+        className="container mx-auto px-4 pt-64 md:pt-80 pb-20"
         variants={container}
         initial="hidden"
         animate="show"
       >
         <div className="max-w-4xl mx-auto text-center">
-          <motion.div variants={item} className="mb-6">
+          <motion.div variants={item} className="mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
               The Most Ambitious{" "}
               <span className="text-pareto-pink">Undergraduate Community</span>
@@ -72,12 +72,12 @@ const Index = () => {
 
           <motion.p
             variants={item}
-            className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-12 max-w-2xl mx-auto"
+            className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto"
           >
             Connect with exceptional peers, access unparalleled opportunities, and accelerate your path to impact.
           </motion.p>
 
-          <motion.div variants={item} className="flex flex-wrap gap-4 justify-center mb-16">
+          <motion.div variants={item} className="flex flex-wrap gap-4 justify-center mb-20">
             <Link
               to="/apply"
               className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
@@ -98,7 +98,7 @@ const Index = () => {
           {/* Stats Section */}
           <motion.div
             variants={item}
-            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-32"
+            className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-40"
           >
             {[
               { number: "50", label: "Fellows Per Batch" },
