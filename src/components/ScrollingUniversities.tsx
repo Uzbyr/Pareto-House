@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -20,8 +19,24 @@ const universities = [
     logo: "/lovable-uploads/06213398-3d3d-4ec2-a70f-62f3daa88e87.png"
   },
   {
+    name: "Cambridge",
+    logo: "/lovable-uploads/ee78082f-9f7f-4f89-b847-a6ca23730af6.png"
+  },
+  {
     name: "Polytechnique",
     logo: "/lovable-uploads/f7ee5c26-25b3-4372-986c-7491cbabc323.png"
+  },
+  {
+    name: "TUT",
+    logo: "/lovable-uploads/1e82e7c3-b0d7-46c2-9617-e71656983faf.png"
+  },
+  {
+    name: "HEC Paris",
+    logo: "/lovable-uploads/d6f46fa9-133c-482c-9601-30f374bbda05.png"
+  },
+  {
+    name: "McGill",
+    logo: "/lovable-uploads/b2dd29a3-1b1c-49fe-ad5f-45516ea2329d.png"
   },
   {
     name: "Caltech",
@@ -63,7 +78,6 @@ const ScrollingUniversities = () => {
       ...prev,
       [uniName]: true
     }));
-    // When an image loads successfully, make sure to remove any error state
     setImageLoadErrors(prev => ({
       ...prev,
       [uniName]: false
