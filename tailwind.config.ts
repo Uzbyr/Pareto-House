@@ -21,6 +21,8 @@ export default {
     extend: {
       colors: {
         border: "hsl(var(--border))",
+        background: "hsl(var(--background))",
+        foreground: "hsl(var(--foreground))",
         pareto: {
           pink: "#D6BCFA",
           black: "#000000",
