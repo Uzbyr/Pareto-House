@@ -5,15 +5,15 @@ import { useState } from "react";
 const universities = [
   {
     name: "Stanford",
-    logo: "/lovable-uploads/stanford.png"
+    logo: "/lovable-uploads/3297876c-3e72-4a19-b170-1e3257661239.png"
   },
   {
     name: "Berkeley",
-    logo: "/lovable-uploads/berkeley.png"
+    logo: "/lovable-uploads/2e0c0a8e-2b00-41ce-9b18-8cc17cd0d6c6.png"
   },
   {
     name: "Harvard",
-    logo: "/lovable-uploads/harvard.png"
+    logo: "/lovable-uploads/af8f7d52-4e24-48ee-a709-b2505ca9dba9.png"
   },
   {
     name: "MIT",
