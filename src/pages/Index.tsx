@@ -1,4 +1,3 @@
-
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
@@ -84,7 +83,11 @@ const Index = () => {
             <motion.div variants={childVariants} className="mb-8">
               <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
                 The Most Ambitious{" "}
-                <span className="text-pareto-pink">Undergraduate Community</span>
+                <span className="relative group">
+                  <span className="text-pareto-pink">Undergraduate</span>
+                  <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-pareto-pink transform scale-x-0 transition-transform duration-300 origin-left group-hover:scale-x-100"></span>
+                </span>{" "}
+                Community
               </h1>
             </motion.div>
 
@@ -156,4 +159,3 @@ const Index = () => {
 };
 
 export default Index;
-
