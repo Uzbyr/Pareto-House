@@ -17,49 +17,49 @@ const mentors: Mentor[] = [
     name: "Edward Lando",
     linkedIn: "https://www.linkedin.com/in/edwardlando/",
     description: "Serial entrepreneur and investor, co-founder of Pareto Holdings",
-    imagePlaceholder: "EL"
+    imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png"
   },
   {
     name: "Ben Cambier",
     linkedIn: "https://www.linkedin.com/in/jbenjamin-cambier/",
     description: "Early-stage investor and founder",
-    imagePlaceholder: "BC"
+    imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png"
   },
   {
     name: "Abhi Ramesh",
     linkedIn: "https://www.linkedin.com/in/abhiramesh/",
     description: "Founder & CEO at Misfits Market",
-    imagePlaceholder: "AR"
+    imageUrl: "/lovable-uploads/7d1b363b-018d-4f30-a2db-f2eb6515cc8e.png"
   },
   {
     name: "Zach Bookman",
     linkedIn: "https://www.linkedin.com/in/zacharybookman/",
     description: "Co-founder & CEO at OpenGov",
-    imagePlaceholder: "ZB"
+    imageUrl: "/lovable-uploads/1cc17b96-3462-4d26-974f-15ba3628034c.png"
   },
   {
     name: "Eric Glyman",
     linkedIn: "https://www.linkedin.com/in/eglyman/",
     description: "Co-founder & CEO at Ramp",
-    imagePlaceholder: "EG"
+    imageUrl: "/lovable-uploads/3a89b51a-b995-42c3-85a2-c29983c21e46.png"
   },
   {
     name: "Pietro Invernizzi",
     linkedIn: "https://www.linkedin.com/in/pietro-invernizzi/",
     description: "Investor and entrepreneur",
-    imagePlaceholder: "PI"
+    imageUrl: "/lovable-uploads/687c5fe9-ccfa-4d12-bdb9-066f37806034.png"
   },
   {
     name: "Liu Jiang",
     linkedIn: "https://www.linkedin.com/in/liujiang1/",
     description: "Engineering leader and startup advisor",
-    imagePlaceholder: "LJ"
+    imageUrl: "/lovable-uploads/86c1fa85-94f4-464c-9ba6-1d7dc3b6dd1e.png"
   },
   {
     name: "Grant Gordon",
     linkedIn: "https://www.linkedin.com/in/grantgordonconnect/",
     description: "Founder & CEO at Artemis",
-    imagePlaceholder: "GG"
+    imageUrl: "/lovable-uploads/29fe48b3-0fa6-425e-abc6-7add6c5d7236.png"
   },
   {
     name: "Arthur Querou",
