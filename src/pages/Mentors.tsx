@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter } from "lucide-react";
@@ -66,6 +65,18 @@ const mentors: Mentor[] = [
     linkedIn: "https://www.linkedin.com/in/arthurquerou/",
     description: "Founder & CEO at PlayPlay",
     imageUrl: "/lovable-uploads/8545216b-c853-4042-b152-cada13843026.png"
+  },
+  {
+    name: "Nicolas Douay",
+    linkedIn: "https://www.linkedin.com/in/nicolasdouay/",
+    description: "Technology entrepreneur and investor",
+    imageUrl: "/lovable-uploads/e838327a-3836-4221-bb14-73a96f840ec9.png"
+  },
+  {
+    name: "Mathias Adam",
+    linkedIn: "https://www.linkedin.com/in/mathias-adam-7a10274a/",
+    description: "Technology leader and advisor",
+    imageUrl: "/lovable-uploads/296914cf-fcac-4a48-9c42-8e9bc9b50f4a.png"
   }
 ];
 
