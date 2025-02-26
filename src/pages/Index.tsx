@@ -1,16 +1,8 @@
 
 import { motion } from "framer-motion";
-
-const universities = [
-  "Stanford",
-  "Berkeley",
-  "Harvard",
-  "MIT",
-  "Oxford",
-  "Cambridge",
-  "Polytechnique",
-  "ETH Zurich",
-];
+import ScrollingUniversities from "../components/ScrollingUniversities";
+import ApplicationForm from "../components/ApplicationForm";
+import { ExternalLink } from "lucide-react";
 
 const Index = () => {
   return (
@@ -38,10 +30,23 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-pareto-pink text-xl md:text-2xl mb-12 max-w-2xl"
+            className="text-pareto-pink text-xl md:text-2xl mb-6 max-w-2xl"
           >
             Building the world's most ambitious undergraduate community
           </motion.p>
+          
+          <motion.a
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.7 }}
+            href="https://www.pareto20.com"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 px-6 py-3 bg-pareto-pink text-black hover:bg-white transition-colors duration-300 mb-12"
+          >
+            <span>Pareto Website</span>
+            <ExternalLink size={20} />
+          </a>
         </div>
 
         {/* Universities Section */}
@@ -49,42 +54,23 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="py-16 text-center"
+          className="py-16"
         >
-          <h2 className="text-sm uppercase tracking-widest mb-8 text-pareto-pink">
+          <h2 className="text-sm uppercase tracking-widest mb-8 text-pareto-pink text-center">
             TARGET UNIVERSITIES
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 max-w-4xl mx-auto">
-            {universities.map((uni, index) => (
-              <motion.div
-                key={uni}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 0.8 + index * 0.1 }}
-                className="p-4 border border-pareto-pink/20 rounded"
-              >
-                <p className="font-medium">{uni}</p>
-              </motion.div>
-            ))}
-          </div>
+          <ScrollingUniversities />
         </motion.div>
 
-        {/* CTA Section */}
+        {/* Application Form Section */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
-          transition={{ delay: 1.2 }}
-          className="py-16 text-center"
+          transition={{ delay: 0.9 }}
+          className="py-16"
         >
-          <a
-            href="https://www.pareto20.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-block px-8 py-4 text-lg font-semibold bg-pareto-pink text-black 
-                     hover:bg-white transition-colors duration-300 tracking-wide"
-          >
-            LEARN MORE
-          </a>
+          <h2 className="text-2xl font-bold mb-8 text-center">Apply Now</h2>
+          <ApplicationForm />
         </motion.div>
       </div>
     </div>
