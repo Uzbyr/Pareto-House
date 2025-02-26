@@ -1,6 +1,7 @@
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 const universities = [
   {
@@ -84,6 +85,8 @@ const universities = [
 const ScrollingUniversities = () => {
   const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const scrollContainerRef = useRef<HTMLDivElement>(null);
 
   const handleImageError = (uniName: string) => {
     console.error(`Failed to load image for ${uniName}`);
@@ -105,12 +108,30 @@ const ScrollingUniversities = () => {
     }));
   };
 
+  // Pause auto-scroll on hover/touch
+  const handleInteraction = () => {
+    setIsAutoScrolling(false);
+  };
+
+  // Resume auto-scroll when not interacting
+  const handleInteractionEnd = () => {
+    setIsAutoScrolling(true);
+  };
+
   return (
     <div className="relative overflow-hidden py-10">
-      <div className="flex animate-[scroll_20s_linear_infinite] space-x-16">
-        {universities.concat(universities).map((uni, index) => {
-          console.log(`Rendering ${uni.name} logo from path: ${uni.logo}`);
-          return (
+      <ScrollArea 
+        className="w-full"
+        onMouseEnter={handleInteraction}
+        onMouseLeave={handleInteractionEnd}
+        onTouchStart={handleInteraction}
+        onTouchEnd={handleInteractionEnd}
+      >
+        <div 
+          ref={scrollContainerRef}
+          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_20s_linear_infinite]' : ''}`}
+        >
+          {universities.concat(universities).map((uni, index) => (
             <div
               key={`${uni.name}-${index}`}
               className="flex items-center justify-center h-28 min-w-[128px]"
@@ -128,11 +149,13 @@ const ScrollingUniversities = () => {
                 <div className="text-xs text-white/50">{uni.name}</div>
               )}
             </div>
-          );
-        })}
-      </div>
+          ))}
+        </div>
+        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+      </ScrollArea>
     </div>
   );
 };
 
 export default ScrollingUniversities;
+
