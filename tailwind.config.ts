@@ -24,7 +24,11 @@ export default {
         background: "hsl(var(--background))",
         foreground: "hsl(var(--foreground))",
         pareto: {
-          pink: "#D6BCFA",
+          pink: {
+            DEFAULT: "#D6BCFA",
+            light: "#E9D8FD",
+            dark: "#B794F4"
+          },
           black: "#000000",
         },
       },

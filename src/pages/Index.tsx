@@ -3,6 +3,7 @@ import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
+import { ThemeToggle } from "../components/ThemeToggle";
 
 const Index = () => {
   const container = {
@@ -22,9 +23,9 @@ const Index = () => {
   };
 
   return (
-    <div className="min-h-screen bg-pareto-black text-white font-inter">
+    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       {/* Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-pareto-black/80 backdrop-blur-md border-b border-white/10">
+      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10">
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <motion.img
@@ -35,19 +36,20 @@ const Index = () => {
               alt="Pareto Logo"
               className="w-36 md:w-44"
             />
-            <div className="flex gap-6">
+            <div className="flex items-center gap-2">
               <Link
                 to="/mentors"
-                className="text-lg text-white/80 hover:text-pareto-pink transition-all duration-300 px-4 py-2"
+                className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
               >
                 Mentors
               </Link>
               <Link
                 to="/faq"
-                className="text-lg text-white/80 hover:text-pareto-pink transition-all duration-300 px-4 py-2"
+                className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
               >
                 FAQ
               </Link>
+              <ThemeToggle />
             </div>
           </div>
         </div>
@@ -70,7 +72,7 @@ const Index = () => {
 
           <motion.p
             variants={item}
-            className="text-xl md:text-2xl text-white/80 mb-12 max-w-2xl mx-auto"
+            className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-12 max-w-2xl mx-auto"
           >
             Connect with exceptional peers, access unparalleled opportunities, and accelerate your path to impact.
           </motion.p>
@@ -78,7 +80,7 @@ const Index = () => {
           <motion.div variants={item} className="flex flex-wrap gap-4 justify-center mb-16">
             <Link
               to="/apply"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
             >
               Apply Now
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
@@ -87,7 +89,7 @@ const Index = () => {
               href="https://www.pareto20.com"
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-white/20"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"
             >
               About Pareto
             </a>
@@ -108,7 +110,7 @@ const Index = () => {
                 <div className="text-3xl md:text-4xl font-bold text-pareto-pink mb-2">
                   {stat.number}
                 </div>
-                <div className="text-sm text-white/60 uppercase tracking-wider">
+                <div className="text-sm text-black/60 dark:text-white/60 uppercase tracking-wider">
                   {stat.label}
                 </div>
               </div>
@@ -119,9 +121,9 @@ const Index = () => {
         {/* Universities Section */}
         <motion.div
           variants={item}
-          className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-white/5 rounded-lg mt-20"
+          className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 rounded-lg mt-20"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-pareto-black via-transparent to-pareto-black z-10 pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-pareto-black dark:via-transparent dark:to-pareto-black z-10 pointer-events-none" />
           <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
             TARGET UNIVERSITIES
           </h2>
