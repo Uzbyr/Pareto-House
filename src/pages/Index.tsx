@@ -1,9 +1,9 @@
-
 import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
+import Footer from "../components/Footer";
 
 const Index = () => {
   const container = {
@@ -130,6 +130,8 @@ const Index = () => {
           <ScrollingUniversities />
         </motion.div>
       </motion.div>
+
+      <Footer />
     </div>
   );
 };

@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 
@@ -121,7 +122,7 @@ const ScrollingUniversities = () => {
                 onLoad={() => handleImageLoad(uni.name)}
                 className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${
                   imageLoadErrors[uni.name] ? 'hidden' : ''
-                } ${uni.name === 'Polytechnique' ? 'brightness-125 contrast-110' : ''}`}
+                } ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}`}
               />
               {imageLoadErrors[uni.name] && (
                 <div className="text-xs text-white/50">{uni.name}</div>
