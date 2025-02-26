@@ -5,28 +5,28 @@ import { Link } from "react-router-dom";
 
 const Index = () => {
   return (
-    <div className="min-h-screen bg-pareto-black text-white font-inter">
-      <div className="container mx-auto px-4 py-12">
+    <div className="h-screen bg-pareto-black text-white font-inter overflow-hidden">
+      <div className="container mx-auto px-4 py-6 h-full flex flex-col">
         {/* Navigation */}
-        <div className="flex justify-between items-center mb-12">
+        <div className="flex justify-between items-center mb-6">
           <motion.img
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5 }}
             src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
             alt="Pareto Logo"
-            className="w-32 md:w-40"
+            className="w-40 md:w-48" /* Increased size by 20% */
           />
           <div className="flex gap-6">
             <Link
               to="/mentors"
-              className="text-white hover:text-pareto-pink transition-colors duration-300 px-4 py-2"
+              className="text-lg md:text-xl text-white hover:text-pareto-pink transition-colors duration-300 px-4 py-2"
             >
               Mentors
             </Link>
             <Link
               to="/faq"
-              className="text-white hover:text-pareto-pink transition-colors duration-300 px-4 py-2"
+              className="text-lg md:text-xl text-white hover:text-pareto-pink transition-colors duration-300 px-4 py-2"
             >
               FAQ
             </Link>
@@ -34,12 +34,12 @@ const Index = () => {
         </div>
 
         {/* Hero Section */}
-        <div className="flex flex-col items-center justify-center min-h-[70vh] text-center">
+        <div className="flex flex-col items-center justify-center flex-grow">
           <motion.h1
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3 }}
-            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight"
+            className="text-4xl md:text-6xl lg:text-7xl font-bold mb-4 tracking-tight"
           >
             PARETO FELLOWSHIP
           </motion.h1>
@@ -47,12 +47,12 @@ const Index = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.5 }}
-            className="text-pareto-pink text-xl md:text-2xl mb-12 max-w-2xl"
+            className="text-pareto-pink text-xl md:text-2xl mb-6 max-w-2xl"
           >
             Building the world's most ambitious undergraduate community
           </motion.p>
 
-          <div className="flex flex-wrap gap-4 justify-center">
+          <div className="flex flex-wrap gap-4 justify-center mb-6">
             <motion.a
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
@@ -84,9 +84,9 @@ const Index = () => {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.7 }}
-          className="py-16"
+          className="py-4"
         >
-          <h2 className="text-sm uppercase tracking-widest mb-8 text-pareto-pink text-center">
+          <h2 className="text-sm uppercase tracking-widest mb-4 text-pareto-pink text-center">
             TARGET UNIVERSITIES
           </h2>
           <ScrollingUniversities />
