@@ -46,7 +46,7 @@ const Index = () => {
           >
             <span>Pareto Website</span>
             <ExternalLink size={20} />
-          </a>
+          </motion.a>
         </div>
 
         {/* Universities Section */}
