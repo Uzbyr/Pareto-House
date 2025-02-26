@@ -3,8 +3,11 @@ import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import ApplicationForm from "../components/ApplicationForm";
 import { ExternalLink } from "lucide-react";
+import { useState } from "react";
 
 const Index = () => {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <div className="min-h-screen bg-pareto-black text-white font-inter">
       <div className="container mx-auto px-4 py-12">
@@ -35,18 +38,29 @@ const Index = () => {
             Building the world's most ambitious undergraduate community
           </motion.p>
           
-          <motion.a
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.7 }}
-            href="https://www.pareto20.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-pareto-pink text-black hover:bg-white transition-colors duration-300 mb-12"
-          >
-            <span>Pareto Website</span>
-            <ExternalLink size={20} />
-          </motion.a>
+          <div className="flex gap-4 mb-12">
+            <motion.a
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              href="https://www.pareto20.com"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-pareto-pink text-black hover:bg-white transition-colors duration-300"
+            >
+              <span>Pareto Website</span>
+              <ExternalLink size={20} />
+            </motion.a>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.7 }}
+              onClick={() => setShowForm(true)}
+              className="inline-flex items-center gap-2 px-6 py-3 bg-white text-black hover:bg-pareto-pink transition-colors duration-300"
+            >
+              Apply Now
+            </motion.button>
+          </div>
         </div>
 
         {/* Universities Section */}
@@ -63,15 +77,17 @@ const Index = () => {
         </motion.div>
 
         {/* Application Form Section */}
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.9 }}
-          className="py-16"
-        >
-          <h2 className="text-2xl font-bold mb-8 text-center">Apply Now</h2>
-          <ApplicationForm />
-        </motion.div>
+        {showForm && (
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.2 }}
+            className="py-16"
+          >
+            <h2 className="text-2xl font-bold mb-8 text-center">Apply Now</h2>
+            <ApplicationForm />
+          </motion.div>
+        )}
       </div>
     </div>
   );
