@@ -14,26 +14,6 @@ const universities = [
   {
     name: "Harvard",
     logo: "/lovable-uploads/af8f7d52-4e24-48ee-a709-b2505ca9dba9.png"
-  },
-  {
-    name: "MIT",
-    logo: "/lovable-uploads/mit.png"
-  },
-  {
-    name: "Oxford",
-    logo: "/lovable-uploads/oxford.png"
-  },
-  {
-    name: "Cambridge",
-    logo: "/lovable-uploads/cambridge.png"
-  },
-  {
-    name: "Polytechnique",
-    logo: "/lovable-uploads/polytechnique.png"
-  },
-  {
-    name: "ETH Zurich",
-    logo: "/lovable-uploads/eth.png"
   }
 ];
 
