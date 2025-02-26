@@ -1,5 +1,6 @@
 
 import { motion } from "framer-motion";
+import { useState } from "react";
 
 const universities = [
   {
@@ -37,6 +38,16 @@ const universities = [
 ];
 
 const ScrollingUniversities = () => {
+  const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
+
+  const handleImageError = (uniName: string) => {
+    console.error(`Failed to load image for ${uniName}`);
+    setImageLoadErrors(prev => ({
+      ...prev,
+      [uniName]: true
+    }));
+  };
+
   return (
     <div className="relative overflow-hidden py-10">
       <div className="flex animate-[scroll_20s_linear_infinite] space-x-8">
@@ -49,8 +60,15 @@ const ScrollingUniversities = () => {
               <img
                 src={uni.logo}
                 alt={`${uni.name} logo`}
-                className="max-w-full max-h-full object-contain filter brightness-0 invert opacity-50 hover:opacity-100 transition-opacity"
+                onError={() => handleImageError(uni.name)}
+                className={`max-w-full max-h-full object-contain filter brightness-0 invert opacity-50 hover:opacity-100 transition-opacity ${
+                  imageLoadErrors[uni.name] ? 'hidden' : ''
+                }`}
+                style={{ minWidth: '24px', minHeight: '24px' }}
               />
+              {imageLoadErrors[uni.name] && (
+                <div className="text-xs text-white/50">{uni.name}</div>
+              )}
             </div>
           </div>
         ))}
