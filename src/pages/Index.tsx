@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { ExternalLink } from "lucide-react";
@@ -13,7 +14,7 @@ const Index = () => {
           opacity: 1
         }} transition={{
           duration: 0.5
-        }} src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png" alt="Pareto Logo" className="w-48 md:w-64 mb-12" />
+        }} src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png" alt="Pareto Logo" className="w-64 md:w-80 mb-12" />
           <motion.h1 initial={{
           opacity: 0,
           y: 20
