@@ -62,8 +62,8 @@ const Index = () => {
       >
         <div className="max-w-4xl mx-auto text-center">
           <motion.div variants={item} className="mb-6">
-            <h1 className="text-4xl md:text-6xl lg:text-7xl font-bold mb-6 tracking-tight leading-tight">
-              Join the World's Most Ambitious{" "}
+            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
+              The Most Ambitious{" "}
               <span className="text-pareto-pink">Undergraduate Community</span>
             </h1>
           </motion.div>
@@ -89,7 +89,7 @@ const Index = () => {
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-white/10 text-white hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-white/20"
             >
-              Learn More
+              About Pareto
             </a>
           </motion.div>
 
