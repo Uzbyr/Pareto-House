@@ -135,6 +135,29 @@ const Perks = () => {
     });
   };
 
+  // Create a proper event handler for the login button
+  const handleLoginClick = () => {
+    // For demo purposes, using predefined credentials
+    // In a real application, you would show a login form instead
+    login("admin@pareto20.com", "admin123")
+      .then(success => {
+        if (success) {
+          toast({
+            title: "Login successful",
+            description: "You are now logged in as a Pareto Fellow.",
+            duration: 3000,
+          });
+        } else {
+          toast({
+            title: "Login failed",
+            description: "Invalid credentials. Please try again.",
+            variant: "destructive",
+            duration: 3000,
+          });
+        }
+      });
+  };
+
   return (
     <motion.div
       className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white"
@@ -163,7 +186,7 @@ const Perks = () => {
                   <LogOut className="h-4 w-4" />
                 </Button>
               ) : (
-                <Button variant="login" size="sm" onClick={login} className="flex items-center gap-2">
+                <Button variant="login" size="sm" onClick={handleLoginClick} className="flex items-center gap-2">
                   <LogIn className="h-4 w-4" />
                   Log in as Fellow
                 </Button>
