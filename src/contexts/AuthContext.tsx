@@ -54,7 +54,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const adminAccounts = [
       { email: 'admin@pareto20.com', role: 'admin' as const, password: 'admin123' },
       { email: 'superadmin@pareto20.com', role: 'super_admin' as const, password: 'super123' },
-      { email: 'analyst@pareto20.com', role: 'analyst' as const, password: 'analyst123' }
+      { email: 'analyst@pareto20.com', role: 'analyst' as const, password: 'analyst123' },
+      { email: 'jules@pareto20.com', role: 'admin' as const, password: 'Kiara00!' }
     ];
 
     const matchedUser = adminAccounts.find(account => 
