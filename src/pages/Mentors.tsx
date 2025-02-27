@@ -1,7 +1,7 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Linkedin, Twitter, Flag } from "lucide-react";
+import { Linkedin, Twitter } from "lucide-react";
 
 interface Mentor {
   name: string;
@@ -114,17 +114,17 @@ const Mentors = () => {
     }
   };
 
-  // Helper function to get flag color based on country
-  const getFlagColor = (country: string) => {
+  // Function to get flag emoji based on country
+  const getFlagEmoji = (country: string) => {
     switch(country) {
       case "USA":
-        return "text-blue-600";
+        return "🇺🇸";
       case "France":
-        return "text-blue-800";
+        return "🇫🇷";
       case "UK":
-        return "text-red-600";
+        return "🇬🇧";
       default:
-        return "text-gray-600";
+        return "🏳️";
     }
   };
 
@@ -172,10 +172,13 @@ const Mentors = () => {
                 <div className="flex-1">
                   <div className="flex items-center gap-2 mb-2">
                     <h3 className="text-xl font-semibold">{mentor.name}</h3>
-                    <Flag 
-                      className={`w-4 h-4 ${getFlagColor(mentor.country)}`} 
+                    <span 
+                      className="text-lg" 
                       aria-label={mentor.country}
-                    />
+                      role="img"
+                    >
+                      {getFlagEmoji(mentor.country)}
+                    </span>
                   </div>
                   {mentor.description && (
                     <p className="text-black/60 dark:text-white/60 mb-4 text-sm">
