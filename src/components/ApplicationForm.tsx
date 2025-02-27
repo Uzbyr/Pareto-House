@@ -25,9 +25,13 @@ const formSchema = z.object({
   lastName: z.string().min(2, { message: "Last name is required" }),
   email: z.string().email({ message: "Please enter a valid email" }),
   university: z.string().min(2, { message: "University is required" }),
+  major: z.string().min(2, { message: "Major is required" }),
+  preparatoryClasses: z.string().optional(),
   graduationYear: z.string().min(4, { message: "Graduation year is required" }),
   interests: z.string().min(10, { message: "Please describe your interests (min 10 characters)" }),
   referral: z.string().optional(),
+  videoPresentation: z.instanceof(FileList).optional().nullable(),
+  resume: z.instanceof(FileList).optional().nullable(),
 });
 
 type FormData = z.infer<typeof formSchema>;
@@ -40,7 +44,9 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   const navigate = useNavigate();
   const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const totalSteps = 3;
+  const totalSteps = 4; // Increased to 4 steps
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
 
   const {
     register,
@@ -55,6 +61,8 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       lastName: "",
       email: "",
       university: "",
+      major: "",
+      preparatoryClasses: "",
       graduationYear: "",
       interests: "",
       referral: "",
@@ -62,6 +70,12 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   });
 
   const watchedFields = watch();
+  
+  // Universities that trigger preparatory classes question
+  const prepClassesUniversities = ["HEC", "Essec", "Polytechnique", "Centrale"];
+  
+  // Flag to check if we should show the preparatory classes question
+  const showPrepClassesQuestion = prepClassesUniversities.includes(watchedFields.university);
 
   const nextStep = () => {
     if (step < totalSteps) {
@@ -77,12 +91,79 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     }
   };
 
+  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      
+      // Check if it's a video file
+      if (!file.type.includes('video/')) {
+        toast.error("Please upload a video file");
+        e.target.value = '';
+        return;
+      }
+      
+      // Load the video to check its duration
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      
+      video.onloadedmetadata = function() {
+        window.URL.revokeObjectURL(video.src);
+        const duration = video.duration;
+        
+        if (duration > 90) {
+          toast.error("Video must be 90 seconds or less");
+          e.target.value = '';
+          setVideoFile(null);
+        } else {
+          setVideoFile(file);
+          toast.success("Video uploaded successfully");
+        }
+      };
+      
+      video.src = URL.createObjectURL(file);
+    }
+  };
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      
+      // Check if it's a PDF or document file
+      if (!file.type.includes('pdf') && !file.type.includes('document')) {
+        toast.error("Please upload a PDF or document file");
+        e.target.value = '';
+        return;
+      }
+      
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size must be less than 5MB");
+        e.target.value = '';
+        return;
+      }
+      
+      setResumeFile(file);
+      toast.success("Resume uploaded successfully");
+    }
+  };
+
   const onSubmit = (data: FormData) => {
     setIsSubmitting(true);
+    
+    // Add file data
+    const formData = new FormData();
+    if (videoFile) {
+      formData.append('videoPresentation', videoFile);
+    }
+    if (resumeFile) {
+      formData.append('resume', resumeFile);
+    }
     
     // Simulate API call
     setTimeout(() => {
       console.log("Application submitted:", data);
+      console.log("Video file:", videoFile);
+      console.log("Resume file:", resumeFile);
       toast.success("Application submitted successfully!");
       setIsSubmitting(false);
       
@@ -181,6 +262,10 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                   <SelectItem value="Princeton">Princeton University</SelectItem>
                   <SelectItem value="Yale">Yale University</SelectItem>
                   <SelectItem value="Caltech">Caltech</SelectItem>
+                  <SelectItem value="HEC">HEC Paris</SelectItem>
+                  <SelectItem value="Essec">ESSEC Business School</SelectItem>
+                  <SelectItem value="Polytechnique">École Polytechnique</SelectItem>
+                  <SelectItem value="Centrale">École Centrale</SelectItem>
                   <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
@@ -188,6 +273,37 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                 <p className="text-red-500 text-sm">{errors.university.message}</p>
               )}
             </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="major">Major / Field of Study</Label>
+              <Input
+                id="major"
+                placeholder="e.g. Computer Science, Business, etc."
+                className="bg-zinc-800 border-zinc-700"
+                {...register("major")}
+              />
+              {errors.major && (
+                <p className="text-red-500 text-sm">{errors.major.message}</p>
+              )}
+            </div>
+            
+            {showPrepClassesQuestion && (
+              <div className="space-y-2">
+                <Label htmlFor="preparatoryClasses">Did you attend preparatory classes?</Label>
+                <Select
+                  value={watchedFields.preparatoryClasses}
+                  onValueChange={(value) => setValue("preparatoryClasses", value)}
+                >
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
             
             <div className="space-y-2">
               <Label htmlFor="graduationYear">Expected Graduation Year</Label>
@@ -214,6 +330,50 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         );
       
       case 3:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Supporting Documents</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="videoPresentation">Video Presentation (90 seconds max)</Label>
+              <div className="mt-1">
+                <Input
+                  id="videoPresentation"
+                  type="file"
+                  accept="video/*"
+                  className="bg-zinc-800 border-zinc-700"
+                  onChange={handleVideoChange}
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Please upload a short video (max 90 seconds) introducing yourself and why you want to join the fellowship.
+                </p>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="resume">Resume / CV (Optional)</Label>
+              <div className="mt-1">
+                <Input
+                  id="resume"
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="bg-zinc-800 border-zinc-700"
+                  onChange={handleResumeChange}
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Optional: Upload your resume in PDF or Document format (max 5MB).
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        );
+      
+      case 4:
         return (
           <motion.div
             initial={{ opacity: 0, x: 20 }}
