@@ -17,6 +17,12 @@ interface Application {
   videoUrl?: string;
   submissionDate: string;
   status: "pending" | "approved" | "rejected";
+  firstName?: string;
+  lastName?: string;
+  graduationYear?: string;
+  interests?: string;
+  preparatoryClasses?: string;
+  referral?: string;
 }
 
 // Site metrics interface
@@ -112,6 +118,67 @@ const storeVisitorData = (visitorData: { total: number, byDate: Record<string, n
     localStorage.setItem('visitorData', JSON.stringify(visitorData));
   } catch (e) {
     console.error("Error saving visitor data to localStorage:", e);
+  }
+};
+
+// Create sample applications for testing if none exist
+const createSampleApplicationsIfNeeded = (): void => {
+  const applications = getStoredApplications();
+  if (applications.length === 0) {
+    const sampleApplications: Application[] = [
+      {
+        id: 1,
+        name: "Jane Smith",
+        firstName: "Jane",
+        lastName: "Smith",
+        email: "jane.smith@university.edu",
+        school: "Stanford University",
+        major: "Computer Science",
+        graduationYear: "2025",
+        interests: "Machine Learning, Blockchain",
+        preparatoryClasses: "yes",
+        referral: "Friend",
+        resumeUrl: "https://example.com/resume1.pdf",
+        videoUrl: "https://example.com/video1.mp4",
+        submissionDate: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
+        status: "approved"
+      },
+      {
+        id: 2,
+        name: "John Doe",
+        firstName: "John",
+        lastName: "Doe",
+        email: "john.doe@college.edu",
+        school: "MIT",
+        major: "Data Science",
+        graduationYear: "2024",
+        interests: "AI, Quantum Computing",
+        preparatoryClasses: "no",
+        resumeUrl: "https://example.com/resume2.pdf",
+        videoUrl: "https://example.com/video2.mp4",
+        submissionDate: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
+        status: "pending"
+      },
+      {
+        id: 3,
+        name: "Alice Johnson",
+        firstName: "Alice",
+        lastName: "Johnson",
+        email: "alice.johnson@university.edu",
+        school: "Harvard University",
+        major: "Economics",
+        graduationYear: "2026",
+        interests: "Fintech, Cryptocurrencies",
+        preparatoryClasses: "yes",
+        referral: "Social Media",
+        resumeUrl: "https://example.com/resume3.pdf",
+        videoUrl: "https://example.com/video3.mp4",
+        submissionDate: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
+        status: "rejected"
+      }
+    ];
+    storeApplications(sampleApplications);
+    console.log("Created sample applications for testing");
   }
 };
 
@@ -255,7 +322,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   });
 
   // Initialize applications state
-  const [applications, setApplications] = useState<Application[]>(getStoredApplications());
+  const [applications, setApplications] = useState<Application[]>(() => {
+    // Create sample applications if needed
+    createSampleApplicationsIfNeeded();
+    return getStoredApplications();
+  });
   
   // Store visitor session ID to avoid counting revisits
   const [sessionId] = useState<string>(() => {
@@ -296,8 +367,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Submit application function
   const submitApplication = (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => {
+    // Combine firstName and lastName to create the name field if it doesn't exist
+    const fullName = applicationData.name || 
+      (applicationData.firstName && applicationData.lastName 
+        ? `${applicationData.firstName} ${applicationData.lastName}`
+        : "Anonymous Applicant");
+
     const newApplication: Application = {
       ...applicationData,
+      name: fullName,
       id: applications.length > 0 ? Math.max(...applications.map(a => a.id)) + 1 : 1,
       submissionDate: new Date().toISOString(),
       status: "pending"
@@ -306,6 +384,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setApplications(prevApps => {
       const updatedApps = [...prevApps, newApplication];
       storeApplications(updatedApps);
+      console.log("Application submitted successfully:", newApplication);
+      console.log("Total applications:", updatedApps.length);
       return updatedApps;
     });
   };
@@ -345,6 +425,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       return () => clearInterval(interval);
     }
   }, [isAuthenticated]);
+
+  // Generate initial data if needed when the app starts
+  useEffect(() => {
+    createSampleApplicationsIfNeeded();
+  }, []);
 
   const isPareto20Email = (email: string) => {
     return email.endsWith('@pareto20.com');
