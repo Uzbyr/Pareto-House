@@ -114,17 +114,17 @@ const Mentors = () => {
     }
   };
 
-  // Function to get flag emoji based on country
-  const getFlagEmoji = (country: string) => {
+  // Function to get country display name and flag
+  const getCountryDisplay = (country: string) => {
     switch(country) {
       case "USA":
-        return "🇺🇸";
+        return { name: "United States", flag: "🇺🇸" };
       case "France":
-        return "🇫🇷";
+        return { name: "France", flag: "🇫🇷" };
       case "UK":
-        return "🇬🇧";
+        return { name: "United Kingdom", flag: "🇬🇧" };
       default:
-        return "🏳️";
+        return { name: country, flag: "🏳️" };
     }
   };
 
@@ -149,66 +149,71 @@ const Mentors = () => {
           animate="animate"
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
         >
-          {mentors.map((mentor, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
-            >
-              <div className="flex items-start gap-4">
-                {mentor.imageUrl ? (
-                  <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
-                    <img 
-                      src={mentor.imageUrl} 
-                      alt={mentor.name}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                ) : (
-                  <div className="w-16 h-16 rounded-full bg-pareto-pink flex items-center justify-center text-black font-bold text-xl">
-                    {mentor.imagePlaceholder}
-                  </div>
-                )}
-                <div className="flex-1">
-                  <div className="flex items-center gap-2 mb-2">
-                    <h3 className="text-xl font-semibold">{mentor.name}</h3>
-                    <span 
-                      className="text-lg" 
-                      aria-label={mentor.country}
-                      role="img"
-                    >
-                      {getFlagEmoji(mentor.country)}
-                    </span>
-                  </div>
-                  {mentor.description && (
-                    <p className="text-black/60 dark:text-white/60 mb-4 text-sm">
-                      {mentor.description} <span className="text-black/40 dark:text-white/40">({mentor.country})</span>
-                    </p>
+          {mentors.map((mentor, index) => {
+            const countryInfo = getCountryDisplay(mentor.country);
+            
+            return (
+              <motion.div
+                key={index}
+                variants={itemVariants}
+                className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+              >
+                <div className="flex items-start gap-4">
+                  {mentor.imageUrl ? (
+                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
+                      <img 
+                        src={mentor.imageUrl} 
+                        alt={mentor.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-16 h-16 rounded-full bg-pareto-pink flex items-center justify-center text-black font-bold text-xl">
+                      {mentor.imagePlaceholder}
+                    </div>
                   )}
-                  <div className="flex gap-3">
-                    <a
-                      href={mentor.linkedIn}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
-                    >
-                      <Linkedin className="w-5 h-5" />
-                    </a>
-                    {mentor.twitter && (
+                  <div className="flex-1">
+                    <div className="flex items-center gap-2 mb-2">
+                      <h3 className="text-xl font-semibold">{mentor.name}</h3>
+                      <span 
+                        className="text-lg" 
+                        aria-label={countryInfo.name}
+                        title={countryInfo.name}
+                        role="img"
+                      >
+                        {countryInfo.flag}
+                      </span>
+                    </div>
+                    {mentor.description && (
+                      <p className="text-black/60 dark:text-white/60 mb-4 text-sm">
+                        {mentor.description} <span className="text-black/40 dark:text-white/40">({countryInfo.name})</span>
+                      </p>
+                    )}
+                    <div className="flex gap-3">
                       <a
-                        href={mentor.twitter}
+                        href={mentor.linkedIn}
                         target="_blank"
                         rel="noopener noreferrer"
                         className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
                       >
-                        <Twitter className="w-5 h-5" />
+                        <Linkedin className="w-5 h-5" />
                       </a>
-                    )}
+                      {mentor.twitter && (
+                        <a
+                          href={mentor.twitter}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
+                        >
+                          <Twitter className="w-5 h-5" />
+                        </a>
+                      )}
+                    </div>
                   </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
+              </motion.div>
+            );
+          })}
         </motion.div>
       </div>
     </div>
