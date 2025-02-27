@@ -2,8 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Gift, ExternalLink, Check, LogIn, LogOut, User } from "lucide-react";
-import { ThemeToggle } from "../components/ThemeToggle";
+import { Gift, ExternalLink, Check } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useToast } from "../components/ui/use-toast";
 import { useAuth } from "../contexts/AuthContext";
@@ -11,7 +10,7 @@ import Footer from "../components/Footer";
 
 const Perks = () => {
   const { toast } = useToast();
-  const { isAuthenticated, login, logout } = useAuth();
+  const { isAuthenticated } = useAuth();
   const [claimedPerks, setClaimedPerks] = useState<Set<number>>(new Set());
 
   const pageVariants = {
@@ -142,38 +141,6 @@ const Perks = () => {
       animate="animate"
       variants={pageVariants}
     >
-      {/* Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <Link
-                to="/"
-                className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 inline-flex items-center gap-2"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Back
-              </Link>
-            </div>
-            <div className="flex items-center gap-3">
-              {isAuthenticated ? (
-                <Button variant="outline" size="sm" onClick={logout} className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span className="hidden sm:inline">Fellow</span>
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button variant="login" size="sm" onClick={login} className="flex items-center gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Log in as Fellow
-                </Button>
-              )}
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-      </nav>
-
       <div className="container mx-auto px-4 pt-32 pb-20">
         <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
