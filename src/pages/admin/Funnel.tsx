@@ -1,7 +1,7 @@
 
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, Download } from "lucide-react";
+import { Download, RefreshCw } from "lucide-react";
 import {
   BarChart,
   Bar,
@@ -15,52 +15,50 @@ import {
   ScatterChart,
   ZAxis,
 } from "recharts";
-
-// Mock funnel data
-const funnelStages = [
-  { name: "Landing Page View", users: 10000, percentage: 100 },
-  { name: "Form Started", users: 3200, percentage: 32 },
-  { name: "Personal Info Completed", users: 2400, percentage: 24 },
-  { name: "Education Info Completed", users: 1800, percentage: 18 },
-  { name: "Resume Uploaded", users: 1300, percentage: 13 },
-  { name: "Video Uploaded", users: 950, percentage: 9.5 },
-  { name: "Form Submitted", users: 800, percentage: 8 },
-];
-
-// Time spent on each section in minutes
-const timeSpentData = [
-  { name: "Personal Info", timeSpent: 2.5 },
-  { name: "Education", timeSpent: 3.2 },
-  { name: "Resume Upload", timeSpent: 5.1 },
-  { name: "Video Upload", timeSpent: 8.4 },
-];
-
-// Dropout rates for different segments
-const dropoutData = [
-  { x: 2.5, y: 35, z: 500, name: "Personal Info" },
-  { x: 5.2, y: 28, z: 400, name: "Education" },
-  { x: 8.7, y: 15, z: 300, name: "Resume Upload" },
-  { x: 12.1, y: 12, z: 150, name: "Video Upload" },
-];
+import { useAuth } from "@/contexts/AuthContext";
+import { useState } from "react";
+import { toast } from "sonner";
 
 const Funnel = () => {
+  const { siteMetrics, refreshMetrics } = useAuth();
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Function to handle refresh
+  const handleRefresh = () => {
+    setIsRefreshing(true);
+    refreshMetrics();
+    toast.success("Funnel data refreshed");
+    setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
+  };
+
   const exportFunnelData = () => {
     // In a real app, this would generate and download a report
-    alert("Funnel analysis report export initiated");
+    toast.success("Funnel analysis report export initiated");
   };
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-white">Funnel Analysis</h1>
-        <Button
-          variant="outline"
-          className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
-          onClick={exportFunnelData}
-        >
-          <Download className="h-4 w-4" />
-          Export Report
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={handleRefresh}
+            disabled={isRefreshing}
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={exportFunnelData}
+          >
+            <Download className="h-4 w-4" />
+            Export Report
+          </Button>
+        </div>
       </div>
 
       {/* Application Funnel */}
@@ -69,7 +67,7 @@ const Funnel = () => {
         <div className="h-96">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={funnelStages}
+              data={siteMetrics.conversionFunnel.stages}
               margin={{ top: 20, right: 30, left: 20, bottom: 5 }}
               layout="vertical"
             >
@@ -88,10 +86,10 @@ const Funnel = () => {
                   borderColor: "#374151",
                   color: "#F9FAFB",
                 }}
-                formatter={(value) => [`${value} users`, "Users"]}
+                formatter={(value) => [`${value.toLocaleString()} users`, "Users"]}
               />
               <Bar
-                dataKey="users"
+                dataKey="value"
                 fill="#EC4899"
                 label={{ position: "right", fill: "#fff" }}
                 barSize={30}
@@ -109,7 +107,7 @@ const Funnel = () => {
           <h2 className="text-xl font-bold text-white mb-6">Time Spent by Section</h2>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={timeSpentData}>
+              <BarChart data={siteMetrics.conversionFunnel.timeSpent}>
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis dataKey="name" stroke="#9CA3AF" />
                 <YAxis stroke="#9CA3AF" label={{ value: 'Minutes', angle: -90, position: 'insideLeft' }} />
@@ -175,7 +173,7 @@ const Funnel = () => {
                   }}
                   cursor={{ strokeDasharray: "3 3" }}
                 />
-                <Scatter name="Sections" data={dropoutData} fill="#EC4899" />
+                <Scatter name="Sections" data={siteMetrics.conversionFunnel.dropoffRates} fill="#EC4899" />
               </ScatterChart>
             </ResponsiveContainer>
           </div>
@@ -197,24 +195,29 @@ const Funnel = () => {
               </tr>
             </thead>
             <tbody>
-              {funnelStages.map((stage, index) => {
-                const prevStage = index > 0 ? funnelStages[index - 1] : null;
+              {siteMetrics.conversionFunnel.stages.map((stage, index) => {
+                const prevStage = index > 0 ? siteMetrics.conversionFunnel.stages[index - 1] : null;
                 const dropOff = prevStage
-                  ? prevStage.users - stage.users
+                  ? prevStage.value - stage.value
                   : 0;
                 const dropOffPercentage = prevStage
-                  ? ((prevStage.users - stage.users) / prevStage.users) * 100
+                  ? ((prevStage.value - stage.value) / prevStage.value) * 100
                   : 0;
                 const stageConversion = prevStage
-                  ? (stage.users / prevStage.users) * 100
+                  ? (stage.value / prevStage.value) * 100
                   : 100;
+                
+                const stageName = stage.name.split(" ")[0];
+                const timeSpentItem = siteMetrics.conversionFunnel.timeSpent.find(t => 
+                  t.name.includes(stageName)
+                );
                 
                 return (
                   <tr key={stage.name} className="border-b border-zinc-700 hover:bg-zinc-900/50">
                     <th scope="row" className="px-6 py-4 font-medium text-white whitespace-nowrap">
                       {stage.name}
                     </th>
-                    <td className="px-6 py-4">{stage.users.toLocaleString()}</td>
+                    <td className="px-6 py-4">{stage.value.toLocaleString()}</td>
                     <td className="px-6 py-4">
                       {index > 0 ? (
                         <>
@@ -228,9 +231,7 @@ const Funnel = () => {
                       {index > 0 ? `${stageConversion.toFixed(1)}%` : "100%"}
                     </td>
                     <td className="px-6 py-4">
-                      {timeSpentData.find(t => t.name.includes(stage.name.split(" ")[0]))
-                        ? `${timeSpentData.find(t => t.name.includes(stage.name.split(" ")[0]))?.timeSpent} min`
-                        : "-"}
+                      {timeSpentItem ? `${timeSpentItem.timeSpent} min` : "-"}
                     </td>
                   </tr>
                 );

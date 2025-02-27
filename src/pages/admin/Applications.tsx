@@ -1,5 +1,5 @@
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -17,25 +17,39 @@ import {
   CheckCircle,
   XCircle,
   Clock,
-  Filter,
+  RefreshCw,
 } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
+import { toast } from "sonner";
 
-// Mock application data
-const mockApplications = Array.from({ length: 30 }, (_, i) => ({
-  id: i + 1,
-  name: `Applicant ${i + 1}`,
-  email: `applicant${i + 1}@example.com`,
-  school: ["Harvard", "MIT", "Stanford", "Berkeley", "Oxford"][Math.floor(Math.random() * 5)],
-  submissionDate: new Date(
-    Date.now() - Math.floor(Math.random() * 30) * 24 * 60 * 60 * 1000
-  ).toISOString(),
-  status: ["pending", "approved", "rejected"][Math.floor(Math.random() * 3)],
-}));
+interface Application {
+  id: number;
+  name: string;
+  email: string;
+  school: string;
+  submissionDate: string;
+  status: string;
+}
 
 const Applications = () => {
-  const [applications, setApplications] = useState(mockApplications);
+  const { getApplications } = useAuth();
+  const [applications, setApplications] = useState<Application[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Initial load of applications
+  useEffect(() => {
+    setApplications(getApplications());
+  }, [getApplications]);
+
+  const refreshApplications = () => {
+    setIsRefreshing(true);
+    // In a real app, this would fetch fresh data from the server
+    setApplications(getApplications());
+    toast.success("Applications data refreshed");
+    setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
+  };
 
   const filteredApplications = applications.filter((app) => {
     const matchesSearch =
@@ -74,6 +88,7 @@ const Applications = () => {
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    toast.success("CSV file downloaded");
   };
 
   const formatDate = (dateString: string) => {
@@ -84,18 +99,38 @@ const Applications = () => {
     });
   };
 
+  const updateApplicationStatus = (id: number, newStatus: string) => {
+    setApplications(apps => 
+      apps.map(app => 
+        app.id === id ? { ...app, status: newStatus } : app
+      )
+    );
+    toast.success(`Application #${id} marked as ${newStatus}`);
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-white">Applications</h1>
-        <Button 
-          variant="outline" 
-          className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
-          onClick={exportToCSV}
-        >
-          <Download className="h-4 w-4" />
-          Export CSV
-        </Button>
+        <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={refreshApplications}
+            disabled={isRefreshing}
+          >
+            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            Refresh
+          </Button>
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={exportToCSV}
+          >
+            <Download className="h-4 w-4" />
+            Export CSV
+          </Button>
+        </div>
       </div>
 
       <Card className="bg-zinc-800 border-zinc-700 p-6">
@@ -109,7 +144,7 @@ const Applications = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-2 flex-wrap">
             <Button
               variant={statusFilter === null ? "pink" : "outline"}
               className={`${
@@ -162,6 +197,7 @@ const Applications = () => {
                 <TableHead className="text-gray-300">School</TableHead>
                 <TableHead className="text-gray-300">Date</TableHead>
                 <TableHead className="text-gray-300">Status</TableHead>
+                <TableHead className="text-gray-300">Actions</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
@@ -187,6 +223,43 @@ const Applications = () => {
                       {app.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
                       {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
                     </span>
+                  </TableCell>
+                  <TableCell>
+                    <div className="flex gap-2">
+                      {app.status !== "approved" && (
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-green-500 hover:text-green-400 hover:bg-green-400/10"
+                          onClick={() => updateApplicationStatus(app.id, "approved")}
+                        >
+                          <CheckCircle className="h-4 w-4" />
+                          <span className="sr-only">Approve</span>
+                        </Button>
+                      )}
+                      {app.status !== "rejected" && (
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-red-500 hover:text-red-400 hover:bg-red-400/10"
+                          onClick={() => updateApplicationStatus(app.id, "rejected")}
+                        >
+                          <XCircle className="h-4 w-4" />
+                          <span className="sr-only">Reject</span>
+                        </Button>
+                      )}
+                      {app.status !== "pending" && (
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-400/10"
+                          onClick={() => updateApplicationStatus(app.id, "pending")}
+                        >
+                          <Clock className="h-4 w-4" />
+                          <span className="sr-only">Mark as Pending</span>
+                        </Button>
+                      )}
+                    </div>
                   </TableCell>
                 </TableRow>
               ))}

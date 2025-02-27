@@ -1,165 +1,315 @@
+
 import { useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
+import { z } from "zod";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "sonner";
-const ApplicationForm = () => {
-  const [formData, setFormData] = useState({
-    name: "",
-    school: "",
-    graduationYear: "",
-    major: "",
-    linkedin: "",
-    twitter: "",
-    heardFrom: "",
-    knowsFellow: "no",
-    fellowName: ""
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { Progress } from "@/components/ui/progress";
+
+// Form schema
+const formSchema = z.object({
+  firstName: z.string().min(2, { message: "First name is required" }),
+  lastName: z.string().min(2, { message: "Last name is required" }),
+  email: z.string().email({ message: "Please enter a valid email" }),
+  university: z.string().min(2, { message: "University is required" }),
+  graduationYear: z.string().min(4, { message: "Graduation year is required" }),
+  interests: z.string().min(10, { message: "Please describe your interests (min 10 characters)" }),
+  referral: z.string().optional(),
+});
+
+type FormData = z.infer<typeof formSchema>;
+
+interface ApplicationFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const totalSteps = 3;
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm<FormData>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      firstName: "",
+      lastName: "",
+      email: "",
+      university: "",
+      graduationYear: "",
+      interests: "",
+      referral: "",
+    },
   });
-  const [resume, setResume] = useState<File | null>(null);
-  const [video, setVideo] = useState<File | null>(null);
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    toast.success("Application submitted successfully!");
-    // Handle form submission logic here
-  };
-  const handleVideoUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      if (file.size > 100000000) {
-        // 100MB limit
-        toast.error("Video file is too large. Please upload a file smaller than 100MB");
-        return;
-      }
-      setVideo(file);
+
+  const watchedFields = watch();
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      window.scrollTo(0, 0);
     }
   };
-  const heardFromOptions = ["From a friend", "LinkedIn/Twitter", "From an event", "From student societies"];
-  return <form onSubmit={handleSubmit} className="max-w-2xl mx-auto space-y-6 text-left">
-      <div className="space-y-4">
-        <div>
-          <label htmlFor="name" className="block text-sm font-medium text-pareto-pink mb-1">
-            Full Name
-          </label>
-          <input type="text" id="name" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.name} onChange={e => setFormData({
-          ...formData,
-          name: e.target.value
-        })} />
-        </div>
 
-        <div>
-          <label htmlFor="school" className="block text-sm font-medium text-pareto-pink mb-1">School/University
-        </label>
-          <input type="text" id="school" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.school} onChange={e => setFormData({
-          ...formData,
-          school: e.target.value
-        })} />
-        </div>
+  const prevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    }
+  };
 
-        <div>
-          <label htmlFor="graduationYear" className="block text-sm font-medium text-pareto-pink mb-1">
-            Year of Graduation
-          </label>
-          <input type="number" id="graduationYear" required min={new Date().getFullYear()} max={new Date().getFullYear() + 6} className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.graduationYear} onChange={e => setFormData({
-          ...formData,
-          graduationYear: e.target.value
-        })} />
-        </div>
+  const onSubmit = (data: FormData) => {
+    setIsSubmitting(true);
+    
+    // Simulate API call
+    setTimeout(() => {
+      console.log("Application submitted:", data);
+      toast.success("Application submitted successfully!");
+      setIsSubmitting(false);
+      
+      // Call the success callback if provided
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
+      }
+      
+      // Redirect to homepage
+      navigate("/");
+    }, 1500);
+  };
 
-        <div>
-          <label htmlFor="major" className="block text-sm font-medium text-pareto-pink mb-1">
-            Major
-          </label>
-          <input type="text" id="major" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.major} onChange={e => setFormData({
-          ...formData,
-          major: e.target.value
-        })} />
-        </div>
-
-        <div>
-          <label htmlFor="heardFrom" className="block text-sm font-medium text-pareto-pink mb-1">
-            How have you heard about the Pareto Fellowship?
-          </label>
-          <select id="heardFrom" required value={formData.heardFrom} onChange={e => setFormData({
-          ...formData,
-          heardFrom: e.target.value
-        })} className="w-full px-4 py-2 border border-pareto-pink/20 rounded text-white bg-zinc-950">
-            <option value="">Select an option</option>
-            {heardFromOptions.map(option => <option key={option} value={option}>{option}</option>)}
-          </select>
-        </div>
-
-        <div className="space-y-3">
-          <div>
-            <label className="block text-sm font-medium text-pareto-pink mb-1">
-              Do you know a Pareto Fellow?
-            </label>
-            <div className="flex gap-4">
-              <label className="flex items-center">
-                <input type="radio" name="knowsFellow" value="yes" checked={formData.knowsFellow === "yes"} onChange={e => setFormData({
-                ...formData,
-                knowsFellow: e.target.value
-              })} className="mr-2" />
-                Yes
-              </label>
-              <label className="flex items-center">
-                <input type="radio" name="knowsFellow" value="no" checked={formData.knowsFellow === "no"} onChange={e => setFormData({
-                ...formData,
-                knowsFellow: e.target.value
-              })} className="mr-2" />
-                No
-              </label>
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Personal Information</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  placeholder="Your first name"
+                  className="bg-zinc-800 border-zinc-700"
+                  {...register("firstName")}
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  placeholder="Your last name"
+                  className="bg-zinc-800 border-zinc-700"
+                  {...register("lastName")}
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                )}
+              </div>
             </div>
-          </div>
-          
-          {formData.knowsFellow === "yes" && <div>
-              <label htmlFor="fellowName" className="block text-sm font-medium text-pareto-pink mb-1">
-                Which Pareto Fellow do you know?
-              </label>
-              <input type="text" id="fellowName" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.fellowName} onChange={e => setFormData({
-            ...formData,
-            fellowName: e.target.value
-          })} />
-            </div>}
-        </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                className="bg-zinc-800 border-zinc-700"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+            </div>
+          </motion.div>
+        );
+      
+      case 2:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Education</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="university">University</Label>
+              <Select
+                value={watchedFields.university}
+                onValueChange={(value) => setValue("university", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select your university" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Harvard">Harvard University</SelectItem>
+                  <SelectItem value="MIT">MIT</SelectItem>
+                  <SelectItem value="Stanford">Stanford University</SelectItem>
+                  <SelectItem value="Berkeley">UC Berkeley</SelectItem>
+                  <SelectItem value="Oxford">Oxford University</SelectItem>
+                  <SelectItem value="Cambridge">Cambridge University</SelectItem>
+                  <SelectItem value="Princeton">Princeton University</SelectItem>
+                  <SelectItem value="Yale">Yale University</SelectItem>
+                  <SelectItem value="Caltech">Caltech</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.university && (
+                <p className="text-red-500 text-sm">{errors.university.message}</p>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="graduationYear">Expected Graduation Year</Label>
+              <Select
+                value={watchedFields.graduationYear}
+                onValueChange={(value) => setValue("graduationYear", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select graduation year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="2024">2024</SelectItem>
+                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2027">2027</SelectItem>
+                  <SelectItem value="2028">2028</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.graduationYear && (
+                <p className="text-red-500 text-sm">{errors.graduationYear.message}</p>
+              )}
+            </div>
+          </motion.div>
+        );
+      
+      case 3:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Additional Information</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="interests">Areas of Interest</Label>
+              <Textarea
+                id="interests"
+                placeholder="Tell us about your interests, projects, and goals"
+                className="min-h-32 bg-zinc-800 border-zinc-700"
+                {...register("interests")}
+              />
+              {errors.interests && (
+                <p className="text-red-500 text-sm">{errors.interests.message}</p>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="referral">How did you hear about us? (Optional)</Label>
+              <Select
+                value={watchedFields.referral}
+                onValueChange={(value) => setValue("referral", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select an option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="friend">From a friend</SelectItem>
+                  <SelectItem value="social">Social media</SelectItem>
+                  <SelectItem value="search">Search engine</SelectItem>
+                  <SelectItem value="university">University event</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </motion.div>
+        );
+      
+      default:
+        return null;
+    }
+  };
 
-        <div>
-          <label htmlFor="linkedin" className="block text-sm font-medium text-pareto-pink mb-1">
-            LinkedIn URL
-          </label>
-          <input type="url" id="linkedin" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.linkedin} onChange={e => setFormData({
-          ...formData,
-          linkedin: e.target.value
-        })} />
+  return (
+    <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 md:p-8 shadow-xl">
+      <div className="mb-8">
+        <div className="flex justify-between text-sm text-gray-400 mb-2">
+          <span>Step {step} of {totalSteps}</span>
+          <span>{Math.round((step / totalSteps) * 100)}% Complete</span>
         </div>
-
-        <div>
-          <label htmlFor="twitter" className="block text-sm font-medium text-pareto-pink mb-1">
-            Twitter Handle
-          </label>
-          <input type="text" id="twitter" className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white" value={formData.twitter} onChange={e => setFormData({
-          ...formData,
-          twitter: e.target.value
-        })} />
-        </div>
-
-        <div>
-          <label htmlFor="resume" className="block text-sm font-medium text-pareto-pink mb-1">
-            Resume (PDF)
-          </label>
-          <input type="file" id="resume" accept=".pdf" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pareto-pink file:text-black hover:file:bg-white" onChange={e => setResume(e.target.files?.[0] || null)} />
-        </div>
-
-        <div>
-          <label htmlFor="video" className="block text-sm font-medium text-pareto-pink mb-1">
-            90-Second Video Introduction
-          </label>
-          <input type="file" id="video" accept="video/*" required className="w-full px-4 py-2 bg-white/10 border border-pareto-pink/20 rounded text-white file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-pareto-pink file:text-black hover:file:bg-white" onChange={handleVideoUpload} />
-          <p className="text-xs text-pareto-pink mt-1">
-            Accepted formats: MP4, MOV, AVI, WebM (max 100MB)
-          </p>
-        </div>
+        <Progress value={(step / totalSteps) * 100} className="h-2" />
       </div>
-
-      <button type="submit" className="w-full px-8 py-4 bg-pareto-pink text-black font-semibold hover:bg-white transition-colors duration-300">
-        Submit Application
-      </button>
-    </form>;
+      
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {renderStep()}
+        
+        <div className="mt-8 flex justify-between">
+          {step > 1 ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="border-zinc-700 text-white hover:bg-zinc-800"
+              onClick={prevStep}
+            >
+              Back
+            </Button>
+          ) : (
+            <div></div>
+          )}
+          
+          {step < totalSteps ? (
+            <Button
+              type="button"
+              variant="pink"
+              onClick={nextStep}
+            >
+              Continue
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              variant="pink"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit Application"}
+            </Button>
+          )}
+        </div>
+      </form>
+    </div>
+  );
 };
+
 export default ApplicationForm;
