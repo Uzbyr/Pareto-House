@@ -1,16 +1,11 @@
-
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link } from "react-router-dom";
-import { ArrowRight, Gift, LogIn } from "lucide-react";
+import { ArrowRight, Gift } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
-import { useAuth } from "../contexts/AuthContext";
-import { Button } from "../components/ui/button";
 
 const Index = () => {
-  const { isAuthenticated, login, logout } = useAuth();
-  
   const pageVariants = {
     initial: {
       opacity: 0,
@@ -127,45 +122,6 @@ const Index = () => {
               </a>
             </motion.div>
 
-            {/* Universities Section */}
-            <motion.div
-              variants={childVariants}
-              className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 rounded-lg mt-20"
-            >
-              <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-pareto-black dark:via-transparent dark:to-pareto-black z-10 pointer-events-none" />
-              <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
-                TARGET UNIVERSITIES
-              </h2>
-              <ScrollingUniversities />
-            </motion.div>
-            
-            {/* Login Button */}
-            <motion.div 
-              variants={childVariants}
-              className="flex justify-center my-10"
-            >
-              {isAuthenticated ? (
-                <Button 
-                  variant="outline" 
-                  size="sm" 
-                  onClick={logout}
-                  className="flex items-center gap-2 px-6 py-2 text-sm border border-black/20 dark:border-white/20 hover:bg-black/5 dark:hover:bg-white/5"
-                >
-                  <span>Signed in as Fellow</span>
-                </Button>
-              ) : (
-                <Button 
-                  variant="login" 
-                  size="sm" 
-                  onClick={login}
-                  className="flex items-center gap-2 px-6 py-2 text-sm"
-                >
-                  <LogIn className="h-4 w-4" />
-                  <span>Login as Fellow</span>
-                </Button>
-              )}
-            </motion.div>
-
             {/* Stats Section */}
             <motion.div
               variants={childVariants}
@@ -188,6 +144,18 @@ const Index = () => {
               ))}
             </motion.div>
           </div>
+
+          {/* Universities Section */}
+          <motion.div
+            variants={childVariants}
+            className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 rounded-lg mt-20"
+          >
+            <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-pareto-black dark:via-transparent dark:to-pareto-black z-10 pointer-events-none" />
+            <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
+              TARGET UNIVERSITIES
+            </h2>
+            <ScrollingUniversities />
+          </motion.div>
         </motion.div>
 
         <Footer />
