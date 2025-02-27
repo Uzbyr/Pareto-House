@@ -27,12 +27,13 @@ interface Application {
   name: string;
   email: string;
   school: string;
+  major?: string;
   submissionDate: string;
   status: string;
 }
 
 const Applications = () => {
-  const { getApplications } = useAuth();
+  const { getApplications, refreshMetrics } = useAuth();
   const [applications, setApplications] = useState<Application[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
@@ -45,8 +46,8 @@ const Applications = () => {
 
   const refreshApplications = () => {
     setIsRefreshing(true);
-    // In a real app, this would fetch fresh data from the server
     setApplications(getApplications());
+    refreshMetrics();
     toast.success("Applications data refreshed");
     setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
   };
@@ -55,7 +56,8 @@ const Applications = () => {
     const matchesSearch =
       app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.school.toLowerCase().includes(searchTerm.toLowerCase());
+      app.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (app.major && app.major.toLowerCase().includes(searchTerm.toLowerCase()));
       
     const matchesStatus = statusFilter ? app.status === statusFilter : true;
     
@@ -64,7 +66,7 @@ const Applications = () => {
 
   const exportToCSV = () => {
     // Create CSV data
-    const headers = ["ID", "Name", "Email", "School", "Submission Date", "Status"];
+    const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status"];
     const csvRows = [
       headers.join(","),
       ...filteredApplications.map((app) => [
@@ -72,6 +74,7 @@ const Applications = () => {
         app.name,
         app.email,
         app.school,
+        app.major || "",
         new Date(app.submissionDate).toLocaleDateString(),
         app.status,
       ].join(","))
@@ -100,11 +103,22 @@ const Applications = () => {
   };
 
   const updateApplicationStatus = (id: number, newStatus: string) => {
-    setApplications(apps => 
-      apps.map(app => 
-        app.id === id ? { ...app, status: newStatus } : app
-      )
+    // Get current apps from localStorage to ensure we're using the latest data
+    const currentApps = localStorage.getItem('applications');
+    let allApps = currentApps ? JSON.parse(currentApps) : [];
+    
+    // Update the application status
+    allApps = allApps.map((app: Application) => 
+      app.id === id ? { ...app, status: newStatus } : app
     );
+    
+    // Save back to localStorage
+    localStorage.setItem('applications', JSON.stringify(allApps));
+    
+    // Update state and refresh metrics
+    setApplications(allApps);
+    refreshMetrics();
+    
     toast.success(`Application #${id} marked as ${newStatus}`);
   };
 
@@ -201,77 +215,82 @@ const Applications = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredApplications.map((app) => (
-                <TableRow key={app.id} className="border-zinc-700 hover:bg-zinc-800/50">
-                  <TableCell className="font-medium text-gray-300">#{app.id}</TableCell>
-                  <TableCell className="text-white">{app.name}</TableCell>
-                  <TableCell className="text-gray-300">{app.email}</TableCell>
-                  <TableCell className="text-gray-300">{app.school}</TableCell>
-                  <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
-                  <TableCell>
-                    <span 
-                      className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                        app.status === "approved" 
-                          ? "bg-green-400/10 text-green-400" 
-                          : app.status === "rejected"
-                          ? "bg-red-400/10 text-red-400" 
-                          : "bg-yellow-400/10 text-yellow-400"
-                      }`}
-                    >
-                      {app.status === "approved" && <CheckCircle className="h-3 w-3 mr-1" />}
-                      {app.status === "rejected" && <XCircle className="h-3 w-3 mr-1" />}
-                      {app.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
-                      {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
-                    </span>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      {app.status !== "approved" && (
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-green-500 hover:text-green-400 hover:bg-green-400/10"
-                          onClick={() => updateApplicationStatus(app.id, "approved")}
-                        >
-                          <CheckCircle className="h-4 w-4" />
-                          <span className="sr-only">Approve</span>
-                        </Button>
-                      )}
-                      {app.status !== "rejected" && (
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-red-500 hover:text-red-400 hover:bg-red-400/10"
-                          onClick={() => updateApplicationStatus(app.id, "rejected")}
-                        >
-                          <XCircle className="h-4 w-4" />
-                          <span className="sr-only">Reject</span>
-                        </Button>
-                      )}
-                      {app.status !== "pending" && (
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-400/10"
-                          onClick={() => updateApplicationStatus(app.id, "pending")}
-                        >
-                          <Clock className="h-4 w-4" />
-                          <span className="sr-only">Mark as Pending</span>
-                        </Button>
-                      )}
-                    </div>
+              {filteredApplications.length > 0 ? (
+                filteredApplications.map((app) => (
+                  <TableRow key={app.id} className="border-zinc-700 hover:bg-zinc-800/50">
+                    <TableCell className="font-medium text-gray-300">#{app.id}</TableCell>
+                    <TableCell className="text-white">{app.name}</TableCell>
+                    <TableCell className="text-gray-300">{app.email}</TableCell>
+                    <TableCell className="text-gray-300">{app.school}</TableCell>
+                    <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
+                    <TableCell>
+                      <span 
+                        className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                          app.status === "approved" 
+                            ? "bg-green-400/10 text-green-400" 
+                            : app.status === "rejected"
+                            ? "bg-red-400/10 text-red-400" 
+                            : "bg-yellow-400/10 text-yellow-400"
+                        }`}
+                      >
+                        {app.status === "approved" && <CheckCircle className="h-3 w-3 mr-1" />}
+                        {app.status === "rejected" && <XCircle className="h-3 w-3 mr-1" />}
+                        {app.status === "pending" && <Clock className="h-3 w-3 mr-1" />}
+                        {app.status.charAt(0).toUpperCase() + app.status.slice(1)}
+                      </span>
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-2">
+                        {app.status !== "approved" && (
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 w-8 p-0 text-green-500 hover:text-green-400 hover:bg-green-400/10"
+                            onClick={() => updateApplicationStatus(app.id, "approved")}
+                          >
+                            <CheckCircle className="h-4 w-4" />
+                            <span className="sr-only">Approve</span>
+                          </Button>
+                        )}
+                        {app.status !== "rejected" && (
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 w-8 p-0 text-red-500 hover:text-red-400 hover:bg-red-400/10"
+                            onClick={() => updateApplicationStatus(app.id, "rejected")}
+                          >
+                            <XCircle className="h-4 w-4" />
+                            <span className="sr-only">Reject</span>
+                          </Button>
+                        )}
+                        {app.status !== "pending" && (
+                          <Button 
+                            size="sm" 
+                            variant="ghost" 
+                            className="h-8 w-8 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-400/10"
+                            onClick={() => updateApplicationStatus(app.id, "pending")}
+                          >
+                            <Clock className="h-4 w-4" />
+                            <span className="sr-only">Mark as Pending</span>
+                          </Button>
+                        )}
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))
+              ) : (
+                <TableRow>
+                  <TableCell colSpan={7} className="text-center py-6 text-gray-400">
+                    {applications.length === 0 
+                      ? "No applications have been submitted yet." 
+                      : "No applications found matching your filters."
+                    }
                   </TableCell>
                 </TableRow>
-              ))}
+              )}
             </TableBody>
           </Table>
         </div>
-
-        {filteredApplications.length === 0 && (
-          <div className="text-center py-8 text-gray-400">
-            No applications found matching your filters.
-          </div>
-        )}
       </Card>
     </div>
   );
