@@ -2,14 +2,16 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Gift, ExternalLink, Check } from "lucide-react";
+import { ArrowLeft, Gift, ExternalLink, Check, LogIn, LogOut, User } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import { Button } from "../components/ui/button";
 import { useToast } from "../components/ui/use-toast";
+import { useAuth } from "../contexts/AuthContext";
 import Footer from "../components/Footer";
 
 const Perks = () => {
   const { toast } = useToast();
+  const { isAuthenticated, login, logout } = useAuth();
   const [claimedPerks, setClaimedPerks] = useState<Set<number>>(new Set());
 
   const pageVariants = {
@@ -153,7 +155,21 @@ const Perks = () => {
                 Back
               </Link>
             </div>
-            <ThemeToggle />
+            <div className="flex items-center gap-3">
+              {isAuthenticated ? (
+                <Button variant="outline" size="sm" onClick={logout} className="flex items-center gap-2">
+                  <User className="h-4 w-4" />
+                  <span className="hidden sm:inline">Fellow</span>
+                  <LogOut className="h-4 w-4" />
+                </Button>
+              ) : (
+                <Button variant="login" size="sm" onClick={login} className="flex items-center gap-2">
+                  <LogIn className="h-4 w-4" />
+                  Log in as Fellow
+                </Button>
+              )}
+              <ThemeToggle />
+            </div>
           </div>
         </div>
       </nav>
@@ -170,68 +186,122 @@ const Perks = () => {
             designed to accelerate your growth and impact.
           </p>
           
-          <div className="bg-black/5 dark:bg-white/5 p-4 rounded-lg mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
-            <div className="text-3xl">🎯</div>
-            <div>
-              <p className="font-medium">Need a personalized recommendation?</p>
-              <p className="text-black/60 dark:text-white/60 text-sm">
-                Book a 1:1 meeting with Jules to discuss which perks would be most valuable for your specific goals.
-              </p>
-            </div>
-            <Button 
-              variant="pink" 
-              className="mt-2 sm:mt-0 sm:ml-auto"
-              onClick={() => window.open("https://calendly.com/jules-pareto", "_blank")}
+          {!isAuthenticated && (
+            <motion.div 
+              variants={itemVariants}
+              className="bg-gradient-to-r from-pareto-pink/10 to-purple-600/10 rounded-lg p-6 mb-8 border border-pareto-pink/20"
             >
-              Book Meeting
-              <ExternalLink className="h-4 w-4" />
-            </Button>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {perks.map((perk, index) => (
-              <motion.div
-                key={index}
-                variants={itemVariants}
-                className={`p-6 rounded-lg border transition-colors duration-300 ${
-                  claimedPerks.has(index)
-                    ? "border-pareto-pink bg-pareto-pink/5"
-                    : "border-black/10 dark:border-white/10 hover:border-pareto-pink dark:hover:border-pareto-pink"
-                }`}
+              <h2 className="text-xl font-semibold mb-2">Not a Pareto Fellow yet?</h2>
+              <p className="mb-4">
+                These exclusive perks are available only to accepted Pareto Fellows. Apply to join our community of exceptional builders and gain access to these valuable resources.
+              </p>
+              <Link to="/apply">
+                <Button variant="pink">
+                  Apply to the Fellowship
+                  <ExternalLink className="h-4 w-4" />
+                </Button>
+              </Link>
+            </motion.div>
+          )}
+          
+          {isAuthenticated && (
+            <div className="bg-black/5 dark:bg-white/5 p-4 rounded-lg mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="text-3xl">🎯</div>
+              <div>
+                <p className="font-medium">Need a personalized recommendation?</p>
+                <p className="text-black/60 dark:text-white/60 text-sm">
+                  Book a 1:1 meeting with Jules to discuss which perks would be most valuable for your specific goals.
+                </p>
+              </div>
+              <Button 
+                variant="pink" 
+                className="mt-2 sm:mt-0 sm:ml-auto"
+                onClick={() => window.open("https://calendly.com/jules-pareto", "_blank")}
               >
-                <div className="text-4xl mb-4">{perk.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{perk.title}</h3>
-                <p className="text-black/60 dark:text-white/60 mb-4">{perk.description}</p>
-                
-                <div className="flex justify-between items-center">
-                  {perk.claimCode && (
-                    <div className="bg-black/5 dark:bg-white/5 px-3 py-1 rounded text-xs font-mono">
-                      {perk.claimCode}
-                    </div>
-                  )}
+                Book Meeting
+                <ExternalLink className="h-4 w-4" />
+              </Button>
+            </div>
+          )}
+
+          {!isAuthenticated ? (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {perks.map((perk, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className="p-6 rounded-lg border border-black/10 dark:border-white/10"
+                >
+                  <div className="text-4xl mb-4">{perk.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2">{perk.title}</h3>
+                  <p className="text-black/60 dark:text-white/60 mb-4">{perk.description}</p>
                   
-                  <Button 
-                    variant={claimedPerks.has(index) ? "outline" : "pink"} 
-                    size="sm"
-                    className={claimedPerks.has(index) ? "ml-auto" : perk.claimCode ? "" : "ml-auto"}
-                    onClick={() => handleClaimPerk(index, perk)}
-                  >
-                    {claimedPerks.has(index) ? (
-                      <>
-                        <Check className="h-4 w-4" />
-                        Claimed
-                      </>
-                    ) : (
-                      <>
-                        Claim Perk
-                        <ExternalLink className="h-4 w-4" />
-                      </>
+                  <div className="filter grayscale opacity-50 cursor-not-allowed flex justify-between items-center">
+                    {perk.claimCode && (
+                      <div className="bg-black/5 dark:bg-white/5 px-3 py-1 rounded text-xs font-mono">
+                        {perk.claimCode}
+                      </div>
                     )}
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
+                    
+                    <Button 
+                      variant="outline" 
+                      size="sm"
+                      disabled
+                      className={perk.claimCode ? "" : "ml-auto"}
+                    >
+                      Login to Claim
+                      <LogIn className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {perks.map((perk, index) => (
+                <motion.div
+                  key={index}
+                  variants={itemVariants}
+                  className={`p-6 rounded-lg border transition-colors duration-300 ${
+                    claimedPerks.has(index)
+                      ? "border-pareto-pink bg-pareto-pink/5"
+                      : "border-black/10 dark:border-white/10 hover:border-pareto-pink dark:hover:border-pareto-pink"
+                  }`}
+                >
+                  <div className="text-4xl mb-4">{perk.icon}</div>
+                  <h3 className="text-xl font-semibold mb-2">{perk.title}</h3>
+                  <p className="text-black/60 dark:text-white/60 mb-4">{perk.description}</p>
+                  
+                  <div className="flex justify-between items-center">
+                    {perk.claimCode && (
+                      <div className="bg-black/5 dark:bg-white/5 px-3 py-1 rounded text-xs font-mono">
+                        {perk.claimCode}
+                      </div>
+                    )}
+                    
+                    <Button 
+                      variant={claimedPerks.has(index) ? "outline" : "pink"} 
+                      size="sm"
+                      className={claimedPerks.has(index) ? "ml-auto" : perk.claimCode ? "" : "ml-auto"}
+                      onClick={() => handleClaimPerk(index, perk)}
+                    >
+                      {claimedPerks.has(index) ? (
+                        <>
+                          <Check className="h-4 w-4" />
+                          Claimed
+                        </>
+                      ) : (
+                        <>
+                          Claim Perk
+                          <ExternalLink className="h-4 w-4" />
+                        </>
+                      )}
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </div>
+          )}
         </motion.div>
       </div>
 

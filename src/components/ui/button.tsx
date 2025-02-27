@@ -20,6 +20,7 @@ const buttonVariants = cva(
         ghost: "hover:bg-accent hover:text-accent-foreground",
         link: "text-primary underline-offset-4 hover:underline",
         pink: "bg-pareto-pink text-black hover:bg-pareto-pink/90",
+        login: "bg-gradient-to-r from-pareto-pink to-purple-600 text-white hover:from-pareto-pink/90 hover:to-purple-600/90 shadow-md",
       },
       size: {
         default: "h-10 px-4 py-2",
