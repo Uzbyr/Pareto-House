@@ -50,6 +50,13 @@ const AdminLogin = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black p-4">
       <div className="w-full max-w-md space-y-8 bg-zinc-800/50 backdrop-blur-sm p-8 rounded-xl border border-zinc-700/50 shadow-xl">
         <div className="text-center">
+          <Button 
+            variant="ghost" 
+            onClick={() => navigate("/")}
+            className="mb-4 text-gray-400 hover:text-white"
+          >
+            ← Back to Homepage
+          </Button>
           <h2 className="text-3xl font-bold text-pareto-pink">Admin Portal</h2>
           <p className="mt-2 text-gray-400">Sign in to access the admin dashboard</p>
         </div>
@@ -105,3 +112,4 @@ const AdminLogin = () => {
 };
 
 export default AdminLogin;
+
