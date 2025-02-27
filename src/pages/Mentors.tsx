@@ -174,7 +174,7 @@ const Mentors = () => {
                     <h3 className="text-xl font-semibold">{mentor.name}</h3>
                     <Flag 
                       className={`w-4 h-4 ${getFlagColor(mentor.country)}`} 
-                      title={mentor.country}
+                      aria-label={mentor.country}
                     />
                   </div>
                   {mentor.description && (
