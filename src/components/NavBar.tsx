@@ -36,22 +36,17 @@ const NavBar = () => {
           </div>
           
           <div className="flex items-center gap-3">
-            {/* Only show login button in NavBar on non-homepage routes */}
-            {!isHomePage && (
-              <>
-                {isAuthenticated ? (
-                  <Button variant="outline" size="sm" onClick={logout} className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
-                    <span className="hidden sm:inline">Fellow</span>
-                    <LogOut className="h-4 w-4" />
-                  </Button>
-                ) : (
-                  <Button variant="login" size="sm" onClick={login} className="flex items-center gap-2">
-                    <LogIn className="h-4 w-4" />
-                    Log in as Fellow
-                  </Button>
-                )}
-              </>
+            {isAuthenticated ? (
+              <Button variant="outline" size="sm" onClick={logout} className="flex items-center gap-2">
+                <User className="h-4 w-4" />
+                <span className="hidden sm:inline">Fellow</span>
+                <LogOut className="h-4 w-4" />
+              </Button>
+            ) : (
+              <Button variant="login" size="sm" onClick={login} className="flex items-center gap-2">
+                <LogIn className="h-4 w-4" />
+                Log in as Fellow
+              </Button>
             )}
             <ThemeToggle />
           </div>
