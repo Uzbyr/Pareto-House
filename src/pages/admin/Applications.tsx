@@ -18,9 +18,11 @@ import {
   XCircle,
   Clock,
   RefreshCw,
+  FileSearch,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
+import ApplicationDetailsDialog from "@/components/ApplicationDetailsDialog";
 
 interface Application {
   id: number;
@@ -38,6 +40,8 @@ const Applications = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [statusFilter, setStatusFilter] = useState<string | null>(null);
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
+  const [isDetailsOpen, setIsDetailsOpen] = useState(false);
 
   // Initial load of applications
   useEffect(() => {
@@ -120,6 +124,11 @@ const Applications = () => {
     refreshMetrics();
     
     toast.success(`Application #${id} marked as ${newStatus}`);
+  };
+
+  const handleCheckApplication = (application: Application) => {
+    setSelectedApplication(application);
+    setIsDetailsOpen(true);
   };
 
   return (
@@ -241,6 +250,16 @@ const Applications = () => {
                     </TableCell>
                     <TableCell>
                       <div className="flex gap-2">
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-blue-500 hover:text-blue-400 hover:bg-blue-400/10"
+                          onClick={() => handleCheckApplication(app)}
+                          title="Check Application"
+                        >
+                          <FileSearch className="h-4 w-4" />
+                          <span className="sr-only">Check Application</span>
+                        </Button>
                         {app.status !== "approved" && (
                           <Button 
                             size="sm" 
@@ -292,6 +311,12 @@ const Applications = () => {
           </Table>
         </div>
       </Card>
+
+      <ApplicationDetailsDialog 
+        application={selectedApplication}
+        open={isDetailsOpen}
+        onOpenChange={setIsDetailsOpen}
+      />
     </div>
   );
 };
