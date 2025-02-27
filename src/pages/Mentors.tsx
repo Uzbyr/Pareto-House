@@ -90,6 +90,76 @@ const mentors: Mentor[] = [
     description: "Technology leader and advisor",
     imageUrl: "/lovable-uploads/296914cf-fcac-4a48-9c42-8e9bc9b50f4a.png",
     country: "France"
+  },
+  {
+    name: "Sylvain Gariel",
+    linkedIn: "https://www.linkedin.com/in/sylvain-gariel-21455735/",
+    description: "Technology entrepreneur and business leader",
+    imageUrl: "/lovable-uploads/9ae2e248-a5a6-4e6d-be4d-3c747a6426de.png",
+    country: "France"
+  },
+  {
+    name: "Arthur Waller",
+    linkedIn: "https://www.linkedin.com/in/arthur-waller-a793a611/",
+    description: "Co-founder & CEO at Pennylane",
+    imageUrl: "/lovable-uploads/ecc7349b-b875-4cdb-8e87-9c6a4dda4f28.png",
+    country: "France"
+  },
+  {
+    name: "Alexandre Yazdi",
+    linkedIn: "https://www.linkedin.com/in/alexandre-yazdi-21a9813a/",
+    description: "Co-founder & CEO at Voodoo",
+    imageUrl: "/lovable-uploads/2c496de7-e447-40fc-9bc9-d3c5ec2d8b71.png",
+    country: "France"
+  },
+  {
+    name: "Michal Valko",
+    linkedIn: "https://www.linkedin.com/in/michalvalko/",
+    description: "Research scientist and AI expert",
+    imageUrl: "/lovable-uploads/9b10dc7d-bdd5-4a3f-b04b-51ac68f019ff.png",
+    country: "France"
+  },
+  {
+    name: "Jean Ponce",
+    linkedIn: "https://www.linkedin.com/in/jean-ponce-2302986/",
+    description: "Computer vision researcher and academic leader",
+    imageUrl: "/lovable-uploads/1429b1d7-6575-4620-97cd-fee282a06662.png",
+    country: "France"
+  },
+  {
+    name: "Boaz Avital",
+    linkedIn: "https://www.linkedin.com/in/boazavital/",
+    description: "Engineering leader and startup advisor",
+    imageUrl: "/lovable-uploads/8754e353-9082-4238-926b-13289a92cdce.png",
+    country: "USA"
+  },
+  {
+    name: "Jean-Daniel Guyot",
+    linkedIn: "https://www.linkedin.com/in/jeandanielguyot/",
+    description: "Serial entrepreneur and investor",
+    imageUrl: "/lovable-uploads/9df83c61-279d-4084-b315-55d7f8d3b272.png",
+    country: "France"
+  },
+  {
+    name: "Jack Pierse",
+    linkedIn: "https://www.linkedin.com/in/jack-pierse-53b51155/",
+    description: "Co-founder & CFO at Wayflyer",
+    imageUrl: "/lovable-uploads/675c3651-db8d-4edd-9ff6-3ffd7210745e.png",
+    country: "Ireland"
+  },
+  {
+    name: "Serena Williams",
+    linkedIn: "https://www.linkedin.com/in/serena-williams-16428a279/",
+    description: "Tennis champion, entrepreneur and investor",
+    imageUrl: "/lovable-uploads/fc28bb63-8d48-4262-a6db-0b61a7a4595b.png",
+    country: "USA"
+  },
+  {
+    name: "Fabrice Grinda",
+    linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
+    description: "Serial entrepreneur and investor",
+    imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
+    country: "USA"
   }
 ];
 
@@ -123,6 +193,8 @@ const Mentors = () => {
         return { name: "France", flag: "🇫🇷" };
       case "UK":
         return { name: "United Kingdom", flag: "🇬🇧" };
+      case "Ireland":
+        return { name: "Ireland", flag: "🇮🇪" };
       default:
         return { name: country, flag: "🏳️" };
     }
