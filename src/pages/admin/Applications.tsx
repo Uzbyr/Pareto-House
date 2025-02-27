@@ -18,6 +18,8 @@ import {
   XCircle,
   Clock,
   RefreshCw,
+  FileText,
+  Video,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -27,8 +29,11 @@ interface Application {
   name: string;
   email: string;
   school: string;
+  major?: string;
   submissionDate: string;
   status: string;
+  resume?: string;
+  video?: string;
 }
 
 const Applications = () => {
@@ -45,7 +50,7 @@ const Applications = () => {
 
   const refreshApplications = () => {
     setIsRefreshing(true);
-    // In a real app, this would fetch fresh data from the server
+    // Fetch fresh data
     setApplications(getApplications());
     toast.success("Applications data refreshed");
     setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
@@ -53,9 +58,10 @@ const Applications = () => {
 
   const filteredApplications = applications.filter((app) => {
     const matchesSearch =
-      app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      app.school.toLowerCase().includes(searchTerm.toLowerCase());
+      app.name?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      app.email?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      app.school?.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      app.major?.toLowerCase().includes(searchTerm.toLowerCase());
       
     const matchesStatus = statusFilter ? app.status === statusFilter : true;
     
@@ -64,7 +70,7 @@ const Applications = () => {
 
   const exportToCSV = () => {
     // Create CSV data
-    const headers = ["ID", "Name", "Email", "School", "Submission Date", "Status"];
+    const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status", "Resume", "Video"];
     const csvRows = [
       headers.join(","),
       ...filteredApplications.map((app) => [
@@ -72,8 +78,11 @@ const Applications = () => {
         app.name,
         app.email,
         app.school,
+        app.major || "",
         new Date(app.submissionDate).toLocaleDateString(),
         app.status,
+        app.resume || "",
+        app.video || "",
       ].join(","))
     ];
     const csvString = csvRows.join("\n");
@@ -92,19 +101,32 @@ const Applications = () => {
   };
 
   const formatDate = (dateString: string) => {
-    return new Date(dateString).toLocaleDateString('en-US', {
-      year: 'numeric',
-      month: 'short',
-      day: 'numeric',
-    });
+    try {
+      return new Date(dateString).toLocaleDateString('en-US', {
+        year: 'numeric',
+        month: 'short',
+        day: 'numeric',
+      });
+    } catch (e) {
+      return "Invalid date";
+    }
   };
 
   const updateApplicationStatus = (id: number, newStatus: string) => {
-    setApplications(apps => 
-      apps.map(app => 
-        app.id === id ? { ...app, status: newStatus } : app
-      )
+    // Get applications from localStorage
+    const storedApps = localStorage.getItem('applications');
+    const apps = storedApps ? JSON.parse(storedApps) : [];
+    
+    // Update the status
+    const updatedApps = apps.map(app => 
+      app.id === id ? { ...app, status: newStatus } : app
     );
+    
+    // Save back to localStorage
+    localStorage.setItem('applications', JSON.stringify(updatedApps));
+    
+    // Update state
+    setApplications(updatedApps);
     toast.success(`Application #${id} marked as ${newStatus}`);
   };
 
@@ -195,7 +217,9 @@ const Applications = () => {
                 <TableHead className="text-gray-300">Name</TableHead>
                 <TableHead className="text-gray-300">Email</TableHead>
                 <TableHead className="text-gray-300">School</TableHead>
+                <TableHead className="text-gray-300">Major</TableHead>
                 <TableHead className="text-gray-300">Date</TableHead>
+                <TableHead className="text-gray-300">Files</TableHead>
                 <TableHead className="text-gray-300">Status</TableHead>
                 <TableHead className="text-gray-300">Actions</TableHead>
               </TableRow>
@@ -207,7 +231,22 @@ const Applications = () => {
                   <TableCell className="text-white">{app.name}</TableCell>
                   <TableCell className="text-gray-300">{app.email}</TableCell>
                   <TableCell className="text-gray-300">{app.school}</TableCell>
+                  <TableCell className="text-gray-300">{app.major || "-"}</TableCell>
                   <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
+                  <TableCell className="text-gray-300">
+                    <div className="flex space-x-2">
+                      {app.resume && (
+                        <span title={`Resume: ${app.resume}`} className="text-blue-400">
+                          <FileText className="h-4 w-4" />
+                        </span>
+                      )}
+                      {app.video && (
+                        <span title={`Video: ${app.video}`} className="text-emerald-400">
+                          <Video className="h-4 w-4" />
+                        </span>
+                      )}
+                    </div>
+                  </TableCell>
                   <TableCell>
                     <span 
                       className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${

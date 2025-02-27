@@ -1,80 +1,68 @@
 
-import { motion } from "framer-motion";
-import { useNavigate } from "react-router-dom";
-import ApplicationForm from "../components/ApplicationForm";
+import ApplicationForm from "@/components/ApplicationForm";
+import Footer from "@/components/Footer";
 import { useEffect } from "react";
+import { useAuth } from "@/contexts/AuthContext";
 
 const Apply = () => {
-  const navigate = useNavigate();
+  const { trackPageVisit } = useAuth();
 
-  // Track page visit for analytics
+  // Track apply page visit on load
   useEffect(() => {
-    // In a production app, this would be an analytics service call
-    console.log("Application page visited");
-    
-    // For our demo, we'll just increment a page view counter in localStorage
-    const applyPageViews = localStorage.getItem('applyPageViews') || '0';
-    localStorage.setItem('applyPageViews', (parseInt(applyPageViews) + 1).toString());
-    
-    // Add a listener for form submissions
-    const handleApplicationSubmitted = () => {
-      // Increment application count
-      const appCount = localStorage.getItem('applicationCount') || '0';
-      localStorage.setItem('applicationCount', (parseInt(appCount) + 1).toString());
-      
-      // Store application data
-      const newApp = {
-        id: new Date().getTime(),
-        name: "New Applicant",
-        email: `applicant${Math.floor(Math.random() * 1000)}@example.com`,
-        school: ["Harvard", "MIT", "Stanford", "Berkeley", "Oxford"][Math.floor(Math.random() * 5)],
-        submissionDate: new Date().toISOString(),
-        status: "pending",
-      };
-      
-      const storedApps = localStorage.getItem('applications') || '[]';
-      const apps = JSON.parse(storedApps);
-      apps.push(newApp);
-      localStorage.setItem('applications', JSON.stringify(apps));
-    };
-    
-    window.addEventListener('application_submitted', handleApplicationSubmitted);
-    
-    return () => {
-      window.removeEventListener('application_submitted', handleApplicationSubmitted);
-    };
-  }, []);
+    trackPageVisit("/apply");
+  }, [trackPageVisit]);
 
   return (
-    <div className="min-h-screen bg-pareto-black text-white font-inter">
-      <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="mb-8">
-            <button
-              onClick={() => navigate("/")}
-              className="px-4 py-2 bg-pareto-pink text-black font-semibold hover:bg-white transition-colors duration-300 rounded text-sm"
-            >
-              ← Back to Homepage
-            </button>
-            <motion.h1
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              className="text-4xl font-bold text-center mt-8"
-            >
-              Apply to Pareto Fellowship
-            </motion.h1>
-          </div>
-          <ApplicationForm onSubmitSuccess={() => {
-            // Dispatch a custom event when application is submitted
-            window.dispatchEvent(new Event('application_submitted'));
-          }} />
-        </motion.div>
+    <div className="flex flex-col min-h-screen">
+      <div className="py-12 md:py-20 px-4 max-w-7xl mx-auto flex-grow">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl md:text-5xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-pareto-pink to-pareto-pink/60">
+            Apply to Pareto 20
+          </h1>
+          <p className="text-xl text-zinc-400 max-w-3xl mx-auto">
+            Join a select community of builders, thinkers, and doers 
+            from the world's top universities.
+          </p>
+        </div>
+        
+        <ApplicationForm />
+        
+        <div className="mt-16 max-w-3xl mx-auto text-center border-t border-zinc-800 pt-8">
+          <h2 className="text-2xl font-bold mb-4">What Happens Next?</h2>
+          <ol className="text-left space-y-6">
+            <li className="flex gap-4">
+              <div className="bg-pareto-pink/20 text-pareto-pink rounded-full h-8 w-8 flex-shrink-0 flex items-center justify-center font-bold">1</div>
+              <div>
+                <h3 className="font-semibold text-lg">Application Review</h3>
+                <p className="text-zinc-400">Our team will review your application within 7-10 business days.</p>
+              </div>
+            </li>
+            <li className="flex gap-4">
+              <div className="bg-pareto-pink/20 text-pareto-pink rounded-full h-8 w-8 flex-shrink-0 flex items-center justify-center font-bold">2</div>
+              <div>
+                <h3 className="font-semibold text-lg">Interview</h3>
+                <p className="text-zinc-400">Selected candidates will be invited for a virtual interview with our team.</p>
+              </div>
+            </li>
+            <li className="flex gap-4">
+              <div className="bg-pareto-pink/20 text-pareto-pink rounded-full h-8 w-8 flex-shrink-0 flex items-center justify-center font-bold">3</div>
+              <div>
+                <h3 className="font-semibold text-lg">Final Decision</h3>
+                <p className="text-zinc-400">You'll receive our decision within 48 hours after your interview.</p>
+              </div>
+            </li>
+            <li className="flex gap-4">
+              <div className="bg-pareto-pink/20 text-pareto-pink rounded-full h-8 w-8 flex-shrink-0 flex items-center justify-center font-bold">4</div>
+              <div>
+                <h3 className="font-semibold text-lg">Welcome to Pareto 20</h3>
+                <p className="text-zinc-400">Accepted fellows will receive onboarding information and program details.</p>
+              </div>
+            </li>
+          </ol>
+        </div>
       </div>
+      
+      <Footer />
     </div>
   );
 };
