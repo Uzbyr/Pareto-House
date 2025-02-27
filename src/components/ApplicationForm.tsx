@@ -1,18 +1,15 @@
 
-import React, { useState } from "react";
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { useNavigate } from "react-router-dom";
 import { z } from "zod";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import {
-  Form,
-  FormControl,
-  FormDescription,
-  FormField,
-  FormItem,
-  FormLabel,
-  FormMessage,
-} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -20,72 +17,128 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Input } from "@/components/ui/input";
-import { toast } from "sonner";
-import { useAuth } from "@/contexts/AuthContext";
+import { Progress } from "@/components/ui/progress";
 
-// Define the form schema with zod
+// Form schema
 const formSchema = z.object({
-  name: z.string().min(2, {
-    message: "Name must be at least 2 characters.",
-  }),
-  email: z.string().email({
-    message: "Please enter a valid email address.",
-  }),
-  school: z.string().min(1, {
-    message: "Please select your school.",
-  }),
-  major: z.string().min(1, {
-    message: "Please enter your major.",
-  }),
-  prepClass: z.string().optional(),
+  firstName: z.string().min(2, { message: "First name is required" }),
+  lastName: z.string().min(2, { message: "Last name is required" }),
+  email: z.string().email({ message: "Please enter a valid email" }),
+  university: z.string().min(2, { message: "University is required" }),
+  major: z.string().min(2, { message: "Major is required" }),
+  preparatoryClasses: z.string().optional(),
+  graduationYear: z.string().min(4, { message: "Graduation year is required" }),
+  interests: z.string().min(10, { message: "Please describe your interests (min 10 characters)" }),
+  referral: z.string().optional(),
+  videoPresentation: z.instanceof(FileList).optional().nullable(),
+  resume: z.instanceof(FileList).optional().nullable(),
 });
 
-type FormValues = z.infer<typeof formSchema>;
+type FormData = z.infer<typeof formSchema>;
 
-const ApplicationForm = () => {
-  const { submitApplication } = useAuth();
-  const [resumeFile, setResumeFile] = useState<File | null>(null);
-  const [videoFile, setVideoFile] = useState<File | null>(null);
+interface ApplicationFormProps {
+  onSubmitSuccess?: () => void;
+}
+
+const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
+  const navigate = useNavigate();
+  const [step, setStep] = useState(1);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showPrepClassField, setShowPrepClassField] = useState(false);
+  const totalSteps = 4; // Increased to 4 steps
+  const [videoFile, setVideoFile] = useState<File | null>(null);
+  const [resumeFile, setResumeFile] = useState<File | null>(null);
 
-  // Initialize the form
-  const form = useForm<FormValues>({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+    watch,
+    setValue,
+  } = useForm<FormData>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      name: "",
+      firstName: "",
+      lastName: "",
       email: "",
-      school: "",
+      university: "",
       major: "",
-      prepClass: "",
+      preparatoryClasses: "",
+      graduationYear: "",
+      interests: "",
+      referral: "",
     },
   });
 
-  // Handle school change to show/hide prep class field
-  const handleSchoolChange = (value: string) => {
-    const frenchSchools = ["HEC Paris", "Essec", "Polytechnique", "CentraleSupelec"];
-    setShowPrepClassField(frenchSchools.includes(value));
-    
-    // Reset the prepClass value if not a French school
-    if (!frenchSchools.includes(value)) {
-      form.setValue("prepClass", "");
+  const watchedFields = watch();
+  
+  // Universities that trigger preparatory classes question
+  const prepClassesUniversities = ["HEC", "Essec", "Polytechnique", "Centrale"];
+  
+  // Flag to check if we should show the preparatory classes question
+  const showPrepClassesQuestion = prepClassesUniversities.includes(watchedFields.university);
+
+  const nextStep = () => {
+    if (step < totalSteps) {
+      setStep(step + 1);
+      window.scrollTo(0, 0);
     }
   };
 
-  // Handle resume file upload
-  const handleResumeChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
+  const prevStep = () => {
+    if (step > 1) {
+      setStep(step - 1);
+      window.scrollTo(0, 0);
+    }
+  };
+
+  const handleVideoChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
       
-      // Validate file type and size
-      if (!file.type.match('application/pdf|application/msword|application/vnd.openxmlformats-officedocument.wordprocessingml.document')) {
-        toast.error("Please upload a PDF or Word document");
+      // Check if it's a video file
+      if (!file.type.includes('video/')) {
+        toast.error("Please upload a video file");
+        e.target.value = '';
         return;
       }
       
-      if (file.size > 5 * 1024 * 1024) { // 5MB limit
+      // Load the video to check its duration
+      const video = document.createElement('video');
+      video.preload = 'metadata';
+      
+      video.onloadedmetadata = function() {
+        window.URL.revokeObjectURL(video.src);
+        const duration = video.duration;
+        
+        if (duration > 90) {
+          toast.error("Video must be 90 seconds or less");
+          e.target.value = '';
+          setVideoFile(null);
+        } else {
+          setVideoFile(file);
+          toast.success("Video uploaded successfully");
+        }
+      };
+      
+      video.src = URL.createObjectURL(file);
+    }
+  };
+
+  const handleResumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length > 0) {
+      const file = e.target.files[0];
+      
+      // Check if it's a PDF or document file
+      if (!file.type.includes('pdf') && !file.type.includes('document')) {
+        toast.error("Please upload a PDF or document file");
+        e.target.value = '';
+        return;
+      }
+      
+      // Check file size (max 5MB)
+      if (file.size > 5 * 1024 * 1024) {
         toast.error("File size must be less than 5MB");
+        e.target.value = '';
         return;
       }
       
@@ -94,258 +147,328 @@ const ApplicationForm = () => {
     }
   };
 
-  // Handle video file upload
-  const handleVideoChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      const file = event.target.files[0];
-      
-      // Validate file type and size
-      if (!file.type.match('video/mp4|video/quicktime|video/x-msvideo')) {
-        toast.error("Please upload an MP4, MOV, or AVI video file");
-        return;
-      }
-      
-      if (file.size > 100 * 1024 * 1024) { // 100MB limit
-        toast.error("File size must be less than 100MB");
-        return;
-      }
-      
-      setVideoFile(file);
-      toast.success("Video uploaded successfully");
-    }
-  };
-
-  // Submit handler
-  const onSubmit = (values: FormValues) => {
-    if (!videoFile) {
-      toast.error("Please upload your 90-second presentation video");
-      return;
-    }
-    
+  const onSubmit = (data: FormData) => {
     setIsSubmitting(true);
     
-    // Simulate file upload delay
+    // Add file data
+    const formData = new FormData();
+    if (videoFile) {
+      formData.append('videoPresentation', videoFile);
+    }
+    if (resumeFile) {
+      formData.append('resume', resumeFile);
+    }
+    
+    // Simulate API call
     setTimeout(() => {
-      try {
-        // In a real app, we would upload files to a server
-        // For now, we'll just store the file names
-        submitApplication({
-          name: values.name,
-          email: values.email,
-          school: values.school,
-          major: values.major,
-          resume: resumeFile ? resumeFile.name : undefined,
-          video: videoFile ? videoFile.name : undefined
-        });
-        
-        // Show success message
-        toast.success("Your application has been submitted successfully!");
-        
-        // Reset form
-        form.reset();
-        setResumeFile(null);
-        setVideoFile(null);
-        setShowPrepClassField(false);
-      } catch (error) {
-        console.error("Error submitting application:", error);
-        toast.error("There was an error submitting your application");
-      } finally {
-        setIsSubmitting(false);
+      console.log("Application submitted:", data);
+      console.log("Video file:", videoFile);
+      console.log("Resume file:", resumeFile);
+      toast.success("Application submitted successfully!");
+      setIsSubmitting(false);
+      
+      // Call the success callback if provided
+      if (onSubmitSuccess) {
+        onSubmitSuccess();
       }
+      
+      // Redirect to homepage
+      navigate("/");
     }, 1500);
   };
 
-  return (
-    <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="space-y-8 bg-zinc-900 p-6 rounded-lg border border-zinc-800 max-w-3xl mx-auto"
-      >
-        <h2 className="text-2xl font-bold text-white">Personal Information</h2>
-        
-        <FormField
-          control={form.control}
-          name="name"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Full Name</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your full name" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="email"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Email</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your email address" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <h2 className="text-2xl font-bold text-white pt-4">Education</h2>
-        
-        <FormField
-          control={form.control}
-          name="school"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>School</FormLabel>
+  const renderStep = () => {
+    switch (step) {
+      case 1:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Personal Information</h2>
+            
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              <div className="space-y-2">
+                <Label htmlFor="firstName">First Name</Label>
+                <Input
+                  id="firstName"
+                  placeholder="Your first name"
+                  className="bg-zinc-800 border-zinc-700"
+                  {...register("firstName")}
+                />
+                {errors.firstName && (
+                  <p className="text-red-500 text-sm">{errors.firstName.message}</p>
+                )}
+              </div>
+              
+              <div className="space-y-2">
+                <Label htmlFor="lastName">Last Name</Label>
+                <Input
+                  id="lastName"
+                  placeholder="Your last name"
+                  className="bg-zinc-800 border-zinc-700"
+                  {...register("lastName")}
+                />
+                {errors.lastName && (
+                  <p className="text-red-500 text-sm">{errors.lastName.message}</p>
+                )}
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="email">Email Address</Label>
+              <Input
+                id="email"
+                type="email"
+                placeholder="you@example.com"
+                className="bg-zinc-800 border-zinc-700"
+                {...register("email")}
+              />
+              {errors.email && (
+                <p className="text-red-500 text-sm">{errors.email.message}</p>
+              )}
+            </div>
+          </motion.div>
+        );
+      
+      case 2:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Education</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="university">University</Label>
               <Select
-                onValueChange={(value) => {
-                  field.onChange(value);
-                  handleSchoolChange(value);
-                }}
-                defaultValue={field.value}
+                value={watchedFields.university}
+                onValueChange={(value) => setValue("university", value)}
               >
-                <FormControl>
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                    <SelectValue placeholder="Select your school" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent className="bg-zinc-800 border-zinc-700">
-                  <SelectItem value="Harvard">Harvard</SelectItem>
-                  <SelectItem value="Stanford">Stanford</SelectItem>
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select your university" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="Harvard">Harvard University</SelectItem>
                   <SelectItem value="MIT">MIT</SelectItem>
-                  <SelectItem value="Berkeley">Berkeley</SelectItem>
-                  <SelectItem value="Princeton">Princeton</SelectItem>
-                  <SelectItem value="Columbia">Columbia</SelectItem>
-                  <SelectItem value="UPenn">UPenn</SelectItem>
+                  <SelectItem value="Stanford">Stanford University</SelectItem>
+                  <SelectItem value="Berkeley">UC Berkeley</SelectItem>
+                  <SelectItem value="Oxford">Oxford University</SelectItem>
+                  <SelectItem value="Cambridge">Cambridge University</SelectItem>
+                  <SelectItem value="Princeton">Princeton University</SelectItem>
+                  <SelectItem value="Yale">Yale University</SelectItem>
                   <SelectItem value="Caltech">Caltech</SelectItem>
-                  <SelectItem value="Cambridge">Cambridge</SelectItem>
-                  <SelectItem value="Oxford">Oxford</SelectItem>
-                  <SelectItem value="ETH Zurich">ETH Zurich</SelectItem>
-                  <SelectItem value="UCL">UCL</SelectItem>
-                  <SelectItem value="LSE">LSE</SelectItem>
-                  <SelectItem value="Imperial">Imperial</SelectItem>
-                  <SelectItem value="Polytechnique">Polytechnique</SelectItem>
-                  <SelectItem value="CentraleSupelec">CentraleSupelec</SelectItem>
-                  <SelectItem value="HEC Paris">HEC Paris</SelectItem>
-                  <SelectItem value="Essec">Essec</SelectItem>
-                  <SelectItem value="ENS">ENS</SelectItem>
-                  <SelectItem value="McGill">McGill</SelectItem>
-                  <SelectItem value="Trinity">Trinity</SelectItem>
-                  <SelectItem value="TUT">TUT</SelectItem>
-                  <SelectItem value="Tokyo">Tokyo</SelectItem>
+                  <SelectItem value="HEC">HEC Paris</SelectItem>
+                  <SelectItem value="Essec">ESSEC Business School</SelectItem>
+                  <SelectItem value="Polytechnique">École Polytechnique</SelectItem>
+                  <SelectItem value="Centrale">École Centrale</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
                 </SelectContent>
               </Select>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        <FormField
-          control={form.control}
-          name="major"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Major/Field of Study</FormLabel>
-              <FormControl>
-                <Input placeholder="Enter your major or field of study" {...field} />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-        
-        {showPrepClassField && (
-          <FormField
-            control={form.control}
-            name="prepClass"
-            render={({ field }) => (
-              <FormItem>
-                <FormLabel>Preparatory Class</FormLabel>
+              {errors.university && (
+                <p className="text-red-500 text-sm">{errors.university.message}</p>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="major">Major / Field of Study</Label>
+              <Input
+                id="major"
+                placeholder="e.g. Computer Science, Business, etc."
+                className="bg-zinc-800 border-zinc-700"
+                {...register("major")}
+              />
+              {errors.major && (
+                <p className="text-red-500 text-sm">{errors.major.message}</p>
+              )}
+            </div>
+            
+            {showPrepClassesQuestion && (
+              <div className="space-y-2">
+                <Label htmlFor="preparatoryClasses">Did you attend preparatory classes?</Label>
                 <Select
-                  onValueChange={field.onChange}
-                  defaultValue={field.value}
+                  value={watchedFields.preparatoryClasses}
+                  onValueChange={(value) => setValue("preparatoryClasses", value)}
                 >
-                  <FormControl>
-                    <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                      <SelectValue placeholder="Select your preparatory class" />
-                    </SelectTrigger>
-                  </FormControl>
-                  <SelectContent className="bg-zinc-800 border-zinc-700">
-                    <SelectItem value="MP">MP</SelectItem>
-                    <SelectItem value="PC">PC</SelectItem>
-                    <SelectItem value="PSI">PSI</SelectItem>
-                    <SelectItem value="PT">PT</SelectItem>
-                    <SelectItem value="BCPST">BCPST</SelectItem>
-                    <SelectItem value="ECS">ECS</SelectItem>
-                    <SelectItem value="ECE">ECE</SelectItem>
-                    <SelectItem value="ECT">ECT</SelectItem>
-                    <SelectItem value="BL">BL</SelectItem>
-                    <SelectItem value="None">None</SelectItem>
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
                   </SelectContent>
                 </Select>
-                <FormDescription>
-                  Only for students from French schools.
-                </FormDescription>
-                <FormMessage />
-              </FormItem>
+              </div>
             )}
-          />
-        )}
-        
-        <div className="space-y-4">
-          <h2 className="text-2xl font-bold text-white pt-4">Supporting Documents</h2>
-          
-          <div>
-            <FormLabel className="block mb-2">Resume (Optional)</FormLabel>
-            <Input
-              type="file"
-              className="bg-zinc-800 border-zinc-700"
-              onChange={handleResumeChange}
-              accept=".pdf,.doc,.docx"
-            />
-            <FormDescription>
-              Upload your resume in PDF or Word format (max 5MB).
-            </FormDescription>
-            {resumeFile && (
-              <p className="text-sm text-emerald-500 mt-1">
-                File uploaded: {resumeFile.name}
-              </p>
-            )}
-          </div>
-          
-          <div>
-            <FormLabel className="block mb-2">
-              90-Second Presentation Video <span className="text-red-500">*</span>
-            </FormLabel>
-            <Input
-              type="file"
-              className="bg-zinc-800 border-zinc-700"
-              onChange={handleVideoChange}
-              accept=".mp4,.mov,.avi"
-              required
-            />
-            <FormDescription>
-              Upload a 90-second video presenting yourself and why you want to join Pareto 20 (max 100MB).
-            </FormDescription>
-            {videoFile && (
-              <p className="text-sm text-emerald-500 mt-1">
-                File uploaded: {videoFile.name}
-              </p>
-            )}
-          </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="graduationYear">Expected Graduation Year</Label>
+              <Select
+                value={watchedFields.graduationYear}
+                onValueChange={(value) => setValue("graduationYear", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select graduation year" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="2024">2024</SelectItem>
+                  <SelectItem value="2025">2025</SelectItem>
+                  <SelectItem value="2026">2026</SelectItem>
+                  <SelectItem value="2027">2027</SelectItem>
+                  <SelectItem value="2028">2028</SelectItem>
+                </SelectContent>
+              </Select>
+              {errors.graduationYear && (
+                <p className="text-red-500 text-sm">{errors.graduationYear.message}</p>
+              )}
+            </div>
+          </motion.div>
+        );
+      
+      case 3:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Supporting Documents</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="videoPresentation">Video Presentation (90 seconds max)</Label>
+              <div className="mt-1">
+                <Input
+                  id="videoPresentation"
+                  type="file"
+                  accept="video/*"
+                  className="bg-zinc-800 border-zinc-700"
+                  onChange={handleVideoChange}
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Please upload a short video (max 90 seconds) introducing yourself and why you want to join the fellowship.
+                </p>
+              </div>
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="resume">Resume / CV (Optional)</Label>
+              <div className="mt-1">
+                <Input
+                  id="resume"
+                  type="file"
+                  accept=".pdf,.doc,.docx"
+                  className="bg-zinc-800 border-zinc-700"
+                  onChange={handleResumeChange}
+                />
+                <p className="text-sm text-gray-400 mt-1">
+                  Optional: Upload your resume in PDF or Document format (max 5MB).
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        );
+      
+      case 4:
+        return (
+          <motion.div
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            exit={{ opacity: 0, x: -20 }}
+            className="space-y-6"
+          >
+            <h2 className="text-2xl font-semibold">Additional Information</h2>
+            
+            <div className="space-y-2">
+              <Label htmlFor="interests">Areas of Interest</Label>
+              <Textarea
+                id="interests"
+                placeholder="Tell us about your interests, projects, and goals"
+                className="min-h-32 bg-zinc-800 border-zinc-700"
+                {...register("interests")}
+              />
+              {errors.interests && (
+                <p className="text-red-500 text-sm">{errors.interests.message}</p>
+              )}
+            </div>
+            
+            <div className="space-y-2">
+              <Label htmlFor="referral">How did you hear about us? (Optional)</Label>
+              <Select
+                value={watchedFields.referral}
+                onValueChange={(value) => setValue("referral", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select an option" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="friend">From a friend</SelectItem>
+                  <SelectItem value="social">Social media</SelectItem>
+                  <SelectItem value="search">Search engine</SelectItem>
+                  <SelectItem value="university">University event</SelectItem>
+                  <SelectItem value="other">Other</SelectItem>
+                </SelectContent>
+              </Select>
+            </div>
+          </motion.div>
+        );
+      
+      default:
+        return null;
+    }
+  };
+
+  return (
+    <div className="bg-zinc-900 border border-zinc-700 rounded-lg p-6 md:p-8 shadow-xl">
+      <div className="mb-8">
+        <div className="flex justify-between text-sm text-gray-400 mb-2">
+          <span>Step {step} of {totalSteps}</span>
+          <span>{Math.round((step / totalSteps) * 100)}% Complete</span>
         </div>
+        <Progress value={(step / totalSteps) * 100} className="h-2" />
+      </div>
+      
+      <form onSubmit={handleSubmit(onSubmit)}>
+        {renderStep()}
         
-        <Button 
-          type="submit" 
-          className="w-full bg-pareto-pink hover:bg-pareto-pink/90" 
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? "Submitting..." : "Submit Application"}
-        </Button>
+        <div className="mt-8 flex justify-between">
+          {step > 1 ? (
+            <Button
+              type="button"
+              variant="outline"
+              className="border-zinc-700 text-white hover:bg-zinc-800"
+              onClick={prevStep}
+            >
+              Back
+            </Button>
+          ) : (
+            <div></div>
+          )}
+          
+          {step < totalSteps ? (
+            <Button
+              type="button"
+              variant="pink"
+              onClick={nextStep}
+            >
+              Continue
+            </Button>
+          ) : (
+            <Button
+              type="submit"
+              variant="pink"
+              disabled={isSubmitting}
+            >
+              {isSubmitting ? "Submitting..." : "Submit Application"}
+            </Button>
+          )}
+        </div>
       </form>
-    </Form>
+    </div>
   );
 };
 

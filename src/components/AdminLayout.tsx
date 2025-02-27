@@ -1,6 +1,6 @@
 
 import { useAuth } from "@/contexts/AuthContext";
-import { Link, useNavigate, useLocation, useEffect } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   BarChart3,
@@ -17,16 +17,9 @@ interface AdminLayoutProps {
 }
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
-  const { logout, user, trackPageVisit } = useAuth();
+  const { logout, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-
-  // Track page visits when location changes
-  useEffect(() => {
-    if (location.pathname) {
-      trackPageVisit(`admin${location.pathname}`);
-    }
-  }, [location.pathname, trackPageVisit]);
 
   const handleLogout = () => {
     logout();
