@@ -1,7 +1,8 @@
 
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { Linkedin, Twitter } from "lucide-react";
+import { Linkedin, Twitter, MessageSquare } from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 interface Mentor {
   name: string;
@@ -210,9 +211,19 @@ const Mentors = () => {
         >
           <Link to="/" className="text-pareto-pink hover:text-black dark:hover:text-white mb-8 inline-block">&larr; Back to Home</Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Our Mentors</h1>
-          <p className="text-xl text-black/80 dark:text-white/80 mb-16 max-w-2xl">
-            Meet our exceptional mentors who are leaders in their fields, ready to share their knowledge and experience with the next generation of entrepreneurs.
-          </p>
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-16">
+            <p className="text-xl text-black/80 dark:text-white/80 max-w-2xl">
+              Meet our exceptional mentors who are leaders in their fields, ready to share their knowledge and experience with the next generation of entrepreneurs.
+            </p>
+            <div className="flex-shrink-0">
+              <Link to="/mentor-finder">
+                <Button variant="pink" className="flex items-center gap-2">
+                  <MessageSquare className="w-5 h-5" />
+                  Find Your Mentor
+                </Button>
+              </Link>
+            </div>
+          </div>
         </motion.div>
 
         <motion.div 
