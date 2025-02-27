@@ -1,9 +1,11 @@
+
 import { motion, AnimatePresence } from "framer-motion";
 import ScrollingUniversities from "../components/ScrollingUniversities";
-import { Link } from "react-router-dom";
-import { ArrowRight, Gift } from "lucide-react";
+import { Link, useNavigate } from "react-router-dom";
+import { ArrowRight, Gift, Lock } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
+import { Button } from "../components/ui/button";
 
 const Index = () => {
   const pageVariants = {
@@ -33,6 +35,12 @@ const Index = () => {
         ease: [0.6, 0.05, 0.01, 0.9],
       },
     },
+  };
+
+  const navigate = useNavigate();
+
+  const handleAdminLogin = () => {
+    navigate('/admin/login');
   };
 
   return (
@@ -158,7 +166,33 @@ const Index = () => {
           </motion.div>
         </motion.div>
 
-        <Footer />
+        {/* Footer with Admin Login Button */}
+        <div className="border-t border-black/10 dark:border-white/10 py-6">
+          <div className="container mx-auto px-4">
+            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
+              <div className="flex items-center gap-2">
+                <img 
+                  src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png" 
+                  alt="Pareto Logo" 
+                  className="w-24"
+                />
+                <span className="text-sm text-black/60 dark:text-white/60">
+                  © {new Date().getFullYear()} Pareto Fellowship
+                </span>
+              </div>
+              
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
+                onClick={handleAdminLogin}
+              >
+                <Lock className="w-4 h-4 mr-2" />
+                Admin Login
+              </Button>
+            </div>
+          </div>
+        </div>
       </motion.div>
     </AnimatePresence>
   );
