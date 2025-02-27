@@ -280,21 +280,13 @@ const Index = () => {
           </div>
         </motion.div>
 
-        {/* Footer with Admin Login Button */}
+        {/* Use the Footer component */}
+        <Footer />
+
+        {/* Admin Login Button */}
         <div className="border-t border-black/10 dark:border-white/10 py-6">
           <div className="container mx-auto px-4">
-            <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-              <div className="flex items-center gap-2">
-                <img 
-                  src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png" 
-                  alt="Pareto Logo" 
-                  className="w-24"
-                />
-                <span className="text-sm text-black/60 dark:text-white/60">
-                  © {new Date().getFullYear()} Pareto Fellowship
-                </span>
-              </div>
-              
+            <div className="flex justify-end">
               <Button
                 variant="ghost"
                 size="sm"
