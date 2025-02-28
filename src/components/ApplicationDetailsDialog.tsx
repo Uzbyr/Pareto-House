@@ -9,25 +9,7 @@ import {
 import { Button } from "@/components/ui/button";
 import { X } from "lucide-react";
 import { formatDate } from "@/lib/utils";
-
-interface Application {
-  id: number;
-  name: string;
-  email: string;
-  school: string;
-  major?: string;
-  submissionDate: string;
-  status: string;
-  // Additional properties that might be in the application
-  firstName?: string;
-  lastName?: string;
-  graduationYear?: string;
-  interests?: string;
-  preparatoryClasses?: string;
-  referral?: string;
-  videoUrl?: string;
-  resumeUrl?: string;
-}
+import { Application } from "@/types/application";
 
 interface ApplicationDetailsDialogProps {
   application: Application | null;
@@ -43,9 +25,7 @@ const ApplicationDetailsDialog = ({
   if (!application) return null;
 
   // Format name from firstName and lastName if available, otherwise use name
-  const fullName = application.firstName && application.lastName
-    ? `${application.firstName} ${application.lastName}`
-    : application.name;
+  const fullName = application.name || `${application.firstName} ${application.lastName}`;
 
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>

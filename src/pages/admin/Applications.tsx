@@ -7,16 +7,7 @@ import ApplicationDetailsDialog from "@/components/ApplicationDetailsDialog";
 import ApplicationsHeader from "@/components/admin/ApplicationsHeader";
 import ApplicationsFilters from "@/components/admin/ApplicationsFilters";
 import ApplicationsTable from "@/components/admin/ApplicationsTable";
-
-interface Application {
-  id: number;
-  name: string;
-  email: string;
-  school: string;
-  major?: string;
-  submissionDate: string;
-  status: string;
-}
+import { Application } from "@/types/application";
 
 const Applications = () => {
   const { getApplications, refreshMetrics } = useAuth();
@@ -44,8 +35,11 @@ const Applications = () => {
   };
 
   const filteredApplications = applications.filter((app) => {
+    // Create a display name for filtering
+    const displayName = app.name || `${app.firstName} ${app.lastName}`;
+    
     const matchesSearch =
-      app.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      displayName.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
       app.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (app.major && app.major.toLowerCase().includes(searchTerm.toLowerCase()));
@@ -60,15 +54,18 @@ const Applications = () => {
     const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status"];
     const csvRows = [
       headers.join(","),
-      ...filteredApplications.map((app) => [
-        app.id,
-        app.name,
-        app.email,
-        app.school,
-        app.major || "",
-        new Date(app.submissionDate).toLocaleDateString(),
-        app.status,
-      ].join(","))
+      ...filteredApplications.map((app) => {
+        const displayName = app.name || `${app.firstName} ${app.lastName}`;
+        return [
+          app.id,
+          displayName,
+          app.email,
+          app.school,
+          app.major || "",
+          new Date(app.submissionDate).toLocaleDateString(),
+          app.status,
+        ].join(",");
+      })
     ];
     const csvString = csvRows.join("\n");
     

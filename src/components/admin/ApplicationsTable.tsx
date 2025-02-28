@@ -9,16 +9,7 @@ import {
 } from "@/components/ui/table";
 import StatusBadge from "./StatusBadge";
 import ActionButtons from "./ActionButtons";
-
-interface Application {
-  id: number;
-  name: string;
-  email: string;
-  school: string;
-  major?: string;
-  submissionDate: string;
-  status: string;
-}
+import { Application } from "@/types/application";
 
 interface ApplicationsTableProps {
   applications: Application[];
@@ -49,26 +40,31 @@ const ApplicationsTable = ({
         </TableHeader>
         <TableBody>
           {applications.length > 0 ? (
-            applications.map((app) => (
-              <TableRow key={app.id} className="border-zinc-700 hover:bg-zinc-800/50">
-                <TableCell className="font-medium text-gray-300">#{app.id}</TableCell>
-                <TableCell className="text-white">{app.name}</TableCell>
-                <TableCell className="text-gray-300">{app.email}</TableCell>
-                <TableCell className="text-gray-300">{app.school}</TableCell>
-                <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
-                <TableCell>
-                  <StatusBadge status={app.status} />
-                </TableCell>
-                <TableCell>
-                  <ActionButtons 
-                    applicationId={app.id} 
-                    status={app.status}
-                    onCheck={() => handleCheckApplication(app)}
-                    onUpdateStatus={updateApplicationStatus}
-                  />
-                </TableCell>
-              </TableRow>
-            ))
+            applications.map((app) => {
+              // Generate name from firstName and lastName if name is not provided
+              const displayName = app.name || `${app.firstName} ${app.lastName}`;
+              
+              return (
+                <TableRow key={app.id} className="border-zinc-700 hover:bg-zinc-800/50">
+                  <TableCell className="font-medium text-gray-300">#{app.id}</TableCell>
+                  <TableCell className="text-white">{displayName}</TableCell>
+                  <TableCell className="text-gray-300">{app.email}</TableCell>
+                  <TableCell className="text-gray-300">{app.school}</TableCell>
+                  <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
+                  <TableCell>
+                    <StatusBadge status={app.status} />
+                  </TableCell>
+                  <TableCell>
+                    <ActionButtons 
+                      applicationId={app.id} 
+                      status={app.status}
+                      onCheck={() => handleCheckApplication(app)}
+                      onUpdateStatus={updateApplicationStatus}
+                    />
+                  </TableCell>
+                </TableRow>
+              );
+            })
           ) : (
             <TableRow>
               <TableCell colSpan={7} className="text-center py-6 text-gray-400">
