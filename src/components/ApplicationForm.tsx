@@ -12,7 +12,6 @@ import {
 } from "@/components/ui/select";
 import { motion } from "framer-motion";
 import { toast } from "sonner";
-import { useAuth } from "@/contexts/AuthContext";
 
 interface ApplicationFormProps {
   onSubmitSuccess?: () => void;
@@ -21,7 +20,6 @@ interface ApplicationFormProps {
 const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   const [currentStep, setCurrentStep] = useState(1);
   const [loading, setLoading] = useState(false);
-  const { submitApplication } = useAuth();
   
   // Form data state
   const [formData, setFormData] = useState({
@@ -63,7 +61,9 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
 
     try {
       // Create the application object with all form data
-      submitApplication({
+      const newApplication = {
+        id: Date.now(),
+        name: `${formData.firstName} ${formData.lastName}`,
         firstName: formData.firstName,
         lastName: formData.lastName,
         email: formData.email,
@@ -75,7 +75,19 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         referral: formData.referral || "",
         videoUrl: formData.videoUrl || "",
         resumeUrl: formData.resumeUrl || "",
-      });
+        submissionDate: new Date().toISOString(),
+        status: "pending",
+      };
+
+      // Store the application in localStorage for the admin dashboard
+      const storedApps = localStorage.getItem('applications') || '[]';
+      const applications = JSON.parse(storedApps);
+      applications.push(newApplication);
+      localStorage.setItem('applications', JSON.stringify(applications));
+      
+      // Update metrics
+      const appCount = localStorage.getItem('applicationCount') || '0';
+      localStorage.setItem('applicationCount', (parseInt(appCount) + 1).toString());
       
       setTimeout(() => {
         setLoading(false);
