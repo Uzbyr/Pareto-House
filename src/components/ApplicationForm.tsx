@@ -53,6 +53,9 @@ const universities = {
   ],
   "Canada": [
     "McGill University"
+  ],
+  "Other": [
+    "Other"
   ]
 };
 
@@ -93,6 +96,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     country: "",
     nationality: "",
     university: "",
+    otherUniversity: "",
     major: "",
     graduationYear: "",
     preparatoryClasses: "",
@@ -157,6 +161,12 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         toast.error("Please fill in all required fields.");
         return;
       }
+      
+      if (formData.university === "Other" && !formData.otherUniversity) {
+        toast.error("Please specify your university.");
+        return;
+      }
+      
       if (requiresPreparatoryQuestion() && !formData.preparatoryClasses) {
         toast.error("Please answer the preparatory classes question.");
         return;
@@ -188,7 +198,13 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       data.append("email", formData.email);
       data.append("country", formData.country);
       data.append("nationality", formData.nationality);
-      data.append("university", formData.university);
+      
+      // Handle university field (including "Other" option)
+      const universityValue = formData.university === "Other" 
+        ? formData.otherUniversity 
+        : formData.university;
+      data.append("university", universityValue);
+      
       data.append("major", formData.major);
       data.append("graduationYear", formData.graduationYear);
       
@@ -218,7 +234,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         email: formData.email,
         country: formData.country,
         nationality: formData.nationality,
-        university: formData.university,
+        university: universityValue,
         major: formData.major,
         graduationYear: formData.graduationYear,
         preparatoryClasses: requiresPreparatoryQuestion() ? formData.preparatoryClasses : "n/a",
@@ -375,6 +391,42 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                 </SelectContent>
               </Select>
             </div>
+
+            {formData.university === "Other" && (
+              <div className="space-y-2">
+                <Label htmlFor="otherUniversity">Specify University</Label>
+                <Input
+                  id="otherUniversity"
+                  name="otherUniversity"
+                  placeholder="Enter your university name"
+                  value={formData.otherUniversity}
+                  onChange={handleInputChange}
+                  className="bg-zinc-800 border-zinc-700"
+                  required
+                />
+              </div>
+            )}
+            
+            {requiresPreparatoryQuestion() && (
+              <div className="space-y-2">
+                <Label htmlFor="preparatoryClasses">
+                  Have you taken preparatory classes (classes préparatoires) in the French education system?
+                </Label>
+                <Select
+                  value={formData.preparatoryClasses}
+                  onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
+                >
+                  <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                    <SelectValue placeholder="Select an option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="yes">Yes</SelectItem>
+                    <SelectItem value="no">No</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            )}
+            
             <div className="space-y-2">
               <Label htmlFor="major">Major</Label>
               <Input
@@ -405,24 +457,6 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                 </SelectContent>
               </Select>
             </div>
-            
-            {requiresPreparatoryQuestion() && (
-              <div className="space-y-2">
-                <Label htmlFor="preparatoryClasses">Have you taken any preparatory classes for this fellowship?</Label>
-                <Select
-                  value={formData.preparatoryClasses}
-                  onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
-                >
-                  <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                    <SelectValue placeholder="Select an option" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="yes">Yes</SelectItem>
-                    <SelectItem value="no">No</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            )}
             
             <div className="space-y-2">
               <Label htmlFor="resumeFile">Resume (PDF)</Label>
