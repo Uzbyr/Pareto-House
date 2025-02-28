@@ -36,19 +36,14 @@ const Apply = () => {
               </svg>
               Back to Homepage
             </button>
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.2, duration: 0.4 }}
-              className="text-center mt-10 mb-12"
-            >
+            <div className="text-center mt-10 mb-12">
               <h1 className="text-4xl font-bold">
                 Apply to Pareto Fellowship
               </h1>
               <p className="mt-4 text-zinc-400 max-w-xl mx-auto">
                 Join the most ambitious undergraduate community and connect with talented peers from top universities around the world.
               </p>
-            </motion.div>
+            </div>
           </div>
           <ApplicationForm />
         </motion.div>

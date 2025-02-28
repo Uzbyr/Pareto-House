@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -11,7 +11,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import { toast } from "sonner";
 import { Check } from "lucide-react";
 
@@ -122,36 +122,36 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   }, [formData.country]);
 
   // Check if the selected university requires preparatory class question
-  const requiresPreparatoryQuestion = () => {
+  const requiresPreparatoryQuestion = useCallback(() => {
     const frenchUniversities = ["HEC", "ENS", "ESSEC", "Polytechnique", "Centrale Supélec"];
     return frenchUniversities.includes(formData.university);
-  };
+  }, [formData.university]);
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
 
-  const handleSelectChange = (name: string, value: string) => {
+  const handleSelectChange = useCallback((name: string, value: string) => {
     setFormData(prev => ({
       ...prev,
       [name]: value
     }));
-  };
+  }, []);
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
+  const handleFileChange = useCallback((e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
     if (e.target.files && e.target.files[0]) {
       setFormData(prev => ({ 
         ...prev, 
         [fieldName]: e.target.files?.[0] || null 
       }));
     }
-  };
+  }, []);
 
-  const nextStep = () => {
+  const nextStep = useCallback(() => {
     // Validate current step
     if (currentStep === 1) {
       if (!formData.firstName || !formData.lastName || !formData.email) {
@@ -181,18 +181,18 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
 
     setCurrentStep(prev => prev + 1);
     window.scrollTo(0, 0);
-  };
+  }, [currentStep, formData, requiresPreparatoryQuestion]);
 
-  const prevStep = () => {
+  const prevStep = useCallback(() => {
     setCurrentStep(prev => prev - 1);
     window.scrollTo(0, 0);
-  };
+  }, []);
 
   const validateEmail = (email: string) => {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
+  const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
@@ -279,7 +279,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       setLoading(false);
       toast.error("There was an error submitting your application. Please try again.");
     }
-  };
+  }, [formData, onSubmitSuccess, requiresPreparatoryQuestion]);
 
   // Personal Information Step (Step 1)
   const renderPersonalInformationStep = () => {
@@ -593,11 +593,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   // Success Step (Step 4)
   const renderSuccessStep = () => {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="text-center py-12"
-      >
+      <div className="text-center py-12">
         <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6">
           <Check className="h-8 w-8 text-white" />
         </div>
@@ -612,12 +608,12 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         >
           Return to Homepage
         </Button>
-      </motion.div>
+      </div>
     );
   };
 
   // Render the appropriate step content based on currentStep
-  const renderStepContent = () => {
+  const renderStepContent = useCallback(() => {
     switch (currentStep) {
       case 1:
         return renderPersonalInformationStep();
@@ -630,7 +626,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       default:
         return null;
     }
-  };
+  }, [currentStep]);
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-8 shadow-lg">
@@ -669,14 +665,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
 
       {currentStep <= 3 ? (
         <form onSubmit={handleSubmit}>
-          <motion.div
-            key={`step-${currentStep}`}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-          >
-            {renderStepContent()}
-          </motion.div>
+          {renderStepContent()}
 
           <div className="flex justify-between pt-4 mt-6">
             {currentStep > 1 && (
