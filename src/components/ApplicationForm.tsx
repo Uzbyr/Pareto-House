@@ -53,9 +53,6 @@ const universities = {
   ],
   "Canada": [
     "McGill University"
-  ],
-  "Other": [
-    "Other"
   ]
 };
 
@@ -115,9 +112,11 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
   // Update available universities when country changes
   useEffect(() => {
     if (formData.country && universities[formData.country as keyof typeof universities]) {
-      setAvailableUniversities(universities[formData.country as keyof typeof universities]);
+      const countryUniversities = universities[formData.country as keyof typeof universities];
+      // Always include "Other" as an option, regardless of the country
+      setAvailableUniversities([...countryUniversities, "Other"]);
     } else {
-      setAvailableUniversities([]);
+      setAvailableUniversities(["Other"]);
     }
   }, [formData.country]);
 
