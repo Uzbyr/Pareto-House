@@ -97,6 +97,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     major: "",
     graduationYear: "",
     preparatoryClasses: "",
+    studentSocieties: "",
     buildingCompany: "no",
     companyContext: "",
     resumeFile: null as File | null,
@@ -206,6 +207,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       
       data.append("major", formData.major);
       data.append("graduationYear", formData.graduationYear);
+      data.append("studentSocieties", formData.studentSocieties || "");
       
       if (requiresPreparatoryQuestion()) {
         data.append("preparatoryClasses", formData.preparatoryClasses);
@@ -216,9 +218,9 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       if (formData.buildingCompany === "yes") {
         data.append("companyContext", formData.companyContext || "");
         if (formData.websiteUrl) data.append("websiteUrl", formData.websiteUrl);
-        if (formData.videoUrl) data.append("videoUrl", formData.videoUrl);
       }
       
+      if (formData.videoUrl) data.append("videoUrl", formData.videoUrl);
       if (formData.resumeFile) data.append("resumeFile", formData.resumeFile);
       if (formData.deckFile) data.append("deckFile", formData.deckFile);
       if (formData.memoFile) data.append("memoFile", formData.memoFile);
@@ -236,6 +238,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         university: universityValue,
         major: formData.major,
         graduationYear: formData.graduationYear,
+        studentSocieties: formData.studentSocieties || "",
         preparatoryClasses: requiresPreparatoryQuestion() ? formData.preparatoryClasses : "n/a",
         buildingCompany: formData.buildingCompany,
         companyContext: formData.buildingCompany === "yes" ? formData.companyContext : "",
@@ -243,7 +246,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         deckFile: formData.deckFile ? formData.deckFile.name : "",
         memoFile: formData.memoFile ? formData.memoFile.name : "",
         websiteUrl: formData.buildingCompany === "yes" ? formData.websiteUrl : "",
-        videoUrl: formData.buildingCompany === "yes" ? formData.videoUrl : "",
+        videoUrl: formData.videoUrl || "",
         submissionDate: new Date().toISOString(),
         status: "pending",
       };
@@ -272,20 +275,10 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     }
   };
 
+  // Render the form step with controlled animations
   const FormStep = ({ step }: { step: number }) => {
-    const fadeInVariants = {
-      hidden: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 0.4 } }
-    };
-
     return (
-      <motion.div
-        key={`step-${step}`}
-        initial="hidden"
-        animate="visible"
-        variants={fadeInVariants}
-        className="space-y-6"
-      >
+      <div className="space-y-6">
         {step === 1 && (
           <>
             <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
@@ -456,6 +449,18 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                 </SelectContent>
               </Select>
             </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="studentSocieties">Student Societies</Label>
+              <Textarea
+                id="studentSocieties"
+                name="studentSocieties"
+                placeholder="Are you part of any student societies or organizations? Please list them."
+                value={formData.studentSocieties}
+                onChange={handleInputChange}
+                className="bg-zinc-800 border-zinc-700 min-h-[80px]"
+              />
+            </div>
             
             <div className="space-y-2">
               <Label htmlFor="resumeFile">Resume (PDF)</Label>
@@ -479,6 +484,21 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         {step === 3 && (
           <>
             <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
+            <div className="space-y-2">
+              <Label htmlFor="videoUrl">Video Presentation URL</Label>
+              <Input
+                id="videoUrl"
+                name="videoUrl"
+                placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
+                value={formData.videoUrl}
+                onChange={handleInputChange}
+                className="bg-zinc-800 border-zinc-700"
+              />
+              <p className="text-xs text-zinc-500 mt-1">
+                Upload a 1-2 minute video presentation about yourself and your goals
+              </p>
+            </div>
+
             <div className="space-y-2">
               <Label htmlFor="buildingCompany">Are you building a company?</Label>
               <Select
@@ -554,18 +574,6 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
                     className="bg-zinc-800 border-zinc-700"
                   />
                 </div>
-                
-                <div className="space-y-2">
-                  <Label htmlFor="videoUrl">Video URL (Optional)</Label>
-                  <Input
-                    id="videoUrl"
-                    name="videoUrl"
-                    placeholder="Video presentation URL"
-                    value={formData.videoUrl}
-                    onChange={handleInputChange}
-                    className="bg-zinc-800 border-zinc-700"
-                  />
-                </div>
               </>
             )}
           </>
@@ -602,7 +610,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
             </Button>
           )}
         </div>
-      </motion.div>
+      </div>
     );
   };
 
@@ -642,7 +650,14 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       )}
 
       {currentStep <= 3 ? (
-        <FormStep step={currentStep} />
+        <motion.div
+          key={`step-${currentStep}`}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
+        >
+          <FormStep step={currentStep} />
+        </motion.div>
       ) : (
         <motion.div
           initial={{ opacity: 0 }}
