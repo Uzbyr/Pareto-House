@@ -129,16 +129,22 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleSelectChange = (name: string, value: string) => {
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => {
     if (e.target.files && e.target.files[0]) {
-      setFormData((prev) => ({ 
+      setFormData(prev => ({ 
         ...prev, 
         [fieldName]: e.target.files?.[0] || null 
       }));
@@ -173,12 +179,12 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       }
     }
 
-    setCurrentStep((prev) => prev + 1);
+    setCurrentStep(prev => prev + 1);
     window.scrollTo(0, 0);
   };
 
   const prevStep = () => {
-    setCurrentStep((prev) => prev - 1);
+    setCurrentStep(prev => prev - 1);
     window.scrollTo(0, 0);
   };
 
