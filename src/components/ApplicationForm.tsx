@@ -281,239 +281,135 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     }
   }, [formData, onSubmitSuccess, requiresPreparatoryQuestion]);
 
-  // Personal Information Step (Step 1)
-  const renderPersonalInformationStep = () => {
-    return (
-      <div key="step1" className="space-y-6">
-        <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label htmlFor="firstName">First Name</Label>
-            <Input
-              id="firstName"
-              name="firstName"
-              placeholder="Enter your first name"
-              value={formData.firstName}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700"
-              required
-            />
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="lastName">Last Name</Label>
-            <Input
-              id="lastName"
-              name="lastName"
-              placeholder="Enter your last name"
-              value={formData.lastName}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700"
-              required
-            />
-          </div>
-        </div>
+  // Render functions for each step
+  const PersonalInformationStep = () => (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="email">Email Address</Label>
+          <Label htmlFor="firstName">First Name</Label>
           <Input
-            id="email"
-            name="email"
-            type="email"
-            placeholder="Enter your email address"
-            value={formData.email}
+            id="firstName"
+            name="firstName"
+            placeholder="Enter your first name"
+            value={formData.firstName}
             onChange={handleInputChange}
             className="bg-zinc-800 border-zinc-700"
             required
           />
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="space-y-2">
-            <Label htmlFor="country">Country of Residence</Label>
-            <Select
-              value={formData.country}
-              onValueChange={(value) => handleSelectChange("country", value)}
-            >
-              <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                <SelectValue placeholder="Select your country" />
-              </SelectTrigger>
-              <SelectContent>
-                {countries.map((country) => (
-                  <SelectItem key={country} value={country}>
-                    {country}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
-          <div className="space-y-2">
-            <Label htmlFor="nationality">Nationality</Label>
-            <Select
-              value={formData.nationality}
-              onValueChange={(value) => handleSelectChange("nationality", value)}
-            >
-              <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                <SelectValue placeholder="Select your nationality" />
-              </SelectTrigger>
-              <SelectContent>
-                {nationalities.map((nationality) => (
-                  <SelectItem key={nationality} value={nationality}>
-                    {nationality}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+        <div className="space-y-2">
+          <Label htmlFor="lastName">Last Name</Label>
+          <Input
+            id="lastName"
+            name="lastName"
+            placeholder="Enter your last name"
+            value={formData.lastName}
+            onChange={handleInputChange}
+            className="bg-zinc-800 border-zinc-700"
+            required
+          />
         </div>
       </div>
-    );
-  };
-
-  // Educational Background Step (Step 2)
-  const renderEducationalBackgroundStep = () => {
-    return (
-      <div key="step2" className="space-y-6">
-        <h2 className="text-2xl font-bold mb-4">Educational Background</h2>
+      <div className="space-y-2">
+        <Label htmlFor="email">Email Address</Label>
+        <Input
+          id="email"
+          name="email"
+          type="email"
+          placeholder="Enter your email address"
+          value={formData.email}
+          onChange={handleInputChange}
+          className="bg-zinc-800 border-zinc-700"
+          required
+        />
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <div className="space-y-2">
-          <Label htmlFor="university">University</Label>
+          <Label htmlFor="country">Country of Residence</Label>
           <Select
-            value={formData.university}
-            onValueChange={(value) => handleSelectChange("university", value)}
+            value={formData.country}
+            onValueChange={(value) => handleSelectChange("country", value)}
           >
             <SelectTrigger className="bg-zinc-800 border-zinc-700">
-              <SelectValue placeholder="Select your university" />
+              <SelectValue placeholder="Select your country" />
             </SelectTrigger>
             <SelectContent>
-              {availableUniversities.map((uni) => (
-                <SelectItem key={uni} value={uni}>
-                  {uni}
+              {countries.map((country) => (
+                <SelectItem key={country} value={country}>
+                  {country}
                 </SelectItem>
               ))}
             </SelectContent>
           </Select>
         </div>
-
-        {formData.university === "Other" && (
-          <div className="space-y-2">
-            <Label htmlFor="otherUniversity">Specify University</Label>
-            <Input
-              id="otherUniversity"
-              name="otherUniversity"
-              placeholder="Enter your university name"
-              value={formData.otherUniversity}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700"
-              required
-            />
-          </div>
-        )}
-        
-        {requiresPreparatoryQuestion() && (
-          <div className="space-y-2">
-            <Label htmlFor="preparatoryClasses">
-              Have you taken preparatory classes (classes préparatoires) in the French education system?
-            </Label>
-            <Select
-              value={formData.preparatoryClasses}
-              onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
-            >
-              <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                <SelectValue placeholder="Select an option" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="yes">Yes</SelectItem>
-                <SelectItem value="no">No</SelectItem>
-              </SelectContent>
-            </Select>
-          </div>
-        )}
-        
         <div className="space-y-2">
-          <Label htmlFor="major">Major</Label>
+          <Label htmlFor="nationality">Nationality</Label>
+          <Select
+            value={formData.nationality}
+            onValueChange={(value) => handleSelectChange("nationality", value)}
+          >
+            <SelectTrigger className="bg-zinc-800 border-zinc-700">
+              <SelectValue placeholder="Select your nationality" />
+            </SelectTrigger>
+            <SelectContent>
+              {nationalities.map((nationality) => (
+                <SelectItem key={nationality} value={nationality}>
+                  {nationality}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+      </div>
+    </div>
+  );
+
+  const EducationalBackgroundStep = () => (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">Educational Background</h2>
+      <div className="space-y-2">
+        <Label htmlFor="university">University</Label>
+        <Select
+          value={formData.university}
+          onValueChange={(value) => handleSelectChange("university", value)}
+        >
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
+            <SelectValue placeholder="Select your university" />
+          </SelectTrigger>
+          <SelectContent>
+            {availableUniversities.map((uni) => (
+              <SelectItem key={uni} value={uni}>
+                {uni}
+              </SelectItem>
+            ))}
+          </SelectContent>
+        </Select>
+      </div>
+
+      {formData.university === "Other" && (
+        <div className="space-y-2">
+          <Label htmlFor="otherUniversity">Specify University</Label>
           <Input
-            id="major"
-            name="major"
-            placeholder="Enter your major"
-            value={formData.major}
+            id="otherUniversity"
+            name="otherUniversity"
+            placeholder="Enter your university name"
+            value={formData.otherUniversity}
             onChange={handleInputChange}
             className="bg-zinc-800 border-zinc-700"
             required
           />
         </div>
+      )}
+      
+      {requiresPreparatoryQuestion() && (
         <div className="space-y-2">
-          <Label htmlFor="graduationYear">Graduation Year</Label>
+          <Label htmlFor="preparatoryClasses">
+            Have you taken preparatory classes (classes préparatoires) in the French education system?
+          </Label>
           <Select
-            value={formData.graduationYear}
-            onValueChange={(value) => handleSelectChange("graduationYear", value)}
-          >
-            <SelectTrigger className="bg-zinc-800 border-zinc-700">
-              <SelectValue placeholder="Select year" />
-            </SelectTrigger>
-            <SelectContent>
-              <SelectItem value="2024">2024</SelectItem>
-              <SelectItem value="2025">2025</SelectItem>
-              <SelectItem value="2026">2026</SelectItem>
-              <SelectItem value="2027">2027</SelectItem>
-              <SelectItem value="2028">2028</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="studentSocieties">Student Societies</Label>
-          <Textarea
-            id="studentSocieties"
-            name="studentSocieties"
-            placeholder="Are you part of any student societies or organizations? Please list them."
-            value={formData.studentSocieties}
-            onChange={handleInputChange}
-            className="bg-zinc-800 border-zinc-700 min-h-[80px]"
-          />
-        </div>
-        
-        <div className="space-y-2">
-          <Label htmlFor="resumeFile">Resume (PDF)</Label>
-          <Input
-            id="resumeFile"
-            name="resumeFile"
-            type="file"
-            accept=".pdf"
-            onChange={(e) => handleFileChange(e, "resumeFile")}
-            className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
-          />
-          {formData.resumeFile && (
-            <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
-              <Check className="h-4 w-4" /> {formData.resumeFile.name}
-            </p>
-          )}
-        </div>
-      </div>
-    );
-  };
-
-  // Additional Information Step (Step 3)
-  const renderAdditionalInformationStep = () => {
-    return (
-      <div key="step3" className="space-y-6">
-        <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
-        <div className="space-y-2">
-          <Label htmlFor="videoUrl">Video Presentation URL</Label>
-          <Input
-            id="videoUrl"
-            name="videoUrl"
-            placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
-            value={formData.videoUrl}
-            onChange={handleInputChange}
-            className="bg-zinc-800 border-zinc-700"
-          />
-          <p className="text-xs text-zinc-500 mt-1">
-            Upload a 1-2 minute video presentation about yourself and your goals
-          </p>
-        </div>
-
-        <div className="space-y-2">
-          <Label htmlFor="buildingCompany">Are you building a company?</Label>
-          <Select
-            value={formData.buildingCompany}
-            onValueChange={(value) => handleSelectChange("buildingCompany", value)}
+            value={formData.preparatoryClasses}
+            onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
           >
             <SelectTrigger className="bg-zinc-800 border-zinc-700">
               <SelectValue placeholder="Select an option" />
@@ -524,109 +420,197 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
             </SelectContent>
           </Select>
         </div>
+      )}
+      
+      <div className="space-y-2">
+        <Label htmlFor="major">Major</Label>
+        <Input
+          id="major"
+          name="major"
+          placeholder="Enter your major"
+          value={formData.major}
+          onChange={handleInputChange}
+          className="bg-zinc-800 border-zinc-700"
+          required
+        />
+      </div>
+      <div className="space-y-2">
+        <Label htmlFor="graduationYear">Graduation Year</Label>
+        <Select
+          value={formData.graduationYear}
+          onValueChange={(value) => handleSelectChange("graduationYear", value)}
+        >
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
+            <SelectValue placeholder="Select year" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="2024">2024</SelectItem>
+            <SelectItem value="2025">2025</SelectItem>
+            <SelectItem value="2026">2026</SelectItem>
+            <SelectItem value="2027">2027</SelectItem>
+            <SelectItem value="2028">2028</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
 
-        {formData.buildingCompany === "yes" && (
-          <>
-            <div className="space-y-2">
-              <Label htmlFor="companyContext">Company Context</Label>
-              <Textarea
-                id="companyContext"
-                name="companyContext"
-                placeholder="Tell us about the company you're building"
-                value={formData.companyContext}
-                onChange={handleInputChange}
-                className="bg-zinc-800 border-zinc-700 min-h-[120px]"
-              />
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="deckFile">Pitch Deck (Optional)</Label>
-              <Input
-                id="deckFile"
-                name="deckFile"
-                type="file"
-                accept=".pdf,.ppt,.pptx"
-                onChange={(e) => handleFileChange(e, "deckFile")}
-                className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
-              />
-              {formData.deckFile && (
-                <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
-                  <Check className="h-4 w-4" /> {formData.deckFile.name}
-                </p>
-              )}
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="memoFile">Memo (Optional)</Label>
-              <Input
-                id="memoFile"
-                name="memoFile"
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={(e) => handleFileChange(e, "memoFile")}
-                className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
-              />
-              {formData.memoFile && (
-                <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
-                  <Check className="h-4 w-4" /> {formData.memoFile.name}
-                </p>
-              )}
-            </div>
-            
-            <div className="space-y-2">
-              <Label htmlFor="websiteUrl">Website URL (Optional)</Label>
-              <Input
-                id="websiteUrl"
-                name="websiteUrl"
-                placeholder="https://your-company.com"
-                value={formData.websiteUrl}
-                onChange={handleInputChange}
-                className="bg-zinc-800 border-zinc-700"
-              />
-            </div>
-          </>
+      <div className="space-y-2">
+        <Label htmlFor="studentSocieties">Student Societies</Label>
+        <Textarea
+          id="studentSocieties"
+          name="studentSocieties"
+          placeholder="Are you part of any student societies or organizations? Please list them."
+          value={formData.studentSocieties}
+          onChange={handleInputChange}
+          className="bg-zinc-800 border-zinc-700 min-h-[80px]"
+        />
+      </div>
+      
+      <div className="space-y-2">
+        <Label htmlFor="resumeFile">Resume (PDF)</Label>
+        <Input
+          id="resumeFile"
+          name="resumeFile"
+          type="file"
+          accept=".pdf"
+          onChange={(e) => handleFileChange(e, "resumeFile")}
+          className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
+        />
+        {formData.resumeFile && (
+          <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
+            <Check className="h-4 w-4" /> {formData.resumeFile.name}
+          </p>
         )}
       </div>
-    );
-  };
+    </div>
+  );
 
-  // Success Step (Step 4)
-  const renderSuccessStep = () => {
-    return (
-      <div className="text-center py-12">
-        <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6">
-          <Check className="h-8 w-8 text-white" />
-        </div>
-        <h2 className="text-2xl font-bold mb-4">Application Submitted!</h2>
-        <p className="text-gray-400 mb-8">
-          Thank you for applying to the Pareto Fellowship. We will review your
-          application and get back to you soon.
+  const AdditionalInformationStep = () => (
+    <div className="space-y-6">
+      <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
+      <div className="space-y-2">
+        <Label htmlFor="videoUrl">Video Presentation URL</Label>
+        <Input
+          id="videoUrl"
+          name="videoUrl"
+          placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
+          value={formData.videoUrl}
+          onChange={handleInputChange}
+          className="bg-zinc-800 border-zinc-700"
+        />
+        <p className="text-xs text-zinc-500 mt-1">
+          Upload a 1-2 minute video presentation about yourself and your goals
         </p>
-        <Button
-          onClick={() => window.location.href = "/"}
-          className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
-        >
-          Return to Homepage
-        </Button>
       </div>
-    );
-  };
 
-  // Render the appropriate step content based on currentStep
-  const renderStepContent = useCallback(() => {
+      <div className="space-y-2">
+        <Label htmlFor="buildingCompany">Are you building a company?</Label>
+        <Select
+          value={formData.buildingCompany}
+          onValueChange={(value) => handleSelectChange("buildingCompany", value)}
+        >
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
+            <SelectValue placeholder="Select an option" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="yes">Yes</SelectItem>
+            <SelectItem value="no">No</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {formData.buildingCompany === "yes" && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="companyContext">Company Context</Label>
+            <Textarea
+              id="companyContext"
+              name="companyContext"
+              placeholder="Tell us about the company you're building"
+              value={formData.companyContext}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700 min-h-[120px]"
+            />
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="deckFile">Pitch Deck (Optional)</Label>
+            <Input
+              id="deckFile"
+              name="deckFile"
+              type="file"
+              accept=".pdf,.ppt,.pptx"
+              onChange={(e) => handleFileChange(e, "deckFile")}
+              className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
+            />
+            {formData.deckFile && (
+              <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
+                <Check className="h-4 w-4" /> {formData.deckFile.name}
+              </p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="memoFile">Memo (Optional)</Label>
+            <Input
+              id="memoFile"
+              name="memoFile"
+              type="file"
+              accept=".pdf,.doc,.docx"
+              onChange={(e) => handleFileChange(e, "memoFile")}
+              className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
+            />
+            {formData.memoFile && (
+              <p className="text-sm text-green-400 flex items-center gap-1 mt-1">
+                <Check className="h-4 w-4" /> {formData.memoFile.name}
+              </p>
+            )}
+          </div>
+          
+          <div className="space-y-2">
+            <Label htmlFor="websiteUrl">Website URL (Optional)</Label>
+            <Input
+              id="websiteUrl"
+              name="websiteUrl"
+              placeholder="https://your-company.com"
+              value={formData.websiteUrl}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+            />
+          </div>
+        </>
+      )}
+    </div>
+  );
+
+  const SuccessStep = () => (
+    <div className="text-center py-12">
+      <div className="w-16 h-16 bg-green-500 rounded-full mx-auto flex items-center justify-center mb-6">
+        <Check className="h-8 w-8 text-white" />
+      </div>
+      <h2 className="text-2xl font-bold mb-4">Application Submitted!</h2>
+      <p className="text-gray-400 mb-8">
+        Thank you for applying to the Pareto Fellowship. We will review your
+        application and get back to you soon.
+      </p>
+      <Button
+        onClick={() => window.location.href = "/"}
+        className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
+      >
+        Return to Homepage
+      </Button>
+    </div>
+  );
+
+  // Render content based on current step
+  const renderStepContent = () => {
     switch (currentStep) {
-      case 1:
-        return renderPersonalInformationStep();
-      case 2:
-        return renderEducationalBackgroundStep();
-      case 3:
-        return renderAdditionalInformationStep();
-      case 4:
-        return renderSuccessStep();
-      default:
-        return null;
+      case 1: return <PersonalInformationStep />;
+      case 2: return <EducationalBackgroundStep />;
+      case 3: return <AdditionalInformationStep />;
+      case 4: return <SuccessStep />;
+      default: return null;
     }
-  }, [currentStep]);
+  };
 
   return (
     <div className="bg-zinc-900 border border-zinc-800 rounded-lg p-8 shadow-lg">
@@ -699,7 +683,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
           </div>
         </form>
       ) : (
-        renderSuccessStep()
+        <SuccessStep />
       )}
     </div>
   );
