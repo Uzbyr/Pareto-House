@@ -1,41 +1,12 @@
 
-import { motion, AnimatePresence } from "framer-motion";
-import ScrollingUniversities from "../components/ScrollingUniversities";
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Gift, Lock } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
+import ScrollingUniversities from "../components/ScrollingUniversities";
 
 const Index = () => {
-  const pageVariants = {
-    initial: {
-      opacity: 0,
-    },
-    animate: {
-      opacity: 1,
-      transition: {
-        duration: 0.5,
-        ease: "easeInOut",
-      },
-    },
-  };
-
-  const childVariants = {
-    initial: {
-      opacity: 0,
-      y: 10,
-    },
-    animate: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.3,
-        ease: "easeOut",
-      },
-    },
-  };
-
   const navigate = useNavigate();
 
   const handleAdminLogin = () => {
@@ -79,15 +50,12 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 pt-64 md:pt-80 pb-20">
+      <div className="container mx-auto px-4 pt-32 md:pt-48 pb-20">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
               The Most Ambitious{" "}
-              <span className="relative inline-block group">
-                <span className="text-pareto-pink">Undergraduate</span>
-                <span className="absolute -bottom-1 left-0 w-full h-0.5 bg-pareto-pink transform scale-x-0 transition-all duration-500 origin-left group-hover:scale-x-100 group-hover:h-1"></span>
-              </span>{" "}
+              <span className="text-pareto-pink">Undergraduate</span>{" "}
               Community
             </h1>
           </div>
@@ -102,7 +70,7 @@ const Index = () => {
               className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
             >
               Apply Now
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-5 h-5" />
             </Link>
             <a
               href="https://www.pareto20.com"
@@ -115,7 +83,7 @@ const Index = () => {
           </div>
 
           {/* Stats Section */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-40">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
             {[
               { number: "50", label: "Fellows Per Batch" },
               { number: "30+", label: "Universities" },
@@ -246,7 +214,7 @@ const Index = () => {
               className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
             >
               Apply Now
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
+              <ArrowRight className="w-5 h-5" />
             </Link>
           </div>
         </div>
