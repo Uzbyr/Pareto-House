@@ -1,7 +1,6 @@
 
 export interface Application {
   id: number;
-  name: string;
   email: string;
   school: string;
   major?: string;
@@ -9,10 +8,11 @@ export interface Application {
   videoUrl?: string;
   submissionDate: string;
   status: "pending" | "approved" | "rejected";
-  firstName?: string;
-  lastName?: string;
+  firstName: string;
+  lastName: string;
   graduationYear?: string;
   interests?: string;
   preparatoryClasses?: string;
   referral?: string;
+  name?: string; // Making name optional since we'll derive it from firstName and lastName
 }

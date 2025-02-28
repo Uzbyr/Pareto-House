@@ -12,6 +12,6 @@ export interface AuthContextType {
   siteMetrics: SiteMetrics;
   refreshMetrics: () => void;
   getApplications: () => Application[];
-  submitApplication: (application: Omit<Application, "id" | "submissionDate" | "status">) => void;
+  submitApplication: (application: Omit<Application, "id" | "submissionDate" | "status" | "name">) => void;
   trackPageVisit: (page: string) => void;
 }
