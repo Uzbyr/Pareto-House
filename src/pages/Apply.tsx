@@ -3,24 +3,19 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm";
 import { useEffect } from "react";
-import { useAuth } from "@/contexts/AuthContext";
 
 const Apply = () => {
   const navigate = useNavigate();
-  const { trackPageVisit } = useAuth();
 
   // Track page visit for analytics
   useEffect(() => {
-    // Track this page visit in our analytics system
-    trackPageVisit("Apply");
+    // In a production app, this would be an analytics service call
+    console.log("Application page visited");
     
-    // For our demo, we'll also increment a page view counter in localStorage (legacy approach)
+    // For our demo, we'll just increment a page view counter in localStorage
     const applyPageViews = localStorage.getItem('applyPageViews') || '0';
     localStorage.setItem('applyPageViews', (parseInt(applyPageViews) + 1).toString());
-    
-    // Log for debugging purposes
-    console.log("Application page visited");
-  }, [trackPageVisit]);
+  }, []);
 
   return (
     <div className="min-h-screen bg-pareto-black text-white font-inter">

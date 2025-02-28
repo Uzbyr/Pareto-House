@@ -46,14 +46,11 @@ const Applications = () => {
   // Initial load of applications
   useEffect(() => {
     setApplications(getApplications());
-    console.log("Loading applications from AuthContext");
   }, [getApplications]);
 
   const refreshApplications = () => {
     setIsRefreshing(true);
-    const updatedApplications = getApplications();
-    setApplications(updatedApplications);
-    console.log("Applications refreshed:", updatedApplications.length);
+    setApplications(getApplications());
     refreshMetrics();
     toast.success("Applications data refreshed");
     setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
