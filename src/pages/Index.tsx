@@ -50,7 +50,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 pt-32 md:pt-48 pb-20">
+      <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
@@ -132,12 +132,12 @@ const Index = () => {
                 description: "Up to $100,000 in grant funding for exceptional projects"
               },
               {
-                icon: <Gift className="w-10 h-10 text-pareto-pink" />,
+                icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pareto-pink"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>,
                 title: "Mentor Network",
                 description: "Connect with top founders, operators, and researchers"
               },
               {
-                icon: <Gift className="w-10 h-10 text-pareto-pink" />,
+                icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pareto-pink"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>,
                 title: "Cohort Community",
                 description: "Join a vetted peer group of ambitious undergraduates"
               },

@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
@@ -69,7 +70,7 @@ const universities = [
   },
   {
     name: "Princeton",
-    logo: "/lovable-uploads/36e958d6-20f5-4981-ab4f-23e535ca6dc9.png"
+    logo: "/lovable-uploads/36e958d6-20f5-4981-af4f-23e535ca6dc9.png"
   },
   {
     name: "ETH Zurich",
@@ -90,6 +91,10 @@ const universities = [
   {
     name: "ESSEC",
     logo: "/lovable-uploads/d632a680-9cfd-42ca-977b-de196318580c.png"
+  },
+  {
+    name: "Imperial College London",
+    logo: "/lovable-uploads/3a7cff91-9674-4859-90e5-ca7fb6992275.png"
   }
 ];
 

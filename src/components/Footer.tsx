@@ -1,58 +1,24 @@
-
-import { TwitterIcon, LinkedinIcon } from "lucide-react";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="border-t border-black/10 dark:border-white/10 py-12 mt-20">
+    <footer className="bg-black/5 dark:bg-white/5 py-12 border-t border-black/10 dark:border-white/10">
       <div className="container mx-auto px-4">
-        <div className="flex flex-col md:flex-row items-center justify-between gap-8">
-          <div className="flex items-center gap-8">
-            <a href="https://www.pareto20.com" target="_blank" rel="noopener noreferrer">
-              <img
-                src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
-                alt="Pareto Logo"
-                className="w-36"
-              />
-            </a>
-            <div className="flex items-center gap-4">
-              <a
-                href="https://twitter.com/Pareto_Fellows"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black/70 dark:text-white/70 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
-              >
-                <TwitterIcon className="w-6 h-6" />
-              </a>
-              <a
-                href="https://www.linkedin.com/company/pareto-fellows/"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-black/70 dark:text-white/70 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
-              >
-                <LinkedinIcon className="w-6 h-6" />
-              </a>
-            </div>
-          </div>
-          <a
-            href="https://www.youtube.com/watch?v=lc8ourcIe10"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-pareto-pink hover:opacity-80 transition-opacity text-sm underline decoration-1 underline-offset-4"
-          >
-            Build brutally, or don't.
-          </a>
-          <p className="text-black/70 dark:text-white/70 text-sm">
-            Any questions? Text{" "}
-            <a
-              href="https://www.linkedin.com/in/julesboustouller/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-pareto-pink hover:underline"
-            >
-              Jules
-            </a>{" "}
-            at +33 7 77 00 29 75
+        <div className="flex flex-col md:flex-row justify-between items-center">
+          <p className="text-sm text-black/60 dark:text-white/60 mb-4 md:mb-0">
+            © {new Date().getFullYear()} Pareto Fellowship. All rights reserved.
           </p>
+          <div className="flex gap-4">
+            <Link to="/terms" className="text-sm text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors duration-300">
+              Terms of Service
+            </Link>
+            <Link to="/privacy" className="text-sm text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors duration-300">
+              Privacy Policy
+            </Link>
+            <Link to="/tech-partners" className="text-sm text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors duration-300">
+              Tech Partners
+            </Link>
+          </div>
         </div>
       </div>
     </footer>
