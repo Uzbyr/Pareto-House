@@ -1,5 +1,4 @@
 
-import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 import ApplicationForm from "../components/ApplicationForm";
 import { useEffect } from "react";
@@ -20,12 +19,7 @@ const Apply = () => {
   return (
     <div className="min-h-screen bg-gradient-to-b from-pareto-black to-zinc-900 text-white font-inter">
       <div className="container mx-auto px-4 py-12">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 0.4 }}
-          className="max-w-3xl mx-auto"
-        >
+        <div className="max-w-3xl mx-auto">
           <div className="mb-8">
             <button
               onClick={() => navigate("/")}
@@ -46,7 +40,7 @@ const Apply = () => {
             </div>
           </div>
           <ApplicationForm />
-        </motion.div>
+        </div>
       </div>
     </div>
   );
