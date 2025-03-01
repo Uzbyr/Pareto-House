@@ -5,7 +5,7 @@ import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 
-// Updated partners array with categories and company descriptions
+// Updated partners array with correct logos, categories and company descriptions
 const partnerCategories = [
   {
     name: "AI & Machine Learning",
@@ -125,7 +125,7 @@ const partnerCategories = [
         twitter: "https://twitter.com/codametrix"
       },
       { 
-        name: "Cohere Health", 
+        name: "Cohere", 
         url: "https://www.coherehealth.com",
         logo: "/lovable-uploads/82303084-40a9-4fce-b5d4-28e5ba38ecca.png",
         description: "Provides AI-driven solutions to streamline healthcare administration and improve patient care coordination.",
@@ -448,10 +448,10 @@ const TechPartners = () => {
               Back to Homepage
             </Link>
             <div className="text-center mt-10 mb-12">
-              <h1 className="text-4xl font-bold">
+              <h1 className="text-4xl font-bold animate-fade-in">
                 Our Tech Partners
               </h1>
-              <p className="mt-4 text-black/60 dark:text-white/60 max-w-xl mx-auto">
+              <p className="mt-4 text-black/60 dark:text-white/60 max-w-xl mx-auto animate-fade-in" style={{animationDelay: "0.1s"}}>
                 Pareto Fellows gain exclusive access to resources, mentorship, and opportunities from our tech partners.
               </p>
             </div>
@@ -459,17 +459,17 @@ const TechPartners = () => {
           
           {/* Partner detail modal/card */}
           {selectedPartner && (
-            <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 overflow-y-auto" onClick={() => setSelectedPartner(null)}>
-              <Card className="max-w-2xl w-full bg-white dark:bg-zinc-900 p-0 m-4" onClick={(e) => e.stopPropagation()}>
+            <div className="fixed inset-0 bg-black/70 flex items-center justify-center z-50 p-4 overflow-y-auto animate-fade-in" onClick={() => setSelectedPartner(null)}>
+              <Card className="max-w-2xl w-full bg-white dark:bg-zinc-900 p-0 m-4 animate-scale-in" onClick={(e) => e.stopPropagation()}>
                 <CardContent className="p-6">
                   <div className="flex justify-between items-start mb-6">
                     <div className="flex items-center gap-4">
-                      <div className="h-16 w-16 bg-zinc-100 dark:bg-zinc-800 rounded-md flex items-center justify-center overflow-hidden">
+                      <div className="h-20 w-20 bg-zinc-100 dark:bg-zinc-800 rounded-md flex items-center justify-center overflow-hidden">
                         {selectedPartner.logo ? (
                           <img 
                             src={selectedPartner.logo} 
                             alt={`${selectedPartner.name} logo`} 
-                            className="max-h-full max-w-full object-contain p-1"
+                            className="max-h-14 max-w-14 object-contain p-1"
                           />
                         ) : (
                           <span className="text-2xl font-semibold text-pareto-pink">{selectedPartner.name.charAt(0)}</span>
@@ -482,7 +482,8 @@ const TechPartners = () => {
                             href={selectedPartner.url} 
                             target="_blank" 
                             rel="noopener noreferrer"
-                            className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition"
+                            className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition-colors"
+                            aria-label={`Visit ${selectedPartner.name} website`}
                           >
                             <ExternalLink className="w-4 h-4" />
                           </a>
@@ -491,7 +492,8 @@ const TechPartners = () => {
                               href={selectedPartner.linkedin} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition"
+                              className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition-colors"
+                              aria-label={`Visit ${selectedPartner.name} LinkedIn`}
                             >
                               <Linkedin className="w-4 h-4" />
                             </a>
@@ -501,7 +503,8 @@ const TechPartners = () => {
                               href={selectedPartner.twitter} 
                               target="_blank" 
                               rel="noopener noreferrer"
-                              className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition"
+                              className="text-zinc-500 hover:text-pareto-pink dark:text-zinc-400 dark:hover:text-pareto-pink transition-colors"
+                              aria-label={`Visit ${selectedPartner.name} Twitter`}
                             >
                               <Twitter className="w-4 h-4" />
                             </a>
@@ -511,7 +514,8 @@ const TechPartners = () => {
                     </div>
                     <button 
                       onClick={() => setSelectedPartner(null)}
-                      className="text-zinc-500 hover:text-black dark:hover:text-white"
+                      className="text-zinc-500 hover:text-black dark:hover:text-white transition-colors"
+                      aria-label="Close"
                     >
                       ✕
                     </button>
@@ -534,31 +538,41 @@ const TechPartners = () => {
 
           {/* Display partners by category */}
           {partnerCategories.map((category, categoryIndex) => (
-            <div key={categoryIndex} className="mb-12">
-              <h2 className="text-2xl font-bold mb-6 text-center">{category.name}</h2>
+            <div key={categoryIndex} className="mb-16 animate-fade-up" style={{animationDelay: `${categoryIndex * 0.1}s`}}>
+              <h2 className="text-2xl font-bold mb-8 text-center">{category.name}</h2>
               <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-6">
                 {category.partners.map((partner, partnerIndex) => (
                   <button
                     key={partnerIndex}
                     onClick={() => setSelectedPartner(partner)}
-                    className="group bg-white dark:bg-zinc-900 p-4 rounded-md flex flex-col items-center justify-center hover:scale-105 transition-transform duration-300 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md aspect-square cursor-pointer"
+                    className="group bg-white dark:bg-zinc-900 p-4 rounded-md flex flex-col items-center justify-center transform hover:scale-105 transition-all duration-300 border border-zinc-200 dark:border-zinc-800 shadow-sm hover:shadow-md aspect-square cursor-pointer animate-fade-up"
+                    style={{animationDelay: `${(categoryIndex * 0.1) + (partnerIndex * 0.05)}s`}}
+                    aria-label={`View ${partner.name} details`}
                   >
                     <div className="flex items-center justify-center w-full h-full">
                       <div className="text-center">
                         {partner.logo ? (
-                          <div className="w-12 h-12 mx-auto mb-3 flex items-center justify-center">
+                          <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                             <img 
                               src={partner.logo} 
                               alt={`${partner.name} logo`} 
-                              className="max-h-full max-w-full object-contain"
+                              className="max-h-12 max-w-12 object-contain"
                             />
                           </div>
                         ) : (
-                          <div className="w-12 h-12 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-3">
+                          <div className="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-3">
                             <span className="text-xl font-semibold text-pareto-pink">{partner.name.charAt(0)}</span>
                           </div>
                         )}
-                        <span className="text-sm font-medium">{partner.name}</span>
+                        <a 
+                          href={partner.url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="text-sm font-medium text-[1.15em] hover:text-pareto-pink transition-colors duration-300"
+                        >
+                          {partner.name}
+                        </a>
                       </div>
                     </div>
                   </button>
@@ -567,14 +581,14 @@ const TechPartners = () => {
             </div>
           ))}
 
-          <div className="text-center mb-20">
+          <div className="text-center mb-20 animate-fade-up" style={{animationDelay: "0.9s"}}>
             <h2 className="text-2xl font-bold mb-6">Want to become a Tech Partner?</h2>
             <p className="text-black/60 dark:text-white/60 max-w-xl mx-auto mb-8">
               We're always looking to expand our network of partners to provide even more opportunities for our fellows.
             </p>
             <a
               href="mailto:partners@pareto.xyz"
-              className="px-6 py-3 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm inline-flex items-center gap-2"
+              className="px-6 py-3 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm inline-flex items-center gap-2 transform hover:scale-105 transition-transform duration-300"
             >
               Contact Us
             </a>
