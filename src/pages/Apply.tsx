@@ -17,7 +17,7 @@ const Apply = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-pareto-black to-zinc-900 text-white font-inter">
+    <div className="min-h-screen bg-zinc-900 text-white font-inter">
       <div className="container mx-auto px-4 py-12">
         <div className="max-w-3xl mx-auto">
           <div className="mb-8">
