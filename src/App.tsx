@@ -12,6 +12,7 @@ import Mentors from "./pages/Mentors";
 import MentorFinder from "./pages/MentorFinder";
 import FAQ from "./pages/FAQ";
 import Perks from "./pages/Perks";
+import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
 import AdminLogin from "./pages/AdminLogin";
@@ -41,6 +42,7 @@ const App = () => (
               <Route path="/mentor-finder" element={<MentorFinder />} />
               <Route path="/perks" element={<Perks />} />
               <Route path="/faq" element={<FAQ />} />
+              <Route path="/tech-partners" element={<TechPartners />} />
               
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />

@@ -32,6 +32,12 @@ const Index = () => {
                 Mentors
               </Link>
               <Link
+                to="/tech-partners"
+                className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
+              >
+                Tech Partners
+              </Link>
+              <Link
                 to="/perks"
                 className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 px-4 py-2"
               >
