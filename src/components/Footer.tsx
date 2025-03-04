@@ -8,8 +8,22 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-6 md:mb-0">
-            <div className="font-bold text-xl text-pareto-pink">Pareto</div>
-            <span className="text-sm text-black/60 dark:text-white/60">Build brutally or don't</span>
+            <img
+              src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
+              alt="Pareto Logo"
+              className="w-36 md:w-44"
+            />
+          </div>
+          
+          <div className="mb-6 md:mb-0">
+            <a 
+              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+              target="_blank" 
+              rel="noopener noreferrer"
+              className="text-sm text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors duration-300"
+            >
+              Build brutally or don't
+            </a>
           </div>
           
           <div className="flex flex-col md:flex-row md:items-center gap-6">
