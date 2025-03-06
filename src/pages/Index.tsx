@@ -1,3 +1,4 @@
+
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
@@ -5,6 +6,7 @@ import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import FellowshipPerks from "../components/FellowshipPerks";
+import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
 
 const Index = () => {
@@ -124,6 +126,13 @@ const Index = () => {
 
       {/* Fellowship Perks Section */}
       <FellowshipPerks />
+
+      {/* Scrolling Mentors Banner */}
+      <div className="py-20 bg-white dark:bg-pareto-black border-t border-black/10 dark:border-white/10">
+        <div className="container mx-auto px-4">
+          <ScrollingMentors />
+        </div>
+      </div>
 
       {/* Final CTA Section */}
       <FinalCTA />
