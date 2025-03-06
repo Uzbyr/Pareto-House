@@ -29,7 +29,8 @@ import {
   GraduationCap,
   Filter,
   BarChart3,
-  PieChart as PieChartIcon
+  PieChart as PieChartIcon,
+  CheckCircle2
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -65,6 +66,14 @@ const Analytics = () => {
   const getFilteredVisitorData = () => {
     const days = parseInt(timeRange.split(' ')[0]);
     return siteMetrics.visitors.byDate.slice(-days);
+  };
+
+  // Filter application data based on selected time range
+  const getFilteredApplicationData = () => {
+    const days = parseInt(timeRange.split(' ')[0]);
+    // Since we're using byDay instead of byDate in the applications data
+    // We'll just take the last few days worth of data
+    return siteMetrics.applications.byDay.slice(-days);
   };
 
   return (
@@ -291,7 +300,7 @@ const Analytics = () => {
                   <p className="text-4xl font-bold text-white mt-2">12.4%</p>
                 </div>
                 <div className="bg-purple-500/20 p-3 rounded-full">
-                  <CheckCircle className="h-6 w-6 text-purple-500" />
+                  <CheckCircle2 className="h-6 w-6 text-purple-500" />
                 </div>
               </div>
               <p className="text-sm text-red-500 flex items-center mt-2">
@@ -319,7 +328,7 @@ const Analytics = () => {
             <h2 className="text-xl font-bold text-white mb-6">Application Trend</h2>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
-                <AreaChart data={siteMetrics.applications.byDate}>
+                <AreaChart data={getFilteredApplicationData()}>
                   <defs>
                     <linearGradient id="colorApps" x1="0" y1="0" x2="0" y2="1">
                       <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8} />
@@ -331,7 +340,7 @@ const Analytics = () => {
                     </linearGradient>
                   </defs>
                   <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-                  <XAxis dataKey="date" stroke="#9CA3AF" />
+                  <XAxis dataKey="name" stroke="#9CA3AF" />
                   <YAxis stroke="#9CA3AF" />
                   <Tooltip
                     contentStyle={{
@@ -348,15 +357,6 @@ const Analytics = () => {
                     fillOpacity={1}
                     fill="url(#colorApps)"
                     name="Applications"
-                  />
-                  <Area
-                    type="monotone"
-                    dataKey="approved"
-                    stackId="2"
-                    stroke="#10B981"
-                    fillOpacity={1}
-                    fill="url(#colorApprove)"
-                    name="Approved"
                   />
                   <Legend />
                 </AreaChart>

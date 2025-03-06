@@ -1,174 +1,173 @@
 
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { 
-  Building2, 
-  GraduationCap,
-  Filter,
-  BarChart3
-} from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
-import { useState } from "react";
+import {
+  BarChart,
+  Bar,
+  XAxis,
+  YAxis,
+  CartesianGrid,
+  Tooltip,
+  ResponsiveContainer,
+  Legend,
+  LineChart,
+  Line,
+} from "recharts";
 
-// Mock data for the quality metrics
 const universityData = [
-  { name: "Stanford", score: 92, count: 28 },
-  { name: "MIT", score: 89, count: 24 },
-  { name: "Harvard", score: 86, count: 22 },
-  { name: "Carnegie Mellon", score: 85, count: 19 },
-  { name: "UC Berkeley", score: 84, count: 31 },
-  { name: "Princeton", score: 82, count: 16 },
-  { name: "UCLA", score: 78, count: 27 },
-  { name: "NYU", score: 76, count: 25 },
-  { name: "USC", score: 74, count: 20 },
-  { name: "UIUC", score: 72, count: 18 }
+  { name: "Stanford", quality: 92, count: 48 },
+  { name: "MIT", quality: 90, count: 42 },
+  { name: "Harvard", quality: 88, count: 36 },
+  { name: "UC Berkeley", quality: 86, count: 45 },
+  { name: "CMU", quality: 85, count: 32 },
+  { name: "Caltech", quality: 83, count: 18 },
+  { name: "Princeton", quality: 82, count: 24 },
 ];
 
-const referralData = [
-  { name: "Faculty Referral", score: 88, count: 42 },
-  { name: "Alumni", score: 86, count: 38 },
-  { name: "LinkedIn", score: 79, count: 64 },
-  { name: "Twitter", score: 76, count: 56 },
-  { name: "Website", score: 72, count: 85 },
-  { name: "School Fair", score: 71, count: 48 },
-  { name: "Email Campaign", score: 68, count: 73 },
-  { name: "Instagram", score: 65, count: 52 },
-  { name: "Hackathon", score: 81, count: 29 },
-  { name: "Friend Referral", score: 74, count: 47 }
+const channelData = [
+  { name: "Direct", quality: 84, count: 120 },
+  { name: "Referral", quality: 91, count: 95 },
+  { name: "University", quality: 86, count: 78 },
+  { name: "LinkedIn", quality: 79, count: 65 },
+  { name: "Twitter", quality: 74, count: 42 },
+  { name: "Instagram", quality: 72, count: 35 },
 ];
 
 const QualityMetricsChart = () => {
-  const [dataType, setDataType] = useState<'university' | 'referral'>('university');
-  const [sortBy, setSortBy] = useState<'score' | 'count'>('score');
-  
-  // Choose data based on type
-  const data = dataType === 'university' ? universityData : referralData;
-  
-  // Sort data
-  const sortedData = [...data].sort((a, b) => b[sortBy] - a[sortBy]).slice(0, 10);
-
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row justify-between sm:items-center gap-4">
-        <h2 className="text-xl font-bold text-white">Quality Metrics by Source</h2>
-        <div className="flex gap-3">
-          <div className="flex">
-            <Button
-              variant={dataType === 'university' ? "pink" : "outline"}
-              className={dataType !== 'university' ? "border-zinc-700 text-gray-300 rounded-r-none" : "rounded-r-none"}
-              onClick={() => setDataType('university')}
-            >
-              <GraduationCap className="h-4 w-4 mr-2" />
-              Universities
-            </Button>
-            <Button
-              variant={dataType === 'referral' ? "pink" : "outline"}
-              className={dataType !== 'referral' ? "border-zinc-700 text-gray-300 rounded-l-none" : "rounded-l-none"}
-              onClick={() => setDataType('referral')}
-            >
-              <Building2 className="h-4 w-4 mr-2" />
-              Referral Sources
-            </Button>
-          </div>
-          <div className="flex">
-            <Button
-              variant={sortBy === 'score' ? "pink" : "outline"}
-              className={sortBy !== 'score' ? "border-zinc-700 text-gray-300 rounded-r-none" : "rounded-r-none"}
-              onClick={() => setSortBy('score')}
-            >
-              <BarChart3 className="h-4 w-4 mr-2" />
-              By Quality
-            </Button>
-            <Button
-              variant={sortBy === 'count' ? "pink" : "outline"}
-              className={sortBy !== 'count' ? "border-zinc-700 text-gray-300 rounded-l-none" : "rounded-l-none"}
-              onClick={() => setSortBy('count')}
-            >
-              <Filter className="h-4 w-4 mr-2" />
-              By Volume
-            </Button>
-          </div>
-        </div>
-      </div>
-
       <Card className="bg-zinc-800 border-zinc-700 p-6">
-        <div className="h-96">
+        <h2 className="text-xl font-bold text-white mb-6">Application Quality by University</h2>
+        <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
-              data={sortedData}
-              layout="vertical"
-              margin={{ top: 20, right: 30, left: 50, bottom: 5 }}
+              data={universityData}
+              margin={{
+                top: 20,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
-              <XAxis type="number" domain={[0, 100]} stroke="#9CA3AF" />
-              <YAxis dataKey="name" type="category" stroke="#9CA3AF" width={120} />
+              <XAxis dataKey="name" stroke="#9CA3AF" />
+              <YAxis 
+                yAxisId="left" 
+                stroke="#9CA3AF" 
+                domain={[60, 100]}
+                label={{ 
+                  value: 'Quality Score', 
+                  angle: -90, 
+                  position: 'insideLeft',
+                  fill: '#9CA3AF'
+                }}
+              />
+              <YAxis 
+                yAxisId="right" 
+                orientation="right" 
+                stroke="#9CA3AF"
+                label={{ 
+                  value: 'Application Count', 
+                  angle: 90, 
+                  position: 'insideRight',
+                  fill: '#9CA3AF'
+                }}
+              />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#1F2937",
                   borderColor: "#374151",
                   color: "#F9FAFB",
                 }}
-                formatter={(value, name) => {
-                  if (name === 'score') return [`${value} / 100`, 'Quality Score'];
-                  return [value, 'Applications'];
-                }}
               />
               <Legend />
               <Bar 
-                dataKey="score" 
-                fill="#EC4899" 
+                yAxisId="left"
+                dataKey="quality" 
                 name="Quality Score" 
-                radius={[0, 4, 4, 0]}
-                label={{ 
-                  position: 'right',
-                  formatter: (value: number) => `${value}`, 
-                  fill: 'white' 
-                }}
+                fill="#EC4899" 
               />
-              {sortBy === 'count' && (
-                <Bar 
-                  dataKey="count" 
-                  fill="#8B5CF6" 
-                  name="Applications" 
-                  radius={[0, 4, 4, 0]} 
-                />
-              )}
+              <Bar 
+                yAxisId="right"
+                dataKey="count" 
+                name="Application Count" 
+                fill="#3B82F6" 
+              />
             </BarChart>
           </ResponsiveContainer>
         </div>
       </Card>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="bg-zinc-800 border-zinc-700 p-6">
-          <h3 className="text-gray-400 text-sm font-medium">Highest Quality Source</h3>
-          <p className="text-2xl font-bold text-white mt-2">
-            {dataType === 'university' ? 'Stanford' : 'Faculty Referral'}
-          </p>
-          <p className="text-sm text-gray-300 mt-1">
-            92 / 100 average quality score
-          </p>
-        </Card>
+      <Card className="bg-zinc-800 border-zinc-700 p-6">
+        <h2 className="text-xl font-bold text-white mb-6">Application Quality by Source</h2>
+        <div className="h-80">
+          <ResponsiveContainer width="100%" height="100%">
+            <LineChart
+              data={channelData}
+              margin={{
+                top: 5,
+                right: 30,
+                left: 20,
+                bottom: 5,
+              }}
+            >
+              <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
+              <XAxis dataKey="name" stroke="#9CA3AF" />
+              <YAxis 
+                yAxisId="left" 
+                stroke="#9CA3AF" 
+                domain={[60, 100]}
+                label={{ 
+                  value: 'Quality Score', 
+                  angle: -90, 
+                  position: 'insideLeft',
+                  fill: '#9CA3AF'
+                }}
+              />
+              <YAxis 
+                yAxisId="right" 
+                orientation="right" 
+                stroke="#9CA3AF"
+                label={{ 
+                  value: 'Application Count', 
+                  angle: 90, 
+                  position: 'insideRight',
+                  fill: '#9CA3AF'
+                }}
+              />
+              <Tooltip
+                contentStyle={{
+                  backgroundColor: "#1F2937",
+                  borderColor: "#374151",
+                  color: "#F9FAFB",
+                }}
+              />
+              <Legend />
+              <Line 
+                yAxisId="left"
+                type="monotone" 
+                dataKey="quality" 
+                name="Quality Score" 
+                stroke="#EC4899" 
+                activeDot={{ r: 8 }} 
+              />
+              <Line 
+                yAxisId="right"
+                type="monotone" 
+                dataKey="count" 
+                name="Application Count" 
+                stroke="#3B82F6" 
+                activeDot={{ r: 8 }} 
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        </div>
+      </Card>
 
-        <Card className="bg-zinc-800 border-zinc-700 p-6">
-          <h3 className="text-gray-400 text-sm font-medium">Most Applicants</h3>
-          <p className="text-2xl font-bold text-white mt-2">
-            {dataType === 'university' ? 'UC Berkeley' : 'Website'}
-          </p>
-          <p className="text-sm text-gray-300 mt-1">
-            {dataType === 'university' ? '31' : '85'} total applications
-          </p>
-        </Card>
-
-        <Card className="bg-zinc-800 border-zinc-700 p-6">
-          <h3 className="text-gray-400 text-sm font-medium">Best Quality-Volume Ratio</h3>
-          <p className="text-2xl font-bold text-white mt-2">
-            {dataType === 'university' ? 'MIT' : 'Alumni'}
-          </p>
-          <p className="text-sm text-gray-300 mt-1">
-            High score with substantial volume
-          </p>
-        </Card>
-      </div>
+      <p className="text-sm text-gray-400 mt-4 px-6">
+        Quality score is a composite metric based on factors like completeness of application, 
+        academic achievements, project portfolio quality, and interview performance (if applicable).
+        Scores range from 0-100, with higher scores indicating stronger applications.
+      </p>
     </div>
   );
 };
