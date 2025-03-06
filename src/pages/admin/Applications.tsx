@@ -1,5 +1,5 @@
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -19,10 +19,19 @@ import {
   Clock,
   RefreshCw,
   FileSearch,
+  Flag,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+  Users
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import ApplicationDetailsDialog from "@/components/ApplicationDetailsDialog";
+import BatchComparisonDialog from "@/components/BatchComparisonDialog";
+import CommunicationDialog from "@/components/CommunicationDialog";
+import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
+import { useHotkeys } from "react-hotkeys-hook";
 
 interface Application {
   id: number;
@@ -32,6 +41,7 @@ interface Application {
   major?: string;
   submissionDate: string;
   status: string;
+  flagged?: boolean;
 }
 
 const Applications = () => {
@@ -42,6 +52,11 @@ const Applications = () => {
   const [isRefreshing, setIsRefreshing] = useState(false);
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
+  const [isBatchOpen, setIsBatchOpen] = useState(false);
+  const [isCommunicationOpen, setIsCommunicationOpen] = useState(false);
+  const [selectedApplications, setSelectedApplications] = useState<Application[]>([]);
+  const [isHelpOpen, setIsHelpOpen] = useState(false);
+  const tableRef = useRef<HTMLDivElement>(null);
 
   // Initial load of applications
   useEffect(() => {
@@ -70,7 +85,7 @@ const Applications = () => {
 
   const exportToCSV = () => {
     // Create CSV data
-    const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status"];
+    const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status", "Flagged"];
     const csvRows = [
       headers.join(","),
       ...filteredApplications.map((app) => [
@@ -81,6 +96,7 @@ const Applications = () => {
         app.major || "",
         new Date(app.submissionDate).toLocaleDateString(),
         app.status,
+        app.flagged ? "Yes" : "No"
       ].join(","))
     ];
     const csvString = csvRows.join("\n");
@@ -126,16 +142,128 @@ const Applications = () => {
     toast.success(`Application #${id} marked as ${newStatus}`);
   };
 
+  const toggleFlagApplication = (id: number) => {
+    // Get current apps from localStorage
+    const currentApps = localStorage.getItem('applications');
+    let allApps = currentApps ? JSON.parse(currentApps) : [];
+    
+    // Toggle the flagged status
+    allApps = allApps.map((app: Application) => {
+      if (app.id === id) {
+        const newFlaggedStatus = !app.flagged;
+        return { ...app, flagged: newFlaggedStatus };
+      }
+      return app;
+    });
+    
+    // Save back to localStorage
+    localStorage.setItem('applications', JSON.stringify(allApps));
+    
+    // Update state
+    setApplications(allApps);
+    
+    // Get the application to check its new flagged status
+    const updatedApp = allApps.find((app: Application) => app.id === id);
+    toast.success(`Application #${id} ${updatedApp?.flagged ? 'flagged' : 'unflagged'}`);
+  };
+
   const handleCheckApplication = (application: Application) => {
     setSelectedApplication(application);
     setIsDetailsOpen(true);
   };
+
+  // Batch comparison handling
+  const handleBatchComparison = () => {
+    // Get the first 4 applications in the filtered list for comparison
+    const appsToCompare = filteredApplications.slice(0, 4);
+    setSelectedApplications(appsToCompare);
+    setIsBatchOpen(true);
+  };
+
+  // Communication handling
+  const handleCommunication = (application: Application) => {
+    setSelectedApplication(application);
+    setIsCommunicationOpen(true);
+  };
+
+  // Sequential navigation
+  const navigateToApplication = useCallback((direction: 'next' | 'prev') => {
+    if (!selectedApplication) return;
+    
+    const currentIndex = filteredApplications.findIndex(app => app.id === selectedApplication.id);
+    
+    if (currentIndex === -1) return;
+    
+    let newIndex;
+    if (direction === 'next') {
+      newIndex = (currentIndex + 1) % filteredApplications.length;
+    } else {
+      newIndex = (currentIndex - 1 + filteredApplications.length) % filteredApplications.length;
+    }
+    
+    setSelectedApplication(filteredApplications[newIndex]);
+  }, [filteredApplications, selectedApplication]);
+
+  // Keyboard shortcuts using react-hotkeys-hook
+  useHotkeys('right', () => {
+    if (isDetailsOpen) navigateToApplication('next');
+  }, [isDetailsOpen, navigateToApplication]);
+  
+  useHotkeys('left', () => {
+    if (isDetailsOpen) navigateToApplication('prev');
+  }, [isDetailsOpen, navigateToApplication]);
+  
+  useHotkeys('a', () => {
+    if (isDetailsOpen && selectedApplication) {
+      updateApplicationStatus(selectedApplication.id, 'approved');
+    }
+  }, [isDetailsOpen, selectedApplication]);
+  
+  useHotkeys('r', () => {
+    if (isDetailsOpen && selectedApplication) {
+      updateApplicationStatus(selectedApplication.id, 'rejected');
+    }
+  }, [isDetailsOpen, selectedApplication]);
+  
+  useHotkeys('p', () => {
+    if (isDetailsOpen && selectedApplication) {
+      updateApplicationStatus(selectedApplication.id, 'pending');
+    }
+  }, [isDetailsOpen, selectedApplication]);
+  
+  useHotkeys('f', () => {
+    if (isDetailsOpen && selectedApplication) {
+      toggleFlagApplication(selectedApplication.id);
+    }
+  }, [isDetailsOpen, selectedApplication]);
+  
+  useHotkeys('c', () => {
+    if (isDetailsOpen && selectedApplication) {
+      setIsCommunicationOpen(true);
+    }
+  }, [isDetailsOpen, selectedApplication]);
+  
+  useHotkeys('escape', () => {
+    setIsDetailsOpen(false);
+  }, []);
+  
+  useHotkeys('?', () => {
+    setIsHelpOpen(prev => !prev);
+  }, []);
 
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold text-white">Applications</h1>
         <div className="flex gap-3">
+          <Button
+            variant="outline"
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={() => setIsHelpOpen(true)}
+          >
+            ?
+            <span className="sr-only">Keyboard Shortcuts</span>
+          </Button>
           <Button
             variant="outline"
             className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
@@ -152,6 +280,15 @@ const Applications = () => {
           >
             <Download className="h-4 w-4" />
             Export CSV
+          </Button>
+          <Button 
+            variant="outline" 
+            className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            onClick={handleBatchComparison}
+            disabled={filteredApplications.length < 2}
+          >
+            <Users className="h-4 w-4" />
+            Compare Batch
           </Button>
         </div>
       </div>
@@ -207,10 +344,20 @@ const Applications = () => {
               <XCircle className="h-4 w-4 mr-2" />
               Rejected
             </Button>
+            <Button
+              variant={statusFilter === "flagged" ? "pink" : "outline"}
+              className={`${
+                statusFilter === "flagged" ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+              }`}
+              onClick={() => setStatusFilter("flagged")}
+            >
+              <Flag className="h-4 w-4 mr-2" />
+              Flagged
+            </Button>
           </div>
         </div>
 
-        <div className="rounded-md border border-zinc-700 overflow-hidden">
+        <div ref={tableRef} className="rounded-md border border-zinc-700 overflow-hidden">
           <Table>
             <TableHeader className="bg-zinc-900">
               <TableRow className="border-zinc-700 hover:bg-zinc-800/50">
@@ -228,7 +375,12 @@ const Applications = () => {
                 filteredApplications.map((app) => (
                   <TableRow key={app.id} className="border-zinc-700 hover:bg-zinc-800/50">
                     <TableCell className="font-medium text-gray-300">#{app.id}</TableCell>
-                    <TableCell className="text-white">{app.name}</TableCell>
+                    <TableCell className="text-white">
+                      <div className="flex items-center gap-2">
+                        {app.flagged && <Flag className="h-3 w-3 text-amber-400" />}
+                        {app.name}
+                      </div>
+                    </TableCell>
                     <TableCell className="text-gray-300">{app.email}</TableCell>
                     <TableCell className="text-gray-300">{app.school}</TableCell>
                     <TableCell className="text-gray-300">{formatDate(app.submissionDate)}</TableCell>
@@ -260,6 +412,29 @@ const Applications = () => {
                           <FileSearch className="h-4 w-4" />
                           <span className="sr-only">Check Application</span>
                         </Button>
+                        
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-amber-500 hover:text-amber-400 hover:bg-amber-400/10"
+                          onClick={() => toggleFlagApplication(app.id)}
+                          title={app.flagged ? "Unflag" : "Flag for Review"}
+                        >
+                          <Flag className="h-4 w-4" />
+                          <span className="sr-only">Flag</span>
+                        </Button>
+                        
+                        <Button 
+                          size="sm" 
+                          variant="ghost" 
+                          className="h-8 w-8 p-0 text-purple-500 hover:text-purple-400 hover:bg-purple-400/10"
+                          onClick={() => handleCommunication(app)}
+                          title="Send Email"
+                        >
+                          <MessageCircle className="h-4 w-4" />
+                          <span className="sr-only">Email</span>
+                        </Button>
+                        
                         {app.status !== "approved" && (
                           <Button 
                             size="sm" 
@@ -316,6 +491,27 @@ const Applications = () => {
         application={selectedApplication}
         open={isDetailsOpen}
         onOpenChange={setIsDetailsOpen}
+        onNavigate={navigateToApplication}
+        onStatusChange={updateApplicationStatus}
+        onFlagToggle={toggleFlagApplication}
+        onCommunicate={() => setIsCommunicationOpen(true)}
+      />
+
+      <BatchComparisonDialog
+        applications={selectedApplications}
+        open={isBatchOpen}
+        onOpenChange={setIsBatchOpen}
+      />
+
+      <CommunicationDialog
+        application={selectedApplication}
+        open={isCommunicationOpen}
+        onOpenChange={setIsCommunicationOpen}
+      />
+
+      <KeyboardShortcutsHelp 
+        open={isHelpOpen}
+        onOpenChange={setIsHelpOpen}
       />
     </div>
   );

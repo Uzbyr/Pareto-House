@@ -7,7 +7,16 @@ import {
   DialogClose,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { X } from "lucide-react";
+import { 
+  X, 
+  ChevronLeft, 
+  ChevronRight, 
+  CheckCircle, 
+  XCircle, 
+  Clock, 
+  Flag, 
+  MessageCircle 
+} from "lucide-react";
 import { formatDate } from "@/lib/utils";
 
 interface Application {
@@ -18,6 +27,7 @@ interface Application {
   major?: string;
   submissionDate: string;
   status: string;
+  flagged?: boolean;
   // Additional properties that might be in the application
   firstName?: string;
   lastName?: string;
@@ -33,12 +43,20 @@ interface ApplicationDetailsDialogProps {
   application: Application | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
+  onNavigate?: (direction: 'next' | 'prev') => void;
+  onStatusChange?: (id: number, status: string) => void;
+  onFlagToggle?: (id: number) => void;
+  onCommunicate?: () => void;
 }
 
 const ApplicationDetailsDialog = ({
   application,
   open,
   onOpenChange,
+  onNavigate,
+  onStatusChange,
+  onFlagToggle,
+  onCommunicate,
 }: ApplicationDetailsDialogProps) => {
   if (!application) return null;
 
@@ -47,20 +65,125 @@ const ApplicationDetailsDialog = ({
     ? `${application.firstName} ${application.lastName}`
     : application.name;
 
+  const keyboardShortcutsInfo = [
+    { key: "←", action: "Previous application" },
+    { key: "→", action: "Next application" },
+    { key: "A", action: "Approve application" },
+    { key: "R", action: "Reject application" },
+    { key: "P", action: "Mark as pending" },
+    { key: "F", action: "Flag/unflag application" },
+    { key: "C", action: "Open communication dialog" },
+    { key: "Esc", action: "Close dialog" },
+  ];
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="bg-zinc-800 border-zinc-700 text-white max-w-4xl max-h-[90vh] overflow-y-auto">
         <DialogHeader className="border-b border-zinc-700 pb-4">
           <DialogTitle className="text-xl font-bold flex items-center justify-between">
-            <span>Application #{application.id}: {fullName}</span>
-            <DialogClose className="h-6 w-6 rounded-md border border-zinc-700 text-gray-400 hover:text-white hover:bg-zinc-700">
-              <X className="h-4 w-4" />
-              <span className="sr-only">Close</span>
-            </DialogClose>
+            <div className="flex items-center">
+              <span>Application #{application.id}: {fullName}</span>
+              {application.flagged && (
+                <Flag className="ml-2 h-4 w-4 text-amber-400" />
+              )}
+            </div>
+            <div className="flex items-center gap-2">
+              {onNavigate && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
+                    onClick={() => onNavigate('prev')}
+                    title="Previous Application (←)"
+                  >
+                    <ChevronLeft className="h-4 w-4" />
+                    <span className="sr-only">Previous</span>
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
+                    onClick={() => onNavigate('next')}
+                    title="Next Application (→)"
+                  >
+                    <ChevronRight className="h-4 w-4" />
+                    <span className="sr-only">Next</span>
+                  </Button>
+                </>
+              )}
+              <DialogClose className="h-8 w-8 rounded-md border border-zinc-700 text-gray-400 hover:text-white hover:bg-zinc-700">
+                <X className="h-4 w-4" />
+                <span className="sr-only">Close</span>
+              </DialogClose>
+            </div>
           </DialogTitle>
         </DialogHeader>
 
         <div className="py-4 space-y-6">
+          {/* Action buttons row */}
+          {(onStatusChange || onFlagToggle || onCommunicate) && (
+            <div className="bg-zinc-900/60 rounded-md p-3 flex flex-wrap gap-2 justify-center border border-zinc-700">
+              {onStatusChange && (
+                <>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-green-500 border-green-500/20 hover:bg-green-500/10 hover:text-green-400"
+                    onClick={() => onStatusChange(application.id, "approved")}
+                  >
+                    <CheckCircle className="h-4 w-4 mr-2" />
+                    Approve (A)
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-red-500 border-red-500/20 hover:bg-red-500/10 hover:text-red-400"
+                    onClick={() => onStatusChange(application.id, "rejected")}
+                  >
+                    <XCircle className="h-4 w-4 mr-2" />
+                    Reject (R)
+                  </Button>
+                  <Button
+                    variant="outline"
+                    size="sm"
+                    className="text-yellow-500 border-yellow-500/20 hover:bg-yellow-500/10 hover:text-yellow-400"
+                    onClick={() => onStatusChange(application.id, "pending")}
+                  >
+                    <Clock className="h-4 w-4 mr-2" />
+                    Pending (P)
+                  </Button>
+                </>
+              )}
+              {onFlagToggle && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className={`${
+                    application.flagged 
+                      ? "text-amber-400 border-amber-400/20 hover:bg-amber-400/10 hover:text-amber-300"
+                      : "text-gray-400 border-gray-400/20 hover:bg-gray-400/10 hover:text-gray-300"
+                  }`}
+                  onClick={() => onFlagToggle(application.id)}
+                >
+                  <Flag className="h-4 w-4 mr-2" />
+                  {application.flagged ? "Unflag (F)" : "Flag (F)"}
+                </Button>
+              )}
+              {onCommunicate && (
+                <Button
+                  variant="outline"
+                  size="sm"
+                  className="text-purple-500 border-purple-500/20 hover:bg-purple-500/10 hover:text-purple-400"
+                  onClick={onCommunicate}
+                >
+                  <MessageCircle className="h-4 w-4 mr-2" />
+                  Send Email (C)
+                </Button>
+              )}
+            </div>
+          )}
+
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             <div className="space-y-4">
               <div>
@@ -183,6 +306,18 @@ const ApplicationDetailsDialog = ({
               </div>
             </div>
           )}
+
+          <div className="mt-4 text-xs text-gray-500 border-t border-zinc-700 pt-4">
+            <h4 className="mb-1 text-gray-400">Keyboard Shortcuts:</h4>
+            <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-1">
+              {keyboardShortcutsInfo.map((item, idx) => (
+                <div key={idx} className="flex items-center gap-2">
+                  <kbd className="px-1.5 py-0.5 bg-zinc-700 rounded-md text-gray-300">{item.key}</kbd>
+                  <span>{item.action}</span>
+                </div>
+              ))}
+            </div>
+          </div>
         </div>
       </DialogContent>
     </Dialog>
