@@ -77,7 +77,7 @@ const perks = [
   {
     icon: <Users className="w-12 h-12 text-pareto-pink" />,
     title: "Elite Peer Network",
-    description: "The most exclusive community of amazingly talented and ambitious undergrads from all over the world"
+    description: "The most exclusive community of amazingly talented and ambitious undergrads from all over the world university ecosystem"
   },
   {
     icon: <PiggyBank className="w-12 h-12 text-pareto-pink" />,
