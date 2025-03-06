@@ -17,7 +17,7 @@ const Footer = () => {
           
           <div className="mb-6 md:mb-0">
             <a 
-              href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" 
+              href="https://www.youtube.com/watch?v=lc8ourcIe10" 
               target="_blank" 
               rel="noopener noreferrer"
               className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300"
