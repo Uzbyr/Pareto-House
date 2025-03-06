@@ -17,7 +17,7 @@ const mentors: Mentor[] = [
   {
     name: "Fabrice Grinda",
     linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
-    description: "Serial entrepreneur and investor",
+    description: "Founder of OLX and FJ Labs",
     imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
     country: "USA"
   },
@@ -85,10 +85,10 @@ const mentors: Mentor[] = [
     country: "USA"
   },
   {
-    name: "Olivier Godement",
-    linkedIn: "https://www.linkedin.com/in/oliviergodement/",
-    description: "Head of Product at OpenAI",
-    imageUrl: "/lovable-uploads/3ee502bc-ee4c-422f-9408-e89c6cbbab00.png",
+    name: "Gokul Rajaram",
+    linkedIn: "https://www.linkedin.com/in/gokulrajaram1/",
+    description: "Investor & Board Member at Coinbase and Pinterest",
+    imageUrl: "/lovable-uploads/98179821-cd4d-4a1e-9c84-8544e48e694f.png",
     country: "USA"
   },
   {
@@ -99,10 +99,17 @@ const mentors: Mentor[] = [
     country: "USA"
   },
   {
-    name: "Gokul Rajaram",
-    linkedIn: "https://www.linkedin.com/in/gokulrajaram/",
-    description: "Product and business leader",
+    name: "Liu Jiang",
+    linkedIn: "https://www.linkedin.com/in/liujiang/",
+    description: "Founder & GP at Sunflower and former Sequoia Partner",
     imageUrl: "/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png",
+    country: "USA"
+  },
+  {
+    name: "Reilly Opelka",
+    linkedIn: "https://www.linkedin.com/in/reillyopelka/",
+    description: "Tennis player, Investor and Art Guru",
+    imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",
     country: "USA"
   }
 ];
@@ -143,7 +150,7 @@ const ScrollingMentors = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_35s_linear_infinite]' : ''}`}
+          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_28s_linear_infinite]' : ''}`}
         >
           {mentors.concat(mentors).map((mentor, index) => (
             <motion.div
@@ -175,7 +182,13 @@ const ScrollingMentors = () => {
         </div>
       </div>
       
-      <div className="text-center mt-12">
+      <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
+        <p className="text-lg text-black/70 dark:text-white/70 italic">
+          Wisdom from leaders who have collectively built companies worth over $50 billion and invested in thousands of startups
+        </p>
+      </div>
+      
+      <div className="text-center mt-8">
         <Link 
           to="/mentors"
           className="inline-flex items-center px-6 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300 text-lg font-medium rounded-md"
