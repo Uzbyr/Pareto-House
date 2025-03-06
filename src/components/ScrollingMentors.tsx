@@ -129,6 +129,9 @@ const ScrollingMentors = () => {
         <h3 className="text-3xl md:text-4xl font-bold mb-4">
           Learn from the Best
         </h3>
+        <p className="text-black/60 dark:text-white/60 text-lg max-w-2xl mx-auto">
+          Decacorn and unicorn founders, tier 1 investors, top operators, public figures, and more
+        </p>
       </div>
       
       <div 
@@ -140,7 +143,7 @@ const ScrollingMentors = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-8 px-4 ${isAutoScrolling ? 'animate-[scroll_35s_linear_infinite]' : ''}`}
+          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_35s_linear_infinite]' : ''}`}
         >
           {mentors.concat(mentors).map((mentor, index) => (
             <motion.div
@@ -153,7 +156,7 @@ const ScrollingMentors = () => {
               onHoverEnd={() => setHoveredMentor(null)}
             >
               <Link to="/mentors" className="block relative">
-                <div className="h-32 w-32 overflow-hidden rounded-full relative transition-all duration-300">
+                <div className="h-48 w-48 overflow-hidden rounded-full relative transition-all duration-300">
                   {mentor.imageUrl && (
                     <img
                       src={mentor.imageUrl}
@@ -161,11 +164,10 @@ const ScrollingMentors = () => {
                       className="h-full w-full object-cover"
                     />
                   )}
-                  <div className={`absolute inset-0 bg-gradient-to-t from-black/70 to-transparent transition-opacity duration-300 ${hoveredMentor === mentor.name ? 'opacity-100' : 'opacity-0'}`}></div>
                 </div>
-                <div className={`absolute bottom-0 left-0 w-full text-center transition-all duration-300 ${hoveredMentor === mentor.name ? 'opacity-100 -mb-10' : 'opacity-0 mb-0'}`}>
-                  <p className="text-sm font-medium text-white truncate px-1">{mentor.name}</p>
-                  <p className="text-xs text-white/70 truncate px-1">{mentor.description}</p>
+                <div className="mt-4 text-center">
+                  <p className="font-medium text-base">{mentor.name}</p>
+                  <p className="text-sm text-black/60 dark:text-white/60">{mentor.description}</p>
                 </div>
               </Link>
             </motion.div>
