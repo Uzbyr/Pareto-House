@@ -47,22 +47,32 @@ const FinalCTA = () => {
               <div className="flex flex-col items-center">
                 <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
                   <img 
-                    src="/lovable-uploads/1e75307d-54c1-42c6-af98-0bb9438273ae.png" 
-                    alt="ZF Capital" 
-                    className="h-12 object-contain"
-                  />
-                </div>
-                <span className="text-sm font-medium">Founders Fund</span>
-              </div>
-              <div className="flex flex-col items-center">
-                <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
-                  <img 
                     src="/lovable-uploads/1ac598ab-2b9e-45b2-a5c3-69088f7cff56.png" 
                     alt="BoxGroup" 
                     className="h-14 object-contain"
                   />
                 </div>
                 <span className="text-sm font-medium">BoxGroup</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
+                  <img 
+                    src="/lovable-uploads/57b75d93-9a3a-49f2-bd17-b94c95f87b30.png" 
+                    alt="Z Fellows" 
+                    className="h-10 object-contain"
+                  />
+                </div>
+                <span className="text-sm font-medium">Z Fellows</span>
+              </div>
+              <div className="flex flex-col items-center">
+                <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
+                  <img 
+                    src="/lovable-uploads/1e75307d-54c1-42c6-af98-0bb9438273ae.png" 
+                    alt="Founders Fund" 
+                    className="h-12 object-contain"
+                  />
+                </div>
+                <span className="text-sm font-medium">Founders Fund</span>
               </div>
               <div className="flex flex-col items-center">
                 <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">

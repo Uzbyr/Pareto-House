@@ -103,7 +103,7 @@ const mentors: Mentor[] = [
     name: "Liu Jiang",
     linkedIn: "https://www.linkedin.com/in/liujiang/",
     description: "Founder & GP at Sunflower and former Sequoia Partner",
-    imageUrl: "/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png",
+    imageUrl: "/lovable-uploads/6c5fe0c4-03d3-4457-b3b6-e5f0a5cb69c6.png",
     country: "USA"
   },
   {
