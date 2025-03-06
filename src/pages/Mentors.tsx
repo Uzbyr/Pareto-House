@@ -23,7 +23,7 @@ const mentors: Mentor[] = [
   {
     name: "Fabrice Grinda",
     linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
-    description: "Serial entrepreneur and investor",
+    description: "Founder of OLX and FJ Labs",
     bio: "Fabrice Grinda is a French-American serial entrepreneur and investor. As a prominent angel investor, he has backed hundreds of startups globally through his investment vehicle. Grinda's entrepreneurial background includes founding and scaling multiple successful marketplace businesses. His investment thesis often centers on marketplace models and network-effect businesses. He is known for his data-driven approach to identifying investment opportunities across diverse geographic markets.",
     imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
     country: "USA"
@@ -31,7 +31,7 @@ const mentors: Mentor[] = [
   {
     name: "Edward Lando",
     linkedIn: "https://www.linkedin.com/in/edwardlando/",
-    description: "Serial entrepreneur and investor, co-founder of Pareto Holdings",
+    description: "Serial entrepreneur and investor",
     bio: "Edward Lando is a serial entrepreneur and investor based in the United States. He co-founded Pareto Holdings, an early-stage investment firm and venture studio that has made over 900 investments globally. Lando is also the co-founder and former CEO of Goody, a gifting app that simplifies sending gifts. He is known for combining capital investment with hands-on mentorship to help startups thrive. Lando maintains a notable presence in the startup community by championing founders and scalable technologies.",
     imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png",
     country: "USA"
@@ -80,7 +80,7 @@ const mentors: Mentor[] = [
   {
     name: "Eric Wu",
     linkedIn: "https://www.linkedin.com/in/ericwu01/",
-    description: "Founder at Opendoor and other companies",
+    description: "Founder at Opendoor",
     bio: "Eric Wu is the co-founder of Opendoor, a digital platform for residential real estate transactions. He has founded multiple successful companies and has a track record of disrupting traditional industries with technology-driven solutions. Wu's expertise spans real estate tech, marketplaces, and scaling high-growth startups.",
     imageUrl: "/lovable-uploads/b44fbc4b-212b-49e6-adcc-bf0072f797ed.png",
     country: "USA"
@@ -88,7 +88,7 @@ const mentors: Mentor[] = [
   {
     name: "Cyan Banister",
     linkedIn: "https://www.linkedin.com/in/cyantechnology/",
-    description: "Ex-Partner at Founders Fund, Angel Investor, Founder",
+    description: "Ex-Partner at Founders Fund",
     bio: "Cyan Banister is a prominent angel investor and entrepreneur. She served as a partner at Founders Fund and has made early investments in companies like SpaceX, Uber, and Postmates. As the founder of Zivity, she brings firsthand entrepreneurial experience to her advisory roles. Banister is known for her contrarian investment approach and for backing unconventional founders.",
     imageUrl: "/lovable-uploads/56ab8193-d996-4fc8-954d-c71a3d96bd5a.png",
     country: "USA"
@@ -96,7 +96,7 @@ const mentors: Mentor[] = [
   {
     name: "Venus Williams",
     linkedIn: "https://www.linkedin.com/in/venuswilliams/",
-    description: "Tennis champion, entrepreneur and investor",
+    description: "Tennis champion and entrepreneur",
     bio: "Venus Williams is a legendary tennis champion who has successfully transitioned into entrepreneurship and investing. She has founded multiple businesses including her activewear brand EleVen and interior design firm V Starr. Williams brings her championship mindset and global influence to her business ventures and investments, with a focus on wellness, women's empowerment, and equality.",
     imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
     country: "USA"
@@ -110,11 +110,11 @@ const mentors: Mentor[] = [
     country: "USA"
   },
   {
-    name: "Olivier Godement",
-    linkedIn: "https://www.linkedin.com/in/oliviergodement/",
-    description: "Head of Product at OpenAI",
-    bio: "Olivier Godement serves as the Head of Product at OpenAI, one of the world's leading artificial intelligence research laboratories. He leads product strategy and development for groundbreaking AI systems including ChatGPT and GPT-4. Before OpenAI, Godement held key product roles at Stripe, helping build financial infrastructure that powers businesses globally.",
-    imageUrl: "/lovable-uploads/3ee502bc-ee4c-422f-9408-e89c6cbbab00.png",
+    name: "Gokul Rajaram",
+    linkedIn: "https://www.linkedin.com/in/gokulrajaram1/",
+    description: "Investor & Board Member at Coinbase and Pinterest",
+    bio: "Gokul Rajaram is a seasoned product and business leader who has made significant contributions at companies like Facebook, Google, DoorDash, and Square. His experience spans product development, business strategy, and growth initiatives. Rajaram serves on the boards of multiple public and private companies, providing strategic guidance derived from his extensive career in technology.",
+    imageUrl: "/lovable-uploads/98179821-cd4d-4a1e-9c84-8544e48e694f.png",
     country: "USA"
   },
   {
@@ -126,11 +126,19 @@ const mentors: Mentor[] = [
     country: "USA"
   },
   {
-    name: "Gokul Rajaram",
-    linkedIn: "https://www.linkedin.com/in/gokulrajaram/",
-    description: "Product and business leader, board member",
-    bio: "Gokul Rajaram is a seasoned product and business leader who has made significant contributions at companies like Facebook, Google, DoorDash, and Square. His experience spans product development, business strategy, and growth initiatives. Rajaram serves on the boards of multiple public and private companies, providing strategic guidance derived from his extensive career in technology.",
-    imageUrl: "/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png",
+    name: "Liu Jiang",
+    linkedIn: "https://www.linkedin.com/in/liujiang/",
+    description: "Founder & GP at Sunflower and former Sequoia Partner",
+    bio: "Liu Jiang is a U.S.-based engineering leader and startup advisor. She leverages a strong technical background to guide product development and software architecture. Jiang's advisory work includes optimizing organizational processes and scaling engineering teams. Her experience spans multiple tech segments, reflecting a versatile problem-solving skill set. She is committed to nurturing inclusive, innovative environments that empower teams to excel.",
+    imageUrl: "/lovable-uploads/6c5fe0c4-03d3-4457-b3b6-e5f0a5cb69c6.png",
+    country: "USA"
+  },
+  {
+    name: "Reilly Opelka",
+    linkedIn: "https://www.linkedin.com/in/reillyopelka/",
+    description: "Tennis player, Investor and Art Guru",
+    bio: "Reilly Opelka is a professional tennis player and investor with interests spanning sports, technology, and art. He brings a unique perspective to his investment activities, combining his experiences as a professional athlete with a keen eye for emerging trends and opportunities. Opelka is known for his thoughtful approach to both his athletic career and his business ventures.",
+    imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",
     country: "USA"
   }
 ];
