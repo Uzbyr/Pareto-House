@@ -77,7 +77,7 @@ const Index = () => {
           </div>
 
           <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto">
-            Connect with exceptional peers, access unparalleled opportunities, and accelerate your path to impact.
+            Join a community of exceptional operators, access unparalleled opportunities, and accelerate your path to making an impact.
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-20">
