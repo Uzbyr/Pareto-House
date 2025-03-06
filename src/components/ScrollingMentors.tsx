@@ -2,6 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
 // Using the same mentor data structure from the Mentors page
 interface Mentor {
@@ -115,88 +116,19 @@ const mentors: Mentor[] = [
 ];
 
 const ScrollingMentors = () => {
-  const [hoveredMentor, setHoveredMentor] = useState<string | null>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isDragging, setIsDragging] = useState(false);
-  const [startX, setStartX] = useState(0);
-  const [scrollLeft, setScrollLeft] = useState(0);
 
-  // Setup continuous seamless scrolling with duplicated items
-  const setupInfiniteScroll = () => {
-    if (!scrollContainerRef.current) return;
-    
-    const scrollContainer = scrollContainerRef.current;
-    const scrollWidth = scrollContainer.scrollWidth;
-    const containerWidth = scrollContainer.clientWidth;
-    
-    // When we reach halfway through the duplicated items, jump back to start
-    const handleScroll = () => {
-      if (scrollContainer.scrollLeft >= scrollWidth / 2) {
-        // Disable smooth scrolling temporarily
-        scrollContainer.style.scrollBehavior = 'auto';
-        scrollContainer.scrollLeft = 1;
-        // Re-enable smooth scrolling
-        setTimeout(() => {
-          scrollContainer.style.scrollBehavior = 'smooth';
-        }, 50);
-      } else if (scrollContainer.scrollLeft <= 0) {
-        // Handle scrolling left beyond the start
-        scrollContainer.style.scrollBehavior = 'auto';
-        scrollContainer.scrollLeft = scrollWidth / 2 - 1;
-        setTimeout(() => {
-          scrollContainer.style.scrollBehavior = 'smooth';
-        }, 50);
-      }
-    };
-    
-    scrollContainer.addEventListener('scroll', handleScroll);
-    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  const handleInteraction = () => {
+    setIsAutoScrolling(false);
   };
 
-  useEffect(() => {
-    const cleanup = setupInfiniteScroll();
-    return cleanup;
-  }, []);
-
-  // Mouse drag interaction
-  const handleMouseDown = (e: React.MouseEvent) => {
-    if (!scrollContainerRef.current) return;
-    
-    setIsDragging(true);
-    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
-    setScrollLeft(scrollContainerRef.current.scrollLeft);
+  const handleInteractionEnd = () => {
+    // Only resume auto-scrolling if the user hasn't interacted for a while
+    setTimeout(() => {
+      setIsAutoScrolling(true);
+    }, 5000);
   };
-
-  const handleMouseMove = (e: React.MouseEvent) => {
-    if (!isDragging || !scrollContainerRef.current) return;
-    
-    e.preventDefault();
-    const x = e.pageX - scrollContainerRef.current.offsetLeft;
-    const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
-    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
-  };
-
-  const handleMouseUp = () => {
-    setIsDragging(false);
-  };
-
-  const handleMouseLeave = () => {
-    setIsDragging(false);
-  };
-
-  // Handle wheel events for horizontal scrolling
-  useEffect(() => {
-    const container = scrollContainerRef.current;
-    if (!container) return;
-    
-    const handleWheel = (e: WheelEvent) => {
-      e.preventDefault();
-      container.scrollLeft += e.deltaY;
-    };
-    
-    container.addEventListener('wheel', handleWheel, { passive: false });
-    return () => container.removeEventListener('wheel', handleWheel);
-  }, []);
 
   return (
     <div className="relative overflow-hidden py-16">
@@ -212,77 +144,65 @@ const ScrollingMentors = () => {
         </p>
       </div>
       
-      <div 
-        className="relative overflow-hidden py-8 cursor-grab active:cursor-grabbing"
-        onMouseDown={handleMouseDown}
-        onMouseMove={handleMouseMove}
-        onMouseUp={handleMouseUp}
-        onMouseLeave={handleMouseLeave}
+      <ScrollArea 
+        className="w-full"
+        onMouseEnter={handleInteraction}
+        onMouseLeave={handleInteractionEnd}
+        onTouchStart={handleInteraction}
+        onTouchEnd={handleInteractionEnd}
       >
         <div 
           ref={scrollContainerRef}
-          className="flex space-x-12 px-4 overflow-x-auto scrollbar-hide"
-          style={{ scrollBehavior: 'smooth' }}
+          className={`flex space-x-12 px-4 py-6 ${isAutoScrolling ? 'animate-[scroll_25s_linear_infinite]' : ''}`}
         >
           {/* First set of mentors */}
           {mentors.map((mentor, index) => (
-            <motion.div
+            <Link 
               key={`a-${mentor.name}-${index}`}
-              className="flex-shrink-0"
-              initial={{ scale: 1 }}
-              whileHover={{ scale: 1.1, zIndex: 10 }}
-              transition={{ duration: 0.3 }}
-              onHoverStart={() => setHoveredMentor(mentor.name)}
-              onHoverEnd={() => setHoveredMentor(null)}
+              to="/mentors" 
+              className="flex-shrink-0 group"
             >
-              <Link to="/mentors" className="block relative">
-                <div className="h-48 w-48 overflow-hidden rounded-full relative transition-all duration-300">
+              <div className="flex flex-col items-center w-48">
+                <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
                   {mentor.imageUrl && (
                     <img
                       src={mentor.imageUrl}
                       alt={mentor.name}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   )}
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="font-medium text-base">{mentor.name}</p>
-                  <p className="text-sm text-black/60 dark:text-white/60">{mentor.description}</p>
-                </div>
-              </Link>
-            </motion.div>
+                <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
+              </div>
+            </Link>
           ))}
           
           {/* Duplicated mentors for infinite scroll effect */}
           {mentors.map((mentor, index) => (
-            <motion.div
+            <Link 
               key={`b-${mentor.name}-${index}`}
-              className="flex-shrink-0"
-              initial={{ scale: 1 }}
-              whileHover={{ scale: 1.1, zIndex: 10 }}
-              transition={{ duration: 0.3 }}
-              onHoverStart={() => setHoveredMentor(mentor.name)}
-              onHoverEnd={() => setHoveredMentor(null)}
+              to="/mentors" 
+              className="flex-shrink-0 group"
             >
-              <Link to="/mentors" className="block relative">
-                <div className="h-48 w-48 overflow-hidden rounded-full relative transition-all duration-300">
+              <div className="flex flex-col items-center w-48">
+                <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
                   {mentor.imageUrl && (
                     <img
                       src={mentor.imageUrl}
                       alt={mentor.name}
-                      className="h-full w-full object-cover"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
                     />
                   )}
                 </div>
-                <div className="mt-4 text-center">
-                  <p className="font-medium text-base">{mentor.name}</p>
-                  <p className="text-sm text-black/60 dark:text-white/60">{mentor.description}</p>
-                </div>
-              </Link>
-            </motion.div>
+                <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
+              </div>
+            </Link>
           ))}
         </div>
-      </div>
+        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+      </ScrollArea>
       
       <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
         <p className="text-lg text-black/70 dark:text-white/70 italic">
