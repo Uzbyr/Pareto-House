@@ -122,7 +122,7 @@ const Index = () => {
         <div className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 rounded-lg mt-20">
           <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-pareto-black dark:via-transparent dark:to-pareto-black z-10 pointer-events-none" />
           <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
-            TARGET UNIVERSITIES
+            UNIVERSITY ECOSYSTEM
           </h2>
           <ScrollingUniversities />
         </div>
