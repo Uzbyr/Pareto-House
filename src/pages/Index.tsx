@@ -1,10 +1,11 @@
-
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Gift, Lock, Users } from "lucide-react";
+import { ArrowRight, Lock } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import ScrollingUniversities from "../components/ScrollingUniversities";
+import FellowshipPerks from "../components/FellowshipPerks";
+import FinalCTA from "../components/FinalCTA";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -118,115 +119,13 @@ const Index = () => {
         </div>
       </div>
 
-      {/* Perks Section */}
-      <div className="bg-black/5 dark:bg-white/5 py-32">
-        <div className="container mx-auto px-4">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              Fellowship Perks
-            </h2>
-            <p className="text-lg md:text-xl text-black/70 dark:text-white/70 max-w-2xl mx-auto">
-              As a Pareto Fellow, you get access to exclusive benefits and opportunities
-            </p>
-          </div>
+      {/* Fellowship Perks Section */}
+      <FellowshipPerks />
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {[
-              {
-                icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pareto-pink"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>,
-                title: "Mentors",
-                description: "Connect with top founders, operators, and researchers"
-              },
-              {
-                icon: <Users className="w-10 h-10 text-pareto-pink" />,
-                title: "Cohort Community",
-                description: "Join a vetted peer group of ambitious undergraduates"
-              },
-              {
-                icon: <Gift className="w-10 h-10 text-pareto-pink" />,
-                title: "Initial Capital",
-                description: "Looking to build something? The fellowship can be your first check"
-              }
-            ].map((perk, index) => (
-              <div key={index} className="bg-white dark:bg-pareto-black p-8 rounded-md hover:shadow-lg transition-shadow duration-300">
-                <div className="mb-6">{perk.icon}</div>
-                <h3 className="text-xl font-semibold mb-2">{perk.title}</h3>
-                <p className="text-black/70 dark:text-white/70">{perk.description}</p>
-              </div>
-            ))}
-          </div>
+      {/* Final CTA Section */}
+      <FinalCTA />
 
-          <div className="mt-16 text-center">
-            <Link 
-              to="/perks"
-              className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium"
-            >
-              View All Perks
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* How It Works Section */}
-      <div className="py-32">
-        <div className="container mx-auto px-4">
-          <div className="mb-16 text-center">
-            <h2 className="text-3xl md:text-4xl font-bold mb-6">
-              How It Works
-            </h2>
-            <p className="text-lg md:text-xl text-black/70 dark:text-white/70 max-w-2xl mx-auto">
-              The Pareto Fellowship selects and supports exceptional undergraduates through a rigorous process
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-8 max-w-4xl mx-auto">
-            {[
-              {
-                step: "01",
-                title: "Apply",
-                description: "Submit your application with projects, achievements, and ambitions"
-              },
-              {
-                step: "02",
-                title: "Interview",
-                description: "Selected applicants proceed to interviews with our team"
-              },
-              {
-                step: "03",
-                title: "Selection",
-                description: "50 undergraduates are accepted into each cohort"
-              },
-              {
-                step: "04",
-                title: "Fellowship",
-                description: "Join the community, access mentorship, funding, and more"
-              },
-            ].map((item, index) => (
-              <div key={index} className="relative">
-                <div className="text-4xl font-bold text-pareto-pink mb-4">{item.step}</div>
-                <h3 className="text-xl font-semibold mb-2">{item.title}</h3>
-                <p className="text-black/70 dark:text-white/70">{item.description}</p>
-                {index < 3 && (
-                  <div className="hidden md:block absolute top-6 right-0 w-3/4 h-0.5 bg-black/10 dark:bg-white/10" />
-                )}
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-16 text-center">
-            <Link
-              to="/apply"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
-            >
-              Apply Now
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </div>
-        </div>
-      </div>
-
-      {/* Use the Footer component */}
+      {/* Footer */}
       <Footer />
 
       {/* Admin Login Button */}
