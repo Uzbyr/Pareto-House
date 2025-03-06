@@ -1,5 +1,5 @@
 
-import { useState, useRef } from "react";
+import { useState, useRef, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 
@@ -118,14 +118,68 @@ const ScrollingMentors = () => {
   const [hoveredMentor, setHoveredMentor] = useState<string | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const [scrollPosition, setScrollPosition] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
 
-  const handleInteraction = () => {
-    setIsAutoScrolling(false);
+  const handleMouseDown = (e: React.MouseEvent) => {
+    if (scrollContainerRef.current) {
+      setIsDragging(true);
+      setStartX(e.clientX);
+      setIsAutoScrolling(false);
+    }
   };
 
-  const handleInteractionEnd = () => {
-    setIsAutoScrolling(true);
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (isDragging && scrollContainerRef.current) {
+      const dx = startX - e.clientX;
+      setStartX(e.clientX);
+      scrollContainerRef.current.scrollLeft += dx;
+      setScrollPosition(scrollContainerRef.current.scrollLeft);
+    }
   };
+
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    // Wait a bit before resuming auto-scrolling
+    setTimeout(() => {
+      if (!isDragging) {
+        setIsAutoScrolling(true);
+      }
+    }, 1000);
+  };
+
+  const handleMouseLeave = () => {
+    setIsDragging(false);
+    // Resume auto-scrolling when mouse leaves
+    setTimeout(() => {
+      setIsAutoScrolling(true);
+    }, 1000);
+  };
+
+  useEffect(() => {
+    const container = scrollContainerRef.current;
+    if (container) {
+      const handleWheel = (e: WheelEvent) => {
+        e.preventDefault();
+        container.scrollLeft += e.deltaY;
+        setScrollPosition(container.scrollLeft);
+        setIsAutoScrolling(false);
+        
+        // Resume auto-scrolling after a delay
+        clearTimeout(container.dataset.scrollTimeout as unknown as number);
+        const timeoutId = setTimeout(() => {
+          setIsAutoScrolling(true);
+        }, 1000);
+        container.dataset.scrollTimeout = timeoutId.toString();
+      };
+
+      container.addEventListener('wheel', handleWheel, { passive: false });
+      return () => {
+        container.removeEventListener('wheel', handleWheel);
+      };
+    }
+  }, []);
 
   return (
     <div className="relative overflow-hidden py-16">
@@ -142,15 +196,16 @@ const ScrollingMentors = () => {
       </div>
       
       <div 
-        className="relative overflow-hidden py-8"
-        onMouseEnter={handleInteraction}
-        onMouseLeave={handleInteractionEnd}
-        onTouchStart={handleInteraction}
-        onTouchEnd={handleInteractionEnd}
+        className="relative overflow-hidden py-8 cursor-grab active:cursor-grabbing"
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
+        onMouseLeave={handleMouseLeave}
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_28s_linear_infinite]' : ''}`}
+          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_18s_linear_infinite]' : ''}`}
+          style={{ scrollBehavior: isDragging ? 'auto' : 'smooth' }}
         >
           {mentors.concat(mentors).map((mentor, index) => (
             <motion.div
