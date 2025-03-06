@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -18,21 +17,23 @@ interface Mentor {
   country: string;
 }
 
+// Active mentors to display on the page
 const mentors: Mentor[] = [
+  // Keep the requested mentors
+  {
+    name: "Fabrice Grinda",
+    linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
+    description: "Serial entrepreneur and investor",
+    bio: "Fabrice Grinda is a French-American serial entrepreneur and investor. As a prominent angel investor, he has backed hundreds of startups globally through his investment vehicle. Grinda's entrepreneurial background includes founding and scaling multiple successful marketplace businesses. His investment thesis often centers on marketplace models and network-effect businesses. He is known for his data-driven approach to identifying investment opportunities across diverse geographic markets.",
+    imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
+    country: "USA"
+  },
   {
     name: "Edward Lando",
     linkedIn: "https://www.linkedin.com/in/edwardlando/",
     description: "Serial entrepreneur and investor, co-founder of Pareto Holdings",
     bio: "Edward Lando is a serial entrepreneur and investor based in the United States. He co-founded Pareto Holdings, an early-stage investment firm and venture studio that has made over 900 investments globally. Lando is also the co-founder and former CEO of Goody, a gifting app that simplifies sending gifts. He is known for combining capital investment with hands-on mentorship to help startups thrive. Lando maintains a notable presence in the startup community by championing founders and scalable technologies.",
     imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png",
-    country: "USA"
-  },
-  {
-    name: "Ben Cambier",
-    linkedIn: "https://www.linkedin.com/in/jbenjamin-cambier/",
-    description: "Early-stage investor and founder",
-    bio: "Ben Cambier is a partner at Pareto Holdings, where he focuses on building and investing in early-stage companies. His role involves identifying and partnering with high-potential startups at their formative stages. Cambier leverages firsthand entrepreneurial insights to guide companies toward sustainable growth. He provides both financial backing and strategic counsel, aiming to de-risk the path to market traction. Through active involvement, he fosters a supportive ecosystem that empowers emerging tech ventures.",
-    imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png",
     country: "USA"
   },
   {
@@ -60,20 +61,97 @@ const mentors: Mentor[] = [
     country: "USA"
   },
   {
-    name: "Pietro Invernizzi",
-    linkedIn: "https://www.linkedin.com/in/pietro-invernizzi/",
-    description: "Investor and entrepreneur",
-    bio: "Pietro Invernizzi is an entrepreneur and investor based in the United Kingdom. He focuses on supporting emerging startups through both capital deployment and advisory services. Invernizzi takes a hands-on approach, helping founders navigate the challenges of early-stage company building. His cross-border perspective allows him to spot international opportunities and bridge diverse markets. He believes in fostering collaborative ecosystems that nurture disruptive ideas and sustainable growth.",
-    imageUrl: "/lovable-uploads/687c5fe9-ccfa-4d12-bdb9-066f37806034.png",
-    country: "UK"
-  },
-  {
     name: "Liu Jiang",
     linkedIn: "https://www.linkedin.com/in/liujiang1/",
     description: "Engineering leader and startup advisor",
     bio: "Liu Jiang is a U.S.-based engineering leader and startup advisor. She leverages a strong technical background to guide product development and software architecture. Jiang's advisory work includes optimizing organizational processes and scaling engineering teams. Her experience spans multiple tech segments, reflecting a versatile problem-solving skill set. She is committed to nurturing inclusive, innovative environments that empower teams to excel.",
     imageUrl: "/lovable-uploads/86c1fa85-94f4-464c-9ba6-1d7dc3b6dd1e.png",
     country: "USA"
+  },
+  // Add the new mentors
+  {
+    name: "Francis Pedraza",
+    linkedIn: "https://www.linkedin.com/in/francispedraza/",
+    description: "Founder at Invisible Technologies",
+    bio: "Francis Pedraza is the founder of Invisible Technologies, a company that provides remote talent and process automation solutions. He's known for his innovative approach to building scalable service businesses and his unique perspective on leadership and company culture.",
+    imageUrl: "/lovable-uploads/dc5b5f95-0b6e-493c-b293-4e43ce71392a.png",
+    country: "USA"
+  },
+  {
+    name: "Eric Wu",
+    linkedIn: "https://www.linkedin.com/in/ericwu01/",
+    description: "Founder at Opendoor and other companies",
+    bio: "Eric Wu is the co-founder of Opendoor, a digital platform for residential real estate transactions. He has founded multiple successful companies and has a track record of disrupting traditional industries with technology-driven solutions. Wu's expertise spans real estate tech, marketplaces, and scaling high-growth startups.",
+    imageUrl: "/lovable-uploads/b44fbc4b-212b-49e6-adcc-bf0072f797ed.png",
+    country: "USA"
+  },
+  {
+    name: "Cyan Banister",
+    linkedIn: "https://www.linkedin.com/in/cyantechnology/",
+    description: "Ex-Partner at Founders Fund, Angel Investor, Founder",
+    bio: "Cyan Banister is a prominent angel investor and entrepreneur. She served as a partner at Founders Fund and has made early investments in companies like SpaceX, Uber, and Postmates. As the founder of Zivity, she brings firsthand entrepreneurial experience to her advisory roles. Banister is known for her contrarian investment approach and for backing unconventional founders.",
+    imageUrl: "/lovable-uploads/56ab8193-d996-4fc8-954d-c71a3d96bd5a.png",
+    country: "USA"
+  },
+  {
+    name: "Venus Williams",
+    linkedIn: "https://www.linkedin.com/in/venuswilliams/",
+    description: "Tennis champion, entrepreneur and investor",
+    bio: "Venus Williams is a legendary tennis champion who has successfully transitioned into entrepreneurship and investing. She has founded multiple businesses including her activewear brand EleVen and interior design firm V Starr. Williams brings her championship mindset and global influence to her business ventures and investments, with a focus on wellness, women's empowerment, and equality.",
+    imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
+    country: "USA"
+  },
+  {
+    name: "Sarah Guo",
+    linkedIn: "https://www.linkedin.com/in/sarahguo/",
+    description: "Founder at Conviction VC",
+    bio: "Sarah Guo is the founder of Conviction VC, a venture capital firm focused on early-stage technology companies. Previously, she was a General Partner at Greylock Partners, where she led investments in AI, cybersecurity, and enterprise software. Guo brings deep technical knowledge and operational insights to her role as an investor and advisor to founders.",
+    imageUrl: "/lovable-uploads/67bf0c08-24a9-4e1d-bb41-9318d2c672e8.png",
+    country: "USA"
+  },
+  {
+    name: "Olivier Godement",
+    linkedIn: "https://www.linkedin.com/in/oliviergodement/",
+    description: "Head of Product at OpenAI",
+    bio: "Olivier Godement serves as the Head of Product at OpenAI, one of the world's leading artificial intelligence research laboratories. He leads product strategy and development for groundbreaking AI systems including ChatGPT and GPT-4. Before OpenAI, Godement held key product roles at Stripe, helping build financial infrastructure that powers businesses globally.",
+    imageUrl: "/lovable-uploads/3ee502bc-ee4c-422f-9408-e89c6cbbab00.png",
+    country: "USA"
+  },
+  {
+    name: "Max Altman",
+    linkedIn: "https://www.linkedin.com/in/maxhaltman/",
+    description: "Founder & GP at Saga Ventures",
+    bio: "Max Altman is the Founder and General Partner at Saga Ventures, an early-stage venture capital firm. His investment focus spans AI, developer tools, and enterprise software. Altman brings a unique perspective to his role as an investor, combining technical acumen with strategic business insights to support founders building transformative companies.",
+    imageUrl: "/lovable-uploads/dad2a4c2-5fc0-4074-8dac-8294428f754e.png",
+    country: "USA"
+  },
+  {
+    name: "Gokul Rajaram",
+    linkedIn: "https://www.linkedin.com/in/gokulrajaram/",
+    description: "Product and business leader, board member",
+    bio: "Gokul Rajaram is a seasoned product and business leader who has made significant contributions at companies like Facebook, Google, DoorDash, and Square. His experience spans product development, business strategy, and growth initiatives. Rajaram serves on the boards of multiple public and private companies, providing strategic guidance derived from his extensive career in technology.",
+    imageUrl: "/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png",
+    country: "USA"
+  }
+];
+
+// Backlog mentors (not displayed on the page)
+const backlogMentors: Mentor[] = [
+  {
+    name: "Ben Cambier",
+    linkedIn: "https://www.linkedin.com/in/jbenjamin-cambier/",
+    description: "Early-stage investor and founder",
+    bio: "Ben Cambier is a partner at Pareto Holdings, where he focuses on building and investing in early-stage companies. His role involves identifying and partnering with high-potential startups at their formative stages. Cambier leverages firsthand entrepreneurial insights to guide companies toward sustainable growth. He provides both financial backing and strategic counsel, aiming to de-risk the path to market traction. Through active involvement, he fosters a supportive ecosystem that empowers emerging tech ventures.",
+    imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png",
+    country: "USA"
+  },
+  {
+    name: "Pietro Invernizzi",
+    linkedIn: "https://www.linkedin.com/in/pietro-invernizzi/",
+    description: "Investor and entrepreneur",
+    bio: "Pietro Invernizzi is an entrepreneur and investor based in the United Kingdom. He focuses on supporting emerging startups through both capital deployment and advisory services. Invernizzi takes a hands-on approach, helping founders navigate the challenges of early-stage company building. His cross-border perspective allows him to spot international opportunities and bridge diverse markets. He believes in fostering collaborative ecosystems that nurture disruptive ideas and sustainable growth.",
+    imageUrl: "/lovable-uploads/687c5fe9-ccfa-4d12-bdb9-066f37806034.png",
+    country: "UK"
   },
   {
     name: "Grant Gordon",
@@ -177,14 +255,6 @@ const mentors: Mentor[] = [
     description: "Tennis champion, entrepreneur and investor",
     bio: "Serena Williams is an accomplished tennis champion, entrepreneur, and investor based in the United States. Beyond her legendary sports career, she has established herself as a formidable presence in business and investment. Williams has founded and invested in numerous ventures, with a focus on supporting diverse founders and innovative companies. Her investment philosophy emphasizes companies that align with her values of inclusivity and empowerment. Williams brings her championship mindset and global influence to her role as a business leader and mentor.",
     imageUrl: "/lovable-uploads/fc28bb63-8d48-4262-a6db-0b61a7a4595b.png",
-    country: "USA"
-  },
-  {
-    name: "Fabrice Grinda",
-    linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
-    description: "Serial entrepreneur and investor",
-    bio: "Fabrice Grinda is a French-American serial entrepreneur and investor. As a prominent angel investor, he has backed hundreds of startups globally through his investment vehicle. Grinda's entrepreneurial background includes founding and scaling multiple successful marketplace businesses. His investment thesis often centers on marketplace models and network-effect businesses. He is known for his data-driven approach to identifying investment opportunities across diverse geographic markets.",
-    imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
     country: "USA"
   }
 ];
