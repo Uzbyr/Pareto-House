@@ -60,11 +60,14 @@ const Index = () => {
       <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20 flex flex-col justify-center min-h-[80vh]">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
-            <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
+            <h1 className="text-pareto-pink text-3xl md:text-4xl lg:text-5xl font-bold mb-4 tracking-tight">
+              The Pareto Fellowship
+            </h1>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
               The Most Ambitious{" "}
               <span className="text-pareto-pink">Undergraduate</span>{" "}
               Community
-            </h1>
+            </h2>
           </div>
 
           <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto">
