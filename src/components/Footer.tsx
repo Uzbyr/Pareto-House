@@ -26,7 +26,7 @@ const Footer = () => {
             </a>
           </div>
           
-          <div className="flex flex-col md:flex-row md:items-center gap-6">
+          <div className="flex gap-6">
             <div className="flex gap-4">
               <a 
                 href="https://twitter.com/ParetoCommunity" 
@@ -52,15 +52,6 @@ const Footer = () => {
               >
                 <Instagram className="w-5 h-5" />
               </a>
-            </div>
-            
-            <div className="flex gap-4">
-              <Link to="/terms" className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300">
-                Terms of Service
-              </Link>
-              <Link to="/privacy" className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300">
-                Privacy Policy
-              </Link>
             </div>
           </div>
         </div>

@@ -1,6 +1,6 @@
 
 import { Link, useNavigate } from "react-router-dom";
-import { ArrowRight, Gift, Lock } from "lucide-react";
+import { ArrowRight, Gift, Lock, Users } from "lucide-react";
 import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
@@ -56,7 +56,7 @@ const Index = () => {
       </nav>
 
       {/* Hero Section */}
-      <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20">
+      <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20 flex flex-col justify-center min-h-[80vh]">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
             <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight">
@@ -133,20 +133,20 @@ const Index = () => {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
             {[
               {
-                icon: <Gift className="w-10 h-10 text-pareto-pink" />,
-                title: "Grant Money",
-                description: "Up to $100,000 in grant funding for exceptional projects"
-              },
-              {
                 icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pareto-pink"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>,
-                title: "Mentor Network",
+                title: "Mentors",
                 description: "Connect with top founders, operators, and researchers"
               },
               {
-                icon: <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="text-pareto-pink"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path></svg>,
+                icon: <Users className="w-10 h-10 text-pareto-pink" />,
                 title: "Cohort Community",
                 description: "Join a vetted peer group of ambitious undergraduates"
               },
+              {
+                icon: <Gift className="w-10 h-10 text-pareto-pink" />,
+                title: "Initial Capital",
+                description: "Looking to build something? The fellowship can be your first check"
+              }
             ].map((perk, index) => (
               <div key={index} className="bg-white dark:bg-pareto-black p-8 rounded-md hover:shadow-lg transition-shadow duration-300">
                 <div className="mb-6">{perk.icon}</div>
