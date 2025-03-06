@@ -62,15 +62,17 @@ const Index = () => {
       <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20 flex flex-col justify-center min-h-[80vh]">
         <div className="max-w-4xl mx-auto text-center">
           <div className="mb-8">
-            <h1 className="title-hover text-pareto-pink text-4xl md:text-5xl lg:text-6xl font-bold mb-8 tracking-tight relative inline-block">
+            <h1 className="text-pareto-pink text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight relative inline-block">
               The Pareto Fellowship
               <span className="hover-underline-animation"></span>
             </h1>
-            <h2 className="title-hover text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight relative inline-block">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight inline-block">
               The Most Ambitious{" "}
-              <span className="text-pareto-pink">Undergraduate</span>{" "}
+              <span className="title-hover text-pareto-pink relative inline-block">
+                Undergraduate
+                <span className="hover-underline-animation"></span>
+              </span>{" "}
               Community
-              <span className="hover-underline-animation"></span>
             </h2>
           </div>
 
@@ -87,7 +89,7 @@ const Index = () => {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a
-              href="https://www.pareto20.com"
+              href="https://www.youtube.com/watch?v=lc8ourcIe10"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"

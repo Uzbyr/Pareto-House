@@ -29,12 +29,6 @@ const FinalCTA = () => {
               Apply Now
               <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
             </Link>
-            
-            <div className="block">
-              <span className="text-lg font-medium tracking-wide text-black/60 dark:text-white/60 italic">
-                Build brutally or don't
-              </span>
-            </div>
           </div>
         </motion.div>
       </div>

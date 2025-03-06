@@ -117,68 +117,85 @@ const mentors: Mentor[] = [
 const ScrollingMentors = () => {
   const [hoveredMentor, setHoveredMentor] = useState<string | null>(null);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const [scrollPosition, setScrollPosition] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
+  // Setup continuous seamless scrolling with duplicated items
+  const setupInfiniteScroll = () => {
+    if (!scrollContainerRef.current) return;
+    
+    const scrollContainer = scrollContainerRef.current;
+    const scrollWidth = scrollContainer.scrollWidth;
+    const containerWidth = scrollContainer.clientWidth;
+    
+    // When we reach halfway through the duplicated items, jump back to start
+    const handleScroll = () => {
+      if (scrollContainer.scrollLeft >= scrollWidth / 2) {
+        // Disable smooth scrolling temporarily
+        scrollContainer.style.scrollBehavior = 'auto';
+        scrollContainer.scrollLeft = 1;
+        // Re-enable smooth scrolling
+        setTimeout(() => {
+          scrollContainer.style.scrollBehavior = 'smooth';
+        }, 50);
+      } else if (scrollContainer.scrollLeft <= 0) {
+        // Handle scrolling left beyond the start
+        scrollContainer.style.scrollBehavior = 'auto';
+        scrollContainer.scrollLeft = scrollWidth / 2 - 1;
+        setTimeout(() => {
+          scrollContainer.style.scrollBehavior = 'smooth';
+        }, 50);
+      }
+    };
+    
+    scrollContainer.addEventListener('scroll', handleScroll);
+    return () => scrollContainer.removeEventListener('scroll', handleScroll);
+  };
+
+  useEffect(() => {
+    const cleanup = setupInfiniteScroll();
+    return cleanup;
+  }, []);
+
+  // Mouse drag interaction
   const handleMouseDown = (e: React.MouseEvent) => {
-    if (scrollContainerRef.current) {
-      setIsDragging(true);
-      setStartX(e.clientX);
-      setIsAutoScrolling(false);
-    }
+    if (!scrollContainerRef.current) return;
+    
+    setIsDragging(true);
+    setStartX(e.pageX - scrollContainerRef.current.offsetLeft);
+    setScrollLeft(scrollContainerRef.current.scrollLeft);
   };
 
   const handleMouseMove = (e: React.MouseEvent) => {
-    if (isDragging && scrollContainerRef.current) {
-      const dx = startX - e.clientX;
-      setStartX(e.clientX);
-      scrollContainerRef.current.scrollLeft += dx;
-      setScrollPosition(scrollContainerRef.current.scrollLeft);
-    }
+    if (!isDragging || !scrollContainerRef.current) return;
+    
+    e.preventDefault();
+    const x = e.pageX - scrollContainerRef.current.offsetLeft;
+    const walk = (x - startX) * 2; // Multiply by 2 for faster scrolling
+    scrollContainerRef.current.scrollLeft = scrollLeft - walk;
   };
 
   const handleMouseUp = () => {
     setIsDragging(false);
-    // Wait a bit before resuming auto-scrolling
-    setTimeout(() => {
-      if (!isDragging) {
-        setIsAutoScrolling(true);
-      }
-    }, 1000);
   };
 
   const handleMouseLeave = () => {
     setIsDragging(false);
-    // Resume auto-scrolling when mouse leaves
-    setTimeout(() => {
-      setIsAutoScrolling(true);
-    }, 1000);
   };
 
+  // Handle wheel events for horizontal scrolling
   useEffect(() => {
     const container = scrollContainerRef.current;
-    if (container) {
-      const handleWheel = (e: WheelEvent) => {
-        e.preventDefault();
-        container.scrollLeft += e.deltaY;
-        setScrollPosition(container.scrollLeft);
-        setIsAutoScrolling(false);
-        
-        // Resume auto-scrolling after a delay
-        clearTimeout(container.dataset.scrollTimeout as unknown as number);
-        const timeoutId = setTimeout(() => {
-          setIsAutoScrolling(true);
-        }, 1000);
-        container.dataset.scrollTimeout = timeoutId.toString();
-      };
-
-      container.addEventListener('wheel', handleWheel, { passive: false });
-      return () => {
-        container.removeEventListener('wheel', handleWheel);
-      };
-    }
+    if (!container) return;
+    
+    const handleWheel = (e: WheelEvent) => {
+      e.preventDefault();
+      container.scrollLeft += e.deltaY;
+    };
+    
+    container.addEventListener('wheel', handleWheel, { passive: false });
+    return () => container.removeEventListener('wheel', handleWheel);
   }, []);
 
   return (
@@ -204,12 +221,42 @@ const ScrollingMentors = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-12 px-4 ${isAutoScrolling ? 'animate-[scroll_18s_linear_infinite]' : ''}`}
-          style={{ scrollBehavior: isDragging ? 'auto' : 'smooth' }}
+          className="flex space-x-12 px-4 overflow-x-auto scrollbar-hide"
+          style={{ scrollBehavior: 'smooth' }}
         >
-          {mentors.concat(mentors).map((mentor, index) => (
+          {/* First set of mentors */}
+          {mentors.map((mentor, index) => (
             <motion.div
-              key={`${mentor.name}-${index}`}
+              key={`a-${mentor.name}-${index}`}
+              className="flex-shrink-0"
+              initial={{ scale: 1 }}
+              whileHover={{ scale: 1.1, zIndex: 10 }}
+              transition={{ duration: 0.3 }}
+              onHoverStart={() => setHoveredMentor(mentor.name)}
+              onHoverEnd={() => setHoveredMentor(null)}
+            >
+              <Link to="/mentors" className="block relative">
+                <div className="h-48 w-48 overflow-hidden rounded-full relative transition-all duration-300">
+                  {mentor.imageUrl && (
+                    <img
+                      src={mentor.imageUrl}
+                      alt={mentor.name}
+                      className="h-full w-full object-cover"
+                    />
+                  )}
+                </div>
+                <div className="mt-4 text-center">
+                  <p className="font-medium text-base">{mentor.name}</p>
+                  <p className="text-sm text-black/60 dark:text-white/60">{mentor.description}</p>
+                </div>
+              </Link>
+            </motion.div>
+          ))}
+          
+          {/* Duplicated mentors for infinite scroll effect */}
+          {mentors.map((mentor, index) => (
+            <motion.div
+              key={`b-${mentor.name}-${index}`}
               className="flex-shrink-0"
               initial={{ scale: 1 }}
               whileHover={{ scale: 1.1, zIndex: 10 }}

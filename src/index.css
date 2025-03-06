@@ -115,3 +115,13 @@
   transform: scaleX(1);
   transform-origin: bottom left;
 }
+
+/* Additional styling for scrollable content */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+.scrollbar-hide {
+  -ms-overflow-style: none;  /* IE and Edge */
+  scrollbar-width: none;  /* Firefox */
+}
