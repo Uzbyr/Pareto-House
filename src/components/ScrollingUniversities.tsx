@@ -70,7 +70,7 @@ const universities = [
   },
   {
     name: "Princeton",
-    logo: "/lovable-uploads/36e958d6-20f5-4981-af4f-23e535ca6dc9.png"
+    logo: "/lovable-uploads/8b9daaea-e034-4b31-b8e0-7a28cf433078.png"
   },
   {
     name: "ETH Zurich",
@@ -158,7 +158,8 @@ const ScrollingUniversities = () => {
                 className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${
                   imageLoadErrors[uni.name] ? 'hidden' : ''
                 } ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
-                  ${uni.name === 'Stanford' ? 'brightness-125' : ''}`}
+                  ${uni.name === 'Stanford' ? 'brightness-125' : ''}
+                  ${uni.name === 'Princeton' ? 'h-[78%]' : ''}`}
               />
               {imageLoadErrors[uni.name] && (
                 <div className="text-xs text-white/50">{uni.name}</div>
