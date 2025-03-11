@@ -1,4 +1,3 @@
-
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 // import { ThemeToggle } from "../components/ThemeToggle";
