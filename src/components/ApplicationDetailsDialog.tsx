@@ -144,7 +144,7 @@ const ApplicationDetailsDialog = ({
                 <Flag className="ml-2 h-4 w-4 text-amber-400" />
               )}
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 mr-4">
               {onNavigate && (
                 <>
                   <Button
@@ -169,15 +169,6 @@ const ApplicationDetailsDialog = ({
                   </Button>
                 </>
               )}
-              <Button
-                className="h-8 w-8 p-0 rounded-md border border-zinc-700 text-gray-400 hover:text-white hover:bg-zinc-700"
-                variant="outline"
-                size="sm"
-                onClick={() => onOpenChange(false)}
-              >
-                <X className="h-4 w-4" />
-                <span className="sr-only">Close</span>
-              </Button>
             </div>
           </DialogTitle>
         </DialogHeader>

@@ -1,7 +1,7 @@
 
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
-import { ThemeToggle } from "../components/ThemeToggle";
+// import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import ScrollingUniversities from "../components/ScrollingUniversities";
@@ -19,7 +19,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       {/* Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10">
+      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10 min-h-16">
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <img
@@ -52,7 +52,6 @@ const Index = () => {
               >
                 FAQ
               </Link>
-              <ThemeToggle />
             </div>
           </div>
         </div>
