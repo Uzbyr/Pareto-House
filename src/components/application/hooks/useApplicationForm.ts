@@ -2,7 +2,14 @@
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
-import { FormDataType, initialFormData, validateEmail, requiresPreparatoryQuestion, universities } from "../utils/formUtils";
+import { 
+  FormDataType, 
+  initialFormData, 
+  validateEmail, 
+  requiresPreparatoryQuestion, 
+  universities,
+  validateLinkedInUrl
+} from "../utils/formUtils";
 
 interface UseApplicationFormProps {
   onSubmitSuccess?: () => void;
@@ -99,6 +106,19 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     setLoading(true);
 
     try {
+      // Validate LinkedIn URL (required field)
+      if (!formData.linkedInUrl) {
+        toast.error("Please provide your LinkedIn profile URL.");
+        setLoading(false);
+        return;
+      }
+
+      if (!validateLinkedInUrl(formData.linkedInUrl)) {
+        toast.error("Please enter a valid LinkedIn URL (should start with https://www.linkedin.com/).");
+        setLoading(false);
+        return;
+      }
+
       // Handle university field (including "Other" option)
       const universityValue = formData.university === "Other" 
         ? formData.otherUniversity 
@@ -120,6 +140,8 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         company_context: formData.buildingCompany === "yes" ? formData.companyContext : null,
         website_url: formData.buildingCompany === "yes" ? formData.websiteUrl : null,
         video_url: formData.videoUrl || null,
+        linkedin_url: formData.linkedInUrl,
+        x_url: formData.xUrl || null,
         resume_file: formData.resumeFile ? formData.resumeFile.name : null,
         deck_file: formData.deckFile ? formData.deckFile.name : null,
         memo_file: formData.memoFile ? formData.memoFile.name : null
@@ -156,6 +178,8 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         memoFile: formData.memoFile ? formData.memoFile.name : "",
         websiteUrl: formData.buildingCompany === "yes" ? formData.websiteUrl : "",
         videoUrl: formData.videoUrl || "",
+        linkedInUrl: formData.linkedInUrl,
+        xUrl: formData.xUrl || "",
         submissionDate: new Date().toISOString(),
         status: "pending",
       };

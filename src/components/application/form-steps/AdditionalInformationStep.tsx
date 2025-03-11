@@ -27,6 +27,38 @@ const AdditionalInformationStep = memo(({
 }: AdditionalInformationStepProps) => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
+    
+    <div className="space-y-2">
+      <Label htmlFor="linkedInUrl">LinkedIn Profile URL<span className="text-red-500">*</span></Label>
+      <Input
+        id="linkedInUrl"
+        name="linkedInUrl"
+        placeholder="https://www.linkedin.com/in/yourusername"
+        value={formData.linkedInUrl}
+        onChange={handleInputChange}
+        className="bg-zinc-800 border-zinc-700"
+        required
+      />
+      <p className="text-xs text-zinc-500 mt-1">
+        Please provide your LinkedIn profile URL (Required)
+      </p>
+    </div>
+
+    <div className="space-y-2">
+      <Label htmlFor="xUrl">X (Twitter) Profile URL (Optional)</Label>
+      <Input
+        id="xUrl"
+        name="xUrl"
+        placeholder="https://x.com/yourusername"
+        value={formData.xUrl}
+        onChange={handleInputChange}
+        className="bg-zinc-800 border-zinc-700"
+      />
+      <p className="text-xs text-zinc-500 mt-1">
+        Your X (formerly Twitter) profile URL if available
+      </p>
+    </div>
+
     <div className="space-y-2">
       <Label htmlFor="videoUrl">Video Presentation URL</Label>
       <Input

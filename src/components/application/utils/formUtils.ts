@@ -47,6 +47,30 @@ export const validateEmail = (email: string): boolean => {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 };
 
+// URL validation (for social media profiles)
+export const validateUrl = (url: string): boolean => {
+  // Basic URL validation that requires https:// protocol
+  try {
+    const urlObj = new URL(url);
+    return urlObj.protocol === 'https:';
+  } catch {
+    return false;
+  }
+};
+
+// LinkedIn URL validation
+export const validateLinkedInUrl = (url: string): boolean => {
+  if (!validateUrl(url)) return false;
+  
+  // Check if it's a LinkedIn URL (contains linkedin.com)
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.includes('linkedin.com');
+  } catch {
+    return false;
+  }
+};
+
 // List of countries
 export const countries = Object.keys(universities);
 
@@ -70,6 +94,8 @@ export const initialFormData = {
   memoFile: null as File | null,
   websiteUrl: "",
   videoUrl: "",
+  linkedInUrl: "",
+  xUrl: "",
 };
 
 export type FormDataType = typeof initialFormData;
