@@ -3,15 +3,15 @@ import { motion } from "framer-motion";
 
 const TopInvestors = () => {
   return (
-    <div className="container max-w-3xl mb-16">
-      <h3 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
+    <div className="container mb-16">
+      <h3 className="text-2xl md:text-3xl text-center font-bold mb-4 tracking-tight">
         Backed by Top Investors
       </h3>
-      <p className="text-lg text-black/70 dark:text-white/70 mb-8">
-        After completing the Pareto Fellowship, many of our fellows go on to raise funding from world-class investors, including:
+      <p className="text-lg md:text-xl text-black/70 dark:text-white/70 max-w-2xl mx-auto text-center">
+        After completing the Pareto Fellowship, many of our fellows go on to raise funding from world-class investors
       </p>
       
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-7 gap-6 mt-8">
         <div className="flex flex-col items-center">
           <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
