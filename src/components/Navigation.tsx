@@ -31,16 +31,6 @@ const Navigation = () => {
               Mentors
             </Link>
             <Link
-              to="/tech-partners"
-              className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                isActive("/tech-partners") 
-                ? "text-pareto-pink font-medium border-b-2 border-pareto-pink" 
-                : "text-black/80 dark:text-white/80"
-              }`}
-            >
-              Tech Partners
-            </Link>
-            <Link
               to="/perks"
               className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
                 isActive("/perks") 
