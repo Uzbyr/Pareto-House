@@ -8,11 +8,13 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center">
           <div className="flex items-center space-x-2 mb-6 md:mb-0">
-            <img
-              src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
-              alt="Pareto Logo"
-              className="w-36 md:w-44"
-            />
+            <Link to="/">
+              <img
+                src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
+                alt="Pareto Logo"
+                className="w-36 md:w-44"
+              />
+            </Link>
           </div>
           
           <div className="mb-6 md:mb-0">
