@@ -78,6 +78,15 @@ const GraduationYearInput = ({ value, onChange }) => {
 const Apply = () => {
   const navigate = useNavigate();
   const [showCustomForm, setShowCustomForm] = useState(false);
+  const [formState, setFormState] = useState({
+    about: "",
+    projects: "",
+    name: "",
+    email: "",
+    university: "",
+    graduationYear: "",
+    videoUrl: ""
+  });
 
   // Track page visit for analytics
   useEffect(() => {
@@ -88,6 +97,22 @@ const Apply = () => {
     const applyPageViews = localStorage.getItem('applyPageViews') || '0';
     localStorage.setItem('applyPageViews', (parseInt(applyPageViews) + 1).toString());
   }, []);
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setFormState(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    // Here you would normally handle the form submission
+    console.log("Form submitted:", formState);
+    // For demo purposes, just show a success message
+    alert("Application submitted successfully!");
+  };
 
   return (
     <div className="min-h-screen bg-zinc-900 text-white font-inter">
@@ -132,7 +157,7 @@ const Apply = () => {
           {showCustomForm ? (
             <div className="p-6 bg-zinc-800 rounded-lg shadow-lg">
               <div className="text-lg font-medium mb-6">Custom Form with Fixes</div>
-              <form onSubmit={(e) => e.preventDefault()}>
+              <form onSubmit={handleSubmit}>
                 {/* Basic Information */}
                 <div className="mb-8">
                   <h3 className="text-xl font-semibold mb-4 text-pareto-pink">
@@ -145,7 +170,9 @@ const Apply = () => {
                     <Input 
                       type="text" 
                       id="name" 
-                      name="name" 
+                      name="name"
+                      value={formState.name}
+                      onChange={handleInputChange}
                       className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink"
                       placeholder="Your full name"
                     />
@@ -157,7 +184,9 @@ const Apply = () => {
                     <Input 
                       type="email" 
                       id="email" 
-                      name="email" 
+                      name="email"
+                      value={formState.email}
+                      onChange={handleInputChange}
                       className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink"
                       placeholder="your.email@university.edu"
                     />
@@ -170,11 +199,16 @@ const Apply = () => {
                       type="text" 
                       id="university" 
                       name="university"
+                      value={formState.university}
+                      onChange={handleInputChange}
                       className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink" 
                       placeholder="Your university name"
                     />
                   </div>
-                  <GraduationYearInput value="" onChange={() => {}} />
+                  <GraduationYearInput 
+                    value={formState.graduationYear} 
+                    onChange={handleInputChange} 
+                  />
                 </div>
 
                 {/* About You */}
@@ -186,16 +220,16 @@ const Apply = () => {
                     label="Tell us about yourself"
                     placeholder="Share your background, interests, and what drives you..."
                     name="about"
-                    value=""
-                    onChange={() => {}}
+                    value={formState.about}
+                    onChange={handleInputChange}
                     maxLength={1000}
                   />
                   <CustomTextarea
                     label="What are you working on?"
                     placeholder="Tell us about your current projects, research, or initiatives..."
                     name="projects"
-                    value=""
-                    onChange={() => {}}
+                    value={formState.projects}
+                    onChange={handleInputChange}
                     maxLength={1000}
                   />
                 </div>
@@ -213,9 +247,17 @@ const Apply = () => {
                       type="text" 
                       id="videoUrl" 
                       name="videoUrl" 
+                      value={formState.videoUrl}
+                      onChange={handleInputChange}
                       className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink"
                       placeholder="https://www.youtube.com/watch?v=..."
                       onClick={(e) => e.stopPropagation()} // Prevent form submission on click
+                      onKeyDown={(e) => {
+                        // Prevent form submission when pressing Enter in the URL field
+                        if (e.key === 'Enter') {
+                          e.preventDefault();
+                        }
+                      }}
                     />
                     <p className="mt-2 text-xs text-zinc-400">
                       Upload a 60-second video of yourself to YouTube (unlisted is fine) and paste the URL here.
@@ -224,7 +266,7 @@ const Apply = () => {
                 </div>
 
                 <Button 
-                  type="button" 
+                  type="submit" 
                   variant="pink"
                   className="w-full py-6 text-lg"
                 >
