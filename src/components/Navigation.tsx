@@ -1,5 +1,6 @@
 
 import { Link, useLocation } from "react-router-dom";
+import { ArrowRight } from "lucide-react";
 
 const Navigation = () => {
   const location = useLocation();
@@ -49,6 +50,13 @@ const Navigation = () => {
               }`}
             >
               FAQ
+            </Link>
+            <Link
+              to="/apply"
+              className="group ml-2 inline-flex items-center gap-2 px-6 py-2 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-md font-semibold rounded-sm"
+            >
+              Apply Now
+              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>
         </div>
