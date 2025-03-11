@@ -39,9 +39,6 @@ const AdditionalInformationStep = memo(({
         className="bg-zinc-800 border-zinc-700"
         required
       />
-      <p className="text-xs text-zinc-500 mt-1">
-        Please provide your LinkedIn profile URL (Required)
-      </p>
     </div>
 
     <div className="space-y-2">
@@ -54,9 +51,6 @@ const AdditionalInformationStep = memo(({
         onChange={handleInputChange}
         className="bg-zinc-800 border-zinc-700"
       />
-      <p className="text-xs text-zinc-500 mt-1">
-        Your X (formerly Twitter) profile URL if available
-      </p>
     </div>
 
     <div className="space-y-2">
