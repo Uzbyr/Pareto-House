@@ -8,6 +8,7 @@ import {
   AccordionTrigger,
 } from "../components/ui/accordion";
 import BackToHomeButton from "../components/application/BackToHomeButton";
+import Navigation from "../components/Navigation";
 
 const FAQ = () => {
   const faqSections = [
@@ -92,6 +93,8 @@ const FAQ = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
+      <Navigation />
+      
       <div className="container mx-auto px-4 py-24">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
