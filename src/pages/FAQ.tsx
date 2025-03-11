@@ -95,7 +95,7 @@ const FAQ = () => {
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       <Navigation />
       
-      <div className="container mx-auto px-4 py-24">
+      <div className="container mx-auto px-4 py-12 pt-36">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}

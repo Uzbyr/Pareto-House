@@ -162,7 +162,7 @@ const Perks = () => {
     >
       <Navigation />
 
-      <div className="container mx-auto px-4 pt-32 pb-20">
+      <div className="container mx-auto px-4 py-12 pt-36">
         <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <Gift className="w-8 h-8 text-pareto-pink" />
