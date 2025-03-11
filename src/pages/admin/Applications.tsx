@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -29,7 +28,6 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import ApplicationDetailsDialog from "@/components/ApplicationDetailsDialog";
 import BatchComparisonDialog from "@/components/BatchComparisonDialog";
-import CommunicationDialog from "@/components/CommunicationDialog";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import { useHotkeys } from "react-hotkeys-hook";
 import { supabase } from "@/integrations/supabase/client";
@@ -69,7 +67,6 @@ const Applications = () => {
   const [selectedApplication, setSelectedApplication] = useState<Application | null>(null);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isBatchOpen, setIsBatchOpen] = useState(false);
-  const [isCommunicationOpen, setIsCommunicationOpen] = useState(false);
   const [selectedApplications, setSelectedApplications] = useState<Application[]>([]);
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
@@ -139,7 +136,6 @@ const Applications = () => {
       app.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (app.major && app.major.toLowerCase().includes(searchTerm.toLowerCase()));
       
-    // Modified filter logic to handle "flagged" separately from status
     let matchesFilter = true;
     if (statusFilter === "flagged") {
       matchesFilter = !!app.flagged;
@@ -259,28 +255,6 @@ const Applications = () => {
     setIsBatchOpen(true);
   };
 
-  const handleCommunication = (application: Application) => {
-    setSelectedApplication(application);
-    setIsCommunicationOpen(true);
-  };
-
-  const navigateToApplication = useCallback((direction: 'next' | 'prev') => {
-    if (!selectedApplication) return;
-    
-    const currentIndex = filteredApplications.findIndex(app => app.id === selectedApplication.id);
-    
-    if (currentIndex === -1) return;
-    
-    let newIndex;
-    if (direction === 'next') {
-      newIndex = (currentIndex + 1) % filteredApplications.length;
-    } else {
-      newIndex = (currentIndex - 1 + filteredApplications.length) % filteredApplications.length;
-    }
-    
-    setSelectedApplication(filteredApplications[newIndex]);
-  }, [filteredApplications, selectedApplication]);
-
   useHotkeys('right', () => {
     if (isDetailsOpen) navigateToApplication('next');
   }, [isDetailsOpen, navigateToApplication]);
@@ -313,11 +287,7 @@ const Applications = () => {
     }
   }, [isDetailsOpen, selectedApplication]);
   
-  useHotkeys('c', () => {
-    if (isDetailsOpen && selectedApplication) {
-      setIsCommunicationOpen(true);
-    }
-  }, [isDetailsOpen, selectedApplication]);
+  useHotkeys('c', () => {}, [isDetailsOpen, selectedApplication]);
   
   useHotkeys('escape', () => {
     setIsDetailsOpen(false);
@@ -500,17 +470,6 @@ const Applications = () => {
                           <span className="sr-only">Flag</span>
                         </Button>
                         
-                        <Button 
-                          size="sm" 
-                          variant="ghost" 
-                          className="h-8 w-8 p-0 text-purple-500 hover:text-purple-400 hover:bg-purple-400/10"
-                          onClick={() => handleCommunication(app)}
-                          title="Send Email"
-                        >
-                          <MessageCircle className="h-4 w-4" />
-                          <span className="sr-only">Email</span>
-                        </Button>
-                        
                         {app.status !== "approved" && (
                           <Button 
                             size="sm" 
@@ -570,19 +529,12 @@ const Applications = () => {
         onNavigate={navigateToApplication}
         onStatusChange={updateApplicationStatus}
         onFlagToggle={toggleFlagApplication}
-        onCommunicate={() => setIsCommunicationOpen(true)}
       />
 
       <BatchComparisonDialog
         applications={selectedApplications}
         open={isBatchOpen}
         onOpenChange={setIsBatchOpen}
-      />
-
-      <CommunicationDialog
-        application={selectedApplication}
-        open={isCommunicationOpen}
-        onOpenChange={setIsCommunicationOpen}
       />
 
       <KeyboardShortcutsHelp 

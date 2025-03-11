@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -16,7 +15,6 @@ import {
   XCircle,
   Clock,
   Flag,
-  MessageCircle,
   ChevronLeft,
   ChevronRight,
   ExternalLink,
@@ -67,7 +65,6 @@ interface ApplicationDetailsDialogProps {
   onNavigate: (direction: "next" | "prev") => void;
   onStatusChange: (id: string, status: string) => void;
   onFlagToggle: (id: string) => void;
-  onCommunicate: () => void;
 }
 
 const ApplicationDetailsDialog = ({
@@ -77,7 +74,6 @@ const ApplicationDetailsDialog = ({
   onNavigate,
   onStatusChange,
   onFlagToggle,
-  onCommunicate
 }: ApplicationDetailsDialogProps) => {
   const [secureUrls, setSecureUrls] = useState<Record<string, string>>({});
   
@@ -134,7 +130,6 @@ const ApplicationDetailsDialog = ({
     { key: "R", action: "Reject application" },
     { key: "P", action: "Mark as pending" },
     { key: "F", action: "Flag/unflag application" },
-    { key: "C", action: "Open communication dialog" },
     { key: "Esc", action: "Close dialog" },
   ];
 
@@ -188,7 +183,7 @@ const ApplicationDetailsDialog = ({
         </DialogHeader>
 
         <div className="py-4 space-y-6">
-          {(onStatusChange || onFlagToggle || onCommunicate) && (
+          {(onStatusChange || onFlagToggle) && (
             <div className="bg-zinc-900/60 rounded-md p-3 flex flex-wrap gap-2 justify-center border border-zinc-700">
               {onStatusChange && (
                 <>
@@ -234,17 +229,6 @@ const ApplicationDetailsDialog = ({
                 >
                   <Flag className="h-4 w-4 mr-2" />
                   {application.flagged ? "Unflag (F)" : "Flag (F)"}
-                </Button>
-              )}
-              {onCommunicate && (
-                <Button
-                  variant="outline"
-                  size="sm"
-                  className="text-purple-500 border-purple-500/20 hover:bg-purple-500/10 hover:text-purple-400"
-                  onClick={onCommunicate}
-                >
-                  <MessageCircle className="h-4 w-4 mr-2" />
-                  Send Email (C)
                 </Button>
               )}
             </div>
