@@ -34,7 +34,7 @@ import { useHotkeys } from "react-hotkeys-hook";
 import { supabase } from "@/integrations/supabase/client";
 
 interface Application {
-  id: number;
+  id: string; // Changed from number to string for UUID
   name: string;
   email: string;
   school: string;
@@ -71,7 +71,7 @@ const Applications = () => {
       
       if (data) {
         const formattedApplications = data.map(app => ({
-          id: parseInt(app.id.toString().replace(/-/g, '')),
+          id: app.id, // Using the UUID directly
           name: `${app.first_name} ${app.last_name}`,
           email: app.email,
           school: app.university,
@@ -150,106 +150,53 @@ const Applications = () => {
     });
   };
 
-  const updateApplicationStatus = async (id: number, newStatus: string) => {
+  const updateApplicationStatus = async (id: string, newStatus: string) => {
     try {
-      const idString = id.toString();
-      
-      const { data, error } = await supabase
+      const { error: updateError } = await supabase
         .from('applications')
-        .select('id')
-        .eq('id', idString);
+        .update({ status: newStatus })
+        .eq('id', id);
       
-      if (error) {
-        console.error("Error finding application:", error);
-        throw new Error(error.message);
-      }
-      
-      if (data && data.length > 0) {
-        const uuid = data[0].id;
-        
-        const { error: updateError } = await supabase
-          .from('applications')
-          .update({ status: newStatus })
-          .eq('id', uuid);
-        
-        if (updateError) {
-          console.error("Error updating application:", updateError);
-          throw new Error(updateError.message);
-        }
+      if (updateError) {
+        console.error("Error updating application:", updateError);
+        throw new Error(updateError.message);
       }
       
       setApplications(prev => 
         prev.map(app => app.id === id ? { ...app, status: newStatus } : app)
       );
       
-      const currentApps = localStorage.getItem('applications');
-      let allApps = currentApps ? JSON.parse(currentApps) : [];
-      
-      allApps = allApps.map((app: Application) => 
-        app.id === id ? { ...app, status: newStatus } : app
-      );
-      
-      localStorage.setItem('applications', JSON.stringify(allApps));
-      
       refreshMetrics();
       
-      toast.success(`Application #${id} marked as ${newStatus}`);
+      toast.success(`Application ${id} marked as ${newStatus}`);
     } catch (error) {
       console.error("Error updating application status:", error);
       toast.error("Failed to update application status. Please try again.");
     }
   };
 
-  const toggleFlagApplication = async (id: number) => {
+  const toggleFlagApplication = async (id: string) => {
     try {
       const app = applications.find(a => a.id === id);
       if (!app) return;
       
       const newFlaggedStatus = !app.flagged;
       
-      const idString = id.toString();
-      
-      const { data, error } = await supabase
+      const { error: updateError } = await supabase
         .from('applications')
-        .select('id')
-        .eq('id', idString);
+        .update({ flagged: newFlaggedStatus })
+        .eq('id', id);
       
-      if (error) {
-        console.error("Error finding application:", error);
-        throw new Error(error.message);
-      }
-      
-      if (data && data.length > 0) {
-        const uuid = data[0].id;
-        
-        const { error: updateError } = await supabase
-          .from('applications')
-          .update({ flagged: newFlaggedStatus })
-          .eq('id', uuid);
-        
-        if (updateError) {
-          console.error("Error updating application flag:", updateError);
-          throw new Error(updateError.message);
-        }
+      if (updateError) {
+        console.error("Error updating application flag:", updateError);
+        throw new Error(updateError.message);
       }
       
       setApplications(prev => 
         prev.map(a => a.id === id ? { ...a, flagged: newFlaggedStatus } : a)
       );
       
-      const currentApps = localStorage.getItem('applications');
-      let allApps = currentApps ? JSON.parse(currentApps) : [];
-      
-      allApps = allApps.map((a: Application) => {
-        if (a.id === id) {
-          return { ...a, flagged: newFlaggedStatus };
-        }
-        return a;
-      });
-      
-      localStorage.setItem('applications', JSON.stringify(allApps));
-      
-      toast.success(`Application #${id} ${newFlaggedStatus ? 'flagged' : 'unflagged'}`);
+      toast.success(`Application ${id} ${newFlaggedStatus ? 'flagged' : 'unflagged'}`);
     } catch (error) {
       console.error("Error toggling application flag:", error);
       toast.error("Failed to update application flag. Please try again.");
