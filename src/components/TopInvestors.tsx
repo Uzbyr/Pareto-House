@@ -13,71 +13,71 @@ const TopInvestors = () => {
       
       <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6 mt-8">
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/e1a7ca51-19ab-4cf0-8c3e-22a0eeef0554.png" 
               alt="a16z" 
-              className="h-16 object-contain"
+              className="h-12 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Andreessen Horowitz (a16z)</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/253181bb-ed4d-4ccf-bba5-d02e998dbb85.png" 
               alt="Sequoia" 
-              className="h-16 object-contain"
+              className="h-12 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Sequoia Capital</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/1ac598ab-2b9e-45b2-a5c3-69088f7cff56.png" 
               alt="BoxGroup" 
-              className="h-18 object-contain"
+              className="h-14 object-contain"
             />
           </div>
           <span className="text-sm font-medium">BoxGroup</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/57b75d93-9a3a-49f2-bd17-b94c95f87b30.png" 
               alt="Z Fellows" 
-              className="h-14 object-contain"
+              className="h-10 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Z Fellows</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/1e75307d-54c1-42c6-af98-0bb9438273ae.png" 
               alt="Founders Fund" 
-              className="h-16 object-contain"
+              className="h-12 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Founders Fund</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/eefde1fe-abbb-4412-ad16-d59e6b39cecb.png" 
               alt="Accel" 
-              className="h-14 object-contain"
+              className="h-10 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Accel</span>
         </div>
         <div className="flex flex-col items-center">
-          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-28 w-full flex items-center justify-center mb-2">
+          <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
               src="/lovable-uploads/d17b7464-777f-4649-b13a-8139a0cec2e8.png" 
               alt="Khosla Ventures" 
-              className="h-14 object-contain"
+              className="h-10 object-contain"
             />
           </div>
           <span className="text-sm font-medium">Khosla Ventures</span>
