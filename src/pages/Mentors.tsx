@@ -424,9 +424,6 @@ const Mentors = () => {
               <DialogTitle className="text-2xl font-bold">
                 {selectedMentor?.name}
               </DialogTitle>
-              <DialogClose className="rounded-full p-1.5 hover:bg-gray-200 dark:hover:bg-gray-700">
-                <X className="h-5 w-5" />
-              </DialogClose>
             </div>
             <DialogDescription className="text-black/60 dark:text-white/60">
               {selectedMentor?.description}

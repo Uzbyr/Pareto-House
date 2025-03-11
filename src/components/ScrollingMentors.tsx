@@ -1,4 +1,5 @@
-
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
 import { useRef, useEffect } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { ExternalLink } from "lucide-react";
@@ -229,15 +230,10 @@ const ScrollingMentors = () => {
       </div>
       
       <div className="text-center mt-8">
-        <Button 
-          variant="pink" 
-          size="lg"
-          asChild
-        >
-          <a href="/mentors">
-            Meet All Mentors
-          </a>
-        </Button>
+        <Link to="/mentors" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-md">
+          Meet All Mentors
+          <ArrowRight className="w-5 h-5" />
+        </Link>
       </div>
     </div>
   );
