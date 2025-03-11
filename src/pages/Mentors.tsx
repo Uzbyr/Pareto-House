@@ -5,6 +5,7 @@ import { Linkedin, Twitter, MessageSquare, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import Navigation from "../components/Navigation";
 
 interface Mentor {
   name: string;
@@ -19,7 +20,6 @@ interface Mentor {
 
 // Active mentors to display on the page
 const mentors: Mentor[] = [
-  // Keep the requested mentors
   {
     name: "Fabrice Grinda",
     linkedIn: "https://www.linkedin.com/in/fabricegrinda/",
@@ -68,7 +68,6 @@ const mentors: Mentor[] = [
     imageUrl: "/lovable-uploads/86c1fa85-94f4-464c-9ba6-1d7dc3b6dd1e.png",
     country: "USA"
   },
-  // Add the new mentors
   {
     name: "Francis Pedraza",
     linkedIn: "https://www.linkedin.com/in/francispedraza/",
@@ -291,7 +290,6 @@ const Mentors = () => {
     }
   };
 
-  // Function to get country display name and flag
   const getCountryDisplay = (country: string) => {
     switch(country) {
       case "USA":
@@ -314,7 +312,8 @@ const Mentors = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
-      <div className="container mx-auto px-4 py-12">
+      <Navigation />
+      <div className="container mx-auto px-4 py-12 pt-28">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
@@ -416,7 +415,6 @@ const Mentors = () => {
         </motion.div>
       </div>
 
-      {/* Mentor Bio Dialog */}
       <Dialog open={dialogOpen} onOpenChange={setDialogOpen}>
         <DialogContent className="sm:max-w-3xl max-h-[90vh] overflow-hidden flex flex-col">
           <DialogHeader>
