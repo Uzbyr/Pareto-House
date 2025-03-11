@@ -319,7 +319,6 @@ const Mentors = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <Link to="/" className="text-pareto-pink hover:text-black dark:hover:text-white mb-8 inline-block">&larr; Back to Home</Link>
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Our Mentors</h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-16">
             <p className="text-xl text-black/80 dark:text-white/80 max-w-2xl">

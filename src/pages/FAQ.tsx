@@ -103,7 +103,6 @@ const FAQ = () => {
           className="max-w-3xl mx-auto"
         >
 
-          <BackToHomeButton />
           <h1 className="text-4xl md:text-5xl font-bold mb-8">
             Frequently Asked Questions
           </h1>
