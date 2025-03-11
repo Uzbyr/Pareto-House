@@ -7,25 +7,70 @@ import { Clock, RefreshCw } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
+import { useQuery } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
+
+interface ApplicationStats {
+  total: number;
+  approved: number;
+  pending: number;
+  rejected: number;
+  byDay: { name: string; applications: number }[];
+}
 
 const Dashboard = () => {
-  const { user, siteMetrics, refreshMetrics } = useAuth();
+  const { user } = useAuth();
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
-  const [isRefreshing, setIsRefreshing] = useState(false);
+
+  // Fetch application stats from Supabase
+  const { data: stats, refetch, isRefreshing } = useQuery({
+    queryKey: ['applicationStats'],
+    queryFn: async (): Promise<ApplicationStats> => {
+      // Get all applications
+      const { data: applications, error } = await supabase
+        .from('applications')
+        .select('status, submission_date');
+      
+      if (error) throw error;
+
+      // Calculate statistics
+      const total = applications.length;
+      const approved = applications.filter(app => app.status === 'approved').length;
+      const pending = applications.filter(app => app.status === 'pending').length;
+      const rejected = applications.filter(app => app.status === 'rejected').length;
+
+      // Calculate applications by day for the last 7 days
+      const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+      const today = new Date();
+      const byDay = Array(7).fill(0).map((_, i) => {
+        const date = new Date(today);
+        date.setDate(date.getDate() - i);
+        const count = applications.filter(app => {
+          const submissionDate = new Date(app.submission_date);
+          return submissionDate.toDateString() === date.toDateString();
+        }).length;
+        return {
+          name: dayNames[(7 + date.getDay() - i) % 7],
+          applications: count
+        };
+      }).reverse();
+
+      return {
+        total,
+        approved,
+        pending,
+        rejected,
+        byDay
+      };
+    }
+  });
 
   // Function to handle manual refresh
-  const handleRefresh = () => {
-    setIsRefreshing(true);
-    refreshMetrics();
+  const handleRefresh = async () => {
+    await refetch();
     setLastUpdated(new Date());
     toast.success("Dashboard metrics refreshed");
-    setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
   };
-
-  // Update the last updated time when metrics change
-  useEffect(() => {
-    setLastUpdated(new Date());
-  }, [siteMetrics]);
 
   return (
     <div className="space-y-8">
@@ -56,7 +101,7 @@ const Dashboard = () => {
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         <Card className="bg-zinc-800 border-zinc-700 p-6">
           <h3 className="text-gray-400 text-sm font-medium">Total Applications</h3>
-          <p className="text-4xl font-bold text-white mt-2">{siteMetrics.applications.total}</p>
+          <p className="text-4xl font-bold text-white mt-2">{stats?.total || 0}</p>
           <div className="mt-4">
             <Progress value={100} className="h-1 bg-zinc-700" />
           </div>
@@ -64,10 +109,10 @@ const Dashboard = () => {
         
         <Card className="bg-zinc-800 border-zinc-700 p-6">
           <h3 className="text-gray-400 text-sm font-medium">Approved</h3>
-          <p className="text-4xl font-bold text-green-500 mt-2">{siteMetrics.applications.approved}</p>
+          <p className="text-4xl font-bold text-green-500 mt-2">{stats?.approved || 0}</p>
           <div className="mt-4">
             <Progress 
-              value={(siteMetrics.applications.approved / siteMetrics.applications.total) * 100} 
+              value={stats ? (stats.approved / stats.total) * 100 : 0} 
               className="h-1 bg-zinc-700" 
             />
           </div>
@@ -75,10 +120,10 @@ const Dashboard = () => {
         
         <Card className="bg-zinc-800 border-zinc-700 p-6">
           <h3 className="text-gray-400 text-sm font-medium">Pending Review</h3>
-          <p className="text-4xl font-bold text-yellow-500 mt-2">{siteMetrics.applications.pending}</p>
+          <p className="text-4xl font-bold text-yellow-500 mt-2">{stats?.pending || 0}</p>
           <div className="mt-4">
             <Progress 
-              value={(siteMetrics.applications.pending / siteMetrics.applications.total) * 100} 
+              value={stats ? (stats.pending / stats.total) * 100 : 0} 
               className="h-1 bg-zinc-700" 
             />
           </div>
@@ -86,10 +131,10 @@ const Dashboard = () => {
         
         <Card className="bg-zinc-800 border-zinc-700 p-6">
           <h3 className="text-gray-400 text-sm font-medium">Rejected</h3>
-          <p className="text-4xl font-bold text-red-500 mt-2">{siteMetrics.applications.rejected}</p>
+          <p className="text-4xl font-bold text-red-500 mt-2">{stats?.rejected || 0}</p>
           <div className="mt-4">
             <Progress 
-              value={(siteMetrics.applications.rejected / siteMetrics.applications.total) * 100} 
+              value={stats ? (stats.rejected / stats.total) * 100 : 0} 
               className="h-1 bg-zinc-700" 
             />
           </div>
@@ -101,7 +146,7 @@ const Dashboard = () => {
         <h2 className="text-xl font-bold text-white mb-6">Weekly Application Submissions</h2>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
-            <BarChart data={siteMetrics.applications.byDay}>
+            <BarChart data={stats?.byDay || []}>
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="name" stroke="#9CA3AF" />
               <YAxis stroke="#9CA3AF" />
@@ -115,25 +160,6 @@ const Dashboard = () => {
               <Bar dataKey="applications" fill="#EC4899" radius={[4, 4, 0, 0]} />
             </BarChart>
           </ResponsiveContainer>
-        </div>
-      </Card>
-
-      {/* Funnel Overview */}
-      <Card className="bg-zinc-800 border-zinc-700 p-6">
-        <h2 className="text-xl font-bold text-white mb-6">Application Funnel Overview</h2>
-        <div className="space-y-4">
-          {siteMetrics.conversionFunnel.stages.map((stage, index) => {
-            const percentage = Math.round((stage.value / siteMetrics.conversionFunnel.stages[0].value) * 100);
-            return (
-              <div key={stage.name}>
-                <div className="flex justify-between text-sm mb-1">
-                  <span className="text-gray-300">{stage.name}</span>
-                  <span className="text-gray-400">{stage.value.toLocaleString()} users ({percentage}%)</span>
-                </div>
-                <Progress value={percentage} className="h-2 bg-zinc-700" />
-              </div>
-            );
-          })}
         </div>
       </Card>
     </div>
