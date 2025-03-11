@@ -93,7 +93,7 @@ const FellowshipPerks = () => {
       }} transition={{
         duration: 0.6
       }} className="text-center">
-          <Link to="/perks" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-md">
+          <Link to="/perks" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm">
             View All Perks
             <ArrowRight className="w-5 h-5" />
           </Link>

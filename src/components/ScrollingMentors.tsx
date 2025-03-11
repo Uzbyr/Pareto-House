@@ -230,7 +230,7 @@ const ScrollingMentors = () => {
       </div>
       
       <div className="text-center mt-8">
-        <Link to="/mentors" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-md">
+        <Link to="/mentors" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm">
           Meet All Mentors
           <ArrowRight className="w-5 h-5" />
         </Link>

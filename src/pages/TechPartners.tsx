@@ -442,7 +442,7 @@ const TechPartners = () => {
           <div className="mb-8">
             <Link
               to="/"
-              className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-black dark:text-white font-medium transition-colors duration-300 rounded-md text-sm flex items-center gap-2 w-fit"
+              className="px-4 py-2 bg-zinc-100 hover:bg-zinc-200 dark:bg-zinc-800 dark:hover:bg-zinc-700 text-black dark:text-white font-medium transition-colors duration-300 rounded-sm text-sm flex items-center gap-2 w-fit"
             >
               <ArrowLeft className="w-4 h-4" />
               Back to Homepage
@@ -554,9 +554,9 @@ const TechPartners = () => {
                         {partner.logo ? (
                           <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                             <img 
-                              src={partner.logo} 
+                              src={partner.logo}
                               alt={`${partner.name} logo`} 
-                              className="max-h-12 max-w-12 object-contain"
+                              className="object-contain"
                             />
                           </div>
                         ) : (

@@ -327,12 +327,12 @@ const Mentors = () => {
               Meet our exceptional mentors who are leaders in their fields, ready to share their knowledge and experience with the next generation of entrepreneurs.
             </p>
             <div className="flex-shrink-0">
-              <Link to="/mentor-finder">
+            {false &&<Link to="/mentor-finder">
                 <Button variant="pink" className="flex items-center gap-2">
                   <MessageSquare className="w-5 h-5" />
                   Find Your Mentor
                 </Button>
-              </Link>
+              </Link>}
             </div>
           </div>
         </motion.div>
