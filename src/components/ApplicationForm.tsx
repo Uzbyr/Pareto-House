@@ -70,6 +70,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
           <div className="flex justify-between pt-4 mt-6">
             {currentStep > 1 && (
               <Button
+                key="prev-step-button"
                 type="button"
                 onClick={prevStep}
                 variant="outline"
@@ -81,6 +82,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
             
             {currentStep < 3 ? (
               <Button
+                key="next-step-button"
                 type="button"
                 onClick={nextStep}
                 className="bg-pareto-pink hover:bg-pareto-pink/90 text-black ml-auto"
@@ -89,6 +91,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
               </Button>
             ) : (
               <Button
+                key="submit-button"
                 type="submit"
                 className="bg-pareto-pink hover:bg-pareto-pink/90 text-black ml-auto"
                 disabled={loading}
