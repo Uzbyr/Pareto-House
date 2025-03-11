@@ -23,7 +23,7 @@ const Dashboard = () => {
   const [lastUpdated, setLastUpdated] = useState<Date>(new Date());
 
   // Fetch application stats from Supabase
-  const { data: stats, refetch, isRefreshing } = useQuery({
+  const { data: stats, refetch, isFetching } = useQuery({
     queryKey: ['applicationStats'],
     queryFn: async (): Promise<ApplicationStats> => {
       // Get all applications
@@ -86,9 +86,9 @@ const Dashboard = () => {
             size="sm" 
             onClick={handleRefresh}
             className="border-zinc-700 text-gray-300 hover:bg-zinc-800"
-            disabled={isRefreshing}
+            disabled={isFetching}
           >
-            <RefreshCw className={`h-4 w-4 mr-2 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw className={`h-4 w-4 mr-2 ${isFetching ? 'animate-spin' : ''}`} />
             Refresh
           </Button>
           <p className="text-gray-400">
