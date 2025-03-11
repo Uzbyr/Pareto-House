@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Dialog,
@@ -20,7 +21,15 @@ import {
   ChevronRight,
   ExternalLink,
   FileText,
-  Video
+  Video,
+  X,
+  Globe,
+  Linkedin,
+  Twitter,
+  GraduationCap,
+  Building,
+  Users,
+  MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -35,6 +44,19 @@ interface Application {
   flagged?: boolean;
   resumeUrl?: string;
   videoUrl?: string;
+  country?: string;
+  nationality?: string;
+  graduationYear?: string;
+  preparatoryClasses?: string;
+  studentSocieties?: string;
+  buildingCompany?: string;
+  companyContext?: string;
+  websiteUrl?: string;
+  xUrl?: string;
+  linkedinUrl?: string;
+  resumeFile?: string;
+  deckFile?: string;
+  memoFile?: string;
 }
 
 interface ApplicationDetailsDialogProps {
@@ -58,10 +80,6 @@ const ApplicationDetailsDialog = ({
 }: ApplicationDetailsDialogProps) => {
   if (!application) return null;
 
-  const fullName = application.firstName && application.lastName
-    ? `${application.firstName} ${application.lastName}`
-    : application.name;
-
   const keyboardShortcutsInfo = [
     { key: "←", action: "Previous application" },
     { key: "→", action: "Next application" },
@@ -79,7 +97,7 @@ const ApplicationDetailsDialog = ({
         <DialogHeader className="border-b border-zinc-700 pb-4">
           <DialogTitle className="text-xl font-bold flex items-center justify-between">
             <div className="flex items-center">
-              <span>Application #{application.id}: {fullName}</span>
+              <span>Application #{application.id}: {application.name}</span>
               {application.flagged && (
                 <Flag className="ml-2 h-4 w-4 text-amber-400" />
               )}
@@ -109,10 +127,15 @@ const ApplicationDetailsDialog = ({
                   </Button>
                 </>
               )}
-              <DialogClose className="h-8 w-8 rounded-md border border-zinc-700 text-gray-400 hover:text-white hover:bg-zinc-700">
+              <Button
+                className="h-8 w-8 p-0 rounded-md border border-zinc-700 text-gray-400 hover:text-white hover:bg-zinc-700"
+                variant="outline"
+                size="sm"
+                onClick={() => onOpenChange(false)}
+              >
                 <X className="h-4 w-4" />
                 <span className="sr-only">Close</span>
-              </DialogClose>
+              </Button>
             </div>
           </DialogTitle>
         </DialogHeader>
@@ -180,95 +203,171 @@ const ApplicationDetailsDialog = ({
             </div>
           )}
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-sm font-medium text-gray-400">Personal Information</h3>
-                <div className="mt-2 bg-zinc-900 rounded-md p-4 space-y-2">
-                  <div>
-                    <span className="text-sm text-gray-400">Name:</span>
-                    <p className="text-white">{fullName}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm text-gray-400">Email:</span>
-                    <p className="text-white">{application.email}</p>
-                  </div>
-                </div>
-              </div>
+          <Tabs defaultValue="personal" className="w-full">
+            <TabsList className="mb-4 bg-zinc-900">
+              <TabsTrigger value="personal">Personal Info</TabsTrigger>
+              <TabsTrigger value="education">Education</TabsTrigger>
+              <TabsTrigger value="project">Project</TabsTrigger>
+              <TabsTrigger value="documents">Documents</TabsTrigger>
+              <TabsTrigger value="links">Links</TabsTrigger>
+            </TabsList>
 
-              <div>
-                <h3 className="text-sm font-medium text-gray-400">Education</h3>
-                <div className="mt-2 bg-zinc-900 rounded-md p-4 space-y-2">
-                  <div>
-                    <span className="text-sm text-gray-400">School:</span>
-                    <p className="text-white">{application.school}</p>
-                  </div>
-                  {application.major && (
-                    <div>
-                      <span className="text-sm text-gray-400">Major:</span>
-                      <p className="text-white">{application.major}</p>
-                    </div>
-                  )}
-                  {application.graduationYear && (
-                    <div>
-                      <span className="text-sm text-gray-400">Expected Graduation:</span>
-                      <p className="text-white">{application.graduationYear}</p>
-                    </div>
-                  )}
-                  {application.preparatoryClasses && (
-                    <div>
-                      <span className="text-sm text-gray-400">Preparatory Classes:</span>
-                      <p className="text-white">{application.preparatoryClasses === "yes" ? "Yes" : "No"}</p>
-                    </div>
-                  )}
+            <TabsContent value="personal" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                <div>
+                  <span className="text-sm text-gray-400">Name:</span>
+                  <p className="text-white">{application.name}</p>
                 </div>
-              </div>
-            </div>
-
-            <div className="space-y-4">
-              <div>
-                <h3 className="text-sm font-medium text-gray-400">Application Details</h3>
-                <div className="mt-2 bg-zinc-900 rounded-md p-4 space-y-2">
+                <div>
+                  <span className="text-sm text-gray-400">Email:</span>
+                  <p className="text-white">{application.email}</p>
+                </div>
+                {application.country && (
                   <div>
-                    <span className="text-sm text-gray-400">Submission Date:</span>
-                    <p className="text-white">{application.submissionDate}</p>
-                  </div>
-                  <div>
-                    <span className="text-sm text-gray-400">Status:</span>
-                    <p className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                      application.status === "approved" 
-                        ? "bg-green-400/10 text-green-400" 
-                        : application.status === "rejected"
-                        ? "bg-red-400/10 text-red-400" 
-                        : "bg-yellow-400/10 text-yellow-400"
-                    }`}>
-                      {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                    <span className="text-sm text-gray-400">Country:</span>
+                    <p className="text-white flex items-center">
+                      <MapPin className="h-4 w-4 mr-1 text-gray-400" />
+                      {application.country}
                     </p>
                   </div>
-                  {application.referral && (
-                    <div>
-                      <span className="text-sm text-gray-400">Referral Source:</span>
-                      <p className="text-white">{application.referral}</p>
-                    </div>
-                  )}
+                )}
+                {application.nationality && (
+                  <div>
+                    <span className="text-sm text-gray-400">Nationality:</span>
+                    <p className="text-white">{application.nationality}</p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="education" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                <div>
+                  <span className="text-sm text-gray-400">School:</span>
+                  <p className="text-white flex items-center">
+                    <GraduationCap className="h-4 w-4 mr-1 text-gray-400" />
+                    {application.school}
+                  </p>
+                </div>
+                {application.major && (
+                  <div>
+                    <span className="text-sm text-gray-400">Major:</span>
+                    <p className="text-white">{application.major}</p>
+                  </div>
+                )}
+                {application.graduationYear && (
+                  <div>
+                    <span className="text-sm text-gray-400">Expected Graduation:</span>
+                    <p className="text-white">{application.graduationYear}</p>
+                  </div>
+                )}
+                {application.preparatoryClasses && (
+                  <div>
+                    <span className="text-sm text-gray-400">Preparatory Classes:</span>
+                    <p className="text-white">{application.preparatoryClasses === "yes" ? "Yes" : "No"}</p>
+                  </div>
+                )}
+                {application.studentSocieties && (
+                  <div>
+                    <span className="text-sm text-gray-400">Student Societies:</span>
+                    <p className="text-white">
+                      <Users className="h-4 w-4 inline mr-1 text-gray-400" />
+                      {application.studentSocieties}
+                    </p>
+                  </div>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="project" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                {application.buildingCompany && (
+                  <div>
+                    <span className="text-sm text-gray-400">Building Company:</span>
+                    <p className="text-white flex items-center">
+                      <Building className="h-4 w-4 mr-1 text-gray-400" />
+                      {application.buildingCompany}
+                    </p>
+                  </div>
+                )}
+                {application.companyContext && (
+                  <div>
+                    <span className="text-sm text-gray-400">Company Context:</span>
+                    <p className="text-white whitespace-pre-wrap">{application.companyContext}</p>
+                  </div>
+                )}
+                <div>
+                  <span className="text-sm text-gray-400">Submission Date:</span>
+                  <p className="text-white">{application.submissionDate}</p>
+                </div>
+                <div>
+                  <span className="text-sm text-gray-400">Status:</span>
+                  <p className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                    application.status === "approved" 
+                      ? "bg-green-400/10 text-green-400" 
+                      : application.status === "rejected"
+                      ? "bg-red-400/10 text-red-400" 
+                      : "bg-yellow-400/10 text-yellow-400"
+                  }`}>
+                    {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                  </p>
                 </div>
               </div>
+            </TabsContent>
 
-              {application.interests && (
-                <div>
-                  <h3 className="text-sm font-medium text-gray-400">Areas of Interest</h3>
-                  <div className="mt-2 bg-zinc-900 rounded-md p-4">
-                    <p className="text-white whitespace-pre-wrap">{application.interests}</p>
+            <TabsContent value="documents" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                {application.resumeFile && (
+                  <div>
+                    <span className="text-sm text-gray-400">Resume:</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.resumeFile, '_blank')}
+                      >
+                        <FileText className="h-4 w-4 mr-2" />
+                        View Resume
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
                   </div>
-                </div>
-              )}
-            </div>
-          </div>
-
-          {(application.videoUrl || application.resumeUrl) && (
-            <div>
-              <h3 className="text-sm font-medium text-gray-400 mb-2">Uploaded Documents</h3>
-              <div className="bg-zinc-900 rounded-md p-4 space-y-2">
+                )}
+                {application.deckFile && (
+                  <div>
+                    <span className="text-sm text-gray-400">Deck Presentation:</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.deckFile, '_blank')}
+                      >
+                        <FileText className="h-4 w-4 mr-2" />
+                        View Deck
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {application.memoFile && (
+                  <div>
+                    <span className="text-sm text-gray-400">Memo:</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.memoFile, '_blank')}
+                      >
+                        <FileText className="h-4 w-4 mr-2" />
+                        View Memo
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
                 {application.videoUrl && (
                   <div>
                     <span className="text-sm text-gray-400">Video Presentation:</span>
@@ -279,29 +378,78 @@ const ApplicationDetailsDialog = ({
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
                         onClick={() => window.open(application.videoUrl, '_blank')}
                       >
-                        View Video
+                        <Video className="h-4 w-4 mr-2" />
+                        Watch Video
+                        <ExternalLink className="h-3 w-3 ml-1" />
                       </Button>
                     </div>
                   </div>
                 )}
-                {application.resumeUrl && (
+                {!application.resumeFile && !application.deckFile && !application.memoFile && !application.videoUrl && (
+                  <p className="text-gray-400 italic">No documents uploaded</p>
+                )}
+              </div>
+            </TabsContent>
+
+            <TabsContent value="links" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                {application.websiteUrl && (
                   <div>
-                    <span className="text-sm text-gray-400">Resume:</span>
+                    <span className="text-sm text-gray-400">Website:</span>
                     <div className="mt-1">
                       <Button 
                         variant="outline" 
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.resumeUrl, '_blank')}
+                        onClick={() => window.open(application.websiteUrl, '_blank')}
                       >
-                        View Resume
+                        <Globe className="h-4 w-4 mr-2" />
+                        {application.websiteUrl}
+                        <ExternalLink className="h-3 w-3 ml-1" />
                       </Button>
                     </div>
                   </div>
                 )}
+                {application.linkedinUrl && (
+                  <div>
+                    <span className="text-sm text-gray-400">LinkedIn:</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.linkedinUrl, '_blank')}
+                      >
+                        <Linkedin className="h-4 w-4 mr-2" />
+                        LinkedIn Profile
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {application.xUrl && (
+                  <div>
+                    <span className="text-sm text-gray-400">X (Twitter):</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.xUrl, '_blank')}
+                      >
+                        <Twitter className="h-4 w-4 mr-2" />
+                        X Profile
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {!application.websiteUrl && !application.linkedinUrl && !application.xUrl && (
+                  <p className="text-gray-400 italic">No external links provided</p>
+                )}
               </div>
-            </div>
-          )}
+            </TabsContent>
+          </Tabs>
 
           <div className="mt-4 text-xs text-gray-500 border-t border-zinc-700 pt-4">
             <h4 className="mb-1 text-gray-400">Keyboard Shortcuts:</h4>

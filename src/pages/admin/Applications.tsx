@@ -32,9 +32,10 @@ import CommunicationDialog from "@/components/CommunicationDialog";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import { useHotkeys } from "react-hotkeys-hook";
 import { supabase } from "@/integrations/supabase/client";
+import { Tables } from "@/integrations/supabase/types";
 
 interface Application {
-  id: string; // Changed from number to string for UUID
+  id: string;
   name: string;
   email: string;
   school: string;
@@ -42,6 +43,20 @@ interface Application {
   submissionDate: string;
   status: string;
   flagged?: boolean;
+  resumeFile?: string;
+  deckFile?: string;
+  memoFile?: string;
+  videoUrl?: string;
+  country?: string;
+  nationality?: string;
+  graduationYear?: string;
+  preparatoryClasses?: string;
+  studentSocieties?: string;
+  buildingCompany?: string;
+  companyContext?: string;
+  websiteUrl?: string;
+  xUrl?: string;
+  linkedinUrl?: string;
 }
 
 const Applications = () => {
@@ -70,22 +85,37 @@ const Applications = () => {
       }
       
       if (data) {
-        const formattedApplications = data.map(app => ({
-          id: app.id, // Using the UUID directly
+        const formattedApplications = data.map((app: Tables<"applications">) => ({
+          id: app.id,
           name: `${app.first_name} ${app.last_name}`,
           email: app.email,
           school: app.university,
           major: app.major,
           submissionDate: app.submission_date,
           status: app.status,
-          flagged: app.flagged
+          flagged: app.flagged,
+          country: app.country,
+          nationality: app.nationality,
+          graduationYear: app.graduation_year,
+          preparatoryClasses: app.preparatory_classes,
+          studentSocieties: app.student_societies,
+          buildingCompany: app.building_company,
+          companyContext: app.company_context,
+          websiteUrl: app.website_url,
+          linkedinUrl: app.linkedin_url,
+          xUrl: app.x_url,
+          resumeFile: app.resume_file,
+          deckFile: app.deck_file,
+          memoFile: app.memo_file,
+          videoUrl: app.video_url
         }));
         
         setApplications(formattedApplications);
       }
     } catch (error) {
       console.error("Error loading applications:", error);
-      setApplications(getApplications());
+      const fallbackData = getApplications();
+      setApplications(fallbackData as unknown as Application[]);
     }
   }, [getApplications]);
 
@@ -166,6 +196,10 @@ const Applications = () => {
         prev.map(app => app.id === id ? { ...app, status: newStatus } : app)
       );
       
+      if (selectedApplication && selectedApplication.id === id) {
+        setSelectedApplication({ ...selectedApplication, status: newStatus });
+      }
+      
       refreshMetrics();
       
       toast.success(`Application ${id} marked as ${newStatus}`);
@@ -195,6 +229,10 @@ const Applications = () => {
       setApplications(prev => 
         prev.map(a => a.id === id ? { ...a, flagged: newFlaggedStatus } : a)
       );
+      
+      if (selectedApplication && selectedApplication.id === id) {
+        setSelectedApplication({ ...selectedApplication, flagged: newFlaggedStatus });
+      }
       
       toast.success(`Application ${id} ${newFlaggedStatus ? 'flagged' : 'unflagged'}`);
     } catch (error) {

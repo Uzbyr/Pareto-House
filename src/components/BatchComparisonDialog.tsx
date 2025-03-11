@@ -1,3 +1,4 @@
+
 import React from "react";
 import {
   Dialog,
@@ -9,9 +10,10 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { CheckCircle, XCircle, Clock } from "lucide-react";
+import { Tables } from "@/integrations/supabase/types";
 
 interface Application {
-  id: string; // Updated to string type for UUID
+  id: string;
   name: string;
   email: string;
   school: string;
@@ -19,6 +21,8 @@ interface Application {
   submissionDate: string;
   status: string;
   flagged?: boolean;
+  resumeUrl?: string;
+  videoUrl?: string;
 }
 
 interface BatchComparisonDialogProps {
