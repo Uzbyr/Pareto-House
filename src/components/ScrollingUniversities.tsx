@@ -1,5 +1,5 @@
 
-import { motion } from "framer-motion";
+import { motion, useMotionValue, animate } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -99,60 +99,43 @@ const universities = [
 ];
 
 const ScrollingUniversities = () => {
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
-  const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
-  const [currentTransform, setCurrentTransform] = useState("translateX(0)");
+  const x = useMotionValue(0);
+  const animationRef = useRef<any>(null);
 
-  const handleImageError = (uniName: string) => {
-    console.error(`Failed to load image for ${uniName}`);
-    setImageLoadErrors(prev => ({
-      ...prev,
-      [uniName]: true
-    }));
-  };
-
-  const handleImageLoad = (uniName: string) => {
-    console.log(`Successfully loaded image for ${uniName}`);
-    setLoadedImages(prev => ({
-      ...prev,
-      [uniName]: true
-    }));
-    setImageLoadErrors(prev => ({
-      ...prev,
-      [uniName]: false
-    }));
-  };
-
-  const handleInteraction = () => {
-    if (scrollContainerRef.current) {
-      const computedStyle = window.getComputedStyle(scrollContainerRef.current);
-      setCurrentTransform(computedStyle.transform);
+  const startAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.stop();
     }
-    setIsAutoScrolling(false);
+    animationRef.current = animate(x, -4000, {
+      duration: 40,      
+      ease: "linear",  
+      repeat: Infinity,
+      repeatType: "reverse",
+    });
   };
 
-  const handleInteractionEnd = () => {
-    setIsAutoScrolling(true);
+  // Stop the current animation
+  const stopAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
   };
+
+  useEffect(() => {
+    startAnimation();
+    return () => stopAnimation();
+  }, []);
 
   return (
     <div className="relative overflow-hidden py-10">
-      <ScrollArea 
+      <motion.div
         className="w-full"
-        onMouseEnter={handleInteraction}
-        onMouseLeave={handleInteractionEnd}
-        onTouchStart={handleInteraction}
-        onTouchEnd={handleInteractionEnd}
+        style={{ x }}
+        onMouseEnter={stopAnimation}
+        onMouseLeave={startAnimation}
       >
         <div 
-          ref={scrollContainerRef}
           className={`flex space-x-16`}
-          style={{
-            animation: isAutoScrolling ? 'scroll 150s linear infinite' : 'none',
-            transform: !isAutoScrolling ? currentTransform : undefined
-          }}
         >
           {universities.concat(universities).map((uni, index) => (
             <div
@@ -162,22 +145,14 @@ const ScrollingUniversities = () => {
               <img
                 src={uni.logo}
                 alt={`${uni.name} logo`}
-                onError={() => handleImageError(uni.name)}
-                onLoad={() => handleImageLoad(uni.name)}
-                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${
-                  imageLoadErrors[uni.name] ? 'hidden' : ''
-                } ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
+                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
                   ${uni.name === 'Stanford' ? 'brightness-125' : ''}
                   ${uni.name === 'Princeton' ? 'h-[78%]' : ''}`}
               />
-              {imageLoadErrors[uni.name] && (
-                <div className="text-xs text-white/50">{uni.name}</div>
-              )}
             </div>
           ))}
         </div>
-        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
-      </ScrollArea>
+      </motion.div>
     </div>
   );
 };

@@ -1,6 +1,6 @@
 
 import { useState, useRef, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, useMotionValue, animate } from "framer-motion";
 import { Link } from "react-router-dom";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -116,19 +116,32 @@ const mentors: Mentor[] = [
 ];
 
 const ScrollingMentors = () => {
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const x = useMotionValue(0);
+  const animationRef = useRef<any>(null);
 
-  const handleInteraction = () => {
-    setIsAutoScrolling(false);
+  const startAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
+    animationRef.current = animate(x, -4000, {
+      duration: 40,      
+      ease: "linear",  
+      repeat: Infinity,
+      repeatType: "reverse",
+    });
   };
 
-  const handleInteractionEnd = () => {
-    // Only resume auto-scrolling if the user hasn't interacted for a while
-    setTimeout(() => {
-      setIsAutoScrolling(true);
-    }, 5000);
+  // Stop the current animation
+  const stopAnimation = () => {
+    if (animationRef.current) {
+      animationRef.current.stop();
+    }
   };
+
+  useEffect(() => {
+    startAnimation();
+    return () => stopAnimation();
+  }, []);
 
   return (
     <div className="relative overflow-hidden py-16">
@@ -144,16 +157,14 @@ const ScrollingMentors = () => {
         </p>
       </div>
       
-      <ScrollArea 
+      <div
         className="w-full"
-        onMouseEnter={handleInteraction}
-        onMouseLeave={handleInteractionEnd}
-        onTouchStart={handleInteraction}
-        onTouchEnd={handleInteractionEnd}
       >
-        <div 
-          ref={scrollContainerRef}
-          className={`flex space-x-12 px-4 py-6 ${isAutoScrolling ? 'animate-[scroll_25s_linear_infinite]' : ''}`}
+        <motion.div 
+          className={`flex space-x-12 px-4 py-6`}
+          style={{x}}
+          onMouseEnter={stopAnimation}
+          onMouseLeave={startAnimation}
         >
           {/* First set of mentors */}
           {mentors.map((mentor, index) => (
@@ -200,9 +211,8 @@ const ScrollingMentors = () => {
               </div>
             </Link>
           ))}
-        </div>
-        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
-      </ScrollArea>
+        </motion.div>
+      </div>
       
       <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
         <p className="text-lg text-black/70 dark:text-white/70 italic">
