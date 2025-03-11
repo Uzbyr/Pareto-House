@@ -9,7 +9,7 @@ interface AuthUser {
 
 // Application interface
 interface Application {
-  id: number;
+  id: string; // Changed from number to string for UUID
   name: string;
   email: string;
   school: string;
@@ -18,6 +18,7 @@ interface Application {
   videoUrl?: string;
   submissionDate: string;
   status: "pending" | "approved" | "rejected";
+  flagged?: boolean;
 }
 
 // Site metrics interface
@@ -323,7 +324,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const submitApplication = (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => {
     const newApplication: Application = {
       ...applicationData,
-      id: applications.length > 0 ? Math.max(...applications.map(a => a.id)) + 1 : 1,
+      id: crypto.randomUUID(),
       submissionDate: new Date().toISOString(),
       status: "pending"
     };
@@ -358,7 +359,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           
           if (data) {
             const formattedApplications = data.map(app => ({
-              id: parseInt(app.id.toString()),
+              id: app.id.toString(),
               name: `${app.first_name} ${app.last_name}`,
               email: app.email,
               school: app.university,
@@ -366,7 +367,8 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               resumeUrl: app.resume_file,
               videoUrl: app.video_url,
               submissionDate: app.submission_date,
-              status: app.status as "pending" | "approved" | "rejected"
+              status: app.status as "pending" | "approved" | "rejected",
+              flagged: app.flagged
             }));
             
             setApplications(formattedApplications);

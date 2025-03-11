@@ -1,26 +1,31 @@
-
+import React from "react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogClose,
+  DialogFooter,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { 
-  X, 
-  ChevronLeft, 
-  ChevronRight, 
-  CheckCircle, 
-  XCircle, 
-  Clock, 
-  Flag, 
-  MessageCircle 
+import { Badge } from "@/components/ui/badge";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Separator } from "@/components/ui/separator";
+import {
+  CheckCircle,
+  XCircle,
+  Clock,
+  Flag,
+  MessageCircle,
+  ChevronLeft,
+  ChevronRight,
+  ExternalLink,
+  FileText,
+  Video
 } from "lucide-react";
-import { formatDate } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 
 interface Application {
-  id: number;
+  id: string;
   name: string;
   email: string;
   school: string;
@@ -28,25 +33,18 @@ interface Application {
   submissionDate: string;
   status: string;
   flagged?: boolean;
-  // Additional properties that might be in the application
-  firstName?: string;
-  lastName?: string;
-  graduationYear?: string;
-  interests?: string;
-  preparatoryClasses?: string;
-  referral?: string;
-  videoUrl?: string;
   resumeUrl?: string;
+  videoUrl?: string;
 }
 
 interface ApplicationDetailsDialogProps {
   application: Application | null;
   open: boolean;
   onOpenChange: (open: boolean) => void;
-  onNavigate?: (direction: 'next' | 'prev') => void;
-  onStatusChange?: (id: number, status: string) => void;
-  onFlagToggle?: (id: number) => void;
-  onCommunicate?: () => void;
+  onNavigate: (direction: "next" | "prev") => void;
+  onStatusChange: (id: string, status: string) => void;
+  onFlagToggle: (id: string) => void;
+  onCommunicate: () => void;
 }
 
 const ApplicationDetailsDialog = ({
@@ -56,11 +54,10 @@ const ApplicationDetailsDialog = ({
   onNavigate,
   onStatusChange,
   onFlagToggle,
-  onCommunicate,
+  onCommunicate
 }: ApplicationDetailsDialogProps) => {
   if (!application) return null;
 
-  // Format name from firstName and lastName if available, otherwise use name
   const fullName = application.firstName && application.lastName
     ? `${application.firstName} ${application.lastName}`
     : application.name;
@@ -121,7 +118,6 @@ const ApplicationDetailsDialog = ({
         </DialogHeader>
 
         <div className="py-4 space-y-6">
-          {/* Action buttons row */}
           {(onStatusChange || onFlagToggle || onCommunicate) && (
             <div className="bg-zinc-900/60 rounded-md p-3 flex flex-wrap gap-2 justify-center border border-zinc-700">
               {onStatusChange && (
@@ -235,7 +231,7 @@ const ApplicationDetailsDialog = ({
                 <div className="mt-2 bg-zinc-900 rounded-md p-4 space-y-2">
                   <div>
                     <span className="text-sm text-gray-400">Submission Date:</span>
-                    <p className="text-white">{formatDate(application.submissionDate)}</p>
+                    <p className="text-white">{application.submissionDate}</p>
                   </div>
                   <div>
                     <span className="text-sm text-gray-400">Status:</span>
