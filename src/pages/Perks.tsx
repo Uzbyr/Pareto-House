@@ -155,7 +155,7 @@ const Perks = () => {
 
   return (
     <motion.div
-      className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white"
+      className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter"
       initial="initial"
       animate="animate"
       variants={pageVariants}

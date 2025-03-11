@@ -32,7 +32,7 @@ const EducationalBackgroundStep = memo(({
   <div className="space-y-6">
     <h2 className="text-2xl font-bold mb-4">Educational Background</h2>
     <div className="space-y-2">
-      <Label htmlFor="university">University</Label>
+      <Label htmlFor="university">University<span className="text-red-500">*</span></Label>
       <Select
         value={formData.university}
         onValueChange={(value) => handleSelectChange("university", value)}
@@ -86,7 +86,7 @@ const EducationalBackgroundStep = memo(({
     )}
     
     <div className="space-y-2">
-      <Label htmlFor="major">Major</Label>
+      <Label htmlFor="major">Major<span className="text-red-500">*</span></Label>
       <Input
         id="major"
         name="major"
@@ -98,7 +98,7 @@ const EducationalBackgroundStep = memo(({
       />
     </div>
     <div className="space-y-2">
-      <Label htmlFor="graduationYear">Graduation Year</Label>
+      <Label htmlFor="graduationYear">Graduation Year<span className="text-red-500">*</span></Label>
       <Select
         value={formData.graduationYear}
         onValueChange={(value) => handleSelectChange("graduationYear", value)}
@@ -130,7 +130,7 @@ const EducationalBackgroundStep = memo(({
     </div>
     
     <div className="space-y-2">
-      <Label htmlFor="resumeFile">Resume (PDF)</Label>
+      <Label htmlFor="resumeFile">Resume (PDF)<span className="text-red-500">*</span></Label>
       <Input
         id="resumeFile"
         name="resumeFile"

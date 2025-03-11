@@ -49,7 +49,7 @@ const PersonalInformationStep = memo(({
     <h2 className="text-2xl font-bold mb-4">Personal Information</h2>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-2">
-        <Label htmlFor="firstName">First Name</Label>
+        <Label htmlFor="firstName">First Name<span className="text-red-500">*</span></Label>
         <Input
           id="firstName"
           name="firstName"
@@ -61,7 +61,7 @@ const PersonalInformationStep = memo(({
         />
       </div>
       <div className="space-y-2">
-        <Label htmlFor="lastName">Last Name</Label>
+        <Label htmlFor="lastName">Last Name<span className="text-red-500">*</span></Label>
         <Input
           id="lastName"
           name="lastName"
@@ -74,7 +74,7 @@ const PersonalInformationStep = memo(({
       </div>
     </div>
     <div className="space-y-2">
-      <Label htmlFor="email">Email Address</Label>
+      <Label htmlFor="email">Email Address<span className="text-red-500">*</span></Label>
       <Input
         id="email"
         name="email"
@@ -88,7 +88,7 @@ const PersonalInformationStep = memo(({
     </div>
     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
       <div className="space-y-2">
-        <Label htmlFor="country">Country of Residence</Label>
+        <Label htmlFor="country">Country of Residence<span className="text-red-500">*</span></Label>
         <Select
           value={formData.country}
           onValueChange={(value) => handleSelectChange("country", value)}
@@ -106,7 +106,7 @@ const PersonalInformationStep = memo(({
         </Select>
       </div>
       <div className="space-y-2">
-        <Label htmlFor="nationality">Nationality</Label>
+        <Label htmlFor="nationality">Nationality<span className="text-red-500">*</span></Label>
         <Select
           value={formData.nationality}
           onValueChange={(value) => handleSelectChange("nationality", value)}
