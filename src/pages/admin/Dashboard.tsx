@@ -31,13 +31,17 @@ const Dashboard = () => {
         .from('applications')
         .select('status, submission_date');
       
-      if (error) throw error;
+      if (error) {
+        console.error("Error fetching applications:", error);
+        toast.error("Failed to fetch application data");
+        throw error;
+      }
 
       // Calculate statistics
-      const total = applications.length;
-      const approved = applications.filter(app => app.status === 'approved').length;
-      const pending = applications.filter(app => app.status === 'pending').length;
-      const rejected = applications.filter(app => app.status === 'rejected').length;
+      const total = applications?.length || 0;
+      const approved = applications?.filter(app => app.status === 'approved').length || 0;
+      const pending = applications?.filter(app => app.status === 'pending').length || 0;
+      const rejected = applications?.filter(app => app.status === 'rejected').length || 0;
 
       // Calculate applications by day for the last 7 days
       const dayNames = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
@@ -45,10 +49,10 @@ const Dashboard = () => {
       const byDay = Array(7).fill(0).map((_, i) => {
         const date = new Date(today);
         date.setDate(date.getDate() - i);
-        const count = applications.filter(app => {
+        const count = applications?.filter(app => {
           const submissionDate = new Date(app.submission_date);
           return submissionDate.toDateString() === date.toDateString();
-        }).length;
+        }).length || 0;
         return {
           name: dayNames[(7 + date.getDay() - i) % 7],
           applications: count
@@ -62,14 +66,21 @@ const Dashboard = () => {
         rejected,
         byDay
       };
-    }
+    },
+    staleTime: 1000 * 60 * 5, // Consider data fresh for 5 minutes
+    retry: 3 // Retry failed requests up to 3 times
   });
 
   // Function to handle manual refresh
   const handleRefresh = async () => {
-    await refetch();
-    setLastUpdated(new Date());
-    toast.success("Dashboard metrics refreshed");
+    try {
+      await refetch();
+      setLastUpdated(new Date());
+      toast.success("Dashboard metrics refreshed");
+    } catch (error) {
+      console.error("Refresh error:", error);
+      toast.error("Failed to refresh dashboard metrics");
+    }
   };
 
   return (
