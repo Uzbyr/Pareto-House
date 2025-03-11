@@ -7,9 +7,8 @@ interface AuthUser {
   role: "admin" | "super_admin" | "analyst";
 }
 
-// Application interface
 interface Application {
-  id: string; // Changed from number to string for UUID
+  id: string;
   name: string;
   email: string;
   school: string;
@@ -21,7 +20,6 @@ interface Application {
   flagged?: boolean;
 }
 
-// Site metrics interface
 interface SiteMetrics {
   visitors: {
     total: number;
@@ -58,7 +56,6 @@ interface AuthContextType {
   trackPageVisit: (page: string) => void;
 }
 
-// Function to get stored applications from localStorage
 const getStoredApplications = (): Application[] => {
   try {
     const storedApps = localStorage.getItem('applications');
@@ -69,7 +66,6 @@ const getStoredApplications = (): Application[] => {
   }
 };
 
-// Function to store applications in localStorage
 const storeApplications = (applications: Application[]) => {
   try {
     localStorage.setItem('applications', JSON.stringify(applications));
@@ -78,7 +74,6 @@ const storeApplications = (applications: Application[]) => {
   }
 };
 
-// Function to get stored page views from localStorage
 const getStoredPageViews = (): Record<string, number> => {
   try {
     const storedViews = localStorage.getItem('pageViews');
@@ -89,7 +84,6 @@ const getStoredPageViews = (): Record<string, number> => {
   }
 };
 
-// Function to store page views in localStorage
 const storePageViews = (pageViews: Record<string, number>) => {
   try {
     localStorage.setItem('pageViews', JSON.stringify(pageViews));
@@ -98,7 +92,6 @@ const storePageViews = (pageViews: Record<string, number>) => {
   }
 };
 
-// Function to get stored visitor data from localStorage
 const getStoredVisitorData = (): { total: number, byDate: Record<string, number> } => {
   try {
     const storedData = localStorage.getItem('visitorData');
@@ -109,7 +102,6 @@ const getStoredVisitorData = (): { total: number, byDate: Record<string, number>
   }
 };
 
-// Function to store visitor data in localStorage
 const storeVisitorData = (visitorData: { total: number, byDate: Record<string, number> }) => {
   try {
     localStorage.setItem('visitorData', JSON.stringify(visitorData));
@@ -118,7 +110,6 @@ const storeVisitorData = (visitorData: { total: number, byDate: Record<string, n
   }
 };
 
-// Real site metrics collector
 const collectRealMetrics = (): SiteMetrics => {
   const applications = getStoredApplications();
   const pageViews = getStoredPageViews();
@@ -249,6 +240,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [loading, setLoading] = useState(true);
 
   const [applications, setApplications] = useState<Application[]>(getStoredApplications());
   
@@ -274,40 +266,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [siteMetrics, setSiteMetrics] = useState<SiteMetrics>(collectRealMetrics());
 
   useEffect(() => {
-    const initializeAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session) {
-        setSession(session);
-        setIsAuthenticated(true);
-        
-        const email = session.user?.email || '';
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      setSession(session);
+      setIsAuthenticated(!!session);
+      if (session?.user?.email) {
         setUser({
-          email,
-          role: getUserRole(email)
+          email: session.user.email,
+          role: getUserRole(session.user.email)
         });
       }
-    };
-    
-    initializeAuth();
-    
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
-      setSession(newSession);
-      setIsAuthenticated(!!newSession);
-      
-      if (newSession?.user?.email) {
+      setLoading(false);
+    });
+
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setSession(session);
+      setIsAuthenticated(!!session);
+      if (session?.user?.email) {
         setUser({
-          email: newSession.user.email,
-          role: getUserRole(newSession.user.email)
+          email: session.user.email,
+          role: getUserRole(session.user.email)
         });
       } else {
         setUser(null);
       }
     });
-    
-    return () => {
-      subscription.unsubscribe();
-    };
+
+    return () => subscription.unsubscribe();
   }, []);
 
   const trackPageVisit = (pageName: string) => {
@@ -402,15 +388,37 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    return true;
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        console.error("Login error:", error.message);
+        return false;
+      }
+
+      return true;
+    } catch (error) {
+      console.error("Login error:", error);
+      return false;
+    }
   };
 
   const logout = async () => {
-    await supabase.auth.signOut();
+    const { error } = await supabase.auth.signOut();
+    if (error) {
+      console.error("Logout error:", error.message);
+    }
     setIsAuthenticated(false);
     setUser(null);
     setSession(null);
   };
+
+  if (loading) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <AuthContext.Provider 
