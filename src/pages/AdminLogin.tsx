@@ -1,7 +1,7 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useAuth } from "@/contexts/AuthContext";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -11,8 +11,11 @@ const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
-  const { login, isPareto20Email } = useAuth();
   const navigate = useNavigate();
+
+  const isPareto20Email = (email: string) => {
+    return email.endsWith('@pareto20.com');
+  };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,12 +34,17 @@ const AdminLogin = () => {
     }
 
     try {
-      const success = await login(email, password);
-      if (success) {
+      const { error } = await supabase.auth.signInWithPassword({
+        email,
+        password
+      });
+
+      if (error) {
+        console.error("Login error:", error);
+        toast.error(error.message || "Invalid credentials");
+      } else {
         toast.success("Login successful");
         navigate("/admin/dashboard");
-      } else {
-        toast.error("Invalid credentials");
       }
     } catch (error) {
       toast.error("Login failed");
@@ -112,4 +120,3 @@ const AdminLogin = () => {
 };
 
 export default AdminLogin;
-

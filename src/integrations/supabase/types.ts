@@ -21,6 +21,7 @@ export type Database = {
           graduation_year: string
           id: string
           last_name: string
+          linkedin_url: string
           major: string
           memo_file: string | null
           nationality: string
@@ -32,6 +33,7 @@ export type Database = {
           university: string
           video_url: string | null
           website_url: string | null
+          x_url: string | null
         }
         Insert: {
           building_company: string
@@ -44,6 +46,7 @@ export type Database = {
           graduation_year: string
           id?: string
           last_name: string
+          linkedin_url?: string
           major: string
           memo_file?: string | null
           nationality: string
@@ -55,6 +58,7 @@ export type Database = {
           university: string
           video_url?: string | null
           website_url?: string | null
+          x_url?: string | null
         }
         Update: {
           building_company?: string
@@ -67,6 +71,7 @@ export type Database = {
           graduation_year?: string
           id?: string
           last_name?: string
+          linkedin_url?: string
           major?: string
           memo_file?: string | null
           nationality?: string
@@ -78,6 +83,7 @@ export type Database = {
           university?: string
           video_url?: string | null
           website_url?: string | null
+          x_url?: string | null
         }
         Relationships: []
       }

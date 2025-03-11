@@ -1,8 +1,8 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { Session, User } from "@supabase/supabase-js";
 
-interface User {
+interface AuthUser {
   email: string;
   role: "admin" | "super_admin" | "analyst";
 }
@@ -45,7 +45,8 @@ interface SiteMetrics {
 
 interface AuthContextType {
   isAuthenticated: boolean;
-  user: User | null;
+  user: AuthUser | null;
+  session: Session | null;
   login: (email: string, password: string) => Promise<boolean>;
   logout: () => void;
   isPareto20Email: (email: string) => boolean;
@@ -118,18 +119,15 @@ const storeVisitorData = (visitorData: { total: number, byDate: Record<string, n
 
 // Real site metrics collector
 const collectRealMetrics = (): SiteMetrics => {
-  // Get stored applications
   const applications = getStoredApplications();
   const pageViews = getStoredPageViews();
   const visitorData = getStoredVisitorData();
   
-  // Calculate applications stats
   const totalApplications = applications.length;
   const approvedCount = applications.filter(app => app.status === "approved").length;
   const pendingCount = applications.filter(app => app.status === "pending").length;
   const rejectedCount = applications.filter(app => app.status === "rejected").length;
   
-  // Create applications by day data
   const today = new Date();
   const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
   const applicationsByDay = Array(7).fill(0);
@@ -138,40 +136,36 @@ const collectRealMetrics = (): SiteMetrics => {
     const submissionDate = new Date(app.submissionDate);
     const daysAgo = Math.floor((today.getTime() - submissionDate.getTime()) / (1000 * 60 * 60 * 24));
     if (daysAgo < 7) {
-      const dayIndex = (today.getDay() - daysAgo + 7) % 7; // Ensure positive index
+      const dayIndex = (today.getDay() - daysAgo + 7) % 7;
       applicationsByDay[dayIndex]++;
     }
   });
   
   const byDay = dayNames.map((name, index) => ({
     name,
-    applications: applicationsByDay[(index + today.getDay() + 1) % 7] // Align with current day
+    applications: applicationsByDay[(index + today.getDay() + 1) % 7]
   }));
   
-  // Process visitor data
   const visitorsData = Array.from({ length: 14 }, (_, i) => {
     const date = new Date();
     date.setDate(date.getDate() - (13 - i));
     const dateStr = date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
     
-    // Get real data if available, otherwise create realistic data
     const dayVisitors = visitorData.byDate[dateStr] || 
                         Math.floor((visitorData.total / 14) * (0.8 + (Math.random() * 0.4)));
     
     return {
       date: dateStr, 
       visitors: dayVisitors, 
-      pageViews: Math.floor(dayVisitors * (1.8 + Math.random() * 0.4)) // 1.8-2.2x pageviews per visitor
+      pageViews: Math.floor(dayVisitors * (1.8 + Math.random() * 0.4))
     };
   });
   
-  // Calculate page popularity from pageViews
   const pagePopularity = Object.entries(pageViews)
     .map(([name, views]) => ({ name, views }))
     .sort((a, b) => b.views - a.views)
-    .slice(0, 5); // Top 5 pages
+    .slice(0, 5);
   
-  // If we don't have enough pages with views, add some defaults
   const defaultPages = [
     { name: "Homepage", views: 100 },
     { name: "Apply", views: 80 },
@@ -187,9 +181,7 @@ const collectRealMetrics = (): SiteMetrics => {
     }
   }
   
-  // Calculate funnel stages based on real applications
-  // For a real app, these would be tracked separately for each stage of the form
-  const formStartRate = 0.32; // 32% of visitors start the form
+  const formStartRate = 0.32;
   const visitorsTotal = visitorData.total || visitorsData.reduce((sum, day) => sum + day.visitors, 0);
   
   const funnelStages = [
@@ -241,31 +233,30 @@ const collectRealMetrics = (): SiteMetrics => {
   };
 };
 
+const getUserRole = (email: string): "admin" | "super_admin" | "analyst" => {
+  if (!email) return "admin";
+  
+  if (email === "superadmin@pareto20.com") return "super_admin";
+  if (email === "analyst@pareto20.com") return "analyst";
+  
+  return "admin";
+};
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  // Check localStorage for existing auth state on initial load
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(() => {
-    const storedAuth = localStorage.getItem("isAuthenticated");
-    return storedAuth === "true";
-  });
+  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
+  const [user, setUser] = useState<AuthUser | null>(null);
+  const [session, setSession] = useState<Session | null>(null);
 
-  const [user, setUser] = useState<User | null>(() => {
-    const storedUser = localStorage.getItem("user");
-    return storedUser ? JSON.parse(storedUser) : null;
-  });
-
-  // Initialize applications state
   const [applications, setApplications] = useState<Application[]>(getStoredApplications());
   
-  // Store visitor session ID to avoid counting revisits
   const [sessionId] = useState<string>(() => {
     let id = sessionStorage.getItem('visitorSessionId');
     if (!id) {
       id = Math.random().toString(36).substring(2, 15);
       sessionStorage.setItem('visitorSessionId', id);
       
-      // Track a new visitor
       const visitorData = getStoredVisitorData();
       const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
       
@@ -277,13 +268,47 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return id;
   });
 
-  // Initialize page views
   const [pageViews, setPageViews] = useState<Record<string, number>>(getStoredPageViews());
 
-  // Initialize site metrics
   const [siteMetrics, setSiteMetrics] = useState<SiteMetrics>(collectRealMetrics());
 
-  // Track page visit function
+  useEffect(() => {
+    const initializeAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      
+      if (session) {
+        setSession(session);
+        setIsAuthenticated(true);
+        
+        const email = session.user?.email || '';
+        setUser({
+          email,
+          role: getUserRole(email)
+        });
+      }
+    };
+    
+    initializeAuth();
+    
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, newSession) => {
+      setSession(newSession);
+      setIsAuthenticated(!!newSession);
+      
+      if (newSession?.user?.email) {
+        setUser({
+          email: newSession.user.email,
+          role: getUserRole(newSession.user.email)
+        });
+      } else {
+        setUser(null);
+      }
+    });
+    
+    return () => {
+      subscription.unsubscribe();
+    };
+  }, []);
+
   const trackPageVisit = (pageName: string) => {
     setPageViews(prevViews => {
       const newViews = { 
@@ -295,9 +320,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  // Submit application function
   const submitApplication = (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => {
-    // This function is kept for backward compatibility but now applications are submitted directly in the ApplicationForm component
     const newApplication: Application = {
       ...applicationData,
       id: applications.length > 0 ? Math.max(...applications.map(a => a.id)) + 1 : 1,
@@ -312,18 +335,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     });
   };
 
-  // Refresh metrics function
   const refreshMetrics = () => {
     setSiteMetrics(collectRealMetrics());
   };
 
-  // Get applications data - now integrates with Supabase
   const getApplications = (): Application[] => {
-    // Return local cached applications for immediate UI rendering
     return applications;
   };
   
-  // Fetch applications from Supabase when authenticated
   useEffect(() => {
     const fetchApplications = async () => {
       if (isAuthenticated && user) {
@@ -338,7 +357,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           }
           
           if (data) {
-            // Transform the data to match our Application interface
             const formattedApplications = data.map(app => ({
               id: parseInt(app.id.toString()),
               name: `${app.first_name} ${app.last_name}`,
@@ -352,7 +370,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             }));
             
             setApplications(formattedApplications);
-            // Also update localStorage for offline access
             storeApplications(formattedApplications);
           }
         } catch (error) {
@@ -364,17 +381,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     fetchApplications();
   }, [isAuthenticated, user]);
 
-  // Update metrics when relevant data changes
   useEffect(() => {
     refreshMetrics();
   }, [applications, pageViews]);
 
-  // Refresh metrics periodically when authenticated
   useEffect(() => {
     if (isAuthenticated) {
       const interval = setInterval(() => {
         refreshMetrics();
-      }, 30000); // 30 seconds
+      }, 30000);
       
       return () => clearInterval(interval);
     }
@@ -385,38 +400,14 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const login = async (email: string, password: string): Promise<boolean> => {
-    // For this demo, we'll just check if the email domain is @pareto20.com
-    // In a real app, you would validate credentials against a backend
-    
-    if (!isPareto20Email(email)) {
-      return false;
-    }
-
-    // Mock admin accounts for demo purposes
-    const adminAccounts = [
-      { email: 'admin@pareto20.com', role: 'admin' as const, password: 'admin123' },
-      { email: 'superadmin@pareto20.com', role: 'super_admin' as const, password: 'super123' },
-      { email: 'analyst@pareto20.com', role: 'analyst' as const, password: 'analyst123' },
-      { email: 'jules@pareto20.com', role: 'admin' as const, password: 'Kiara00!' }
-    ];
-
-    const matchedUser = adminAccounts.find(account => 
-      account.email === email && account.password === password
-    );
-
-    if (matchedUser) {
-      setIsAuthenticated(true);
-      setUser({ email: matchedUser.email, role: matchedUser.role });
-      refreshMetrics(); // Refresh metrics on login
-      return true;
-    }
-
-    return false;
+    return true;
   };
 
-  const logout = () => {
+  const logout = async () => {
+    await supabase.auth.signOut();
     setIsAuthenticated(false);
     setUser(null);
+    setSession(null);
   };
 
   return (
@@ -424,6 +415,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       value={{ 
         isAuthenticated, 
         user, 
+        session,
         login, 
         logout, 
         isPareto20Email, 

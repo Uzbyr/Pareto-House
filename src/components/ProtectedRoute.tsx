@@ -11,13 +11,13 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   const { isAuthenticated, user } = useAuth();
   const location = useLocation();
 
-  if (!isAuthenticated || !user) {
+  if (!isAuthenticated) {
     // Redirect to login if not authenticated
     return <Navigate to="/admin/login" state={{ from: location }} replace />;
   }
 
   // Check role requirements if specified
-  if (requiredRole && user.role !== requiredRole && user.role !== "super_admin") {
+  if (requiredRole && user?.role !== requiredRole && user?.role !== "super_admin") {
     // Super admins can access any route, otherwise check specific role
     return <Navigate to="/admin/dashboard" replace />;
   }
