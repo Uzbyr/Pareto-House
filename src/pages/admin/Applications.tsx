@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -138,9 +139,15 @@ const Applications = () => {
       app.school.toLowerCase().includes(searchTerm.toLowerCase()) ||
       (app.major && app.major.toLowerCase().includes(searchTerm.toLowerCase()));
       
-    const matchesStatus = statusFilter ? app.status === statusFilter : true;
+    // Modified filter logic to handle "flagged" separately from status
+    let matchesFilter = true;
+    if (statusFilter === "flagged") {
+      matchesFilter = !!app.flagged;
+    } else if (statusFilter) {
+      matchesFilter = app.status === statusFilter;
+    }
     
-    return matchesSearch && matchesStatus;
+    return matchesSearch && matchesFilter;
   });
 
   const exportToCSV = () => {
