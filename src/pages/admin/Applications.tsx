@@ -255,6 +255,22 @@ const Applications = () => {
     setIsBatchOpen(true);
   };
 
+  const navigateToApplication = (direction: 'next' | 'prev') => {
+    if (!selectedApplication || applications.length === 0) return;
+    
+    const currentIndex = applications.findIndex(app => app.id === selectedApplication.id);
+    if (currentIndex === -1) return;
+    
+    let newIndex;
+    if (direction === 'next') {
+      newIndex = (currentIndex + 1) % applications.length;
+    } else {
+      newIndex = (currentIndex - 1 + applications.length) % applications.length;
+    }
+    
+    setSelectedApplication(applications[newIndex]);
+  };
+
   useHotkeys('right', () => {
     if (isDetailsOpen) navigateToApplication('next');
   }, [isDetailsOpen, navigateToApplication]);
