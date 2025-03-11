@@ -1,8 +1,7 @@
 
-import { useState, useRef, useEffect } from "react";
+import { useRef, useEffect } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
-import { Link } from "react-router-dom";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import { ExternalLink } from "lucide-react";
 
 // Using the same mentor data structure from the Mentors page
 interface Mentor {
@@ -157,9 +156,7 @@ const ScrollingMentors = () => {
         </p>
       </div>
       
-      <div
-        className="w-full"
-      >
+      <div className="w-full">
         <motion.div 
           className={`flex space-x-12 px-4 py-6`}
           style={{x}}
@@ -168,9 +165,11 @@ const ScrollingMentors = () => {
         >
           {/* First set of mentors */}
           {mentors.map((mentor, index) => (
-            <Link 
+            <a 
               key={`a-${mentor.name}-${index}`}
-              to="/mentors" 
+              href={mentor.linkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-shrink-0 group"
             >
               <div className="flex flex-col items-center w-48">
@@ -183,17 +182,22 @@ const ScrollingMentors = () => {
                     />
                   )}
                 </div>
-                <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                  <ExternalLink className="h-4 w-4 text-gray-500" />
+                </div>
                 <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
               </div>
-            </Link>
+            </a>
           ))}
           
           {/* Duplicated mentors for infinite scroll effect */}
           {mentors.map((mentor, index) => (
-            <Link 
+            <a 
               key={`b-${mentor.name}-${index}`}
-              to="/mentors" 
+              href={mentor.linkedIn}
+              target="_blank"
+              rel="noopener noreferrer"
               className="flex-shrink-0 group"
             >
               <div className="flex flex-col items-center w-48">
@@ -206,10 +210,13 @@ const ScrollingMentors = () => {
                     />
                   )}
                 </div>
-                <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                <div className="flex items-center gap-2">
+                  <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                  <ExternalLink className="h-4 w-4 text-gray-500" />
+                </div>
                 <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
               </div>
-            </Link>
+            </a>
           ))}
         </motion.div>
       </div>
@@ -221,12 +228,12 @@ const ScrollingMentors = () => {
       </div>
       
       <div className="text-center mt-8">
-        <Link 
-          to="/mentors"
+        <a 
+          href="/mentors"
           className="inline-flex items-center px-6 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300 text-lg font-medium rounded-md"
         >
           Meet All Mentors
-        </Link>
+        </a>
       </div>
     </div>
   );
