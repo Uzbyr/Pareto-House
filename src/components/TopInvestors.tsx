@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 
 const TopInvestors = () => {
   return (
-    <div className="mb-16">
+    <div className="container max-w-3xl mb-16">
       <h3 className="text-2xl md:text-3xl font-bold mb-4 tracking-tight">
         Backed by Top Investors
       </h3>
