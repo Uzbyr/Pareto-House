@@ -1,5 +1,6 @@
 
 import React, { createContext, useContext, useState, useEffect } from "react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface User {
   email: string;
@@ -296,6 +297,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Submit application function
   const submitApplication = (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => {
+    // This function is kept for backward compatibility but now applications are submitted directly in the ApplicationForm component
     const newApplication: Application = {
       ...applicationData,
       id: applications.length > 0 ? Math.max(...applications.map(a => a.id)) + 1 : 1,
@@ -315,19 +317,51 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setSiteMetrics(collectRealMetrics());
   };
 
-  // Get applications data
+  // Get applications data - now integrates with Supabase
   const getApplications = (): Application[] => {
+    // Return local cached applications for immediate UI rendering
     return applications;
   };
-
-  // Update localStorage when auth state changes
+  
+  // Fetch applications from Supabase when authenticated
   useEffect(() => {
-    localStorage.setItem("isAuthenticated", isAuthenticated.toString());
-    if (user) {
-      localStorage.setItem("user", JSON.stringify(user));
-    } else {
-      localStorage.removeItem("user");
-    }
+    const fetchApplications = async () => {
+      if (isAuthenticated && user) {
+        try {
+          const { data, error } = await supabase
+            .from('applications')
+            .select('*');
+            
+          if (error) {
+            console.error("Error fetching applications:", error);
+            return;
+          }
+          
+          if (data) {
+            // Transform the data to match our Application interface
+            const formattedApplications = data.map(app => ({
+              id: parseInt(app.id.toString()),
+              name: `${app.first_name} ${app.last_name}`,
+              email: app.email,
+              school: app.university,
+              major: app.major,
+              resumeUrl: app.resume_file,
+              videoUrl: app.video_url,
+              submissionDate: app.submission_date,
+              status: app.status as "pending" | "approved" | "rejected"
+            }));
+            
+            setApplications(formattedApplications);
+            // Also update localStorage for offline access
+            storeApplications(formattedApplications);
+          }
+        } catch (error) {
+          console.error("Error in fetching applications:", error);
+        }
+      }
+    };
+    
+    fetchApplications();
   }, [isAuthenticated, user]);
 
   // Update metrics when relevant data changes

@@ -12,6 +12,7 @@ import {
 } from "@/components/ui/select";
 import { Check } from "lucide-react";
 import { toast } from "sonner";
+import { supabase } from "@/integrations/supabase/client";
 
 interface ApplicationFormProps {
   onSubmitSuccess?: () => void;
@@ -560,30 +561,39 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
       const universityValue = formData.university === "Other" 
         ? formData.otherUniversity 
         : formData.university;
-      data.append("university", universityValue);
       
-      data.append("major", formData.major);
-      data.append("graduationYear", formData.graduationYear);
-      data.append("studentSocieties", formData.studentSocieties || "");
-      
-      if (requiresPreparatoryQuestion()) {
-        data.append("preparatoryClasses", formData.preparatoryClasses);
-      }
-      
-      data.append("buildingCompany", formData.buildingCompany);
-      
-      if (formData.buildingCompany === "yes") {
-        data.append("companyContext", formData.companyContext || "");
-        if (formData.websiteUrl) data.append("websiteUrl", formData.websiteUrl);
-      }
-      
-      if (formData.videoUrl) data.append("videoUrl", formData.videoUrl);
-      if (formData.resumeFile) data.append("resumeFile", formData.resumeFile);
-      if (formData.deckFile) data.append("deckFile", formData.deckFile);
-      if (formData.memoFile) data.append("memoFile", formData.memoFile);
+      // Prepare application data for Supabase
+      const applicationData = {
+        first_name: formData.firstName,
+        last_name: formData.lastName,
+        email: formData.email,
+        country: formData.country,
+        nationality: formData.nationality,
+        university: universityValue,
+        major: formData.major,
+        graduation_year: formData.graduationYear,
+        preparatory_classes: requiresPreparatoryQuestion() ? formData.preparatoryClasses : null,
+        student_societies: formData.studentSocieties || null,
+        building_company: formData.buildingCompany,
+        company_context: formData.buildingCompany === "yes" ? formData.companyContext : null,
+        website_url: formData.buildingCompany === "yes" ? formData.websiteUrl : null,
+        video_url: formData.videoUrl || null,
+        resume_file: formData.resumeFile ? formData.resumeFile.name : null,
+        deck_file: formData.deckFile ? formData.deckFile.name : null,
+        memo_file: formData.memoFile ? formData.memoFile.name : null
+      };
 
-      // In a real app, we would send this data to an API
-      // For demo purposes, we'll use localStorage
+      // Insert the application into Supabase
+      const { error } = await supabase
+        .from('applications')
+        .insert([applicationData]);
+
+      if (error) {
+        console.error("Error submitting application:", error);
+        throw new Error(error.message);
+      }
+
+      // For backwards compatibility, also store in localStorage
       const newApplication = {
         id: Date.now(),
         name: `${formData.firstName} ${formData.lastName}`,
@@ -608,7 +618,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         status: "pending",
       };
 
-      // Store the application in localStorage
+      // Store the application in localStorage for backward compatibility
       const storedApps = localStorage.getItem('applications') || '[]';
       const applications = JSON.parse(storedApps);
       applications.push(newApplication);
@@ -624,6 +634,7 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
         if (onSubmitSuccess) {
           onSubmitSuccess();
         }
+        toast.success("Application submitted successfully!");
       }, 1500);
     } catch (error) {
       console.error("Error submitting application:", error);

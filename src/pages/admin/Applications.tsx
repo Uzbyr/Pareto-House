@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -32,6 +31,7 @@ import BatchComparisonDialog from "@/components/BatchComparisonDialog";
 import CommunicationDialog from "@/components/CommunicationDialog";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import { useHotkeys } from "react-hotkeys-hook";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Application {
   id: number;
@@ -58,17 +58,47 @@ const Applications = () => {
   const [isHelpOpen, setIsHelpOpen] = useState(false);
   const tableRef = useRef<HTMLDivElement>(null);
 
-  // Initial load of applications
-  useEffect(() => {
-    setApplications(getApplications());
+  const loadApplications = useCallback(async () => {
+    try {
+      const { data, error } = await supabase
+        .from('applications')
+        .select('*');
+        
+      if (error) {
+        console.error("Error fetching applications:", error);
+        return;
+      }
+      
+      if (data) {
+        const formattedApplications = data.map(app => ({
+          id: parseInt(app.id.toString().replace(/-/g, '')),
+          name: `${app.first_name} ${app.last_name}`,
+          email: app.email,
+          school: app.university,
+          major: app.major,
+          submissionDate: app.submission_date,
+          status: app.status,
+          flagged: app.flagged
+        }));
+        
+        setApplications(formattedApplications);
+      }
+    } catch (error) {
+      console.error("Error loading applications:", error);
+      setApplications(getApplications());
+    }
   }, [getApplications]);
+
+  useEffect(() => {
+    loadApplications();
+  }, [loadApplications]);
 
   const refreshApplications = () => {
     setIsRefreshing(true);
-    setApplications(getApplications());
+    loadApplications();
     refreshMetrics();
     toast.success("Applications data refreshed");
-    setTimeout(() => setIsRefreshing(false), 800); // Add a small delay for UX
+    setTimeout(() => setIsRefreshing(false), 800);
   };
 
   const filteredApplications = applications.filter((app) => {
@@ -84,7 +114,6 @@ const Applications = () => {
   });
 
   const exportToCSV = () => {
-    // Create CSV data
     const headers = ["ID", "Name", "Email", "School", "Major", "Submission Date", "Status", "Flagged"];
     const csvRows = [
       headers.join(","),
@@ -101,7 +130,6 @@ const Applications = () => {
     ];
     const csvString = csvRows.join("\n");
     
-    // Create download link
     const blob = new Blob([csvString], { type: "text/csv;charset=utf-8;" });
     const url = URL.createObjectURL(blob);
     const link = document.createElement("a");
@@ -122,49 +150,110 @@ const Applications = () => {
     });
   };
 
-  const updateApplicationStatus = (id: number, newStatus: string) => {
-    // Get current apps from localStorage to ensure we're using the latest data
-    const currentApps = localStorage.getItem('applications');
-    let allApps = currentApps ? JSON.parse(currentApps) : [];
-    
-    // Update the application status
-    allApps = allApps.map((app: Application) => 
-      app.id === id ? { ...app, status: newStatus } : app
-    );
-    
-    // Save back to localStorage
-    localStorage.setItem('applications', JSON.stringify(allApps));
-    
-    // Update state and refresh metrics
-    setApplications(allApps);
-    refreshMetrics();
-    
-    toast.success(`Application #${id} marked as ${newStatus}`);
+  const updateApplicationStatus = async (id: number, newStatus: string) => {
+    try {
+      const idString = id.toString();
+      
+      const { data, error } = await supabase
+        .from('applications')
+        .select('id')
+        .eq('id', idString);
+      
+      if (error) {
+        console.error("Error finding application:", error);
+        throw new Error(error.message);
+      }
+      
+      if (data && data.length > 0) {
+        const uuid = data[0].id;
+        
+        const { error: updateError } = await supabase
+          .from('applications')
+          .update({ status: newStatus })
+          .eq('id', uuid);
+        
+        if (updateError) {
+          console.error("Error updating application:", updateError);
+          throw new Error(updateError.message);
+        }
+      }
+      
+      setApplications(prev => 
+        prev.map(app => app.id === id ? { ...app, status: newStatus } : app)
+      );
+      
+      const currentApps = localStorage.getItem('applications');
+      let allApps = currentApps ? JSON.parse(currentApps) : [];
+      
+      allApps = allApps.map((app: Application) => 
+        app.id === id ? { ...app, status: newStatus } : app
+      );
+      
+      localStorage.setItem('applications', JSON.stringify(allApps));
+      
+      refreshMetrics();
+      
+      toast.success(`Application #${id} marked as ${newStatus}`);
+    } catch (error) {
+      console.error("Error updating application status:", error);
+      toast.error("Failed to update application status. Please try again.");
+    }
   };
 
-  const toggleFlagApplication = (id: number) => {
-    // Get current apps from localStorage
-    const currentApps = localStorage.getItem('applications');
-    let allApps = currentApps ? JSON.parse(currentApps) : [];
-    
-    // Toggle the flagged status
-    allApps = allApps.map((app: Application) => {
-      if (app.id === id) {
-        const newFlaggedStatus = !app.flagged;
-        return { ...app, flagged: newFlaggedStatus };
+  const toggleFlagApplication = async (id: number) => {
+    try {
+      const app = applications.find(a => a.id === id);
+      if (!app) return;
+      
+      const newFlaggedStatus = !app.flagged;
+      
+      const idString = id.toString();
+      
+      const { data, error } = await supabase
+        .from('applications')
+        .select('id')
+        .eq('id', idString);
+      
+      if (error) {
+        console.error("Error finding application:", error);
+        throw new Error(error.message);
       }
-      return app;
-    });
-    
-    // Save back to localStorage
-    localStorage.setItem('applications', JSON.stringify(allApps));
-    
-    // Update state
-    setApplications(allApps);
-    
-    // Get the application to check its new flagged status
-    const updatedApp = allApps.find((app: Application) => app.id === id);
-    toast.success(`Application #${id} ${updatedApp?.flagged ? 'flagged' : 'unflagged'}`);
+      
+      if (data && data.length > 0) {
+        const uuid = data[0].id;
+        
+        const { error: updateError } = await supabase
+          .from('applications')
+          .update({ flagged: newFlaggedStatus })
+          .eq('id', uuid);
+        
+        if (updateError) {
+          console.error("Error updating application flag:", updateError);
+          throw new Error(updateError.message);
+        }
+      }
+      
+      setApplications(prev => 
+        prev.map(a => a.id === id ? { ...a, flagged: newFlaggedStatus } : a)
+      );
+      
+      const currentApps = localStorage.getItem('applications');
+      let allApps = currentApps ? JSON.parse(currentApps) : [];
+      
+      allApps = allApps.map((a: Application) => {
+        if (a.id === id) {
+          return { ...a, flagged: newFlaggedStatus };
+        }
+        return a;
+      });
+      
+      localStorage.setItem('applications', JSON.stringify(allApps));
+      
+      toast.success(`Application #${id} ${newFlaggedStatus ? 'flagged' : 'unflagged'}`);
+    } catch (error) {
+      console.error("Error toggling application flag:", error);
+      toast.error("Failed to update application flag. Please try again.");
+    }
   };
 
   const handleCheckApplication = (application: Application) => {
@@ -172,21 +261,17 @@ const Applications = () => {
     setIsDetailsOpen(true);
   };
 
-  // Batch comparison handling
   const handleBatchComparison = () => {
-    // Get the first 4 applications in the filtered list for comparison
     const appsToCompare = filteredApplications.slice(0, 4);
     setSelectedApplications(appsToCompare);
     setIsBatchOpen(true);
   };
 
-  // Communication handling
   const handleCommunication = (application: Application) => {
     setSelectedApplication(application);
     setIsCommunicationOpen(true);
   };
 
-  // Sequential navigation
   const navigateToApplication = useCallback((direction: 'next' | 'prev') => {
     if (!selectedApplication) return;
     
@@ -204,7 +289,6 @@ const Applications = () => {
     setSelectedApplication(filteredApplications[newIndex]);
   }, [filteredApplications, selectedApplication]);
 
-  // Keyboard shortcuts using react-hotkeys-hook
   useHotkeys('right', () => {
     if (isDetailsOpen) navigateToApplication('next');
   }, [isDetailsOpen, navigateToApplication]);

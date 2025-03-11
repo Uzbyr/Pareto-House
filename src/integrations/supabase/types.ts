@@ -9,7 +9,78 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      applications: {
+        Row: {
+          building_company: string
+          company_context: string | null
+          country: string
+          deck_file: string | null
+          email: string
+          first_name: string
+          flagged: boolean | null
+          graduation_year: string
+          id: string
+          last_name: string
+          major: string
+          memo_file: string | null
+          nationality: string
+          preparatory_classes: string | null
+          resume_file: string | null
+          status: string
+          student_societies: string | null
+          submission_date: string
+          university: string
+          video_url: string | null
+          website_url: string | null
+        }
+        Insert: {
+          building_company: string
+          company_context?: string | null
+          country: string
+          deck_file?: string | null
+          email: string
+          first_name: string
+          flagged?: boolean | null
+          graduation_year: string
+          id?: string
+          last_name: string
+          major: string
+          memo_file?: string | null
+          nationality: string
+          preparatory_classes?: string | null
+          resume_file?: string | null
+          status?: string
+          student_societies?: string | null
+          submission_date?: string
+          university: string
+          video_url?: string | null
+          website_url?: string | null
+        }
+        Update: {
+          building_company?: string
+          company_context?: string | null
+          country?: string
+          deck_file?: string | null
+          email?: string
+          first_name?: string
+          flagged?: boolean | null
+          graduation_year?: string
+          id?: string
+          last_name?: string
+          major?: string
+          memo_file?: string | null
+          nationality?: string
+          preparatory_classes?: string | null
+          resume_file?: string | null
+          status?: string
+          student_societies?: string | null
+          submission_date?: string
+          university?: string
+          video_url?: string | null
+          website_url?: string | null
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
