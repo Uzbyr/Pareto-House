@@ -20,6 +20,7 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormDataType>(initialFormData);
   const [availableUniversities, setAvailableUniversities] = useState<string[]>([]);
+  const [isFormDirty, setIsFormDirty] = useState(false);
   
   // Update available universities when country changes
   useEffect(() => {
@@ -31,6 +32,30 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
       setAvailableUniversities(["Other"]);
     }
   }, [formData.country]);
+
+  // Track changes to form data to determine if form is dirty
+  useEffect(() => {
+    // Check if any form field has been filled
+    const isDirty = Object.entries(formData).some(([key, value]) => {
+      // Skip checking file fields directly
+      if (key === 'resumeFile' || key === 'deckFile' || key === 'memoFile') {
+        return false;
+      }
+      
+      // For string fields, check if they're not empty and different from initial
+      if (typeof value === 'string') {
+        return value !== '' && value !== initialFormData[key as keyof FormDataType];
+      }
+      
+      // For other types, just check if they're truthy
+      return !!value;
+    });
+    
+    // Also consider file uploads
+    const hasFiles = !!formData.resumeFile || !!formData.deckFile || !!formData.memoFile;
+    
+    setIsFormDirty(isDirty || hasFiles);
+  }, [formData]);
 
   const handleInputChange = useCallback((e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -254,6 +279,7 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     currentStep,
     loading,
     formData,
+    isFormDirty,
     availableUniversities,
     handleInputChange,
     handleSelectChange,

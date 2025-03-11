@@ -6,16 +6,19 @@ import AdditionalInformationStep from "./application/form-steps/AdditionalInform
 import SuccessStep from "./application/form-steps/SuccessStep";
 import ApplicationProgress from "./application/form-steps/ApplicationProgress";
 import useApplicationForm from "./application/hooks/useApplicationForm";
+import { useEffect } from "react";
 
 interface ApplicationFormProps {
   onSubmitSuccess?: () => void;
+  onFormChange?: (isDirty: boolean) => void;
 }
 
-const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
+const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps) => {
   const {
     currentStep,
     loading,
     formData,
+    isFormDirty,
     availableUniversities,
     handleInputChange,
     handleSelectChange,
@@ -26,6 +29,20 @@ const ApplicationForm = ({ onSubmitSuccess }: ApplicationFormProps) => {
     goToHomepage,
     checkPreparatoryQuestion
   } = useApplicationForm({ onSubmitSuccess });
+
+  // Report form dirty state changes to parent component
+  useEffect(() => {
+    if (onFormChange && currentStep < 4) {
+      onFormChange(isFormDirty);
+    }
+  }, [isFormDirty, onFormChange, currentStep]);
+
+  // Reset form dirty state when form is completed
+  useEffect(() => {
+    if (onFormChange && currentStep === 4) {
+      onFormChange(false);
+    }
+  }, [currentStep, onFormChange]);
 
   // Render content based on current step
   const renderStepContent = () => {
