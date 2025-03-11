@@ -75,7 +75,8 @@ const Applications = () => {
     try {
       const { data, error } = await supabase
         .from('applications')
-        .select('*');
+        .select('*')
+        .order('submission_date', { ascending: false });
         
       if (error) {
         console.error("Error fetching applications:", error);
