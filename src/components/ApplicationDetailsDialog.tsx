@@ -89,7 +89,7 @@ const ApplicationDetailsDialog = ({
       
       if (application.resumeFile) {
         const { data } = await supabase.storage
-          .from('applications')
+          .from('documents')
           .createSignedUrl(application.resumeFile, 3600);
           
         if (data?.signedUrl) {
@@ -99,7 +99,7 @@ const ApplicationDetailsDialog = ({
       
       if (application.deckFile) {
         const { data } = await supabase.storage
-          .from('applications')
+          .from('documents')
           .createSignedUrl(application.deckFile, 3600);
           
         if (data?.signedUrl) {
@@ -109,7 +109,7 @@ const ApplicationDetailsDialog = ({
       
       if (application.memoFile) {
         const { data } = await supabase.storage
-          .from('applications')
+          .from('documents')
           .createSignedUrl(application.memoFile, 3600);
           
         if (data?.signedUrl) {
