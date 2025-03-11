@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -9,8 +9,9 @@ import {
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import { CheckCircle, XCircle, Clock } from "lucide-react";
-import { Tables } from "@/integrations/supabase/types";
+import { Button } from "@/components/ui/button";
+import { CheckCircle, XCircle, Clock, ExternalLink, FileText } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Application {
   id: string;
@@ -23,6 +24,9 @@ interface Application {
   flagged?: boolean;
   resumeUrl?: string;
   videoUrl?: string;
+  resumeFile?: string;
+  deckFile?: string;
+  memoFile?: string;
 }
 
 interface BatchComparisonDialogProps {
@@ -36,6 +40,52 @@ const BatchComparisonDialog = ({
   open,
   onOpenChange,
 }: BatchComparisonDialogProps) => {
+  const [secureUrls, setSecureUrls] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    const getSecureUrls = async () => {
+      const urlMap: Record<string, string> = {};
+      
+      for (const app of applications) {
+        if (app.resumeFile) {
+          const { data } = await supabase.storage
+            .from('applications')
+            .createSignedUrl(app.resumeFile, 3600);
+            
+          if (data?.signedUrl) {
+            urlMap[`resume-${app.id}`] = data.signedUrl;
+          }
+        }
+        
+        if (app.deckFile) {
+          const { data } = await supabase.storage
+            .from('applications')
+            .createSignedUrl(app.deckFile, 3600);
+            
+          if (data?.signedUrl) {
+            urlMap[`deck-${app.id}`] = data.signedUrl;
+          }
+        }
+        
+        if (app.memoFile) {
+          const { data } = await supabase.storage
+            .from('applications')
+            .createSignedUrl(app.memoFile, 3600);
+            
+          if (data?.signedUrl) {
+            urlMap[`memo-${app.id}`] = data.signedUrl;
+          }
+        }
+      }
+      
+      setSecureUrls(urlMap);
+    };
+    
+    if (open && applications.length > 0) {
+      getSecureUrls();
+    }
+  }, [applications, open]);
+
   return (
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogContent className="sm:max-w-[90%] md:max-w-[75%] lg:max-w-[60%] xl:max-w-[50%]">
@@ -111,6 +161,56 @@ const BatchComparisonDialog = ({
                       {app.status}
                     </Badge>
                   </div>
+                  
+                  {/* Documents section */}
+                  {(app.resumeFile || app.deckFile || app.memoFile) && (
+                    <div className="space-y-2 mt-2 pt-2 border-t">
+                      <h4 className="text-sm font-medium text-muted-foreground">Documents</h4>
+                      <div className="flex flex-wrap gap-2">
+                        {app.resumeFile && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                            onClick={() => window.open(secureUrls[`resume-${app.id}`], '_blank')}
+                            disabled={!secureUrls[`resume-${app.id}`]}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            Resume
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </Button>
+                        )}
+                        
+                        {app.deckFile && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                            onClick={() => window.open(secureUrls[`deck-${app.id}`], '_blank')}
+                            disabled={!secureUrls[`deck-${app.id}`]}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            Deck
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </Button>
+                        )}
+                        
+                        {app.memoFile && (
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                            onClick={() => window.open(secureUrls[`memo-${app.id}`], '_blank')}
+                            disabled={!secureUrls[`memo-${app.id}`]}
+                          >
+                            <FileText className="h-4 w-4 mr-2" />
+                            Memo
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  )}
                 </div>
               </TabsContent>
             ))}

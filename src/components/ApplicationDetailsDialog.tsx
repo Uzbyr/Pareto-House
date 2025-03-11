@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import {
   Dialog,
   DialogContent,
@@ -32,6 +32,7 @@ import {
   MapPin
 } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { supabase } from "@/integrations/supabase/client";
 
 interface Application {
   id: string;
@@ -78,6 +79,52 @@ const ApplicationDetailsDialog = ({
   onFlagToggle,
   onCommunicate
 }: ApplicationDetailsDialogProps) => {
+  const [secureUrls, setSecureUrls] = useState<Record<string, string>>({});
+  
+  useEffect(() => {
+    const getSecureUrls = async () => {
+      if (!application) return;
+      
+      const urlMap: Record<string, string> = {};
+      
+      if (application.resumeFile) {
+        const { data } = await supabase.storage
+          .from('applications')
+          .createSignedUrl(application.resumeFile, 3600);
+          
+        if (data?.signedUrl) {
+          urlMap['resume'] = data.signedUrl;
+        }
+      }
+      
+      if (application.deckFile) {
+        const { data } = await supabase.storage
+          .from('applications')
+          .createSignedUrl(application.deckFile, 3600);
+          
+        if (data?.signedUrl) {
+          urlMap['deck'] = data.signedUrl;
+        }
+      }
+      
+      if (application.memoFile) {
+        const { data } = await supabase.storage
+          .from('applications')
+          .createSignedUrl(application.memoFile, 3600);
+          
+        if (data?.signedUrl) {
+          urlMap['memo'] = data.signedUrl;
+        }
+      }
+      
+      setSecureUrls(urlMap);
+    };
+    
+    if (open && application) {
+      getSecureUrls();
+    }
+  }, [application, open]);
+
   if (!application) return null;
 
   const keyboardShortcutsInfo = [
@@ -325,7 +372,8 @@ const ApplicationDetailsDialog = ({
                         variant="outline" 
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.resumeFile, '_blank')}
+                        onClick={() => window.open(secureUrls['resume'], '_blank')}
+                        disabled={!secureUrls['resume']}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Resume
@@ -342,7 +390,8 @@ const ApplicationDetailsDialog = ({
                         variant="outline" 
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.deckFile, '_blank')}
+                        onClick={() => window.open(secureUrls['deck'], '_blank')}
+                        disabled={!secureUrls['deck']}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Deck
@@ -359,7 +408,8 @@ const ApplicationDetailsDialog = ({
                         variant="outline" 
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.memoFile, '_blank')}
+                        onClick={() => window.open(secureUrls['memo'], '_blank')}
+                        disabled={!secureUrls['memo']}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Memo
