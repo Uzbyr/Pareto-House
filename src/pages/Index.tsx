@@ -1,12 +1,12 @@
 import { Link, useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
-// import { ThemeToggle } from "../components/ThemeToggle";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import ScrollingUniversities from "../components/ScrollingUniversities";
 import FellowshipPerks from "../components/FellowshipPerks";
 import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
+import TopInvestors from "../components/TopInvestors";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -134,6 +134,11 @@ const Index = () => {
         <div className="container mx-auto px-4">
           <ScrollingMentors />
         </div>
+      </div>
+
+      {/* Top Investors Section */}
+      <div className="container mx-auto px-4">
+        <TopInvestors />
       </div>
 
       {/* Final CTA Section */}

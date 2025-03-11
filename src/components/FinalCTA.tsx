@@ -2,7 +2,6 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import TopInvestors from "./TopInvestors";
 
 const FinalCTA = () => {
   return (
@@ -15,9 +14,6 @@ const FinalCTA = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          {/* Include the TopInvestors component */}
-          <TopInvestors />
-          
           <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
             Ready to Join the Elite?
           </h2>
