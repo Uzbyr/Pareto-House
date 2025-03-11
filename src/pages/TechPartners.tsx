@@ -1,9 +1,9 @@
-
 import { Link } from "react-router-dom";
 import { ArrowLeft, ExternalLink, Linkedin, Twitter } from "lucide-react";
 import Footer from "../components/Footer";
 import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
+import Navigation from "../components/Navigation";
 
 // Updated partners array with correct logos, categories and company descriptions
 const partnerCategories = [
@@ -437,7 +437,9 @@ const TechPartners = () => {
 
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
-      <div className="container mx-auto px-4 py-12">
+      <Navigation />
+      
+      <div className="container mx-auto px-4 py-12 pt-36">
         <div className="max-w-6xl mx-auto">
           <div className="mb-8">
             <Link
@@ -555,49 +557,4 @@ const TechPartners = () => {
                           <div className="w-16 h-16 mx-auto mb-3 flex items-center justify-center">
                             <img 
                               src={partner.logo}
-                              alt={`${partner.name} logo`} 
-                              className="object-contain"
-                            />
-                          </div>
-                        ) : (
-                          <div className="w-16 h-16 bg-zinc-100 dark:bg-zinc-800 rounded-full flex items-center justify-center mx-auto mb-3">
-                            <span className="text-xl font-semibold text-pareto-pink">{partner.name.charAt(0)}</span>
-                          </div>
-                        )}
-                        <a 
-                          href={partner.url}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="text-sm font-medium text-[1.15em] hover:text-pareto-pink transition-colors duration-300"
-                        >
-                          {partner.name}
-                        </a>
-                      </div>
-                    </div>
-                  </button>
-                ))}
-              </div>
-            </div>
-          ))}
-
-          <div className="text-center mb-20 animate-fade-up" style={{animationDelay: "0.9s"}}>
-            <h2 className="text-2xl font-bold mb-6">Want to become a Tech Partner?</h2>
-            <p className="text-black/60 dark:text-white/60 max-w-xl mx-auto mb-8">
-              We're always looking to expand our network of partners to provide even more opportunities for our fellows.
-            </p>
-            <a
-              href="mailto:partners@pareto.xyz"
-              className="px-6 py-3 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm inline-flex items-center gap-2 transform hover:scale-105 transition-transform duration-300"
-            >
-              Contact Us
-            </a>
-          </div>
-        </div>
-      </div>
-      <Footer />
-    </div>
-  );
-};
-
-export default TechPartners;
+                              alt={`${partner.
