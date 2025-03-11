@@ -2,6 +2,7 @@
 import { useRef, useEffect } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { ExternalLink } from "lucide-react";
+import { Button } from "./ui/button";
 
 // Using the same mentor data structure from the Mentors page
 interface Mentor {
@@ -228,12 +229,15 @@ const ScrollingMentors = () => {
       </div>
       
       <div className="text-center mt-8">
-        <a 
-          href="/mentors"
-          className="inline-flex items-center px-6 py-3 bg-black/5 dark:bg-white/5 hover:bg-black/10 dark:hover:bg-white/10 transition-colors duration-300 text-lg font-medium rounded-md"
+        <Button 
+          variant="pink" 
+          size="lg"
+          asChild
         >
-          Meet All Mentors
-        </a>
+          <a href="/mentors">
+            Meet All Mentors
+          </a>
+        </Button>
       </div>
     </div>
   );
