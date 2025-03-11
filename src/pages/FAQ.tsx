@@ -7,6 +7,7 @@ import {
   AccordionItem,
   AccordionTrigger,
 } from "../components/ui/accordion";
+import BackToHomeButton from "../components/application/BackToHomeButton";
 
 const FAQ = () => {
   const faqSections = [
@@ -98,13 +99,8 @@ const FAQ = () => {
           transition={{ duration: 0.5 }}
           className="max-w-3xl mx-auto"
         >
-          <Link 
-            to="/" 
-            className="text-pareto-pink hover:text-black dark:hover:text-white mb-8 inline-block"
-          >
-            &larr; Back to Home
-          </Link>
-          
+
+          <BackToHomeButton />
           <h1 className="text-4xl md:text-5xl font-bold mb-8">
             Frequently Asked Questions
           </h1>

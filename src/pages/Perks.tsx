@@ -8,6 +8,7 @@ import { Button } from "../components/ui/button";
 import { useToast } from "../components/ui/use-toast";
 import { useAuth } from "../contexts/AuthContext";
 import Footer from "../components/Footer";
+import BackToHomeButton from "../components/application/BackToHomeButton";
 
 const Perks = () => {
   const { toast } = useToast();
@@ -170,13 +171,7 @@ const Perks = () => {
         <div className="container mx-auto px-4 py-3">
           <div className="flex justify-between items-center">
             <div className="flex items-center gap-2">
-              <Link
-                to="/"
-                className="text-lg text-black/80 dark:text-white/80 hover:text-pareto-pink dark:hover:text-pareto-pink transition-all duration-300 inline-flex items-center gap-2"
-              >
-                <ArrowLeft className="w-5 h-5" />
-                Back
-              </Link>
+              <BackToHomeButton />
             </div>
             <div className="flex items-center gap-3">
               {isAuthenticated ? (
