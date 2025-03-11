@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -9,6 +8,7 @@ import { useToast } from "../components/ui/use-toast";
 import { useAuth } from "../contexts/AuthContext";
 import Footer from "../components/Footer";
 import BackToHomeButton from "../components/application/BackToHomeButton";
+import Navigation from "../components/Navigation";
 
 const Perks = () => {
   const { toast } = useToast();
@@ -118,15 +118,12 @@ const Perks = () => {
       return;
     }
 
-    // Open claim URL in a new tab
     window.open(perk.claimUrl, "_blank");
     
-    // Add to claimed perks
     const newClaimedPerks = new Set(claimedPerks);
     newClaimedPerks.add(index);
     setClaimedPerks(newClaimedPerks);
     
-    // Show toast notification
     toast({
       title: `${perk.title} claimed!`,
       description: perk.claimCode 
@@ -136,10 +133,7 @@ const Perks = () => {
     });
   };
 
-  // Create a proper event handler for the login button
   const handleLoginClick = () => {
-    // For demo purposes, using predefined credentials
-    // In a real application, you would show a login form instead
     login("admin@pareto20.com", "admin123")
       .then(success => {
         if (success) {
@@ -166,31 +160,7 @@ const Perks = () => {
       animate="animate"
       variants={pageVariants}
     >
-      {/* Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10">
-        <div className="container mx-auto px-4 py-3">
-          <div className="flex justify-between items-center">
-            <div className="flex items-center gap-2">
-              <BackToHomeButton />
-            </div>
-            <div className="flex items-center gap-3">
-              {isAuthenticated ? (
-                <Button variant="outline" size="sm" onClick={logout} className="flex items-center gap-2">
-                  <User className="h-4 w-4" />
-                  <span className="hidden sm:inline">Fellow</span>
-                  <LogOut className="h-4 w-4" />
-                </Button>
-              ) : (
-                <Button variant="login" size="sm" onClick={handleLoginClick} className="flex items-center gap-2">
-                  <LogIn className="h-4 w-4" />
-                  Log in as Fellow
-                </Button>
-              )}
-              <ThemeToggle />
-            </div>
-          </div>
-        </div>
-      </nav>
+      <Navigation />
 
       <div className="container mx-auto px-4 pt-32 pb-20">
         <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
