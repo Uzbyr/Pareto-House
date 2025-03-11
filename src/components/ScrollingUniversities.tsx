@@ -143,7 +143,7 @@ const ScrollingUniversities = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_40s_linear_infinite]' : ''}`}
+          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_150s_linear_infinite]' : ''}`}
         >
           {universities.concat(universities).map((uni, index) => (
             <div
