@@ -99,10 +99,11 @@ const universities = [
 ];
 
 const ScrollingUniversities = () => {
-  const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
-  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const scrollContainerRef = useRef<HTMLDivElement>(null);
+  const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
+  const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
+  const [currentTransform, setCurrentTransform] = useState("translateX(0)");
 
   const handleImageError = (uniName: string) => {
     console.error(`Failed to load image for ${uniName}`);
@@ -125,6 +126,10 @@ const ScrollingUniversities = () => {
   };
 
   const handleInteraction = () => {
+    if (scrollContainerRef.current) {
+      const computedStyle = window.getComputedStyle(scrollContainerRef.current);
+      setCurrentTransform(computedStyle.transform);
+    }
     setIsAutoScrolling(false);
   };
 
@@ -143,7 +148,11 @@ const ScrollingUniversities = () => {
       >
         <div 
           ref={scrollContainerRef}
-          className={`flex space-x-16 ${isAutoScrolling ? 'animate-[scroll_150s_linear_infinite]' : ''}`}
+          className={`flex space-x-16`}
+          style={{
+            animation: isAutoScrolling ? 'scroll 150s linear infinite' : 'none',
+            transform: !isAutoScrolling ? currentTransform : undefined
+          }}
         >
           {universities.concat(universities).map((uni, index) => (
             <div
