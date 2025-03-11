@@ -101,6 +101,30 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     window.location.href = "/";
   }, []);
 
+  // Function to upload a file to Supabase Storage
+  const uploadFile = async (file: File, path: string): Promise<string | null> => {
+    try {
+      const fileExt = file.name.split('.').pop();
+      const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 15)}.${fileExt}`;
+      const filePath = `${path}/${fileName}`;
+      
+      const { error: uploadError } = await supabase.storage
+        .from('documents')
+        .upload(filePath, file);
+
+      if (uploadError) {
+        console.error('Error uploading file:', uploadError);
+        throw new Error(uploadError.message);
+      }
+      
+      // Return the full path for storage
+      return filePath;
+    } catch (error) {
+      console.error('Error uploading file:', error);
+      return null;
+    }
+  };
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -124,6 +148,23 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         ? formData.otherUniversity 
         : formData.university;
       
+      // Upload files to Supabase storage
+      let resumeFilePath = null;
+      let deckFilePath = null;
+      let memoFilePath = null;
+      
+      if (formData.resumeFile) {
+        resumeFilePath = await uploadFile(formData.resumeFile, 'resumes');
+      }
+      
+      if (formData.deckFile) {
+        deckFilePath = await uploadFile(formData.deckFile, 'decks');
+      }
+      
+      if (formData.memoFile) {
+        memoFilePath = await uploadFile(formData.memoFile, 'memos');
+      }
+      
       // Prepare application data for Supabase
       const applicationData = {
         first_name: formData.firstName,
@@ -142,9 +183,9 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         video_url: formData.videoUrl || null,
         linkedin_url: formData.linkedInUrl,
         x_url: formData.xUrl || null,
-        resume_file: formData.resumeFile ? formData.resumeFile.name : null,
-        deck_file: formData.deckFile ? formData.deckFile.name : null,
-        memo_file: formData.memoFile ? formData.memoFile.name : null
+        resume_file: resumeFilePath,
+        deck_file: deckFilePath,
+        memo_file: memoFilePath
       };
 
       // Insert the application into Supabase
@@ -173,9 +214,9 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         preparatoryClasses: checkPreparatoryQuestion() ? formData.preparatoryClasses : "n/a",
         buildingCompany: formData.buildingCompany,
         companyContext: formData.buildingCompany === "yes" ? formData.companyContext : "",
-        resumeFile: formData.resumeFile ? formData.resumeFile.name : "",
-        deckFile: formData.deckFile ? formData.deckFile.name : "",
-        memoFile: formData.memoFile ? formData.memoFile.name : "",
+        resumeFile: resumeFilePath || (formData.resumeFile ? formData.resumeFile.name : ""),
+        deckFile: deckFilePath || (formData.deckFile ? formData.deckFile.name : ""),
+        memoFile: memoFilePath || (formData.memoFile ? formData.memoFile.name : ""),
         websiteUrl: formData.buildingCompany === "yes" ? formData.websiteUrl : "",
         videoUrl: formData.videoUrl || "",
         linkedInUrl: formData.linkedInUrl,
