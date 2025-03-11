@@ -1,5 +1,4 @@
 
-import { motion } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -99,11 +98,14 @@ const universities = [
 ];
 
 const ScrollingUniversities = () => {
-  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [imageLoadErrors, setImageLoadErrors] = useState<Record<string, boolean>>({});
   const [loadedImages, setLoadedImages] = useState<Record<string, boolean>>({});
-  const [currentTransform, setCurrentTransform] = useState("translateX(0)");
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const scrollAreaRef = useRef<HTMLDivElement>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const animationRef = useRef<number | null>(null);
+  const scrollPositionRef = useRef(0);
+  const isHoveringRef = useRef(false);
 
   const handleImageError = (uniName: string) => {
     console.error(`Failed to load image for ${uniName}`);
@@ -125,33 +127,93 @@ const ScrollingUniversities = () => {
     }));
   };
 
-  const handleInteraction = () => {
-    if (scrollContainerRef.current) {
-      const computedStyle = window.getComputedStyle(scrollContainerRef.current);
-      setCurrentTransform(computedStyle.transform);
+  const scrollAnimation = () => {
+    if (!viewportRef.current || isHoveringRef.current) return;
+    
+    // Increment scroll position
+    scrollPositionRef.current += 0.5;
+    
+    // Get the scrollWidth of the content
+    const scrollWidth = viewportRef.current.scrollWidth;
+    const clientWidth = viewportRef.current.clientWidth;
+    
+    // Reset scroll position when reaching the end
+    if (scrollPositionRef.current >= scrollWidth - clientWidth) {
+      scrollPositionRef.current = 0;
     }
+    
+    // Apply the scroll
+    viewportRef.current.scrollLeft = scrollPositionRef.current;
+    
+    animationRef.current = requestAnimationFrame(scrollAnimation);
+  };
+
+  const handleInteractionStart = () => {
+    isHoveringRef.current = true;
     setIsAutoScrolling(false);
+    
+    if (animationRef.current) {
+      cancelAnimationFrame(animationRef.current);
+      animationRef.current = null;
+    }
+    
+    // Store current scroll position
+    if (viewportRef.current) {
+      scrollPositionRef.current = viewportRef.current.scrollLeft;
+    }
   };
 
   const handleInteractionEnd = () => {
+    isHoveringRef.current = false;
     setIsAutoScrolling(true);
+    
+    // Resume animation from current position
+    if (!animationRef.current) {
+      animationRef.current = requestAnimationFrame(scrollAnimation);
+    }
+  };
+
+  // Start/stop scrolling animation
+  useEffect(() => {
+    // Start the animation
+    animationRef.current = requestAnimationFrame(scrollAnimation);
+    
+    // Clean up on unmount
+    return () => {
+      if (animationRef.current) {
+        cancelAnimationFrame(animationRef.current);
+      }
+    };
+  }, []);
+
+  // Set up viewport ref
+  const handleViewportRef = (node: HTMLDivElement) => {
+    if (node) {
+      viewportRef.current = node;
+      // Get the parent scroll area node's default viewport
+      const viewportNode = node.querySelector('[data-radix-scroll-area-viewport]');
+      if (viewportNode instanceof HTMLDivElement) {
+        viewportRef.current = viewportNode;
+      }
+    }
   };
 
   return (
     <div className="relative overflow-hidden py-10">
       <ScrollArea 
-        className="w-full"
-        onMouseEnter={handleInteraction}
+        ref={scrollAreaRef}
+        className="w-full overflow-hidden"
+        onMouseEnter={handleInteractionStart}
         onMouseLeave={handleInteractionEnd}
-        onTouchStart={handleInteraction}
+        onTouchStart={handleInteractionStart}
         onTouchEnd={handleInteractionEnd}
       >
         <div 
-          ref={scrollContainerRef}
-          className={`flex space-x-16`}
-          style={{
-            animation: isAutoScrolling ? 'scroll 150s linear infinite' : 'none',
-            transform: !isAutoScrolling ? currentTransform : undefined
+          ref={handleViewportRef}
+          className="flex space-x-16 py-2"
+          style={{ 
+            width: "fit-content",
+            minWidth: "200%"
           }}
         >
           {universities.concat(universities).map((uni, index) => (
