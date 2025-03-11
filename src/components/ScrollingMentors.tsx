@@ -2,7 +2,7 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, useMotionValue, animate } from "framer-motion";
 import { Link } from "react-router-dom";
-import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
+import MentorDialog from "./MentorDialog";
 
 // Using the same mentor data structure from the Mentors page
 interface Mentor {
@@ -118,6 +118,8 @@ const mentors: Mentor[] = [
 const ScrollingMentors = () => {
   const x = useMotionValue(0);
   const animationRef = useRef<any>(null);
+  const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
+  const [dialogOpen, setDialogOpen] = useState(false);
 
   const startAnimation = () => {
     if (animationRef.current) {
@@ -136,6 +138,11 @@ const ScrollingMentors = () => {
     if (animationRef.current) {
       animationRef.current.stop();
     }
+  };
+
+  const handleMentorClick = (mentor: Mentor) => {
+    setSelectedMentor(mentor);
+    setDialogOpen(true);
   };
 
   useEffect(() => {
@@ -157,21 +164,19 @@ const ScrollingMentors = () => {
         </p>
       </div>
       
-      <div
-        className="w-full"
-      >
+      <div className="w-full">
         <motion.div 
-          className={`flex space-x-12 px-4 py-6`}
+          className="flex space-x-12 px-4 py-6"
           style={{x}}
           onMouseEnter={stopAnimation}
           onMouseLeave={startAnimation}
         >
           {/* First set of mentors */}
           {mentors.map((mentor, index) => (
-            <Link 
+            <div 
               key={`a-${mentor.name}-${index}`}
-              to="/mentors" 
-              className="flex-shrink-0 group"
+              className="flex-shrink-0 group cursor-pointer"
+              onClick={() => handleMentorClick(mentor)}
             >
               <div className="flex flex-col items-center w-48">
                 <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
@@ -186,15 +191,15 @@ const ScrollingMentors = () => {
                 <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
                 <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
               </div>
-            </Link>
+            </div>
           ))}
           
           {/* Duplicated mentors for infinite scroll effect */}
           {mentors.map((mentor, index) => (
-            <Link 
+            <div 
               key={`b-${mentor.name}-${index}`}
-              to="/mentors" 
-              className="flex-shrink-0 group"
+              className="flex-shrink-0 group cursor-pointer"
+              onClick={() => handleMentorClick(mentor)}
             >
               <div className="flex flex-col items-center w-48">
                 <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
@@ -209,7 +214,7 @@ const ScrollingMentors = () => {
                 <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
                 <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
               </div>
-            </Link>
+            </div>
           ))}
         </motion.div>
       </div>
@@ -228,6 +233,12 @@ const ScrollingMentors = () => {
           Meet All Mentors
         </Link>
       </div>
+
+      <MentorDialog 
+        mentor={selectedMentor} 
+        open={dialogOpen} 
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 };
