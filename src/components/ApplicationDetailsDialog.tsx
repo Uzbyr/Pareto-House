@@ -41,7 +41,9 @@ interface Application {
   submissionDate: string;
   status: string;
   flagged?: boolean;
-  resumeUrl?: string;
+  resumeFile?: string;
+  deckFile?: string;
+  memoFile?: string;
   videoUrl?: string;
   country?: string;
   nationality?: string;
@@ -53,9 +55,13 @@ interface Application {
   websiteUrl?: string;
   xUrl?: string;
   linkedinUrl?: string;
-  resumeFile?: string;
-  deckFile?: string;
-  memoFile?: string;
+  educationLevel?: string;
+  highSchool?: string;
+  githubUrl?: string;
+  categoryOfInterest?: string;
+  hasCompetitionExperience?: string;
+  competitionResults?: string[];
+  competitiveProfiles?: string[];
 }
 
 interface ApplicationDetailsDialogProps {
@@ -230,6 +236,7 @@ const ApplicationDetailsDialog = ({
               <TabsTrigger value="personal">Personal Info</TabsTrigger>
               <TabsTrigger value="education">Education</TabsTrigger>
               <TabsTrigger value="project">Project</TabsTrigger>
+              <TabsTrigger value="competition">Competition</TabsTrigger>
               <TabsTrigger value="documents">Documents</TabsTrigger>
               <TabsTrigger value="links">Links</TabsTrigger>
             </TabsList>
@@ -265,11 +272,21 @@ const ApplicationDetailsDialog = ({
             <TabsContent value="education" className="space-y-4">
               <div className="bg-zinc-900 rounded-md p-4 space-y-3">
                 <div>
-                  <span className="text-sm text-gray-400">School:</span>
-                  <p className="text-white flex items-center">
-                    <GraduationCap className="h-4 w-4 mr-1 text-gray-400" />
-                    {application.school}
+                  <span className="text-sm text-gray-400">Education Level:</span>
+                  <p className="text-white">
+                    <GraduationCap className="h-4 w-4 inline mr-1 text-gray-400" />
+                    {application.educationLevel || "Not specified"}
                   </p>
+                </div>
+                {application.highSchool && (
+                  <div>
+                    <span className="text-sm text-gray-400">High School:</span>
+                    <p className="text-white">{application.highSchool}</p>
+                  </div>
+                )}
+                <div>
+                  <span className="text-sm text-gray-400">University:</span>
+                  <p className="text-white">{application.school}</p>
                 </div>
                 {application.major && (
                   <div>
@@ -286,7 +303,7 @@ const ApplicationDetailsDialog = ({
                 {application.preparatoryClasses && (
                   <div>
                     <span className="text-sm text-gray-400">Preparatory Classes:</span>
-                    <p className="text-white">{application.preparatoryClasses === "yes" ? "Yes" : "No"}</p>
+                    <p className="text-white">{application.preparatoryClasses}</p>
                   </div>
                 )}
                 {application.studentSocieties && (
@@ -318,6 +335,12 @@ const ApplicationDetailsDialog = ({
                     <p className="text-white whitespace-pre-wrap">{application.companyContext}</p>
                   </div>
                 )}
+                {application.categoryOfInterest && (
+                  <div>
+                    <span className="text-sm text-gray-400">Category of Interest:</span>
+                    <p className="text-white">{application.categoryOfInterest}</p>
+                  </div>
+                )}
                 <div>
                   <span className="text-sm text-gray-400">Submission Date:</span>
                   <p className="text-white">{application.submissionDate}</p>
@@ -334,6 +357,48 @@ const ApplicationDetailsDialog = ({
                     {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
                   </p>
                 </div>
+              </div>
+            </TabsContent>
+
+            <TabsContent value="competition" className="space-y-4">
+              <div className="bg-zinc-900 rounded-md p-4 space-y-3">
+                {application.hasCompetitionExperience && (
+                  <div>
+                    <span className="text-sm text-gray-400">Competition Experience:</span>
+                    <p className="text-white">{application.hasCompetitionExperience}</p>
+                  </div>
+                )}
+                {application.competitionResults && application.competitionResults.length > 0 && (
+                  <div>
+                    <span className="text-sm text-gray-400">Competition Results:</span>
+                    <ul className="mt-1 space-y-1">
+                      {application.competitionResults.map((result, index) => (
+                        <li key={index} className="text-white">• {result}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
+                {application.competitiveProfiles && application.competitiveProfiles.length > 0 && (
+                  <div>
+                    <span className="text-sm text-gray-400">Competitive Profiles:</span>
+                    <ul className="mt-1 space-y-1">
+                      {application.competitiveProfiles.map((profile, index) => (
+                        <li key={index}>
+                          <Button 
+                            variant="outline" 
+                            size="sm"
+                            className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                            onClick={() => window.open(profile, '_blank')}
+                          >
+                            <Globe className="h-4 w-4 mr-2" />
+                            View Profile {index + 1}
+                            <ExternalLink className="h-3 w-3 ml-1" />
+                          </Button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
             </TabsContent>
 
@@ -469,7 +534,24 @@ const ApplicationDetailsDialog = ({
                     </div>
                   </div>
                 )}
-                {!application.websiteUrl && !application.linkedinUrl && !application.xUrl && (
+                {application.githubUrl && (
+                  <div>
+                    <span className="text-sm text-gray-400">GitHub:</span>
+                    <div className="mt-1">
+                      <Button 
+                        variant="outline" 
+                        size="sm"
+                        className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                        onClick={() => window.open(application.githubUrl, '_blank')}
+                      >
+                        <Globe className="h-4 w-4 mr-2" />
+                        GitHub Profile
+                        <ExternalLink className="h-3 w-3 ml-1" />
+                      </Button>
+                    </div>
+                  </div>
+                )}
+                {!application.websiteUrl && !application.linkedinUrl && !application.xUrl && !application.githubUrl && (
                   <p className="text-gray-400 italic">No external links provided</p>
                 )}
               </div>
