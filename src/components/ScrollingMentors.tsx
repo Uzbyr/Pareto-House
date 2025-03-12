@@ -1,7 +1,7 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useRef, useEffect } from "react";
-import { motion, useMotionValue, animate } from "framer-motion";
+import { useRef, useEffect, useState } from "react";
+import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { ExternalLink } from "lucide-react";
 import { Button } from "./ui/button";
 
@@ -117,32 +117,49 @@ const mentors: Mentor[] = [
 ];
 
 const ScrollingMentors = () => {
-  const x = useMotionValue(0);
-  const animationRef = useRef<any>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const scrollDirection = useRef<number>(1);
 
-  const startAnimation = () => {
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
-    animationRef.current = animate(x, -4000, {
-      duration: 40,      
-      ease: "linear",  
-      repeat: Infinity,
-      repeatType: "reverse",
-    });
+  const handleInteraction = () => {
+    setIsAutoScrolling(false);
   };
 
-  // Stop the current animation
-  const stopAnimation = () => {
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
+  const handleInteractionEnd = () => {
+    setIsAutoScrolling(true);
   };
 
   useEffect(() => {
-    startAnimation();
-    return () => stopAnimation();
-  }, []);
+    let frameId: number;
+
+    const step = () => {
+      if (isAutoScrolling && viewportRef.current) {
+        const el = viewportRef.current;
+        const maxScrollLeft = el.scrollWidth - el.clientWidth;
+        const currentScrollLeft = el.scrollLeft;
+        const speed = 2; // adjust speed as desired
+
+        // If we've hit the right edge, switch to negative direction
+        if (currentScrollLeft >= maxScrollLeft) {
+          scrollDirection.current = -1;
+        }
+        // If we've hit the left edge, switch to positive direction
+        else if (currentScrollLeft <= 0) {
+          scrollDirection.current = 1;
+        }
+
+        el.scrollLeft += scrollDirection.current * speed;
+      }
+
+      frameId = requestAnimationFrame(step);
+    };
+
+    if (isAutoScrolling) {
+      frameId = requestAnimationFrame(step);
+    }
+
+    return () => cancelAnimationFrame(frameId);
+  }, [isAutoScrolling]);
 
   return (
     <div className="relative overflow-hidden py-16">
@@ -158,15 +175,19 @@ const ScrollingMentors = () => {
         </p>
       </div>
       
-      <div className="w-full">
-        <motion.div 
+      <ScrollArea 
+        viewportRef={viewportRef}
+        className="w-full"
+        onMouseEnter={handleInteraction}
+        onTouchStart={handleInteraction}
+        onMouseLeave={handleInteractionEnd}
+        onTouchEnd={handleInteractionEnd}
+      >
+        <div 
           className={`flex space-x-12 px-4 py-6`}
-          style={{x}}
-          onMouseEnter={stopAnimation}
-          onMouseLeave={startAnimation}
         >
           {/* First set of mentors */}
-          {mentors.map((mentor, index) => (
+          {mentors.concat(mentors).map((mentor, index) => (
             <a 
               key={`a-${mentor.name}-${index}`}
               href={mentor.linkedIn}
@@ -220,8 +241,9 @@ const ScrollingMentors = () => {
               </div>
             </a>
           ))}
-        </motion.div>
-      </div>
+        </div>
+        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+      </ScrollArea>
       
       <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
         <p className="text-lg text-black/70 dark:text-white/70 italic">
