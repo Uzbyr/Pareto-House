@@ -30,6 +30,13 @@ const undergrads: Undergrad[] = [
     university: "University of Chicago",
     achievement: "Tech Founder & ML Engineer",
     description: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills."
+  },
+  {
+    name: "Chan Woo Kim",
+    imageUrl: "/lovable-uploads/ca60f026-0749-4237-bf1c-b5b3358d7294.png",
+    university: "Williams College",
+    achievement: "Co-founder & CEO at Theta One",
+    description: "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space."
   }
 ];
 
