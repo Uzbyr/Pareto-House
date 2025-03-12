@@ -15,10 +15,12 @@ export type Database = {
           company_context: string | null
           country: string
           deck_file: string | null
+          education_level: string
           email: string
           first_name: string
           flagged: boolean | null
           graduation_year: string
+          high_school: string | null
           id: string
           last_name: string
           linkedin_url: string
@@ -40,10 +42,12 @@ export type Database = {
           company_context?: string | null
           country: string
           deck_file?: string | null
+          education_level?: string
           email: string
           first_name: string
           flagged?: boolean | null
           graduation_year: string
+          high_school?: string | null
           id?: string
           last_name: string
           linkedin_url?: string
@@ -65,10 +69,12 @@ export type Database = {
           company_context?: string | null
           country?: string
           deck_file?: string | null
+          education_level?: string
           email?: string
           first_name?: string
           flagged?: boolean | null
           graduation_year?: string
+          high_school?: string | null
           id?: string
           last_name?: string
           linkedin_url?: string

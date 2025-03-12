@@ -97,19 +97,31 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         return;
       }
     } else if (currentStep === 2) {
-      if (!formData.country || !formData.nationality || !formData.university || !formData.major || !formData.graduationYear) {
+      if (!formData.country || !formData.nationality || !formData.graduationYear) {
         toast.error("Please fill in all required fields.");
         return;
       }
       
-      if (formData.university === "Other" && !formData.otherUniversity) {
-        toast.error("Please specify your university.");
-        return;
-      }
-      
-      if (checkPreparatoryQuestion() && !formData.preparatoryClasses) {
-        toast.error("Please answer the preparatory classes question.");
-        return;
+      if (formData.educationLevel === "university") {
+        if (!formData.university || !formData.major) {
+          toast.error("Please fill in all required fields.");
+          return;
+        }
+        
+        if (formData.university === "Other" && !formData.otherUniversity) {
+          toast.error("Please specify your university.");
+          return;
+        }
+        
+        if (checkPreparatoryQuestion() && !formData.preparatoryClasses) {
+          toast.error("Please answer the preparatory classes question.");
+          return;
+        }
+      } else if (formData.educationLevel === "highSchool") {
+        if (!formData.highSchool) {
+          toast.error("Please enter your high school name.");
+          return;
+        }
       }
     }
 
@@ -169,9 +181,12 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
       }
 
       // Handle university field (including "Other" option)
-      const universityValue = formData.university === "Other" 
-        ? formData.otherUniversity 
-        : formData.university;
+      let universityValue = "";
+      if (formData.educationLevel === "university") {
+        universityValue = formData.university === "Other" 
+          ? formData.otherUniversity 
+          : formData.university;
+      }
       
       // Upload files to Supabase storage
       let resumeFilePath = null;
@@ -197,10 +212,12 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         email: formData.email,
         country: formData.country,
         nationality: formData.nationality,
-        university: universityValue,
-        major: formData.major,
+        education_level: formData.educationLevel,
+        university: formData.educationLevel === "university" ? universityValue : null,
+        high_school: formData.educationLevel === "highSchool" ? formData.highSchool : null,
+        major: formData.educationLevel === "university" ? formData.major : null,
         graduation_year: formData.graduationYear,
-        preparatory_classes: checkPreparatoryQuestion() ? formData.preparatoryClasses : null,
+        preparatory_classes: formData.educationLevel === "university" && checkPreparatoryQuestion() ? formData.preparatoryClasses : null,
         student_societies: formData.studentSocieties || null,
         building_company: formData.buildingCompany,
         company_context: formData.buildingCompany === "yes" ? formData.companyContext : null,
@@ -232,11 +249,13 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         email: formData.email,
         country: formData.country,
         nationality: formData.nationality,
-        university: universityValue,
-        major: formData.major,
+        educationLevel: formData.educationLevel,
+        university: formData.educationLevel === "university" ? universityValue : "N/A",
+        highSchool: formData.educationLevel === "highSchool" ? formData.highSchool : "N/A",
+        major: formData.educationLevel === "university" ? formData.major : "N/A",
         graduationYear: formData.graduationYear,
         studentSocieties: formData.studentSocieties || "",
-        preparatoryClasses: checkPreparatoryQuestion() ? formData.preparatoryClasses : "n/a",
+        preparatoryClasses: formData.educationLevel === "university" && checkPreparatoryQuestion() ? formData.preparatoryClasses : "n/a",
         buildingCompany: formData.buildingCompany,
         companyContext: formData.buildingCompany === "yes" ? formData.companyContext : "",
         resumeFile: resumeFilePath || (formData.resumeFile ? formData.resumeFile.name : ""),
