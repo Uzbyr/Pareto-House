@@ -1,6 +1,6 @@
 
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 
 interface Undergrad {
   name: string;
@@ -24,6 +24,13 @@ const undergrads: Undergrad[] = [
     university: "MIT",
     achievement: "Acquired by Microsoft",
     description: "Developed a revolutionary quantum computing simulation software while still a junior. The technology was acquired by Microsoft for $15M, making him one of the youngest founders to achieve such an exit."
+  },
+  {
+    name: "Anu Varma",
+    imageUrl: "/lovable-uploads/aad2ef57-76d8-4b0a-9f5b-413f9d4fba41.png",
+    university: "University of Oxford",
+    achievement: "Co-Founder at Canopy Labs",
+    description: "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent."
   },
   {
     name: "Maya Patel",
@@ -52,6 +59,40 @@ const BackedUndergrads = () => {
   const handleInteractionEnd = () => {
     setIsAutoScrolling(true);
   };
+
+  useEffect(() => {
+    let animationId: number;
+    let lastTimestamp = 0;
+    const scrollSpeed = 0.5; // pixels per millisecond
+
+    const autoScroll = (timestamp: number) => {
+      if (!isAutoScrolling || !viewportRef.current) {
+        lastTimestamp = timestamp;
+        animationId = requestAnimationFrame(autoScroll);
+        return;
+      }
+
+      const elapsed = timestamp - lastTimestamp;
+      if (elapsed > 0) {
+        viewportRef.current.scrollLeft += scrollSpeed * elapsed;
+        
+        // If we've scrolled to the end, reset to the beginning
+        if (viewportRef.current.scrollLeft >= 
+            viewportRef.current.scrollWidth - viewportRef.current.clientWidth) {
+          viewportRef.current.scrollLeft = 0;
+        }
+      }
+      
+      lastTimestamp = timestamp;
+      animationId = requestAnimationFrame(autoScroll);
+    };
+
+    animationId = requestAnimationFrame(autoScroll);
+
+    return () => {
+      cancelAnimationFrame(animationId);
+    };
+  }, [isAutoScrolling]);
 
   return (
     <div className="bg-black/5 dark:bg-white/5 py-20">
