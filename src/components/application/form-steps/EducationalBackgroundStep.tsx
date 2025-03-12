@@ -1,3 +1,4 @@
+
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -175,23 +176,25 @@ const EducationalBackgroundStep = memo(({
       </Select>
     </div>
 
-    <div className="space-y-2">
-      <Label htmlFor="hasCompetitionExperience">
-        Have you participated in national or international competitions in your field of interest?
-      </Label>
-      <Select
-        value={formData.hasCompetitionExperience}
-        onValueChange={(value) => handleSelectChange("hasCompetitionExperience", value)}
-      >
-        <SelectTrigger className="bg-zinc-800 border-zinc-700">
-          <SelectValue placeholder="Select an option" />
-        </SelectTrigger>
-        <SelectContent>
-          <SelectItem value="yes">Yes</SelectItem>
-          <SelectItem value="no">No</SelectItem>
-        </SelectContent>
-      </Select>
-    </div>
+    {formData.categoryOfInterest && (
+      <div className="space-y-2">
+        <Label htmlFor="hasCompetitionExperience">
+          Have you participated in national or international competitions in your field of interest?
+        </Label>
+        <Select
+          value={formData.hasCompetitionExperience}
+          onValueChange={(value) => handleSelectChange("hasCompetitionExperience", value)}
+        >
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
+            <SelectValue placeholder="Select an option" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="yes">Yes</SelectItem>
+            <SelectItem value="no">No</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+    )}
 
     {formData.hasCompetitionExperience === "yes" && (
       <div className="space-y-2">
