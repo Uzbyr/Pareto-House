@@ -24,7 +24,7 @@ export type Database = {
           id: string
           last_name: string
           linkedin_url: string
-          major: string
+          major: string | null
           memo_file: string | null
           nationality: string
           preparatory_classes: string | null
@@ -32,7 +32,7 @@ export type Database = {
           status: string
           student_societies: string | null
           submission_date: string
-          university: string
+          university: string | null
           video_url: string | null
           website_url: string | null
           x_url: string | null
@@ -51,7 +51,7 @@ export type Database = {
           id?: string
           last_name: string
           linkedin_url?: string
-          major: string
+          major?: string | null
           memo_file?: string | null
           nationality: string
           preparatory_classes?: string | null
@@ -59,7 +59,7 @@ export type Database = {
           status?: string
           student_societies?: string | null
           submission_date?: string
-          university: string
+          university?: string | null
           video_url?: string | null
           website_url?: string | null
           x_url?: string | null
@@ -78,7 +78,7 @@ export type Database = {
           id?: string
           last_name?: string
           linkedin_url?: string
-          major?: string
+          major?: string | null
           memo_file?: string | null
           nationality?: string
           preparatory_classes?: string | null
@@ -86,7 +86,7 @@ export type Database = {
           status?: string
           student_societies?: string | null
           submission_date?: string
-          university?: string
+          university?: string | null
           video_url?: string | null
           website_url?: string | null
           x_url?: string | null

@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -22,36 +21,28 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
   const [availableUniversities, setAvailableUniversities] = useState<string[]>([]);
   const [isFormDirty, setIsFormDirty] = useState(false);
   
-  // Update available universities when country changes
   useEffect(() => {
     if (formData.country && universities[formData.country as keyof typeof universities]) {
       const countryUniversities = universities[formData.country as keyof typeof universities];
-      // Always include "Other" as an option, regardless of the country
       setAvailableUniversities([...countryUniversities, "Other"]);
     } else {
       setAvailableUniversities(["Other"]);
     }
   }, [formData.country]);
 
-  // Track changes to form data to determine if form is dirty
   useEffect(() => {
-    // Check if any form field has been filled
     const isDirty = Object.entries(formData).some(([key, value]) => {
-      // Skip checking file fields directly
       if (key === 'resumeFile' || key === 'deckFile' || key === 'memoFile') {
         return false;
       }
       
-      // For string fields, check if they're not empty and different from initial
       if (typeof value === 'string') {
         return value !== '' && value !== initialFormData[key as keyof FormDataType];
       }
       
-      // For other types, just check if they're truthy
       return !!value;
     });
     
-    // Also consider file uploads
     const hasFiles = !!formData.resumeFile || !!formData.deckFile || !!formData.memoFile;
     
     setIsFormDirty(isDirty || hasFiles);
@@ -86,7 +77,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
   }, [formData.university]);
 
   const nextStep = useCallback(() => {
-    // Validate current step
     if (currentStep === 1) {
       if (!formData.firstName || !formData.lastName || !formData.email) {
         toast.error("Please fill in all required fields.");
@@ -138,7 +128,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     window.location.href = "/";
   }, []);
 
-  // Function to upload a file to Supabase Storage
   const uploadFile = async (file: File, path: string): Promise<string | null> => {
     try {
       const fileExt = file.name.split('.').pop();
@@ -154,7 +143,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         throw new Error(uploadError.message);
       }
       
-      // Return the full path for storage
       return filePath;
     } catch (error) {
       console.error('Error uploading file:', error);
@@ -167,7 +155,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     setLoading(true);
 
     try {
-      // Validate LinkedIn URL (required field)
       if (!formData.linkedInUrl) {
         toast.error("Please provide your LinkedIn profile URL.");
         setLoading(false);
@@ -180,7 +167,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         return;
       }
 
-      // Handle university field (including "Other" option)
       let universityValue = "";
       if (formData.educationLevel === "university") {
         universityValue = formData.university === "Other" 
@@ -188,7 +174,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
           : formData.university;
       }
       
-      // Upload files to Supabase storage
       let resumeFilePath = null;
       let deckFilePath = null;
       let memoFilePath = null;
@@ -205,7 +190,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         memoFilePath = await uploadFile(formData.memoFile, 'memos');
       }
       
-      // Prepare application data for Supabase
       const applicationData = {
         first_name: formData.firstName,
         last_name: formData.lastName,
@@ -224,13 +208,13 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         website_url: formData.buildingCompany === "yes" ? formData.websiteUrl : null,
         video_url: formData.videoUrl || null,
         linkedin_url: formData.linkedInUrl,
+        github_url: formData.githubUrl || null,
         x_url: formData.xUrl || null,
         resume_file: resumeFilePath,
         deck_file: deckFilePath,
         memo_file: memoFilePath
       };
 
-      // Insert the application into Supabase
       const { error } = await supabase
         .from('applications')
         .insert([applicationData]);
@@ -240,7 +224,6 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         throw new Error(error.message);
       }
 
-      // For backwards compatibility, also store in localStorage
       const newApplication = {
         id: Date.now(),
         name: `${formData.firstName} ${formData.lastName}`,
@@ -264,24 +247,23 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         websiteUrl: formData.buildingCompany === "yes" ? formData.websiteUrl : "",
         videoUrl: formData.videoUrl || "",
         linkedInUrl: formData.linkedInUrl,
+        githubUrl: formData.githubUrl || "",
         xUrl: formData.xUrl || "",
         submissionDate: new Date().toISOString(),
         status: "pending",
       };
 
-      // Store the application in localStorage for backward compatibility
       const storedApps = localStorage.getItem('applications') || '[]';
       const applications = JSON.parse(storedApps);
       applications.push(newApplication);
       localStorage.setItem('applications', JSON.stringify(applications));
       
-      // Update metrics
       const appCount = localStorage.getItem('applicationCount') || '0';
       localStorage.setItem('applicationCount', (parseInt(appCount) + 1).toString());
       
       setTimeout(() => {
         setLoading(false);
-        setCurrentStep(4); // Success step
+        setCurrentStep(4);
         if (onSubmitSuccess) {
           onSubmitSuccess();
         }

@@ -97,6 +97,7 @@ export const initialFormData = {
   websiteUrl: "",
   videoUrl: "",
   linkedInUrl: "",
+  githubUrl: "",
   xUrl: "",
 };
 
