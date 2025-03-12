@@ -45,7 +45,7 @@ const TopInvestors = () => {
         <div className="flex flex-col items-center">
           <div className="bg-white dark:bg-white/10 rounded-lg p-4 h-20 w-full flex items-center justify-center mb-2">
             <img 
-              src="/lovable-uploads/57b75d93-9a3a-49f2-bd17-b94c95f87b30.png" 
+              src="/lovable-uploads/z-fellows.svg" 
               alt="Z Fellows" 
               className="h-10 object-contain"
             />
