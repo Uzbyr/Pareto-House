@@ -130,7 +130,7 @@ const EducationalBackgroundStep = memo(({
     </div>
     
     <div className="space-y-2">
-      <Label htmlFor="resumeFile">Resume (PDF)<span className="text-red-500">*</span></Label>
+      <Label htmlFor="resumeFile">Resume (PDF)</Label>
       <Input
         id="resumeFile"
         name="resumeFile"

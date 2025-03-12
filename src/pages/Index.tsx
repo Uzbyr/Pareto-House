@@ -52,7 +52,7 @@ const Index = () => {
               <ArrowRight className="w-5 h-5" />
             </Link>
             <a
-              href="https://www.youtube.com/watch?v=lc8ourcIe10"
+              href="https://pareto20.com?ref=pareto-fellowship"
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"

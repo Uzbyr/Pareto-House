@@ -139,6 +139,22 @@ const mentors: Mentor[] = [
     bio: "Reilly Opelka is a professional tennis player and investor with interests spanning sports, technology, and art. He brings a unique perspective to his investment activities, combining his experiences as a professional athlete with a keen eye for emerging trends and opportunities. Opelka is known for his thoughtful approach to both his athletic career and his business ventures.",
     imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",
     country: "USA"
+  },
+  {
+    name: "Khaled Helioui",
+    linkedIn: "https://www.linkedin.com/in/khaledhelioui/",
+    description: "Co-Founder of Plural.",
+    bio: "Khaled Helioui is a UK-based investor and entrepreneur. He is the co-founder of Plural, an investment platform that invests serious time and early-stage venture capital to back Europe’s next generation of iconic founders. Helioui leverages extensive experience and a broad network to provide strategic support, helping founders build legendary companies capable of having a GDP-level impact. He also serves on the boards of Mos.com, Dott, and GoMyCode.",
+    imageUrl: "/lovable-uploads/khaled-helioui.png",
+    country: "UK"
+  },
+  {
+    name: "Tadas Burgaila",
+    linkedIn: "https://www.linkedin.com/in/tadas-burgaila/",
+    description: "Co-Founder at Kilo Health.",
+    bio: "Tadas Burgaila is a Lithuania-based entrepreneur and co-founder of Kilo Health, a digital health platform with over four million customers. He has launched more than 100 projects, including building the world’s second-largest wallpaper website at age 16. Burgaila champions bold ideas and employee well-being, fostering a thriving environment for a team of over 800 people. He is also a co-founder of Unicorns.lt, aimed at cultivating Lithuania’s ecosystem for future entrepreneurs and unicorns.",
+    imageUrl: "/lovable-uploads/tadas-burgaila.jpeg",
+    country: "Lithuania"
   }
 ];
 
@@ -300,6 +316,8 @@ const Mentors = () => {
         return { name: "United Kingdom", flag: "🇬🇧" };
       case "Ireland":
         return { name: "Ireland", flag: "🇮🇪" };
+      case "Lithuania":
+        return { name: "Lithuania", flag: "🇱🇹" };
       default:
         return { name: country, flag: "🏳️" };
     }
@@ -476,15 +494,6 @@ const Mentors = () => {
                 </div>
               )}
             </ScrollArea>
-          </div>
-          
-          <div className="mt-6 flex justify-end">
-            <Link to="/mentor-finder">
-              <Button variant="pink" className="flex items-center gap-2">
-                <MessageSquare className="w-5 h-5" />
-                Find Match
-              </Button>
-            </Link>
           </div>
         </DialogContent>
       </Dialog>
