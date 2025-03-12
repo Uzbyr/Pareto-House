@@ -1,4 +1,3 @@
-
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -17,6 +16,13 @@ const undergrads: Undergrad[] = [
     university: "University of Oxford",
     achievement: "Co-Founder at Canopy Labs",
     description: "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent."
+  },
+  {
+    name: "Elias Fizesan",
+    imageUrl: "/lovable-uploads/f5342cf3-4935-463d-9528-09ba6816b5e1.png",
+    university: "Columbia University",
+    achievement: "Co-Founder at Canopy Labs",
+    description: "Building virtual humans that are indistinguishable from real ones. Pareto's mentorship program and investor connections helped Elias refine his vision and secure the initial funding round that made the company's breakthrough technology possible."
   },
 ];
 
@@ -64,6 +70,7 @@ const BackedUndergrads = () => {
 
     return () => cancelAnimationFrame(frameId);
   }, [isAutoScrolling]);
+
   return (
     <div className="bg-black/5 dark:bg-white/5 py-20">
       <div className="container mx-auto px-4">
