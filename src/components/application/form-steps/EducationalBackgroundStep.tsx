@@ -43,11 +43,9 @@ const EducationalBackgroundStep = memo(({
         </SelectTrigger>
         <SelectContent>
           <SelectItem value="university" className="flex items-center gap-2">
-            <GraduationCap className="h-4 w-4" />
             <span>University</span>
           </SelectItem>
           <SelectItem value="highSchool" className="flex items-center gap-2">
-            <School className="h-4 w-4" />
             <span>High School</span>
           </SelectItem>
         </SelectContent>
