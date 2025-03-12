@@ -1,4 +1,3 @@
-
 import { Button } from "@/components/ui/button";
 import PersonalInformationStep from "./application/form-steps/PersonalInformationStep";
 import EducationalBackgroundStep from "./application/form-steps/EducationalBackgroundStep";
@@ -27,24 +26,24 @@ const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps
     prevStep,
     handleSubmit,
     goToHomepage,
-    checkPreparatoryQuestion
+    checkPreparatoryQuestion,
+    handleCompetitiveProfileAdd,
+    handleCompetitiveProfileChange,
+    handleCompetitiveProfileRemove,
   } = useApplicationForm({ onSubmitSuccess });
 
-  // Report form dirty state changes to parent component
   useEffect(() => {
     if (onFormChange && currentStep < 4) {
       onFormChange(isFormDirty);
     }
   }, [isFormDirty, onFormChange, currentStep]);
 
-  // Reset form dirty state when form is completed
   useEffect(() => {
     if (onFormChange && currentStep === 4) {
       onFormChange(false);
     }
   }, [currentStep, onFormChange]);
 
-  // Render content based on current step
   const renderStepContent = () => {
     switch (currentStep) {
       case 1: 
@@ -68,6 +67,9 @@ const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps
                  handleInputChange={handleInputChange} 
                  handleSelectChange={handleSelectChange} 
                  handleFileChange={handleFileChange}
+                 handleCompetitiveProfileAdd={handleCompetitiveProfileAdd}
+                 handleCompetitiveProfileChange={handleCompetitiveProfileChange}
+                 handleCompetitiveProfileRemove={handleCompetitiveProfileRemove}
                />;
       case 4: 
         return <SuccessStep onReturnHome={goToHomepage} />;

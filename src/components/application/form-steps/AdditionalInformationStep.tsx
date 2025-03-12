@@ -1,8 +1,8 @@
-
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Button } from "@/components/ui/button";
 import {
   Select,
   SelectContent,
@@ -10,20 +10,26 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check } from "lucide-react";
+import { Check, Plus, Trash2 } from "lucide-react";
 
 interface AdditionalInformationStepProps {
   formData: any;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
   handleSelectChange: (name: string, value: string) => void;
   handleFileChange: (e: React.ChangeEvent<HTMLInputElement>, fieldName: string) => void;
+  handleCompetitiveProfileAdd: () => void;
+  handleCompetitiveProfileChange: (index: number, value: string) => void;
+  handleCompetitiveProfileRemove: (index: number) => void;
 }
 
 const AdditionalInformationStep = memo(({ 
   formData, 
   handleInputChange, 
   handleSelectChange,
-  handleFileChange 
+  handleFileChange,
+  handleCompetitiveProfileAdd,
+  handleCompetitiveProfileChange,
+  handleCompetitiveProfileRemove
 }: AdditionalInformationStepProps) => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
@@ -167,6 +173,41 @@ const AdditionalInformationStep = memo(({
         </div>
       </>
     )}
+
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <Label>Competitive Programming Profiles</Label>
+        <Button
+          type="button"
+          onClick={handleCompetitiveProfileAdd}
+          variant="outline"
+          size="sm"
+          className="flex items-center gap-2"
+        >
+          <Plus className="h-4 w-4" />
+          Add Profile URL
+        </Button>
+      </div>
+      
+      {formData.competitiveProfiles.map((profile: string, index: number) => (
+        <div key={index} className="flex gap-2">
+          <Input
+            placeholder="Enter Codeforces/CPHOF/Atcoder/Codechef/IOI profile URL"
+            value={profile}
+            onChange={(e) => handleCompetitiveProfileChange(index, e.target.value)}
+            className="bg-zinc-800 border-zinc-700"
+          />
+          <Button
+            type="button"
+            onClick={() => handleCompetitiveProfileRemove(index)}
+            variant="destructive"
+            size="icon"
+          >
+            <Trash2 className="h-4 w-4" />
+          </Button>
+        </div>
+      ))}
+    </div>
   </div>
 ));
 

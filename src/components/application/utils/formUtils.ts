@@ -114,6 +114,7 @@ export const initialFormData = {
   categoryOfInterest: "",
   hasCompetitionExperience: "",
   competitionResults: "",
+  competitiveProfiles: [] as string[],
 };
 
 export type FormDataType = typeof initialFormData;

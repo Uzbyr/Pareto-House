@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -151,6 +150,31 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     }
   };
 
+  const handleCompetitiveProfileAdd = useCallback(() => {
+    setFormData(prev => ({
+      ...prev,
+      competitiveProfiles: [...prev.competitiveProfiles, ""]
+    }));
+  }, []);
+
+  const handleCompetitiveProfileChange = useCallback((index: number, value: string) => {
+    setFormData(prev => {
+      const newProfiles = [...prev.competitiveProfiles];
+      newProfiles[index] = value;
+      return {
+        ...prev,
+        competitiveProfiles: newProfiles
+      };
+    });
+  }, []);
+
+  const handleCompetitiveProfileRemove = useCallback((index: number) => {
+    setFormData(prev => ({
+      ...prev,
+      competitiveProfiles: prev.competitiveProfiles.filter((_, i) => i !== index)
+    }));
+  }, []);
+
   const handleSubmit = useCallback(async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
@@ -216,7 +240,8 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         memo_file: memoFilePath,
         category_of_interest: formData.categoryOfInterest || null,
         has_competition_experience: formData.hasCompetitionExperience || null,
-        competition_results: formData.hasCompetitionExperience === "yes" ? formData.competitionResults : null
+        competition_results: formData.hasCompetitionExperience === "yes" ? formData.competitionResults : null,
+        competitive_profiles: formData.competitiveProfiles.filter(url => url.trim() !== ""),
       };
 
       const { error } = await supabase
@@ -296,7 +321,10 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
     prevStep,
     handleSubmit,
     goToHomepage,
-    checkPreparatoryQuestion
+    checkPreparatoryQuestion,
+    handleCompetitiveProfileAdd,
+    handleCompetitiveProfileChange,
+    handleCompetitiveProfileRemove
   };
 };
 
