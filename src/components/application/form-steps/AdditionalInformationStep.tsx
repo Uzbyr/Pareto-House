@@ -42,24 +42,24 @@ const AdditionalInformationStep = memo(({
     </div>
 
     <div className="space-y-2">
-      <Label htmlFor="githubUrl">GitHub Profile URL (Optional)</Label>
-      <Input
-        id="githubUrl"
-        name="githubUrl"
-        placeholder="https://github.com/yourusername"
-        value={formData.githubUrl}
-        onChange={handleInputChange}
-        className="bg-zinc-800 border-zinc-700"
-      />
-    </div>
-
-    <div className="space-y-2">
       <Label htmlFor="xUrl">X (Twitter) Profile URL (Optional)</Label>
       <Input
         id="xUrl"
         name="xUrl"
         placeholder="https://x.com/yourusername"
         value={formData.xUrl}
+        onChange={handleInputChange}
+        className="bg-zinc-800 border-zinc-700"
+      />
+    </div>
+
+    <div className="space-y-2">
+      <Label htmlFor="githubUrl">GitHub Profile URL (Optional)</Label>
+      <Input
+        id="githubUrl"
+        name="githubUrl"
+        placeholder="https://github.com/yourusername"
+        value={formData.githubUrl}
         onChange={handleInputChange}
         className="bg-zinc-800 border-zinc-700"
       />
