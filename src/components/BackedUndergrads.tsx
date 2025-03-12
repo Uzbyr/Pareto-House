@@ -24,6 +24,13 @@ const undergrads: Undergrad[] = [
     achievement: "Co-Founder at Canopy Labs",
     description: "Building virtual humans that are indistinguishable from real ones. Pareto's mentorship program and investor connections helped Elias refine his vision and secure the initial funding round that made the company's breakthrough technology possible."
   },
+  {
+    name: "Marieliesse Gouilliard",
+    imageUrl: "/lovable-uploads/cc7fd917-15d3-458e-80dd-fbbff7c92477.png",
+    university: "University of Chicago",
+    achievement: "Tech Founder & ML Engineer",
+    description: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills."
+  }
 ];
 
 const BackedUndergrads = () => {
