@@ -1,4 +1,3 @@
-
 // University data organized by country
 export const universities = {
   "United States": [
@@ -66,6 +65,19 @@ export const validateLinkedInUrl = (url: string): boolean => {
   try {
     const urlObj = new URL(url);
     return urlObj.hostname.includes('linkedin.com');
+  } catch {
+    return false;
+  }
+};
+
+// GitHub URL validation
+export const validateGitHubUrl = (url: string): boolean => {
+  if (!validateUrl(url)) return false;
+  
+  // Check if it's a GitHub URL (contains github.com)
+  try {
+    const urlObj = new URL(url);
+    return urlObj.hostname.includes('github.com');
   } catch {
     return false;
   }

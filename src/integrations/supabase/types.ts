@@ -19,6 +19,7 @@ export type Database = {
           email: string
           first_name: string
           flagged: boolean | null
+          github_url: string | null
           graduation_year: string
           high_school: string | null
           id: string
@@ -46,6 +47,7 @@ export type Database = {
           email: string
           first_name: string
           flagged?: boolean | null
+          github_url?: string | null
           graduation_year: string
           high_school?: string | null
           id?: string
@@ -73,6 +75,7 @@ export type Database = {
           email?: string
           first_name?: string
           flagged?: boolean | null
+          github_url?: string | null
           graduation_year?: string
           high_school?: string | null
           id?: string
