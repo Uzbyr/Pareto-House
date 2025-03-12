@@ -12,45 +12,18 @@ interface Undergrad {
 
 const undergrads: Undergrad[] = [
   {
-    name: "Sarah Chen",
-    imageUrl: "/lovable-uploads/22d647e1-7b1f-4966-af22-3bb3a6254c2f.png",
-    university: "Stanford University",
-    achievement: "Raised $2.1M Seed Round",
-    description: "Built an AI-powered education platform that helps students learn mathematics through personalized learning paths. Featured in TechCrunch and backed by Y Combinator."
-  },
-  {
-    name: "Alex Kumar",
-    imageUrl: "/lovable-uploads/42612d8f-eb8a-4d6f-9f50-69c3e8662f84.png",
-    university: "MIT",
-    achievement: "Acquired by Microsoft",
-    description: "Developed a revolutionary quantum computing simulation software while still a junior. The technology was acquired by Microsoft for $15M, making him one of the youngest founders to achieve such an exit."
-  },
-  {
     name: "Anu Varma",
     imageUrl: "/lovable-uploads/aad2ef57-76d8-4b0a-9f5b-413f9d4fba41.png",
     university: "University of Oxford",
     achievement: "Co-Founder at Canopy Labs",
     description: "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent."
   },
-  {
-    name: "Maya Patel",
-    imageUrl: "/lovable-uploads/56ab8193-d996-4fc8-954d-c71a3d96bd5a.png",
-    university: "Harvard University",
-    achievement: "Series A - $12M",
-    description: "Founded a climate tech startup that developed innovative carbon capture technology. Secured partnerships with major energy companies and raised a $12M Series A led by Sequoia Capital."
-  },
-  {
-    name: "David Park",
-    imageUrl: "/lovable-uploads/8545216b-c853-4042-b152-cada13843026.png",
-    university: "UC Berkeley",
-    achievement: "YC W23 Batch",
-    description: "Created a next-generation cybersecurity platform that uses behavioral biometrics to prevent fraud. Selected for Y Combinator's W23 batch and already serving Fortune 500 clients."
-  }
 ];
 
 const BackedUndergrads = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const scrollDirection = useRef<number>(1);
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
@@ -61,39 +34,36 @@ const BackedUndergrads = () => {
   };
 
   useEffect(() => {
-    let animationId: number;
-    let lastTimestamp = 0;
-    const scrollSpeed = 0.5; // pixels per millisecond
+    let frameId: number;
 
-    const autoScroll = (timestamp: number) => {
-      if (!isAutoScrolling || !viewportRef.current) {
-        lastTimestamp = timestamp;
-        animationId = requestAnimationFrame(autoScroll);
-        return;
-      }
+    const step = () => {
+      if (isAutoScrolling && viewportRef.current) {
+        const el = viewportRef.current;
+        const maxScrollLeft = el.scrollWidth - el.clientWidth;
+        const currentScrollLeft = el.scrollLeft;
+        const speed = 2; // adjust speed as desired
 
-      const elapsed = timestamp - lastTimestamp;
-      if (elapsed > 0) {
-        viewportRef.current.scrollLeft += scrollSpeed * elapsed;
-        
-        // If we've scrolled to the end, reset to the beginning
-        if (viewportRef.current.scrollLeft >= 
-            viewportRef.current.scrollWidth - viewportRef.current.clientWidth) {
-          viewportRef.current.scrollLeft = 0;
+        // If we've hit the right edge, switch to negative direction
+        if (currentScrollLeft >= maxScrollLeft) {
+          scrollDirection.current = -1;
         }
+        // If we've hit the left edge, switch to positive direction
+        else if (currentScrollLeft <= 0) {
+          scrollDirection.current = 1;
+        }
+
+        el.scrollLeft += scrollDirection.current * speed;
       }
-      
-      lastTimestamp = timestamp;
-      animationId = requestAnimationFrame(autoScroll);
+
+      frameId = requestAnimationFrame(step);
     };
 
-    animationId = requestAnimationFrame(autoScroll);
+    if (isAutoScrolling) {
+      frameId = requestAnimationFrame(step);
+    }
 
-    return () => {
-      cancelAnimationFrame(animationId);
-    };
+    return () => cancelAnimationFrame(frameId);
   }, [isAutoScrolling]);
-
   return (
     <div className="bg-black/5 dark:bg-white/5 py-20">
       <div className="container mx-auto px-4">
