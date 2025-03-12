@@ -176,7 +176,7 @@ const AdditionalInformationStep = memo(({
 
     <div className="space-y-4">
       <div className="flex items-center justify-between">
-        <Label>Competitive Programming Profiles</Label>
+        <Label>Competitive Programming Profiles </Label>
         <Button
           type="button"
           onClick={handleCompetitiveProfileAdd}
