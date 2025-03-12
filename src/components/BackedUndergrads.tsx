@@ -1,3 +1,4 @@
+
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -37,6 +38,13 @@ const undergrads: Undergrad[] = [
     university: "Williams College",
     achievement: "Co-founder & CEO at Theta One",
     description: "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space."
+  },
+  {
+    name: "Joseph Jojoe",
+    imageUrl: "/lovable-uploads/ce0f044b-5857-4abb-a8f6-5200557d6056.png",
+    university: "Columbia University",
+    achievement: "Founder at Ventr",
+    description: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs."
   }
 ];
 
