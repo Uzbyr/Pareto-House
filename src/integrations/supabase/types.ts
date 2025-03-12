@@ -12,7 +12,9 @@ export type Database = {
       applications: {
         Row: {
           building_company: string
+          category_of_interest: string | null
           company_context: string | null
+          competition_results: string | null
           country: string
           deck_file: string | null
           education_level: string
@@ -21,6 +23,7 @@ export type Database = {
           flagged: boolean | null
           github_url: string | null
           graduation_year: string
+          has_competition_experience: string | null
           high_school: string | null
           id: string
           last_name: string
@@ -40,7 +43,9 @@ export type Database = {
         }
         Insert: {
           building_company: string
+          category_of_interest?: string | null
           company_context?: string | null
+          competition_results?: string | null
           country: string
           deck_file?: string | null
           education_level?: string
@@ -49,6 +54,7 @@ export type Database = {
           flagged?: boolean | null
           github_url?: string | null
           graduation_year: string
+          has_competition_experience?: string | null
           high_school?: string | null
           id?: string
           last_name: string
@@ -68,7 +74,9 @@ export type Database = {
         }
         Update: {
           building_company?: string
+          category_of_interest?: string | null
           company_context?: string | null
+          competition_results?: string | null
           country?: string
           deck_file?: string | null
           education_level?: string
@@ -77,6 +85,7 @@ export type Database = {
           flagged?: boolean | null
           github_url?: string | null
           graduation_year?: string
+          has_competition_experience?: string | null
           high_school?: string | null
           id?: string
           last_name?: string

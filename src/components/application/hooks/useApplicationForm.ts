@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -212,7 +213,10 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         x_url: formData.xUrl || null,
         resume_file: resumeFilePath,
         deck_file: deckFilePath,
-        memo_file: memoFilePath
+        memo_file: memoFilePath,
+        category_of_interest: formData.categoryOfInterest || null,
+        has_competition_experience: formData.hasCompetitionExperience || null,
+        competition_results: formData.hasCompetitionExperience === "yes" ? formData.competitionResults : null
       };
 
       const { error } = await supabase
@@ -249,6 +253,9 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         linkedInUrl: formData.linkedInUrl,
         githubUrl: formData.githubUrl || "",
         xUrl: formData.xUrl || "",
+        categoryOfInterest: formData.categoryOfInterest || "",
+        hasCompetitionExperience: formData.hasCompetitionExperience || "",
+        competitionResults: formData.hasCompetitionExperience === "yes" ? formData.competitionResults : "",
         submissionDate: new Date().toISOString(),
         status: "pending",
       };
