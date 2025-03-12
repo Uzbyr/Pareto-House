@@ -1,5 +1,3 @@
-
-import { motion, useMotionValue, animate } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -99,43 +97,62 @@ const universities = [
 ];
 
 const ScrollingUniversities = () => {
-  const x = useMotionValue(0);
-  const animationRef = useRef<any>(null);
+  const viewportRef = useRef<HTMLDivElement>(null);
+  const [isAutoScrolling, setIsAutoScrolling] = useState(true);
+  const scrollDirection = useRef<number>(1);
 
-  const startAnimation = () => {
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
-    animationRef.current = animate(x, -4000, {
-      duration: 40,      
-      ease: "linear",  
-      repeat: Infinity,
-      repeatType: "reverse",
-    });
+  const handleInteraction = () => {
+    setIsAutoScrolling(false);
   };
 
-  // Stop the current animation
-  const stopAnimation = () => {
-    if (animationRef.current) {
-      animationRef.current.stop();
-    }
+  const handleInteractionEnd = () => {
+    setIsAutoScrolling(true);
   };
 
   useEffect(() => {
-    startAnimation();
-    return () => stopAnimation();
-  }, []);
+    let frameId: number;
+
+    const step = () => {
+      if (isAutoScrolling && viewportRef.current) {
+        const el = viewportRef.current;
+        const maxScrollLeft = el.scrollWidth - el.clientWidth;
+        const currentScrollLeft = el.scrollLeft;
+        const speed = 2; // adjust speed as desired
+
+        // If we've hit the right edge, switch to negative direction
+        if (currentScrollLeft >= maxScrollLeft) {
+          scrollDirection.current = -1;
+        }
+        // If we've hit the left edge, switch to positive direction
+        else if (currentScrollLeft <= 0) {
+          scrollDirection.current = 1;
+        }
+
+        el.scrollLeft += scrollDirection.current * speed;
+      }
+
+      frameId = requestAnimationFrame(step);
+    };
+
+    if (isAutoScrolling) {
+      frameId = requestAnimationFrame(step);
+    }
+
+    return () => cancelAnimationFrame(frameId);
+  }, [isAutoScrolling]);
 
   return (
     <div className="relative overflow-hidden py-10">
-      <motion.div
+      <ScrollArea 
+        viewportRef={viewportRef}
         className="w-full"
-        style={{ x }}
-        onMouseEnter={stopAnimation}
-        onMouseLeave={startAnimation}
+        onMouseEnter={handleInteraction}
+        onTouchStart={handleInteraction}
+        onMouseLeave={handleInteractionEnd}
+        onTouchEnd={handleInteractionEnd}
       >
         <div 
-          className={`flex space-x-16`}
+          className="flex space-x-16"
         >
           {universities.concat(universities).map((uni, index) => (
             <div
@@ -145,14 +162,15 @@ const ScrollingUniversities = () => {
               <img
                 src={uni.logo}
                 alt={`${uni.name} logo`}
-                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
+                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity  ${uni.name === 'Polytechnique' ? 'brightness-[175%] contrast-125' : ''}
                   ${uni.name === 'Stanford' ? 'brightness-125' : ''}
                   ${uni.name === 'Princeton' ? 'h-[78%]' : ''}`}
               />
             </div>
           ))}
         </div>
-      </motion.div>
+        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+      </ScrollArea>
     </div>
   );
 };
