@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -281,6 +282,7 @@ const useApplicationForm = ({ onSubmitSuccess }: UseApplicationFormProps = {}) =
         categoryOfInterest: formData.categoryOfInterest || "",
         hasCompetitionExperience: formData.hasCompetitionExperience || "",
         competitionResults: formData.hasCompetitionExperience === "yes" ? formData.competitionResults : "",
+        competitiveProfiles: formData.competitiveProfiles.filter(url => url.trim() !== ""),
         submissionDate: new Date().toISOString(),
         status: "pending",
       };

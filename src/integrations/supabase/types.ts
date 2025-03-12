@@ -14,7 +14,8 @@ export type Database = {
           building_company: string
           category_of_interest: string | null
           company_context: string | null
-          competition_results: string | null
+          competition_results: string[] | null
+          competitive_profiles: string[] | null
           country: string
           deck_file: string | null
           education_level: string
@@ -45,7 +46,8 @@ export type Database = {
           building_company: string
           category_of_interest?: string | null
           company_context?: string | null
-          competition_results?: string | null
+          competition_results?: string[] | null
+          competitive_profiles?: string[] | null
           country: string
           deck_file?: string | null
           education_level?: string
@@ -76,7 +78,8 @@ export type Database = {
           building_company?: string
           category_of_interest?: string | null
           company_context?: string | null
-          competition_results?: string | null
+          competition_results?: string[] | null
+          competitive_profiles?: string[] | null
           country?: string
           deck_file?: string | null
           education_level?: string
