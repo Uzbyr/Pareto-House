@@ -17,6 +17,27 @@ export interface Application {
   submissionDate: string;
   status: "pending" | "approved" | "rejected";
   flagged?: boolean;
+  // New fields from Supabase schema
+  country?: string;
+  nationality?: string;
+  graduationYear?: string;
+  preparatoryClasses?: string;
+  studentSocieties?: string;
+  buildingCompany?: string;
+  companyContext?: string;
+  websiteUrl?: string;
+  xUrl?: string;
+  linkedinUrl?: string;
+  educationLevel?: string;
+  highSchool?: string;
+  githubUrl?: string;
+  categoryOfInterest?: string;
+  hasCompetitionExperience?: string;
+  competitionResults?: string[];
+  competitiveProfiles?: string[];
+  resumeFile?: string;
+  deckFile?: string;
+  memoFile?: string;
 }
 
 export interface SiteMetrics {

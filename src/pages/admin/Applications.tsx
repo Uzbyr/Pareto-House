@@ -56,6 +56,13 @@ interface Application {
   websiteUrl?: string;
   xUrl?: string;
   linkedinUrl?: string;
+  educationLevel?: string;
+  highSchool?: string;
+  githubUrl?: string;
+  categoryOfInterest?: string;
+  hasCompetitionExperience?: string;
+  competitionResults?: string[];
+  competitiveProfiles?: string[];
 }
 
 const Applications = () => {
@@ -106,7 +113,18 @@ const Applications = () => {
           resumeFile: app.resume_file,
           deckFile: app.deck_file,
           memoFile: app.memo_file,
-          videoUrl: app.video_url
+          videoUrl: app.video_url,
+          educationLevel: app.education_level,
+          highSchool: app.high_school,
+          githubUrl: app.github_url,
+          categoryOfInterest: app.category_of_interest,
+          hasCompetitionExperience: app.has_competition_experience,
+          competitionResults: app.competition_results ? 
+            (typeof app.competition_results === 'string' ? 
+              JSON.parse(app.competition_results) : 
+              app.competition_results) : 
+            [],
+          competitiveProfiles: app.competitive_profiles || []
         }));
         
         setApplications(formattedApplications);
