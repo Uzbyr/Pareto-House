@@ -9,6 +9,7 @@ import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
 import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
+import BackedUndergrads from "../components/BackedUndergrads";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -100,6 +101,9 @@ const Index = () => {
           <ScrollingMentors />
         </div>
       </div>
+
+      {/* Backed Undergrads Section */}
+      <BackedUndergrads />
 
       {/* Top Investors Section */}
       <div className="container mx-auto px-4">
