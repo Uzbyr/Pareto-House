@@ -155,6 +155,14 @@ const mentors: Mentor[] = [
     bio: "Tadas Burgaila is a Lithuania-based entrepreneur and co-founder of Kilo Health, a digital health platform with over four million customers. He has launched more than 100 projects, including building the world’s second-largest wallpaper website at age 16. Burgaila champions bold ideas and employee well-being, fostering a thriving environment for a team of over 800 people. He is also a co-founder of Unicorns.lt, aimed at cultivating Lithuania’s ecosystem for future entrepreneurs and unicorns.",
     imageUrl: "/lovable-uploads/tadas-burgaila.jpeg",
     country: "Lithuania"
+  },
+  {
+    name: "Hervé Bredin",
+    linkedIn: "https://www.linkedin.com/in/herv%C3%A9-bredin-50b36a248/",
+    description: "Co-Founder of pyannoteAI & CNRS Researcher",
+    bio: "TODO",
+    imageUrl: "/lovable-uploads/herve-bredin.jpeg",
+    country: "France"
   }
 ];
 
