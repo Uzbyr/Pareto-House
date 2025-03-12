@@ -111,6 +111,9 @@ export const initialFormData = {
   linkedInUrl: "",
   githubUrl: "",
   xUrl: "",
+  categoryOfInterest: "",
+  hasCompetitionExperience: "",
+  competitionResults: "",
 };
 
 export type FormDataType = typeof initialFormData;
