@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { Check } from "lucide-react";
+import { Check, GraduationCap, School } from "lucide-react";
 
 interface EducationalBackgroundStepProps {
   formData: any;
@@ -31,72 +31,115 @@ const EducationalBackgroundStep = memo(({
 }: EducationalBackgroundStepProps) => (
   <div className="space-y-6">
     <h2 className="text-2xl font-bold mb-4">Educational Background</h2>
+
     <div className="space-y-2">
-      <Label htmlFor="university">University<span className="text-red-500">*</span></Label>
+      <Label htmlFor="educationLevel">Current Education<span className="text-red-500">*</span></Label>
       <Select
-        value={formData.university}
-        onValueChange={(value) => handleSelectChange("university", value)}
+        value={formData.educationLevel || "university"}
+        onValueChange={(value) => handleSelectChange("educationLevel", value)}
       >
         <SelectTrigger className="bg-zinc-800 border-zinc-700">
-          <SelectValue placeholder="Select your university" />
+          <SelectValue placeholder="Select your education level" />
         </SelectTrigger>
         <SelectContent>
-          {availableUniversities.map((uni) => (
-            <SelectItem key={uni} value={uni}>
-              {uni}
-            </SelectItem>
-          ))}
+          <SelectItem value="university" className="flex items-center gap-2">
+            <GraduationCap className="h-4 w-4" />
+            <span>University</span>
+          </SelectItem>
+          <SelectItem value="highSchool" className="flex items-center gap-2">
+            <School className="h-4 w-4" />
+            <span>High School</span>
+          </SelectItem>
         </SelectContent>
       </Select>
     </div>
 
-    {formData.university === "Other" && (
+    {(formData.educationLevel === "university" || !formData.educationLevel) && (
+      <>
+        <div className="space-y-2">
+          <Label htmlFor="university">University<span className="text-red-500">*</span></Label>
+          <Select
+            value={formData.university}
+            onValueChange={(value) => handleSelectChange("university", value)}
+          >
+            <SelectTrigger className="bg-zinc-800 border-zinc-700">
+              <SelectValue placeholder="Select your university" />
+            </SelectTrigger>
+            <SelectContent>
+              {availableUniversities.map((uni) => (
+                <SelectItem key={uni} value={uni}>
+                  {uni}
+                </SelectItem>
+              ))}
+            </SelectContent>
+          </Select>
+        </div>
+
+        {formData.university === "Other" && (
+          <div className="space-y-2">
+            <Label htmlFor="otherUniversity">Specify University</Label>
+            <Input
+              id="otherUniversity"
+              name="otherUniversity"
+              placeholder="Enter your university name"
+              value={formData.otherUniversity}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+              required
+            />
+          </div>
+        )}
+        
+        {requiresPreparatoryQuestion() && (
+          <div className="space-y-2">
+            <Label htmlFor="preparatoryClasses">
+              Have you taken preparatory classes (classes préparatoires) in the French education system?
+            </Label>
+            <Select
+              value={formData.preparatoryClasses}
+              onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
+            >
+              <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                <SelectValue placeholder="Select an option" />
+              </SelectTrigger>
+              <SelectContent>
+                <SelectItem value="yes">Yes</SelectItem>
+                <SelectItem value="no">No</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
+        
+        <div className="space-y-2">
+          <Label htmlFor="major">Major<span className="text-red-500">*</span></Label>
+          <Input
+            id="major"
+            name="major"
+            placeholder="Enter your major"
+            value={formData.major}
+            onChange={handleInputChange}
+            className="bg-zinc-800 border-zinc-700"
+            required
+          />
+        </div>
+      </>
+    )}
+
+    {formData.educationLevel === "highSchool" && (
       <div className="space-y-2">
-        <Label htmlFor="otherUniversity">Specify University</Label>
+        <Label htmlFor="highSchool">High School<span className="text-red-500">*</span></Label>
         <Input
-          id="otherUniversity"
-          name="otherUniversity"
-          placeholder="Enter your university name"
-          value={formData.otherUniversity}
+          id="highSchool"
+          name="highSchool"
+          placeholder="Enter your high school name"
+          value={formData.highSchool}
           onChange={handleInputChange}
           className="bg-zinc-800 border-zinc-700"
           required
         />
       </div>
     )}
-    
-    {requiresPreparatoryQuestion() && (
-      <div className="space-y-2">
-        <Label htmlFor="preparatoryClasses">
-          Have you taken preparatory classes (classes préparatoires) in the French education system?
-        </Label>
-        <Select
-          value={formData.preparatoryClasses}
-          onValueChange={(value) => handleSelectChange("preparatoryClasses", value)}
-        >
-          <SelectTrigger className="bg-zinc-800 border-zinc-700">
-            <SelectValue placeholder="Select an option" />
-          </SelectTrigger>
-          <SelectContent>
-            <SelectItem value="yes">Yes</SelectItem>
-            <SelectItem value="no">No</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
-    )}
-    
-    <div className="space-y-2">
-      <Label htmlFor="major">Major<span className="text-red-500">*</span></Label>
-      <Input
-        id="major"
-        name="major"
-        placeholder="Enter your major"
-        value={formData.major}
-        onChange={handleInputChange}
-        className="bg-zinc-800 border-zinc-700"
-        required
-      />
-    </div>
+
     <div className="space-y-2">
       <Label htmlFor="graduationYear">Graduation Year<span className="text-red-500">*</span></Label>
       <Select
