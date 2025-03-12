@@ -45,6 +45,13 @@ const undergrads: Undergrad[] = [
     university: "Columbia University",
     achievement: "Founder at Ventr",
     description: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs."
+  },
+  {
+    name: "Shadi Elaridi",
+    imageUrl: "/lovable-uploads/f6e0e831-44b3-4f4d-8e98-f439b0ed49e8.png",
+    university: "Stanford University",
+    achievement: "Founder & CEO at Swish Robotics",
+    description: "Building embodied intelligence for the home at Swish Robotics. Through Pareto's network, Shadi connected with leading robotics experts and investors who helped refine his vision for home automation. The fellowship provided critical early-stage funding and technical advisors that accelerated Swish Robotics' product development and go-to-market strategy."
   }
 ];
 
