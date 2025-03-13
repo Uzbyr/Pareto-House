@@ -1,3 +1,4 @@
+
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -58,6 +59,13 @@ const undergrads: Undergrad[] = [
     university: "Vanderbilt University",
     achievement: "Founder of Stealth Startup",
     description: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture capital connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution."
+  },
+  {
+    name: "James (Yuxi) Qian",
+    imageUrl: "/lovable-uploads/183d91d4-e5cc-4421-ae9f-45473f615ff4.png",
+    university: "Stanford University",
+    achievement: "Founder of Stealth AI Startup",
+    description: "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform."
   }
 ];
 
