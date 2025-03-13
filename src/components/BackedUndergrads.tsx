@@ -66,6 +66,13 @@ const undergrads: Undergrad[] = [
     university: "Stanford University",
     achievement: "Founder of Stealth AI Startup",
     description: "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform."
+  },
+  {
+    name: "Kian Sadeghi",
+    imageUrl: "/lovable-uploads/1a1f7ecf-11fe-4981-bd07-b46cb3042726.png",
+    university: "University of Pennsylvania",
+    achievement: "Founder & CEO at Nucleus",
+    description: "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform."
   }
 ];
 
