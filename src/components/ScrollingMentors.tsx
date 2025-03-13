@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
@@ -62,11 +61,12 @@ const ScrollingMentors = () => {
           Learn from the Best
         </h3>
         <p className="text-black/60 dark:text-white/60 text-lg max-w-2xl mx-auto">
-          Decacorn and unicorn founders, tier 1 investors, top operators, public figures, and more
+          Decacorn and unicorn founders, tier 1 investors, top operators, public
+          figures, and more
         </p>
       </div>
-      
-      <ScrollArea 
+
+      <ScrollArea
         viewportRef={viewportRef}
         className="w-full"
         onMouseEnter={handleInteraction}
@@ -74,12 +74,10 @@ const ScrollingMentors = () => {
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
       >
-        <div 
-          className={`flex space-x-12 px-4 py-6`}
-        >
+        <div className={`flex space-x-12 px-4 py-6`}>
           {/* First set of mentors */}
           {mentors.concat(mentors).map((mentor, index) => (
-            <a 
+            <a
               key={`a-${mentor.name}-${index}`}
               href={mentor.linkedIn}
               target="_blank"
@@ -97,17 +95,21 @@ const ScrollingMentors = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                  <h4 className="font-semibold text-lg text-center mb-1">
+                    {mentor.name}
+                  </h4>
                   <ExternalLink className="h-4 w-4 text-gray-500" />
                 </div>
-                <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
+                <p className="text-black/60 dark:text-white/60 text-sm text-center">
+                  {mentor.description}
+                </p>
               </div>
             </a>
           ))}
-          
+
           {/* Duplicated mentors for infinite scroll effect */}
           {mentors.map((mentor, index) => (
-            <a 
+            <a
               key={`b-${mentor.name}-${index}`}
               href={mentor.linkedIn}
               target="_blank"
@@ -125,25 +127,36 @@ const ScrollingMentors = () => {
                   )}
                 </div>
                 <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-lg text-center mb-1">{mentor.name}</h4>
+                  <h4 className="font-semibold text-lg text-center mb-1">
+                    {mentor.name}
+                  </h4>
                   <ExternalLink className="h-4 w-4 text-gray-500" />
                 </div>
-                <p className="text-black/60 dark:text-white/60 text-sm text-center">{mentor.description}</p>
+                <p className="text-black/60 dark:text-white/60 text-sm text-center">
+                  {mentor.description}
+                </p>
               </div>
             </a>
           ))}
         </div>
-        <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+        <ScrollBar
+          orientation="horizontal"
+          className="bg-black/10 dark:bg-white/10"
+        />
       </ScrollArea>
-      
+
       <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
         <p className="text-lg text-black/70 dark:text-white/70 italic">
-          Wisdom from leaders who have collectively built companies worth over $50 billion and invested in thousands of startups
+          Wisdom from leaders who have collectively built companies worth over
+          $50 billion and invested in thousands of startups
         </p>
       </div>
-      
+
       <div className="text-center mt-8">
-        <Link to="/mentors" className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm">
+        <Link
+          to="/mentors"
+          className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm"
+        >
           Meet All Mentors
           <ArrowRight className="w-5 h-5" />
         </Link>

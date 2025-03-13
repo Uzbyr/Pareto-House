@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -16,7 +15,14 @@ import {
   CartesianGrid,
 } from "recharts";
 
-const COLORS = ["#EC4899", "#8B5CF6", "#3B82F6", "#10B981", "#F59E0B", "#EF4444"];
+const COLORS = [
+  "#EC4899",
+  "#8B5CF6",
+  "#3B82F6",
+  "#10B981",
+  "#F59E0B",
+  "#EF4444",
+];
 
 const genderData = [
   { name: "Male", value: 54 },
@@ -51,7 +57,9 @@ const educationData = [
 ];
 
 const DemographicsChart = () => {
-  const [activeChart, setActiveChart] = useState<"gender" | "ethnicity" | "age" | "education">("gender");
+  const [activeChart, setActiveChart] = useState<
+    "gender" | "ethnicity" | "age" | "education"
+  >("gender");
 
   const getActiveData = () => {
     switch (activeChart) {
@@ -70,12 +78,18 @@ const DemographicsChart = () => {
 
   return (
     <Card className="bg-zinc-800 border-zinc-700 p-6">
-      <h2 className="text-xl font-bold text-white mb-6">Applicant Demographics</h2>
-      
+      <h2 className="text-xl font-bold text-white mb-6">
+        Applicant Demographics
+      </h2>
+
       <div className="flex flex-wrap gap-2 mb-6">
         <Button
           variant={activeChart === "gender" ? "pink" : "outline"}
-          className={activeChart !== "gender" ? "border-zinc-700 text-gray-300 hover:bg-zinc-800" : ""}
+          className={
+            activeChart !== "gender"
+              ? "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+              : ""
+          }
           onClick={() => setActiveChart("gender")}
           size="sm"
         >
@@ -83,7 +97,11 @@ const DemographicsChart = () => {
         </Button>
         <Button
           variant={activeChart === "ethnicity" ? "pink" : "outline"}
-          className={activeChart !== "ethnicity" ? "border-zinc-700 text-gray-300 hover:bg-zinc-800" : ""}
+          className={
+            activeChart !== "ethnicity"
+              ? "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+              : ""
+          }
           onClick={() => setActiveChart("ethnicity")}
           size="sm"
         >
@@ -91,7 +109,11 @@ const DemographicsChart = () => {
         </Button>
         <Button
           variant={activeChart === "age" ? "pink" : "outline"}
-          className={activeChart !== "age" ? "border-zinc-700 text-gray-300 hover:bg-zinc-800" : ""}
+          className={
+            activeChart !== "age"
+              ? "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+              : ""
+          }
           onClick={() => setActiveChart("age")}
           size="sm"
         >
@@ -99,7 +121,11 @@ const DemographicsChart = () => {
         </Button>
         <Button
           variant={activeChart === "education" ? "pink" : "outline"}
-          className={activeChart !== "education" ? "border-zinc-700 text-gray-300 hover:bg-zinc-800" : ""}
+          className={
+            activeChart !== "education"
+              ? "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+              : ""
+          }
           onClick={() => setActiveChart("education")}
           size="sm"
         >
@@ -119,10 +145,15 @@ const DemographicsChart = () => {
                 outerRadius={80}
                 fill="#8884d8"
                 dataKey="value"
-                label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                label={({ name, percent }) =>
+                  `${name} ${(percent * 100).toFixed(0)}%`
+                }
               >
                 {getActiveData().map((entry, index) => (
-                  <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  <Cell
+                    key={`cell-${index}`}
+                    fill={COLORS[index % COLORS.length]}
+                  />
                 ))}
               </Pie>
               <Tooltip
@@ -152,7 +183,12 @@ const DemographicsChart = () => {
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis type="number" stroke="#9CA3AF" />
-              <YAxis dataKey="name" type="category" stroke="#9CA3AF" width={80} />
+              <YAxis
+                dataKey="name"
+                type="category"
+                stroke="#9CA3AF"
+                width={80}
+              />
               <Tooltip
                 contentStyle={{
                   backgroundColor: "#1F2937",
@@ -168,8 +204,9 @@ const DemographicsChart = () => {
       </div>
 
       <p className="text-sm text-gray-400 mt-4">
-        Demographic information is self-reported by applicants and used for diversity monitoring purposes only.
-        This data is not considered during the application review process.
+        Demographic information is self-reported by applicants and used for
+        diversity monitoring purposes only. This data is not considered during
+        the application review process.
       </p>
     </Card>
   );

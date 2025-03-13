@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Twitter } from "lucide-react";
 
@@ -16,39 +15,39 @@ const Footer = () => {
               />
             </Link>
           </div>
-          
+
           <div className="mb-6 md:mb-0">
-            <a 
-              href="https://www.youtube.com/watch?v=lc8ourcIe10" 
-              target="_blank" 
+            <a
+              href="https://www.youtube.com/watch?v=lc8ourcIe10"
+              target="_blank"
               rel="noopener noreferrer"
               className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300"
             >
               Build brutally or don't
             </a>
           </div>
-          
+
           <div className="flex gap-6">
             <div className="flex gap-4">
-              <a 
-                href="https://twitter.com/ParetoCommunity" 
-                target="_blank" 
+              <a
+                href="https://twitter.com/ParetoCommunity"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
               >
                 <Twitter className="w-5 h-5" />
               </a>
-              <a 
-                href="https://www.linkedin.com/company/pareto-fellowship" 
-                target="_blank" 
+              <a
+                href="https://www.linkedin.com/company/pareto-fellowship"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a 
-                href="https://www.instagram.com/pareto_fellowship" 
-                target="_blank" 
+              <a
+                href="https://www.instagram.com/pareto_fellowship"
+                target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
               >

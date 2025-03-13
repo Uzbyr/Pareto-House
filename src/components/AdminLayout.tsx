@@ -1,4 +1,3 @@
-
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -83,7 +82,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
           <div className="flex items-center justify-between mb-4">
             <div>
               <p className="text-sm font-medium text-white">{user?.email}</p>
-              <p className="text-xs text-gray-400 capitalize">{user?.role?.replace("_", " ")}</p>
+              <p className="text-xs text-gray-400 capitalize">
+                {user?.role?.replace("_", " ")}
+              </p>
             </div>
           </div>
           <Button
@@ -99,7 +100,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
       {/* Main content */}
       <div className="flex-1 flex flex-col overflow-hidden">
-        <main className="flex-1 overflow-y-auto bg-zinc-900 p-6">{children}</main>
+        <main className="flex-1 overflow-y-auto bg-zinc-900 p-6">
+          {children}
+        </main>
       </div>
     </div>
   );

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Clock, Flag } from "lucide-react";
@@ -10,7 +9,11 @@ interface StatusActionsProps {
   onFlagToggle: (id: string) => void;
 }
 
-const StatusActions = ({ application, onStatusChange, onFlagToggle }: StatusActionsProps) => {
+const StatusActions = ({
+  application,
+  onStatusChange,
+  onFlagToggle,
+}: StatusActionsProps) => {
   return (
     <div className="bg-zinc-900/60 rounded-md p-3 flex flex-wrap gap-2 justify-center border border-zinc-700">
       <Button
@@ -44,7 +47,7 @@ const StatusActions = ({ application, onStatusChange, onFlagToggle }: StatusActi
         variant="outline"
         size="sm"
         className={`${
-          application.flagged 
+          application.flagged
             ? "text-amber-400 border-amber-400/20 hover:bg-amber-400/10 hover:text-amber-300"
             : "text-gray-400 border-gray-400/20 hover:bg-gray-400/10 hover:text-gray-300"
         }`}

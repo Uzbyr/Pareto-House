@@ -1,8 +1,12 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
-import { AuthContextType, Application, AuthUser, SiteMetrics } from "@/types/auth";
+import {
+  AuthContextType,
+  Application,
+  AuthUser,
+  SiteMetrics,
+} from "@/types/auth";
 import { getUserRole, isPareto20Email } from "@/utils/authUtils";
 import { collectRealMetrics } from "@/utils/metricsUtils";
 import {
@@ -11,7 +15,7 @@ import {
   getStoredPageViews,
   storePageViews,
   getStoredVisitorData,
-  storeVisitorData
+  storeVisitorData,
 } from "@/utils/storageUtils";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
@@ -21,27 +25,34 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
-  const [applications, setApplications] = useState<Application[]>(getStoredApplications());
-  const [siteMetrics, setSiteMetrics] = useState<SiteMetrics>(collectRealMetrics());
+  const [applications, setApplications] = useState<Application[]>(
+    getStoredApplications(),
+  );
+  const [siteMetrics, setSiteMetrics] =
+    useState<SiteMetrics>(collectRealMetrics());
 
   const [sessionId] = useState<string>(() => {
-    let id = sessionStorage.getItem('visitorSessionId');
+    let id = sessionStorage.getItem("visitorSessionId");
     if (!id) {
       id = Math.random().toString(36).substring(2, 15);
-      sessionStorage.setItem('visitorSessionId', id);
-      
+      sessionStorage.setItem("visitorSessionId", id);
+
       const visitorData = getStoredVisitorData();
-      const today = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-      
+      const today = new Date().toLocaleDateString("en-US", {
+        month: "short",
+        day: "numeric",
+      });
+
       visitorData.total += 1;
       visitorData.byDate[today] = (visitorData.byDate[today] || 0) + 1;
-      
+
       storeVisitorData(visitorData);
     }
     return id;
   });
 
-  const [pageViews, setPageViews] = useState<Record<string, number>>(getStoredPageViews());
+  const [pageViews, setPageViews] =
+    useState<Record<string, number>>(getStoredPageViews());
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -50,7 +61,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (session?.user?.email) {
         setUser({
           email: session.user.email,
-          role: getUserRole(session.user.email)
+          role: getUserRole(session.user.email),
         });
       }
       setLoading(false);
@@ -64,7 +75,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (session?.user?.email) {
         setUser({
           email: session.user.email,
-          role: getUserRole(session.user.email)
+          role: getUserRole(session.user.email),
         });
       } else {
         setUser(null);
@@ -75,25 +86,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }, []);
 
   const trackPageVisit = (pageName: string) => {
-    setPageViews(prevViews => {
-      const newViews = { 
+    setPageViews((prevViews) => {
+      const newViews = {
         ...prevViews,
-        [pageName]: (prevViews[pageName] || 0) + 1 
+        [pageName]: (prevViews[pageName] || 0) + 1,
       };
       storePageViews(newViews);
       return newViews;
     });
   };
 
-  const submitApplication = (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => {
+  const submitApplication = (
+    applicationData: Omit<Application, "id" | "submissionDate" | "status">,
+  ) => {
     const newApplication: Application = {
       ...applicationData,
       id: crypto.randomUUID(),
       submissionDate: new Date().toISOString(),
-      status: "pending"
+      status: "pending",
     };
-    
-    setApplications(prevApps => {
+
+    setApplications((prevApps) => {
       const updatedApps = [...prevApps, newApplication];
       storeApplications(updatedApps);
       return updatedApps;
@@ -113,16 +126,16 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       if (isAuthenticated && user) {
         try {
           const { data, error } = await supabase
-            .from('applications')
-            .select('*');
-            
+            .from("applications")
+            .select("*");
+
           if (error) {
             console.error("Error fetching applications:", error);
             return;
           }
-          
+
           if (data) {
-            const formattedApplications = data.map(app => ({
+            const formattedApplications = data.map((app) => ({
               id: app.id.toString(),
               name: `${app.first_name} ${app.last_name}`,
               email: app.email,
@@ -132,9 +145,9 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
               videoUrl: app.video_url,
               submissionDate: app.submission_date,
               status: app.status as "pending" | "approved" | "rejected",
-              flagged: app.flagged
+              flagged: app.flagged,
             }));
-            
+
             setApplications(formattedApplications);
             storeApplications(formattedApplications);
           }
@@ -143,7 +156,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         }
       }
     };
-    
+
     fetchApplications();
   }, [isAuthenticated, user]);
 
@@ -156,7 +169,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       const interval = setInterval(() => {
         refreshMetrics();
       }, 30000);
-      
+
       return () => clearInterval(interval);
     }
   }, [isAuthenticated]);
@@ -195,19 +208,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   }
 
   return (
-    <AuthContext.Provider 
-      value={{ 
-        isAuthenticated, 
-        user, 
+    <AuthContext.Provider
+      value={{
+        isAuthenticated,
+        user,
         session,
-        login, 
-        logout, 
-        isPareto20Email, 
-        siteMetrics, 
+        login,
+        logout,
+        isPareto20Email,
+        siteMetrics,
         refreshMetrics,
         getApplications,
         submitApplication,
-        trackPageVisit
+        trackPageVisit,
       }}
     >
       {children}

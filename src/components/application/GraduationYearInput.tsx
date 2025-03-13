@@ -1,4 +1,3 @@
-
 import { Label } from "@/components/ui/label";
 
 interface GraduationYearInputProps {
@@ -8,7 +7,7 @@ interface GraduationYearInputProps {
 
 const GraduationYearInput = ({ value, onChange }: GraduationYearInputProps) => {
   const years = Array.from({ length: 6 }, (_, i) => 2025 + i);
-  
+
   return (
     <div className="mb-6">
       <Label htmlFor="graduationYear" className="block mb-2 text-white">

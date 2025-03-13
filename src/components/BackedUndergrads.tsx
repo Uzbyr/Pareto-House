@@ -1,4 +1,3 @@
-
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -16,64 +15,73 @@ const undergrads: Undergrad[] = [
     imageUrl: "/lovable-uploads/aad2ef57-76d8-4b0a-9f5b-413f9d4fba41.png",
     university: "University of Oxford",
     achievement: "Co-Founder at Canopy Labs",
-    description: "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent."
+    description:
+      "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent.",
   },
   {
     name: "Elias Fizesan",
     imageUrl: "/lovable-uploads/f5342cf3-4935-463d-9528-09ba6816b5e1.png",
     university: "Columbia University",
     achievement: "Co-Founder at Canopy Labs",
-    description: "Building virtual humans that are indistinguishable from real ones. Pareto's mentorship program and investor connections helped Elias refine his vision and secure the initial funding round that made the company's breakthrough technology possible."
+    description:
+      "Building virtual humans that are indistinguishable from real ones. Pareto's mentorship program and investor connections helped Elias refine his vision and secure the initial funding round that made the company's breakthrough technology possible.",
   },
   {
     name: "Marieliesse Gouilliard",
     imageUrl: "/lovable-uploads/cc7fd917-15d3-458e-80dd-fbbff7c92477.png",
     university: "University of Chicago",
     achievement: "Tech Founder & ML Engineer",
-    description: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills."
+    description:
+      "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills.",
   },
   {
     name: "Chan Woo Kim",
     imageUrl: "/lovable-uploads/ca60f026-0749-4237-bf1c-b5b3358d7294.png",
     university: "Williams College",
     achievement: "Co-founder & CEO at Theta One",
-    description: "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space."
+    description:
+      "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space.",
   },
   {
     name: "Joseph Jojoe",
     imageUrl: "/lovable-uploads/ce0f044b-5857-4abb-a8f6-5200557d6056.png",
     university: "Columbia University",
     achievement: "Founder at Ventr",
-    description: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs."
+    description:
+      "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
   },
   {
     name: "Shadi Elaridi",
     imageUrl: "/lovable-uploads/f6e0e831-44b3-4f4d-8e98-f439b0ed49e8.png",
     university: "Stanford University",
     achievement: "Founder & CEO at Swish Robotics",
-    description: "Building embodied intelligence for the home at Swish Robotics. Through Pareto's network, Shadi connected with leading robotics experts and investors who helped refine his vision for home automation. The fellowship provided critical early-stage funding and technical advisors that accelerated Swish Robotics' product development and go-to-market strategy."
+    description:
+      "Building embodied intelligence for the home at Swish Robotics. Through Pareto's network, Shadi connected with leading robotics experts and investors who helped refine his vision for home automation. The fellowship provided critical early-stage funding and technical advisors that accelerated Swish Robotics' product development and go-to-market strategy.",
   },
   {
     name: "Zilin Dong",
     imageUrl: "/lovable-uploads/bd372fdd-df3e-40e1-a62d-ce8a61c518bf.png",
     university: "Vanderbilt University",
     achievement: "Founder of Stealth Startup",
-    description: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture capital connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution."
+    description:
+      "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture capital connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution.",
   },
   {
     name: "James (Yuxi) Qian",
     imageUrl: "/lovable-uploads/183d91d4-e5cc-4421-ae9f-45473f615ff4.png",
     university: "Stanford University",
     achievement: "Founder of Stealth AI Startup",
-    description: "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform."
+    description:
+      "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform.",
   },
   {
     name: "Kian Sadeghi",
     imageUrl: "/lovable-uploads/1a1f7ecf-11fe-4981-bd07-b46cb3042726.png",
     university: "University of Pennsylvania",
     achievement: "Founder & CEO at Nucleus",
-    description: "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform."
-  }
+    description:
+      "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform.",
+  },
 ];
 
 const BackedUndergrads = () => {
@@ -132,11 +140,12 @@ const BackedUndergrads = () => {
             Undergrads Backed by Pareto
           </h3>
           <p className="text-black/60 dark:text-white/60 text-lg max-w-2xl mx-auto">
-            Meet some of our exceptional fellows who have gone on to build remarkable companies
+            Meet some of our exceptional fellows who have gone on to build
+            remarkable companies
           </p>
         </div>
 
-        <ScrollArea 
+        <ScrollArea
           viewportRef={viewportRef}
           className="w-full"
           onMouseEnter={handleInteraction}
@@ -146,7 +155,7 @@ const BackedUndergrads = () => {
         >
           <div className="flex space-x-6 px-4 py-6">
             {undergrads.map((undergrad, index) => (
-              <div 
+              <div
                 key={index}
                 className="flex-shrink-0 flex gap-6 bg-white/50 dark:bg-white/5 p-6 rounded-lg w-[600px] group hover:bg-white/80 dark:hover:bg-white/10 transition-all duration-300"
               >
@@ -158,8 +167,12 @@ const BackedUndergrads = () => {
                   />
                 </div>
                 <div className="flex flex-col justify-center">
-                  <h4 className="text-xl font-semibold mb-1">{undergrad.name}</h4>
-                  <p className="text-sm text-black/60 dark:text-white/60 mb-2">{undergrad.university}</p>
+                  <h4 className="text-xl font-semibold mb-1">
+                    {undergrad.name}
+                  </h4>
+                  <p className="text-sm text-black/60 dark:text-white/60 mb-2">
+                    {undergrad.university}
+                  </p>
                   <div className="mb-3">
                     <span className="inline-block bg-pareto-pink/20 text-pareto-pink px-3 py-1 rounded-full text-sm font-medium">
                       {undergrad.achievement}
@@ -172,7 +185,10 @@ const BackedUndergrads = () => {
               </div>
             ))}
           </div>
-          <ScrollBar orientation="horizontal" className="bg-black/10 dark:bg-white/10" />
+          <ScrollBar
+            orientation="horizontal"
+            className="bg-black/10 dark:bg-white/10"
+          />
         </ScrollArea>
       </div>
     </div>

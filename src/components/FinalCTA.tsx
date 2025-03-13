@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -20,7 +19,7 @@ const FinalCTA = () => {
           <p className="text-xl md:text-2xl text-black/70 dark:text-white/70 mb-12">
             Applications for the next cohort close soon
           </p>
-          
+
           <div className="space-y-12">
             <Link
               to="/apply"

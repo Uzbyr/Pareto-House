@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -19,18 +18,18 @@ import {
   Bar,
   Legend,
 } from "recharts";
-import { 
-  Calendar, 
-  Download, 
-  RefreshCw, 
-  Building2, 
-  Users, 
-  Clock, 
+import {
+  Calendar,
+  Download,
+  RefreshCw,
+  Building2,
+  Users,
+  Clock,
   GraduationCap,
   Filter,
   BarChart3,
   PieChart as PieChartIcon,
-  CheckCircle2
+  CheckCircle2,
 } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
@@ -64,13 +63,13 @@ const Analytics = () => {
 
   // Filter visitor data based on selected time range
   const getFilteredVisitorData = () => {
-    const days = parseInt(timeRange.split(' ')[0]);
+    const days = parseInt(timeRange.split(" ")[0]);
     return siteMetrics.visitors.byDate.slice(-days);
   };
 
   // Filter application data based on selected time range
   const getFilteredApplicationData = () => {
-    const days = parseInt(timeRange.split(' ')[0]);
+    const days = parseInt(timeRange.split(" ")[0]);
     // Since we're using byDay instead of byDate in the applications data
     // We'll just take the last few days worth of data
     return siteMetrics.applications.byDay.slice(-days);
@@ -88,7 +87,9 @@ const Analytics = () => {
                 variant={timeRange === range ? "pink" : "outline"}
                 size="sm"
                 className={
-                  timeRange !== range ? "border-zinc-700 text-gray-300 hover:bg-zinc-800" : ""
+                  timeRange !== range
+                    ? "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+                    : ""
                 }
                 onClick={() => setTimeRange(range)}
               >
@@ -102,7 +103,9 @@ const Analytics = () => {
             onClick={handleRefresh}
             disabled={isRefreshing}
           >
-            <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+            <RefreshCw
+              className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+            />
             Refresh
           </Button>
           <Button
@@ -116,21 +119,40 @@ const Analytics = () => {
         </div>
       </div>
 
-      <Tabs defaultValue="overview" value={activeTab} onValueChange={setActiveTab}>
+      <Tabs
+        defaultValue="overview"
+        value={activeTab}
+        onValueChange={setActiveTab}
+      >
         <TabsList className="bg-zinc-800 border-zinc-700">
-          <TabsTrigger value="overview" className="data-[state=active]:bg-zinc-700">
+          <TabsTrigger
+            value="overview"
+            className="data-[state=active]:bg-zinc-700"
+          >
             Overview
           </TabsTrigger>
-          <TabsTrigger value="applications" className="data-[state=active]:bg-zinc-700">
+          <TabsTrigger
+            value="applications"
+            className="data-[state=active]:bg-zinc-700"
+          >
             Applications
           </TabsTrigger>
-          <TabsTrigger value="sources" className="data-[state=active]:bg-zinc-700">
+          <TabsTrigger
+            value="sources"
+            className="data-[state=active]:bg-zinc-700"
+          >
             Sources & Quality
           </TabsTrigger>
-          <TabsTrigger value="reviewers" className="data-[state=active]:bg-zinc-700">
+          <TabsTrigger
+            value="reviewers"
+            className="data-[state=active]:bg-zinc-700"
+          >
             Reviewers
           </TabsTrigger>
-          <TabsTrigger value="demographics" className="data-[state=active]:bg-zinc-700">
+          <TabsTrigger
+            value="demographics"
+            className="data-[state=active]:bg-zinc-700"
+          >
             Demographics
           </TabsTrigger>
         </TabsList>
@@ -139,12 +161,20 @@ const Analytics = () => {
         <TabsContent value="overview">
           {/* Visitors Over Time */}
           <Card className="bg-zinc-800 border-zinc-700 p-6">
-            <h2 className="text-xl font-bold text-white mb-6">Visitors Over Time</h2>
+            <h2 className="text-xl font-bold text-white mb-6">
+              Visitors Over Time
+            </h2>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={getFilteredVisitorData()}>
                   <defs>
-                    <linearGradient id="colorVisitors" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorVisitors"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#EC4899" stopOpacity={0.8} />
                       <stop offset="95%" stopColor="#EC4899" stopOpacity={0} />
                     </linearGradient>
@@ -174,7 +204,9 @@ const Analytics = () => {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
             {/* Traffic Sources */}
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h2 className="text-xl font-bold text-white mb-6">Traffic Sources</h2>
+              <h2 className="text-xl font-bold text-white mb-6">
+                Traffic Sources
+              </h2>
               <div className="h-80 flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -187,11 +219,16 @@ const Analytics = () => {
                       fill="#8884d8"
                       paddingAngle={2}
                       dataKey="value"
-                      label={({ name, percent }) => `${name} ${(percent * 100).toFixed(0)}%`}
+                      label={({ name, percent }) =>
+                        `${name} ${(percent * 100).toFixed(0)}%`
+                      }
                       labelLine={false}
                     >
                       {siteMetrics.trafficSources.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                        <Cell
+                          key={`cell-${index}`}
+                          fill={COLORS[index % COLORS.length]}
+                        />
                       ))}
                     </Pie>
                     <Tooltip
@@ -209,7 +246,9 @@ const Analytics = () => {
 
             {/* Page Popularity */}
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h2 className="text-xl font-bold text-white mb-6">Page Popularity</h2>
+              <h2 className="text-xl font-bold text-white mb-6">
+                Page Popularity
+              </h2>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={siteMetrics.pagePopularity}>
@@ -240,18 +279,26 @@ const Analytics = () => {
           {/* Visitor Metrics Summary */}
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mt-6">
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h3 className="text-gray-400 text-sm font-medium">Unique Visitors</h3>
-              <p className="text-4xl font-bold text-white mt-2">{siteMetrics.visitors.total.toLocaleString()}</p>
+              <h3 className="text-gray-400 text-sm font-medium">
+                Unique Visitors
+              </h3>
+              <p className="text-4xl font-bold text-white mt-2">
+                {siteMetrics.visitors.total.toLocaleString()}
+              </p>
               <p className="text-sm text-green-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> 12.5% from last period
+                <span className="inline-block mr-1">↑</span> 12.5% from last
+                period
               </p>
             </Card>
 
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h3 className="text-gray-400 text-sm font-medium">Average Session Duration</h3>
+              <h3 className="text-gray-400 text-sm font-medium">
+                Average Session Duration
+              </h3>
               <p className="text-4xl font-bold text-white mt-2">4:32</p>
               <p className="text-sm text-green-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> 8.3% from last period
+                <span className="inline-block mr-1">↑</span> 8.3% from last
+                period
               </p>
             </Card>
 
@@ -259,17 +306,26 @@ const Analytics = () => {
               <h3 className="text-gray-400 text-sm font-medium">Bounce Rate</h3>
               <p className="text-4xl font-bold text-white mt-2">42.3%</p>
               <p className="text-sm text-red-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> 3.1% from last period
+                <span className="inline-block mr-1">↑</span> 3.1% from last
+                period
               </p>
             </Card>
 
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h3 className="text-gray-400 text-sm font-medium">Conversion Rate</h3>
+              <h3 className="text-gray-400 text-sm font-medium">
+                Conversion Rate
+              </h3>
               <p className="text-4xl font-bold text-white mt-2">
-                {(siteMetrics.applications.total / siteMetrics.visitors.total * 100).toFixed(1)}%
+                {(
+                  (siteMetrics.applications.total /
+                    siteMetrics.visitors.total) *
+                  100
+                ).toFixed(1)}
+                %
               </p>
               <p className="text-sm text-green-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> 5.2% from last period
+                <span className="inline-block mr-1">↑</span> 5.2% from last
+                period
               </p>
             </Card>
           </div>
@@ -281,22 +337,29 @@ const Analytics = () => {
             <Card className="bg-zinc-800 border-zinc-700 p-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-gray-400 text-sm font-medium">Total Applications</h3>
-                  <p className="text-4xl font-bold text-white mt-2">{siteMetrics.applications.total}</p>
+                  <h3 className="text-gray-400 text-sm font-medium">
+                    Total Applications
+                  </h3>
+                  <p className="text-4xl font-bold text-white mt-2">
+                    {siteMetrics.applications.total}
+                  </p>
                 </div>
                 <div className="bg-pink-500/20 p-3 rounded-full">
                   <Users className="h-6 w-6 text-pink-500" />
                 </div>
               </div>
               <p className="text-sm text-green-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> 15.2% from last month
+                <span className="inline-block mr-1">↑</span> 15.2% from last
+                month
               </p>
             </Card>
 
             <Card className="bg-zinc-800 border-zinc-700 p-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-gray-400 text-sm font-medium">Acceptance Rate</h3>
+                  <h3 className="text-gray-400 text-sm font-medium">
+                    Acceptance Rate
+                  </h3>
                   <p className="text-4xl font-bold text-white mt-2">12.4%</p>
                 </div>
                 <div className="bg-purple-500/20 p-3 rounded-full">
@@ -304,28 +367,36 @@ const Analytics = () => {
                 </div>
               </div>
               <p className="text-sm text-red-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↓</span> 2.1% from last month
+                <span className="inline-block mr-1">↓</span> 2.1% from last
+                month
               </p>
             </Card>
 
             <Card className="bg-zinc-800 border-zinc-700 p-6">
               <div className="flex justify-between items-start">
                 <div>
-                  <h3 className="text-gray-400 text-sm font-medium">Avg. Review Time</h3>
-                  <p className="text-4xl font-bold text-white mt-2">1.8 <span className="text-xl">days</span></p>
+                  <h3 className="text-gray-400 text-sm font-medium">
+                    Avg. Review Time
+                  </h3>
+                  <p className="text-4xl font-bold text-white mt-2">
+                    1.8 <span className="text-xl">days</span>
+                  </p>
                 </div>
                 <div className="bg-blue-500/20 p-3 rounded-full">
                   <Clock className="h-6 w-6 text-blue-500" />
                 </div>
               </div>
               <p className="text-sm text-green-500 flex items-center mt-2">
-                <span className="inline-block mr-1">↑</span> Improved 0.5 days since last month
+                <span className="inline-block mr-1">↑</span> Improved 0.5 days
+                since last month
               </p>
             </Card>
           </div>
 
           <Card className="bg-zinc-800 border-zinc-700 p-6">
-            <h2 className="text-xl font-bold text-white mb-6">Application Trend</h2>
+            <h2 className="text-xl font-bold text-white mb-6">
+              Application Trend
+            </h2>
             <div className="h-80">
               <ResponsiveContainer width="100%" height="100%">
                 <AreaChart data={getFilteredApplicationData()}>
@@ -334,7 +405,13 @@ const Analytics = () => {
                       <stop offset="5%" stopColor="#8B5CF6" stopOpacity={0.8} />
                       <stop offset="95%" stopColor="#8B5CF6" stopOpacity={0} />
                     </linearGradient>
-                    <linearGradient id="colorApprove" x1="0" y1="0" x2="0" y2="1">
+                    <linearGradient
+                      id="colorApprove"
+                      x1="0"
+                      y1="0"
+                      x2="0"
+                      y2="1"
+                    >
                       <stop offset="5%" stopColor="#10B981" stopOpacity={0.8} />
                       <stop offset="95%" stopColor="#10B981" stopOpacity={0} />
                     </linearGradient>
@@ -366,7 +443,9 @@ const Analytics = () => {
 
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6">
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h2 className="text-xl font-bold text-white mb-6">Application Status Breakdown</h2>
+              <h2 className="text-xl font-bold text-white mb-6">
+                Application Status Breakdown
+              </h2>
               <div className="h-80 flex items-center justify-center">
                 <ResponsiveContainer width="100%" height="100%">
                   <PieChart>
@@ -374,7 +453,7 @@ const Analytics = () => {
                       data={[
                         { name: "Pending", value: 230 },
                         { name: "Approved", value: 48 },
-                        { name: "Rejected", value: 142 }
+                        { name: "Rejected", value: 142 },
                       ]}
                       cx="50%"
                       cy="50%"
@@ -403,7 +482,9 @@ const Analytics = () => {
             </Card>
 
             <Card className="bg-zinc-800 border-zinc-700 p-6">
-              <h2 className="text-xl font-bold text-white mb-6">Completion Rate by Stage</h2>
+              <h2 className="text-xl font-bold text-white mb-6">
+                Completion Rate by Stage
+              </h2>
               <div className="h-80">
                 <ResponsiveContainer width="100%" height="100%">
                   <BarChart
@@ -412,12 +493,20 @@ const Analytics = () => {
                       { name: "Completed Info", rate: 82 },
                       { name: "Added Resume", rate: 64 },
                       { name: "Added Video", rate: 47 },
-                      { name: "Final Submit", rate: 42 }
+                      { name: "Final Submit", rate: 42 },
                     ]}
                   >
                     <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                     <XAxis dataKey="name" stroke="#9CA3AF" />
-                    <YAxis stroke="#9CA3AF" label={{ value: 'Percentage', angle: -90, position: 'insideLeft', fill: '#9CA3AF' }} />
+                    <YAxis
+                      stroke="#9CA3AF"
+                      label={{
+                        value: "Percentage",
+                        angle: -90,
+                        position: "insideLeft",
+                        fill: "#9CA3AF",
+                      }}
+                    />
                     <Tooltip
                       contentStyle={{
                         backgroundColor: "#1F2937",

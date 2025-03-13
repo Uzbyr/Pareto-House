@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Globe, Linkedin, Twitter, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,11 +14,11 @@ const LinksTab = ({ application }: LinksTabProps) => {
         <div>
           <span className="text-sm text-gray-400">Website:</span>
           <div className="mt-1">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-              onClick={() => window.open(application.websiteUrl, '_blank')}
+              onClick={() => window.open(application.websiteUrl, "_blank")}
             >
               <Globe className="h-4 w-4 mr-2" />
               {application.websiteUrl}
@@ -32,11 +31,11 @@ const LinksTab = ({ application }: LinksTabProps) => {
         <div>
           <span className="text-sm text-gray-400">LinkedIn:</span>
           <div className="mt-1">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-              onClick={() => window.open(application.linkedinUrl, '_blank')}
+              onClick={() => window.open(application.linkedinUrl, "_blank")}
             >
               <Linkedin className="h-4 w-4 mr-2" />
               LinkedIn Profile
@@ -49,11 +48,11 @@ const LinksTab = ({ application }: LinksTabProps) => {
         <div>
           <span className="text-sm text-gray-400">X (Twitter):</span>
           <div className="mt-1">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-              onClick={() => window.open(application.xUrl, '_blank')}
+              onClick={() => window.open(application.xUrl, "_blank")}
             >
               <Twitter className="h-4 w-4 mr-2" />
               X Profile
@@ -66,11 +65,11 @@ const LinksTab = ({ application }: LinksTabProps) => {
         <div>
           <span className="text-sm text-gray-400">GitHub:</span>
           <div className="mt-1">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               size="sm"
               className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-              onClick={() => window.open(application.githubUrl, '_blank')}
+              onClick={() => window.open(application.githubUrl, "_blank")}
             >
               <Globe className="h-4 w-4 mr-2" />
               GitHub Profile
@@ -79,9 +78,12 @@ const LinksTab = ({ application }: LinksTabProps) => {
           </div>
         </div>
       )}
-      {!application.websiteUrl && !application.linkedinUrl && !application.xUrl && !application.githubUrl && (
-        <p className="text-gray-400 italic">No external links provided</p>
-      )}
+      {!application.websiteUrl &&
+        !application.linkedinUrl &&
+        !application.xUrl &&
+        !application.githubUrl && (
+          <p className="text-gray-400 italic">No external links provided</p>
+        )}
     </div>
   );
 };

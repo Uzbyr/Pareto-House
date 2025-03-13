@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -36,7 +35,12 @@ import { useAuth } from "@/contexts/AuthContext";
 // Mock admin users data
 const mockUsers = [
   { id: 1, name: "John Admin", email: "john@pareto20.com", role: "admin" },
-  { id: 2, name: "Sarah Super", email: "sarah@pareto20.com", role: "super_admin" },
+  {
+    id: 2,
+    name: "Sarah Super",
+    email: "sarah@pareto20.com",
+    role: "super_admin",
+  },
   { id: 3, name: "Mike Analyst", email: "mike@pareto20.com", role: "analyst" },
   { id: 4, name: "Linda Admin", email: "linda@pareto20.com", role: "admin" },
 ];
@@ -59,10 +63,16 @@ const Users = () => {
     }
 
     // In a real app, this would send data to a server
-    const newUserId = users.length > 0 ? Math.max(...users.map(u => u.id)) + 1 : 1;
+    const newUserId =
+      users.length > 0 ? Math.max(...users.map((u) => u.id)) + 1 : 1;
     setUsers([
       ...users,
-      { id: newUserId, name: newUser.name, email: newUser.email, role: newUser.role },
+      {
+        id: newUserId,
+        name: newUser.name,
+        email: newUser.email,
+        role: newUser.role,
+      },
     ]);
 
     // Reset form
@@ -78,13 +88,13 @@ const Users = () => {
 
   const deleteUser = (id: number) => {
     // Prevent deleting yourself
-    const userToDelete = users.find(u => u.id === id);
+    const userToDelete = users.find((u) => u.id === id);
     if (userToDelete?.email === currentUser?.email) {
       toast.error("You cannot delete your own account");
       return;
     }
 
-    setUsers(users.filter(user => user.id !== id));
+    setUsers(users.filter((user) => user.id !== id));
     toast.success("User deleted successfully");
   };
 
@@ -118,7 +128,9 @@ const Users = () => {
                   placeholder="John Doe"
                   className="bg-zinc-900 border-zinc-700 text-white"
                   value={newUser.name}
-                  onChange={(e) => setNewUser({ ...newUser, name: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, name: e.target.value })
+                  }
                 />
               </div>
 
@@ -132,9 +144,13 @@ const Users = () => {
                   placeholder="name@pareto20.com"
                   className="bg-zinc-900 border-zinc-700 text-white"
                   value={newUser.email}
-                  onChange={(e) => setNewUser({ ...newUser, email: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, email: e.target.value })
+                  }
                 />
-                <p className="text-xs text-gray-400">Must be a @pareto20.com address</p>
+                <p className="text-xs text-gray-400">
+                  Must be a @pareto20.com address
+                </p>
               </div>
 
               <div className="space-y-2">
@@ -147,7 +163,9 @@ const Users = () => {
                   placeholder="••••••••"
                   className="bg-zinc-900 border-zinc-700 text-white"
                   value={newUser.password}
-                  onChange={(e) => setNewUser({ ...newUser, password: e.target.value })}
+                  onChange={(e) =>
+                    setNewUser({ ...newUser, password: e.target.value })
+                  }
                 />
               </div>
 
@@ -161,7 +179,10 @@ const Users = () => {
                     setNewUser({ ...newUser, role: value })
                   }
                 >
-                  <SelectTrigger id="role" className="bg-zinc-900 border-zinc-700 text-white">
+                  <SelectTrigger
+                    id="role"
+                    className="bg-zinc-900 border-zinc-700 text-white"
+                  >
                     <SelectValue placeholder="Select role" />
                   </SelectTrigger>
                   <SelectContent className="bg-zinc-800 border-zinc-700 text-white">
@@ -171,14 +192,18 @@ const Users = () => {
                   </SelectContent>
                 </Select>
                 <p className="text-xs text-gray-400">
-                  Super Admins have access to all features including user management.
+                  Super Admins have access to all features including user
+                  management.
                 </p>
               </div>
             </div>
 
             <DialogFooter>
               <DialogClose asChild>
-                <Button variant="outline" className="border-zinc-700 text-gray-300 hover:bg-zinc-700">
+                <Button
+                  variant="outline"
+                  className="border-zinc-700 text-gray-300 hover:bg-zinc-700"
+                >
                   Cancel
                 </Button>
               </DialogClose>
@@ -198,13 +223,20 @@ const Users = () => {
                 <TableHead className="text-gray-300">Name</TableHead>
                 <TableHead className="text-gray-300">Email</TableHead>
                 <TableHead className="text-gray-300">Role</TableHead>
-                <TableHead className="text-gray-300 text-right">Actions</TableHead>
+                <TableHead className="text-gray-300 text-right">
+                  Actions
+                </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {users.map((user) => (
-                <TableRow key={user.id} className="border-zinc-700 hover:bg-zinc-800/50">
-                  <TableCell className="font-medium text-white">{user.name}</TableCell>
+                <TableRow
+                  key={user.id}
+                  className="border-zinc-700 hover:bg-zinc-800/50"
+                >
+                  <TableCell className="font-medium text-white">
+                    {user.name}
+                  </TableCell>
                   <TableCell className="text-gray-300">{user.email}</TableCell>
                   <TableCell>
                     <span
@@ -212,16 +244,16 @@ const Users = () => {
                         user.role === "super_admin"
                           ? "bg-purple-400/10 text-purple-400"
                           : user.role === "admin"
-                          ? "bg-blue-400/10 text-blue-400"
-                          : "bg-green-400/10 text-green-400"
+                            ? "bg-blue-400/10 text-blue-400"
+                            : "bg-green-400/10 text-green-400"
                       }`}
                     >
                       <UserCog className="h-3 w-3 mr-1" />
                       {user.role === "super_admin"
                         ? "Super Admin"
                         : user.role === "admin"
-                        ? "Admin"
-                        : "Analyst"}
+                          ? "Admin"
+                          : "Analyst"}
                     </span>
                   </TableCell>
                   <TableCell className="text-right">

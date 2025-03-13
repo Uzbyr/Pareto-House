@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -27,7 +26,7 @@ export default {
           pink: {
             DEFAULT: "#FFC0CB",
             light: "#FFE4E9",
-            dark: "#FFB1BC"
+            dark: "#FFB1BC",
           },
           black: "#000000",
         },
@@ -38,7 +37,7 @@ export default {
       animation: {
         "fade-up": "fadeUp 0.5s ease-out forwards",
         "fade-in": "fadeIn 0.5s ease-out forwards",
-        "scroll": "scroll 20s linear infinite",
+        scroll: "scroll 20s linear infinite",
       },
       keyframes: {
         fadeUp: {

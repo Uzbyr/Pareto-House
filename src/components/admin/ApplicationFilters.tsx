@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -32,7 +31,9 @@ const ApplicationFilters = ({
         <Button
           variant={statusFilter === null ? "pink" : "outline"}
           className={`${
-            statusFilter === null ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            statusFilter === null
+              ? ""
+              : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
           }`}
           onClick={() => setStatusFilter(null)}
         >
@@ -41,7 +42,9 @@ const ApplicationFilters = ({
         <Button
           variant={statusFilter === "pending" ? "pink" : "outline"}
           className={`${
-            statusFilter === "pending" ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            statusFilter === "pending"
+              ? ""
+              : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
           }`}
           onClick={() => setStatusFilter("pending")}
         >
@@ -51,7 +54,9 @@ const ApplicationFilters = ({
         <Button
           variant={statusFilter === "approved" ? "pink" : "outline"}
           className={`${
-            statusFilter === "approved" ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            statusFilter === "approved"
+              ? ""
+              : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
           }`}
           onClick={() => setStatusFilter("approved")}
         >
@@ -61,7 +66,9 @@ const ApplicationFilters = ({
         <Button
           variant={statusFilter === "rejected" ? "pink" : "outline"}
           className={`${
-            statusFilter === "rejected" ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            statusFilter === "rejected"
+              ? ""
+              : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
           }`}
           onClick={() => setStatusFilter("rejected")}
         >
@@ -71,7 +78,9 @@ const ApplicationFilters = ({
         <Button
           variant={statusFilter === "flagged" ? "pink" : "outline"}
           className={`${
-            statusFilter === "flagged" ? "" : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
+            statusFilter === "flagged"
+              ? ""
+              : "border-zinc-700 text-gray-300 hover:bg-zinc-800"
           }`}
           onClick={() => setStatusFilter("flagged")}
         >

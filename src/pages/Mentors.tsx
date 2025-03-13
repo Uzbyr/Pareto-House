@@ -1,10 +1,16 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { Linkedin, Twitter, MessageSquare, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogClose } from "@/components/ui/dialog";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogHeader,
+  DialogTitle,
+  DialogClose,
+} from "@/components/ui/dialog";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navigation from "../components/Navigation";
 import { mentors, backlogMentors, Mentor } from "@/data/mentors";
@@ -19,9 +25,9 @@ const Mentors = () => {
       opacity: 1,
       transition: {
         duration: 0.5,
-        staggerChildren: 0.1
-      }
-    }
+        staggerChildren: 0.1,
+      },
+    },
   };
 
   const itemVariants = {
@@ -29,12 +35,12 @@ const Mentors = () => {
     animate: {
       opacity: 1,
       y: 0,
-      transition: { duration: 0.5 }
-    }
+      transition: { duration: 0.5 },
+    },
   };
 
   const getCountryDisplay = (country: string) => {
-    switch(country) {
+    switch (country) {
       case "USA":
         return { name: "United States", flag: "🇺🇸" };
       case "France":
@@ -67,20 +73,24 @@ const Mentors = () => {
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Our Mentors</h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-16">
             <p className="text-xl text-black/80 dark:text-white/80 max-w-2xl">
-              Meet our exceptional mentors who are leaders in their fields, ready to share their knowledge and experience with the next generation of entrepreneurs.
+              Meet our exceptional mentors who are leaders in their fields,
+              ready to share their knowledge and experience with the next
+              generation of entrepreneurs.
             </p>
             <div className="flex-shrink-0">
-            {false &&<Link to="/mentor-finder">
-                <Button variant="pink" className="flex items-center gap-2">
-                  <MessageSquare className="w-5 h-5" />
-                  Find Your Mentor
-                </Button>
-              </Link>}
+              {false && (
+                <Link to="/mentor-finder">
+                  <Button variant="pink" className="flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Find Your Mentor
+                  </Button>
+                </Link>
+              )}
             </div>
           </div>
         </motion.div>
 
-        <motion.div 
+        <motion.div
           variants={containerVariants}
           initial="initial"
           animate="animate"
@@ -88,7 +98,7 @@ const Mentors = () => {
         >
           {mentors.map((mentor, index) => {
             const countryInfo = getCountryDisplay(mentor.country);
-            
+
             return (
               <motion.div
                 key={index}
@@ -98,8 +108,8 @@ const Mentors = () => {
                 <div className="flex items-start gap-4">
                   {mentor.imageUrl ? (
                     <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
-                      <img 
-                        src={mentor.imageUrl} 
+                      <img
+                        src={mentor.imageUrl}
                         alt={mentor.name}
                         className="w-full h-full object-cover"
                       />
@@ -111,14 +121,14 @@ const Mentors = () => {
                   )}
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <button 
+                      <button
                         onClick={() => handleMentorClick(mentor)}
                         className="text-xl font-semibold hover:text-pareto-pink transition-colors text-left"
                       >
                         {mentor.name}
                       </button>
-                      <span 
-                        className="text-lg" 
+                      <span
+                        className="text-lg"
                         aria-label={countryInfo.name}
                         title={countryInfo.name}
                         role="img"
@@ -128,7 +138,10 @@ const Mentors = () => {
                     </div>
                     {mentor.description && (
                       <p className="text-black/60 dark:text-white/60 mb-4 text-sm">
-                        {mentor.description} <span className="text-black/40 dark:text-white/40">({countryInfo.name})</span>
+                        {mentor.description}{" "}
+                        <span className="text-black/40 dark:text-white/40">
+                          ({countryInfo.name})
+                        </span>
                       </p>
                     )}
                     <div className="flex gap-3">
@@ -171,18 +184,18 @@ const Mentors = () => {
               {selectedMentor?.description}
             </DialogDescription>
           </DialogHeader>
-          
+
           <div className="flex flex-col md:flex-row gap-6 mt-4 flex-1 overflow-hidden">
             {selectedMentor?.imageUrl && (
               <div className="md:w-1/3 flex-shrink-0">
                 <div className="aspect-square rounded-lg overflow-hidden">
-                  <img 
-                    src={selectedMentor.imageUrl} 
+                  <img
+                    src={selectedMentor.imageUrl}
                     alt={selectedMentor.name}
                     className="w-full h-full object-cover"
                   />
                 </div>
-                
+
                 <div className="mt-4 flex gap-3">
                   <a
                     href={selectedMentor.linkedIn}
@@ -205,18 +218,22 @@ const Mentors = () => {
                 </div>
               </div>
             )}
-            
+
             <ScrollArea className="md:w-2/3 flex-1 pr-4">
               <div className="text-lg leading-relaxed">
                 {selectedMentor?.bio}
               </div>
-              
+
               {selectedMentor && (
                 <div className="mt-6 pt-4 border-t border-black/10 dark:border-white/10">
                   <h3 className="font-medium mb-1">Location</h3>
                   <p className="flex items-center gap-2">
-                    <span>{getCountryDisplay(selectedMentor.country).flag}</span>
-                    <span>{getCountryDisplay(selectedMentor.country).name}</span>
+                    <span>
+                      {getCountryDisplay(selectedMentor.country).flag}
+                    </span>
+                    <span>
+                      {getCountryDisplay(selectedMentor.country).name}
+                    </span>
                   </p>
                 </div>
               )}

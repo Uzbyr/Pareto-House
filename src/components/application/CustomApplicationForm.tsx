@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -16,11 +15,17 @@ interface CustomApplicationFormProps {
     graduationYear: string;
     videoUrl: string;
   };
-  handleInputChange: (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => void;
+  handleInputChange: (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => void;
   handleSubmit: (e: React.FormEvent) => void;
 }
 
-const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: CustomApplicationFormProps) => {
+const CustomApplicationForm = ({
+  formState,
+  handleInputChange,
+  handleSubmit,
+}: CustomApplicationFormProps) => {
   return (
     <div className="p-6 bg-zinc-800 rounded-lg shadow-lg">
       <div className="text-lg font-medium mb-6">Custom Form with Fixes</div>
@@ -34,9 +39,9 @@ const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: C
             <Label htmlFor="name" className="block mb-2 text-white">
               Full Name
             </Label>
-            <Input 
-              type="text" 
-              id="name" 
+            <Input
+              type="text"
+              id="name"
               name="name"
               value={formState.name}
               onChange={handleInputChange}
@@ -48,9 +53,9 @@ const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: C
             <Label htmlFor="email" className="block mb-2 text-white">
               Email Address
             </Label>
-            <Input 
-              type="email" 
-              id="email" 
+            <Input
+              type="email"
+              id="email"
               name="email"
               value={formState.email}
               onChange={handleInputChange}
@@ -62,19 +67,19 @@ const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: C
             <Label htmlFor="university" className="block mb-2 text-white">
               University
             </Label>
-            <Input 
-              type="text" 
-              id="university" 
+            <Input
+              type="text"
+              id="university"
               name="university"
               value={formState.university}
               onChange={handleInputChange}
-              className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink" 
+              className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink"
               placeholder="Your university name"
             />
           </div>
-          <GraduationYearInput 
-            value={formState.graduationYear} 
-            onChange={handleInputChange as any} 
+          <GraduationYearInput
+            value={formState.graduationYear}
+            onChange={handleInputChange as any}
           />
         </div>
 
@@ -110,10 +115,10 @@ const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: C
             <Label htmlFor="videoUrl" className="block mb-2 text-white">
               YouTube Video URL (60-second introduction)
             </Label>
-            <Input 
-              type="text" 
-              id="videoUrl" 
-              name="videoUrl" 
+            <Input
+              type="text"
+              id="videoUrl"
+              name="videoUrl"
               value={formState.videoUrl}
               onChange={handleInputChange}
               className="w-full p-3 text-white bg-zinc-800 border border-zinc-700 rounded-md focus:outline-none focus:ring-1 focus:ring-pareto-pink"
@@ -121,22 +126,19 @@ const CustomApplicationForm = ({ formState, handleInputChange, handleSubmit }: C
               onClick={(e) => e.stopPropagation()} // Prevent form submission on click
               onKeyDown={(e) => {
                 // Prevent form submission when pressing Enter in the URL field
-                if (e.key === 'Enter') {
+                if (e.key === "Enter") {
                   e.preventDefault();
                 }
               }}
             />
             <p className="mt-2 text-xs text-zinc-400">
-              Upload a 60-second video of yourself to YouTube (unlisted is fine) and paste the URL here.
+              Upload a 60-second video of yourself to YouTube (unlisted is fine)
+              and paste the URL here.
             </p>
           </div>
         </div>
 
-        <Button 
-          type="submit" 
-          variant="pink"
-          className="w-full py-6 text-lg"
-        >
+        <Button type="submit" variant="pink" className="w-full py-6 text-lg">
           Submit Application
         </Button>
       </form>

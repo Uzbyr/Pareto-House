@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
@@ -14,13 +13,13 @@ const AdminLogin = () => {
   const navigate = useNavigate();
 
   const isPareto20Email = (email: string) => {
-    return email.endsWith('@pareto20.com');
+    return email.endsWith("@pareto20.com");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    
+
     if (!email.trim() || !password.trim()) {
       toast.error("Please enter both email and password");
       setLoading(false);
@@ -36,7 +35,7 @@ const AdminLogin = () => {
     try {
       const { error } = await supabase.auth.signInWithPassword({
         email,
-        password
+        password,
       });
 
       if (error) {
@@ -58,20 +57,25 @@ const AdminLogin = () => {
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black p-4">
       <div className="w-full max-w-md space-y-8 bg-zinc-800/50 backdrop-blur-sm p-8 rounded-xl border border-zinc-700/50 shadow-xl">
         <div className="text-center">
-          <Button 
-            variant="ghost" 
+          <Button
+            variant="ghost"
             onClick={() => navigate("/")}
             className="mb-4 text-gray-400 hover:text-white"
           >
             ← Back to Homepage
           </Button>
           <h2 className="text-3xl font-bold text-pareto-pink">Admin Portal</h2>
-          <p className="mt-2 text-gray-400">Sign in to access the admin dashboard</p>
+          <p className="mt-2 text-gray-400">
+            Sign in to access the admin dashboard
+          </p>
         </div>
         <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
           <div className="space-y-4">
             <div>
-              <Label htmlFor="email" className="text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="email"
+                className="text-sm font-medium text-gray-300"
+              >
                 Email Address
               </Label>
               <Input
@@ -85,10 +89,15 @@ const AdminLogin = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
               />
-              <p className="mt-1 text-xs text-gray-400">Only @pareto20.com email addresses are allowed</p>
+              <p className="mt-1 text-xs text-gray-400">
+                Only @pareto20.com email addresses are allowed
+              </p>
             </div>
             <div>
-              <Label htmlFor="password" className="text-sm font-medium text-gray-300">
+              <Label
+                htmlFor="password"
+                className="text-sm font-medium text-gray-300"
+              >
                 Password
               </Label>
               <Input

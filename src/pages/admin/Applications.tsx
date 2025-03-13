@@ -1,4 +1,3 @@
-
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { useHotkeys } from "react-hotkeys-hook";
@@ -32,56 +31,88 @@ const Applications = () => {
     toggleFlagApplication,
     handleCheckApplication,
     handleBatchComparison,
-    navigateToApplication
+    navigateToApplication,
   } = useApplicationManagement();
-  
+
   const tableRef = useRef<HTMLDivElement>(null);
 
-  useHotkeys('right', () => {
-    if (isDetailsOpen) navigateToApplication('next');
-  }, [isDetailsOpen, navigateToApplication]);
-  
-  useHotkeys('left', () => {
-    if (isDetailsOpen) navigateToApplication('prev');
-  }, [isDetailsOpen, navigateToApplication]);
-  
-  useHotkeys('a', () => {
-    if (isDetailsOpen && selectedApplication) {
-      updateApplicationStatus(selectedApplication.id, 'approved');
-    }
-  }, [isDetailsOpen, selectedApplication]);
-  
-  useHotkeys('r', () => {
-    if (isDetailsOpen && selectedApplication) {
-      updateApplicationStatus(selectedApplication.id, 'rejected');
-    }
-  }, [isDetailsOpen, selectedApplication]);
-  
-  useHotkeys('p', () => {
-    if (isDetailsOpen && selectedApplication) {
-      updateApplicationStatus(selectedApplication.id, 'pending');
-    }
-  }, [isDetailsOpen, selectedApplication]);
-  
-  useHotkeys('f', () => {
-    if (isDetailsOpen && selectedApplication) {
-      toggleFlagApplication(selectedApplication.id);
-    }
-  }, [isDetailsOpen, selectedApplication]);
-  
-  useHotkeys('c', () => {}, [isDetailsOpen, selectedApplication]);
-  
-  useHotkeys('escape', () => {
-    setIsDetailsOpen(false);
-  }, []);
-  
-  useHotkeys('?', () => {
-    setIsHelpOpen(prev => !prev);
-  }, []);
+  useHotkeys(
+    "right",
+    () => {
+      if (isDetailsOpen) navigateToApplication("next");
+    },
+    [isDetailsOpen, navigateToApplication],
+  );
+
+  useHotkeys(
+    "left",
+    () => {
+      if (isDetailsOpen) navigateToApplication("prev");
+    },
+    [isDetailsOpen, navigateToApplication],
+  );
+
+  useHotkeys(
+    "a",
+    () => {
+      if (isDetailsOpen && selectedApplication) {
+        updateApplicationStatus(selectedApplication.id, "approved");
+      }
+    },
+    [isDetailsOpen, selectedApplication],
+  );
+
+  useHotkeys(
+    "r",
+    () => {
+      if (isDetailsOpen && selectedApplication) {
+        updateApplicationStatus(selectedApplication.id, "rejected");
+      }
+    },
+    [isDetailsOpen, selectedApplication],
+  );
+
+  useHotkeys(
+    "p",
+    () => {
+      if (isDetailsOpen && selectedApplication) {
+        updateApplicationStatus(selectedApplication.id, "pending");
+      }
+    },
+    [isDetailsOpen, selectedApplication],
+  );
+
+  useHotkeys(
+    "f",
+    () => {
+      if (isDetailsOpen && selectedApplication) {
+        toggleFlagApplication(selectedApplication.id);
+      }
+    },
+    [isDetailsOpen, selectedApplication],
+  );
+
+  useHotkeys("c", () => {}, [isDetailsOpen, selectedApplication]);
+
+  useHotkeys(
+    "escape",
+    () => {
+      setIsDetailsOpen(false);
+    },
+    [],
+  );
+
+  useHotkeys(
+    "?",
+    () => {
+      setIsHelpOpen((prev) => !prev);
+    },
+    [],
+  );
 
   const updateFunctions = {
     updateApplicationStatus,
-    toggleFlagApplication
+    toggleFlagApplication,
   };
 
   return (
@@ -106,7 +137,10 @@ const Applications = () => {
           setStatusFilter={setStatusFilter}
         />
 
-        <div ref={tableRef} className="rounded-md border border-zinc-700 overflow-hidden">
+        <div
+          ref={tableRef}
+          className="rounded-md border border-zinc-700 overflow-hidden"
+        >
           <ApplicationsTable
             applications={filteredApplications}
             handleCheckApplication={handleCheckApplication}
@@ -115,7 +149,7 @@ const Applications = () => {
         </div>
       </Card>
 
-      <ApplicationDetailsDialog 
+      <ApplicationDetailsDialog
         application={selectedApplication}
         open={isDetailsOpen}
         onOpenChange={setIsDetailsOpen}
@@ -130,10 +164,7 @@ const Applications = () => {
         onOpenChange={setIsBatchOpen}
       />
 
-      <KeyboardShortcutsHelp 
-        open={isHelpOpen}
-        onOpenChange={setIsHelpOpen}
-      />
+      <KeyboardShortcutsHelp open={isHelpOpen} onOpenChange={setIsHelpOpen} />
     </div>
   );
 };

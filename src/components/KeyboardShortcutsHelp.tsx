@@ -1,4 +1,3 @@
-
 import {
   Dialog,
   DialogContent,
@@ -13,7 +12,10 @@ interface KeyboardShortcutsHelpProps {
   onOpenChange: (open: boolean) => void;
 }
 
-const KeyboardShortcutsHelp = ({ open, onOpenChange }: KeyboardShortcutsHelpProps) => {
+const KeyboardShortcutsHelp = ({
+  open,
+  onOpenChange,
+}: KeyboardShortcutsHelpProps) => {
   const shortcuts = [
     { key: "?", action: "Show/hide keyboard shortcuts" },
     { key: "←", action: "Previous application (when viewing details)" },
@@ -51,8 +53,9 @@ const KeyboardShortcutsHelp = ({ open, onOpenChange }: KeyboardShortcutsHelpProp
             ))}
           </div>
           <p className="mt-6 text-sm text-gray-400">
-            Note: These keyboard shortcuts are designed to help you review applications more efficiently.
-            They're especially useful when reviewing applications in sequence.
+            Note: These keyboard shortcuts are designed to help you review
+            applications more efficiently. They're especially useful when
+            reviewing applications in sequence.
           </p>
         </div>
       </DialogContent>

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { RefreshCw, Download, Users } from "lucide-react";
@@ -27,8 +26,7 @@ const ApplicationActionButtons = ({
         className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
         onClick={showKeyboardShortcuts}
       >
-        ?
-        <span className="sr-only">Keyboard Shortcuts</span>
+        ?<span className="sr-only">Keyboard Shortcuts</span>
       </Button>
       <Button
         variant="outline"
@@ -36,19 +34,21 @@ const ApplicationActionButtons = ({
         onClick={refreshApplications}
         disabled={isRefreshing}
       >
-        <RefreshCw className={`h-4 w-4 ${isRefreshing ? 'animate-spin' : ''}`} />
+        <RefreshCw
+          className={`h-4 w-4 ${isRefreshing ? "animate-spin" : ""}`}
+        />
         Refresh
       </Button>
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
         onClick={exportToCSV}
       >
         <Download className="h-4 w-4" />
         Export CSV
       </Button>
-      <Button 
-        variant="outline" 
+      <Button
+        variant="outline"
         className="flex items-center gap-2 border-zinc-700 text-gray-300 hover:bg-zinc-800"
         onClick={handleBatchComparison}
         disabled={applicationCount < 2}

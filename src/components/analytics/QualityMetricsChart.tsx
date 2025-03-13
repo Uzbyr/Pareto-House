@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import {
   BarChart,
@@ -36,7 +35,9 @@ const QualityMetricsChart = () => {
   return (
     <div className="space-y-6">
       <Card className="bg-zinc-800 border-zinc-700 p-6">
-        <h2 className="text-xl font-bold text-white mb-6">Application Quality by University</h2>
+        <h2 className="text-xl font-bold text-white mb-6">
+          Application Quality by University
+        </h2>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <BarChart
@@ -50,26 +51,26 @@ const QualityMetricsChart = () => {
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="name" stroke="#9CA3AF" />
-              <YAxis 
-                yAxisId="left" 
-                stroke="#9CA3AF" 
+              <YAxis
+                yAxisId="left"
+                stroke="#9CA3AF"
                 domain={[60, 100]}
-                label={{ 
-                  value: 'Quality Score', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  fill: '#9CA3AF'
+                label={{
+                  value: "Quality Score",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#9CA3AF",
                 }}
               />
-              <YAxis 
-                yAxisId="right" 
-                orientation="right" 
+              <YAxis
+                yAxisId="right"
+                orientation="right"
                 stroke="#9CA3AF"
-                label={{ 
-                  value: 'Application Count', 
-                  angle: 90, 
-                  position: 'insideRight',
-                  fill: '#9CA3AF'
+                label={{
+                  value: "Application Count",
+                  angle: 90,
+                  position: "insideRight",
+                  fill: "#9CA3AF",
                 }}
               />
               <Tooltip
@@ -80,17 +81,17 @@ const QualityMetricsChart = () => {
                 }}
               />
               <Legend />
-              <Bar 
+              <Bar
                 yAxisId="left"
-                dataKey="quality" 
-                name="Quality Score" 
-                fill="#EC4899" 
+                dataKey="quality"
+                name="Quality Score"
+                fill="#EC4899"
               />
-              <Bar 
+              <Bar
                 yAxisId="right"
-                dataKey="count" 
-                name="Application Count" 
-                fill="#3B82F6" 
+                dataKey="count"
+                name="Application Count"
+                fill="#3B82F6"
               />
             </BarChart>
           </ResponsiveContainer>
@@ -98,7 +99,9 @@ const QualityMetricsChart = () => {
       </Card>
 
       <Card className="bg-zinc-800 border-zinc-700 p-6">
-        <h2 className="text-xl font-bold text-white mb-6">Application Quality by Source</h2>
+        <h2 className="text-xl font-bold text-white mb-6">
+          Application Quality by Source
+        </h2>
         <div className="h-80">
           <ResponsiveContainer width="100%" height="100%">
             <LineChart
@@ -112,26 +115,26 @@ const QualityMetricsChart = () => {
             >
               <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
               <XAxis dataKey="name" stroke="#9CA3AF" />
-              <YAxis 
-                yAxisId="left" 
-                stroke="#9CA3AF" 
+              <YAxis
+                yAxisId="left"
+                stroke="#9CA3AF"
                 domain={[60, 100]}
-                label={{ 
-                  value: 'Quality Score', 
-                  angle: -90, 
-                  position: 'insideLeft',
-                  fill: '#9CA3AF'
+                label={{
+                  value: "Quality Score",
+                  angle: -90,
+                  position: "insideLeft",
+                  fill: "#9CA3AF",
                 }}
               />
-              <YAxis 
-                yAxisId="right" 
-                orientation="right" 
+              <YAxis
+                yAxisId="right"
+                orientation="right"
                 stroke="#9CA3AF"
-                label={{ 
-                  value: 'Application Count', 
-                  angle: 90, 
-                  position: 'insideRight',
-                  fill: '#9CA3AF'
+                label={{
+                  value: "Application Count",
+                  angle: 90,
+                  position: "insideRight",
+                  fill: "#9CA3AF",
                 }}
               />
               <Tooltip
@@ -142,21 +145,21 @@ const QualityMetricsChart = () => {
                 }}
               />
               <Legend />
-              <Line 
+              <Line
                 yAxisId="left"
-                type="monotone" 
-                dataKey="quality" 
-                name="Quality Score" 
-                stroke="#EC4899" 
-                activeDot={{ r: 8 }} 
+                type="monotone"
+                dataKey="quality"
+                name="Quality Score"
+                stroke="#EC4899"
+                activeDot={{ r: 8 }}
               />
-              <Line 
+              <Line
                 yAxisId="right"
-                type="monotone" 
-                dataKey="count" 
-                name="Application Count" 
-                stroke="#3B82F6" 
-                activeDot={{ r: 8 }} 
+                type="monotone"
+                dataKey="count"
+                name="Application Count"
+                stroke="#3B82F6"
+                activeDot={{ r: 8 }}
               />
             </LineChart>
           </ResponsiveContainer>
@@ -164,9 +167,10 @@ const QualityMetricsChart = () => {
       </Card>
 
       <p className="text-sm text-gray-400 mt-4 px-6">
-        Quality score is a composite metric based on factors like completeness of application, 
-        academic achievements, project portfolio quality, and interview performance (if applicable).
-        Scores range from 0-100, with higher scores indicating stronger applications.
+        Quality score is a composite metric based on factors like completeness
+        of application, academic achievements, project portfolio quality, and
+        interview performance (if applicable). Scores range from 0-100, with
+        higher scores indicating stronger applications.
       </p>
     </div>
   );

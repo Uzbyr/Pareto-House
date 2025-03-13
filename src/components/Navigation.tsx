@@ -1,10 +1,9 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 
 const Navigation = () => {
   const location = useLocation();
-  
+
   const isActive = (path: string) => {
     return location.pathname === path;
   };
@@ -24,9 +23,9 @@ const Navigation = () => {
             <Link
               to="/mentors"
               className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                isActive("/mentors") 
-                ? "text-pareto-pink font-medium border-b-2 border-pareto-pink" 
-                : "text-black/80 dark:text-white/80"
+                isActive("/mentors")
+                  ? "text-pareto-pink font-medium border-b-2 border-pareto-pink"
+                  : "text-black/80 dark:text-white/80"
               }`}
             >
               Mentors
@@ -34,9 +33,9 @@ const Navigation = () => {
             <Link
               to="/perks"
               className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                isActive("/perks") 
-                ? "text-pareto-pink font-medium border-b-2 border-pareto-pink" 
-                : "text-black/80 dark:text-white/80"
+                isActive("/perks")
+                  ? "text-pareto-pink font-medium border-b-2 border-pareto-pink"
+                  : "text-black/80 dark:text-white/80"
               }`}
             >
               Perks
@@ -44,9 +43,9 @@ const Navigation = () => {
             <Link
               to="/faq"
               className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                isActive("/faq") 
-                ? "text-pareto-pink font-medium border-b-2 border-pareto-pink" 
-                : "text-black/80 dark:text-white/80"
+                isActive("/faq")
+                  ? "text-pareto-pink font-medium border-b-2 border-pareto-pink"
+                  : "text-black/80 dark:text-white/80"
               }`}
             >
               FAQ

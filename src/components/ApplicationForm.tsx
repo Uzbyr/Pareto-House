@@ -12,7 +12,10 @@ interface ApplicationFormProps {
   onFormChange?: (isDirty: boolean) => void;
 }
 
-const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps) => {
+const ApplicationForm = ({
+  onSubmitSuccess,
+  onFormChange,
+}: ApplicationFormProps) => {
   const {
     currentStep,
     loading,
@@ -46,34 +49,40 @@ const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps
 
   const renderStepContent = () => {
     switch (currentStep) {
-      case 1: 
-        return <PersonalInformationStep 
-                 formData={formData} 
-                 handleInputChange={handleInputChange} 
-                 handleSelectChange={handleSelectChange} 
-               />;
-      case 2: 
-        return <EducationalBackgroundStep 
-                 formData={formData} 
-                 handleInputChange={handleInputChange} 
-                 handleSelectChange={handleSelectChange} 
-                 handleFileChange={handleFileChange}
-                 availableUniversities={availableUniversities}
-                 requiresPreparatoryQuestion={checkPreparatoryQuestion}
-               />;
-      case 3: 
-        return <AdditionalInformationStep 
-                 formData={formData} 
-                 handleInputChange={handleInputChange} 
-                 handleSelectChange={handleSelectChange} 
-                 handleFileChange={handleFileChange}
-                 handleCompetitiveProfileAdd={handleCompetitiveProfileAdd}
-                 handleCompetitiveProfileChange={handleCompetitiveProfileChange}
-                 handleCompetitiveProfileRemove={handleCompetitiveProfileRemove}
-               />;
-      case 4: 
+      case 1:
+        return (
+          <PersonalInformationStep
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSelectChange={handleSelectChange}
+          />
+        );
+      case 2:
+        return (
+          <EducationalBackgroundStep
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSelectChange={handleSelectChange}
+            handleFileChange={handleFileChange}
+            availableUniversities={availableUniversities}
+            requiresPreparatoryQuestion={checkPreparatoryQuestion}
+          />
+        );
+      case 3:
+        return (
+          <AdditionalInformationStep
+            formData={formData}
+            handleInputChange={handleInputChange}
+            handleSelectChange={handleSelectChange}
+            handleFileChange={handleFileChange}
+            handleCompetitiveProfileAdd={handleCompetitiveProfileAdd}
+            handleCompetitiveProfileChange={handleCompetitiveProfileChange}
+            handleCompetitiveProfileRemove={handleCompetitiveProfileRemove}
+          />
+        );
+      case 4:
         return <SuccessStep onReturnHome={goToHomepage} />;
-      default: 
+      default:
         return null;
     }
   };
@@ -98,7 +107,7 @@ const ApplicationForm = ({ onSubmitSuccess, onFormChange }: ApplicationFormProps
                 Previous
               </Button>
             )}
-            
+
             {currentStep < 3 ? (
               <Button
                 key="next-step-button"

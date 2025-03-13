@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Building } from "lucide-react";
 import { Application } from "@/types/application";
@@ -22,7 +21,9 @@ const ProjectTab = ({ application }: ProjectTabProps) => {
       {application.companyContext && (
         <div>
           <span className="text-sm text-gray-400">Company Context:</span>
-          <p className="text-white whitespace-pre-wrap">{application.companyContext}</p>
+          <p className="text-white whitespace-pre-wrap">
+            {application.companyContext}
+          </p>
         </div>
       )}
       {application.categoryOfInterest && (
@@ -37,14 +38,17 @@ const ProjectTab = ({ application }: ProjectTabProps) => {
       </div>
       <div>
         <span className="text-sm text-gray-400">Status:</span>
-        <p className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-          application.status === "approved" 
-            ? "bg-green-400/10 text-green-400" 
-            : application.status === "rejected"
-            ? "bg-red-400/10 text-red-400" 
-            : "bg-yellow-400/10 text-yellow-400"
-        }`}>
-          {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+        <p
+          className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+            application.status === "approved"
+              ? "bg-green-400/10 text-green-400"
+              : application.status === "rejected"
+                ? "bg-red-400/10 text-red-400"
+                : "bg-yellow-400/10 text-yellow-400"
+          }`}
+        >
+          {application.status.charAt(0).toUpperCase() +
+            application.status.slice(1)}
         </p>
       </div>
     </div>

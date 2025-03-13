@@ -1,4 +1,3 @@
-
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -17,7 +16,11 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   }
 
   // Check role requirements if specified
-  if (requiredRole && user?.role !== requiredRole && user?.role !== "super_admin") {
+  if (
+    requiredRole &&
+    user?.role !== requiredRole &&
+    user?.role !== "super_admin"
+  ) {
     // Super admins can access any route, otherwise check specific role
     return <Navigate to="/admin/dashboard" replace />;
   }

@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import {
   LineChart,
@@ -35,11 +34,15 @@ const reviewerTimeData = [
 const TimeToReviewChart = () => {
   return (
     <Card className="bg-zinc-800 border-zinc-700 p-6 mt-6">
-      <h2 className="text-xl font-bold text-white mb-6">Time to Review Performance</h2>
-      
+      <h2 className="text-xl font-bold text-white mb-6">
+        Time to Review Performance
+      </h2>
+
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <div>
-          <h3 className="text-lg font-medium text-white mb-4">Review Time Trend</h3>
+          <h3 className="text-lg font-medium text-white mb-4">
+            Review Time Trend
+          </h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart
@@ -53,25 +56,25 @@ const TimeToReviewChart = () => {
               >
                 <CartesianGrid strokeDasharray="3 3" stroke="#374151" />
                 <XAxis dataKey="date" stroke="#9CA3AF" />
-                <YAxis 
+                <YAxis
                   yAxisId="left"
-                  stroke="#9CA3AF" 
-                  label={{ 
-                    value: 'Avg. Days', 
-                    angle: -90, 
-                    position: 'insideLeft',
-                    fill: '#9CA3AF'
-                  }} 
-                />
-                <YAxis 
-                  yAxisId="right" 
-                  orientation="right" 
                   stroke="#9CA3AF"
-                  label={{ 
-                    value: 'Applications', 
-                    angle: 90, 
-                    position: 'insideRight',
-                    fill: '#9CA3AF'
+                  label={{
+                    value: "Avg. Days",
+                    angle: -90,
+                    position: "insideLeft",
+                    fill: "#9CA3AF",
+                  }}
+                />
+                <YAxis
+                  yAxisId="right"
+                  orientation="right"
+                  stroke="#9CA3AF"
+                  label={{
+                    value: "Applications",
+                    angle: 90,
+                    position: "insideRight",
+                    fill: "#9CA3AF",
                   }}
                 />
                 <Tooltip
@@ -104,7 +107,9 @@ const TimeToReviewChart = () => {
         </div>
 
         <div>
-          <h3 className="text-lg font-medium text-white mb-4">Reviewer Performance</h3>
+          <h3 className="text-lg font-medium text-white mb-4">
+            Reviewer Performance
+          </h3>
           <div className="h-80">
             <ResponsiveContainer width="100%" height="100%">
               <BarChart
@@ -122,20 +127,28 @@ const TimeToReviewChart = () => {
                   type="number"
                   stroke="#9CA3AF"
                   label={{
-                    value: 'Avg. Days to Review',
-                    position: 'insideBottom',
+                    value: "Avg. Days to Review",
+                    position: "insideBottom",
                     offset: -5,
-                    fill: '#9CA3AF'
+                    fill: "#9CA3AF",
                   }}
                 />
-                <YAxis dataKey="name" type="category" stroke="#9CA3AF" width={80} />
+                <YAxis
+                  dataKey="name"
+                  type="category"
+                  stroke="#9CA3AF"
+                  width={80}
+                />
                 <Tooltip
                   contentStyle={{
                     backgroundColor: "#1F2937",
                     borderColor: "#374151",
                     color: "#F9FAFB",
                   }}
-                  formatter={(value) => [`${value} days`, "Avg. Time to Review"]}
+                  formatter={(value) => [
+                    `${value} days`,
+                    "Avg. Time to Review",
+                  ]}
                 />
                 <Bar dataKey="avgTime" fill="#8B5CF6" />
               </BarChart>
@@ -145,8 +158,9 @@ const TimeToReviewChart = () => {
       </div>
 
       <p className="text-sm text-gray-400 mt-4">
-        Time to review is measured from when an application is submitted to when a final decision is made.
-        Target review time is 2 days or less to ensure applicants receive timely responses.
+        Time to review is measured from when an application is submitted to when
+        a final decision is made. Target review time is 2 days or less to ensure
+        applicants receive timely responses.
       </p>
     </Card>
   );

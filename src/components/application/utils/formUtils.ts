@@ -4,41 +4,29 @@ export const universities = {
     "MIT",
     "Harvard",
     "Stanford",
-    "Berkeley", 
+    "Berkeley",
     "Columbia",
     "Princeton",
     "UPenn",
-    "Caltech"
+    "Caltech",
   ],
-  "United Kingdom": [
-    "Cambridge University",
-    "Oxford University"
-  ],
-  "France": [
-    "HEC",
-    "ENS",
-    "ESSEC",
-    "Polytechnique",
-    "Centrale Supélec"
-  ],
-  "Germany": [
-    "TU Munich",
-    "KIT"
-  ],
-  "Ireland": [
-    "Trinity Dublin"
-  ],
-  "Israel": [
-    "Technion"
-  ],
-  "Canada": [
-    "McGill University"
-  ]
+  "United Kingdom": ["Cambridge University", "Oxford University"],
+  France: ["HEC", "ENS", "ESSEC", "Polytechnique", "Centrale Supélec"],
+  Germany: ["TU Munich", "KIT"],
+  Ireland: ["Trinity Dublin"],
+  Israel: ["Technion"],
+  Canada: ["McGill University"],
 };
 
 // Check if the selected university requires preparatory class question
 export const requiresPreparatoryQuestion = (university: string): boolean => {
-  const frenchUniversities = ["HEC", "ENS", "ESSEC", "Polytechnique", "Centrale Supélec"];
+  const frenchUniversities = [
+    "HEC",
+    "ENS",
+    "ESSEC",
+    "Polytechnique",
+    "Centrale Supélec",
+  ];
   return frenchUniversities.includes(university);
 };
 
@@ -52,7 +40,7 @@ export const validateUrl = (url: string): boolean => {
   // Basic URL validation that requires https:// protocol
   try {
     const urlObj = new URL(url);
-    return urlObj.protocol === 'https:';
+    return urlObj.protocol === "https:";
   } catch {
     return false;
   }
@@ -61,11 +49,11 @@ export const validateUrl = (url: string): boolean => {
 // LinkedIn URL validation
 export const validateLinkedInUrl = (url: string): boolean => {
   if (!validateUrl(url)) return false;
-  
+
   // Check if it's a LinkedIn URL (contains linkedin.com)
   try {
     const urlObj = new URL(url);
-    return urlObj.hostname.includes('linkedin.com');
+    return urlObj.hostname.includes("linkedin.com");
   } catch {
     return false;
   }
@@ -74,11 +62,11 @@ export const validateLinkedInUrl = (url: string): boolean => {
 // GitHub URL validation
 export const validateGitHubUrl = (url: string): boolean => {
   if (!validateUrl(url)) return false;
-  
+
   // Check if it's a GitHub URL (contains github.com)
   try {
     const urlObj = new URL(url);
-    return urlObj.hostname.includes('github.com');
+    return urlObj.hostname.includes("github.com");
   } catch {
     return false;
   }

@@ -1,4 +1,3 @@
-
 import { useEffect, useState } from "react";
 import ApplicationForm from "../components/ApplicationForm";
 import BackToHomeButton from "../components/application/BackToHomeButton";
@@ -6,15 +5,18 @@ import PageHeader from "../components/application/PageHeader";
 
 const Apply = () => {
   const [isFormDirty, setIsFormDirty] = useState(false);
-  
+
   // Track page visit for analytics
   useEffect(() => {
     // In a production app, this would be an analytics service call
     console.log("Application page visited");
-    
+
     // For our demo, we'll just increment a page view counter in localStorage
-    const applyPageViews = localStorage.getItem('applyPageViews') || '0';
-    localStorage.setItem('applyPageViews', (parseInt(applyPageViews) + 1).toString());
+    const applyPageViews = localStorage.getItem("applyPageViews") || "0";
+    localStorage.setItem(
+      "applyPageViews",
+      (parseInt(applyPageViews) + 1).toString(),
+    );
   }, []);
 
   const handleFormChange = (isDirty: boolean) => {
@@ -29,7 +31,7 @@ const Apply = () => {
             <BackToHomeButton isFormDirty={isFormDirty} />
             <PageHeader />
           </div>
-          
+
           <ApplicationForm onFormChange={handleFormChange} />
         </div>
       </div>

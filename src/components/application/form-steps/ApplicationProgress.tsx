@@ -1,4 +1,3 @@
-
 import { Check } from "lucide-react";
 
 interface ApplicationProgressProps {
@@ -25,7 +24,11 @@ const ApplicationProgress = ({ currentStep }: ApplicationProgressProps) => {
               )}
             </div>
             <span className="text-xs mt-1 text-zinc-400">
-              {step === 1 ? "Personal" : step === 2 ? "Education" : "Additional"}
+              {step === 1
+                ? "Personal"
+                : step === 2
+                  ? "Education"
+                  : "Additional"}
             </span>
           </div>
         ))}

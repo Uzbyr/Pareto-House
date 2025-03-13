@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -38,46 +37,46 @@ const ApplicationDetailsDialog = ({
   onFlagToggle,
 }: ApplicationDetailsDialogProps) => {
   const [secureUrls, setSecureUrls] = useState<Record<string, string>>({});
-  
+
   useEffect(() => {
     const getSecureUrls = async () => {
       if (!application) return;
-      
+
       const urlMap: Record<string, string> = {};
-      
+
       if (application.resumeFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.resumeFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['resume'] = data.signedUrl;
+          urlMap["resume"] = data.signedUrl;
         }
       }
-      
+
       if (application.deckFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.deckFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['deck'] = data.signedUrl;
+          urlMap["deck"] = data.signedUrl;
         }
       }
-      
+
       if (application.memoFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.memoFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['memo'] = data.signedUrl;
+          urlMap["memo"] = data.signedUrl;
         }
       }
-      
+
       setSecureUrls(urlMap);
     };
-    
+
     if (open && application) {
       getSecureUrls();
     }
@@ -101,7 +100,9 @@ const ApplicationDetailsDialog = ({
         <DialogHeader className="border-b border-zinc-700 pb-4">
           <DialogTitle className="text-xl font-bold flex items-center justify-between">
             <div className="flex items-center">
-              <span>Application #{application.id}: {application.name}</span>
+              <span>
+                Application #{application.id}: {application.name}
+              </span>
               {application.flagged && (
                 <Flag className="ml-2 h-4 w-4 text-amber-400" />
               )}
@@ -113,7 +114,7 @@ const ApplicationDetailsDialog = ({
                     variant="outline"
                     size="sm"
                     className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
-                    onClick={() => onNavigate('prev')}
+                    onClick={() => onNavigate("prev")}
                     title="Previous Application (←)"
                   >
                     <ChevronLeft className="h-4 w-4" />
@@ -123,7 +124,7 @@ const ApplicationDetailsDialog = ({
                     variant="outline"
                     size="sm"
                     className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
-                    onClick={() => onNavigate('next')}
+                    onClick={() => onNavigate("next")}
                     title="Next Application (→)"
                   >
                     <ChevronRight className="h-4 w-4" />
@@ -184,7 +185,9 @@ const ApplicationDetailsDialog = ({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-1">
               {keyboardShortcutsInfo.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <kbd className="px-1.5 py-0.5 bg-zinc-700 rounded-md text-gray-300">{item.key}</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-zinc-700 rounded-md text-gray-300">
+                    {item.key}
+                  </kbd>
                   <span>{item.action}</span>
                 </div>
               ))}

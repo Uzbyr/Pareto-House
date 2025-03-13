@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Label } from "@/components/ui/label";
 import { Switch } from "@/components/ui/switch";
@@ -22,7 +21,7 @@ const Settings = () => {
       ...settings,
       [setting]: !settings[setting as keyof typeof settings],
     });
-    
+
     toast.success(`${setting} setting updated`);
   };
 
@@ -42,7 +41,10 @@ const Settings = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <Label htmlFor="email-notifications" className="text-white text-base">
+                <Label
+                  htmlFor="email-notifications"
+                  className="text-white text-base"
+                >
                   Email Notifications
                 </Label>
                 <p className="text-sm text-gray-400">
@@ -58,7 +60,10 @@ const Settings = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <Label htmlFor="weekly-reports" className="text-white text-base">
+                <Label
+                  htmlFor="weekly-reports"
+                  className="text-white text-base"
+                >
                   Weekly Reports
                 </Label>
                 <p className="text-sm text-gray-400">
@@ -74,7 +79,10 @@ const Settings = () => {
 
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <Label htmlFor="application-alerts" className="text-white text-base">
+                <Label
+                  htmlFor="application-alerts"
+                  className="text-white text-base"
+                >
                   Application Alerts
                 </Label>
                 <p className="text-sm text-gray-400">
@@ -96,11 +104,15 @@ const Settings = () => {
           <div className="space-y-6">
             <div className="flex items-center justify-between">
               <div className="space-y-1">
-                <Label htmlFor="maintenance-mode" className="text-white text-base">
+                <Label
+                  htmlFor="maintenance-mode"
+                  className="text-white text-base"
+                >
                   Maintenance Mode
                 </Label>
                 <p className="text-sm text-gray-400">
-                  When enabled, the application form will be temporarily unavailable
+                  When enabled, the application form will be temporarily
+                  unavailable
                 </p>
               </div>
               <Switch
@@ -154,7 +166,9 @@ const Settings = () => {
               className="bg-zinc-900 border-zinc-700 text-white"
               placeholder="email@pareto20.com"
               value={settings.reportEmail}
-              onChange={(e) => setSettings({ ...settings, reportEmail: e.target.value })}
+              onChange={(e) =>
+                setSettings({ ...settings, reportEmail: e.target.value })
+              }
             />
             <p className="text-sm text-gray-400">
               Separate multiple email addresses with commas
@@ -164,11 +178,7 @@ const Settings = () => {
       </Card>
 
       <div className="flex justify-end">
-        <Button
-          variant="pink"
-          className="px-8"
-          onClick={saveSettings}
-        >
+        <Button variant="pink" className="px-8" onClick={saveSettings}>
           Save Settings
         </Button>
       </div>

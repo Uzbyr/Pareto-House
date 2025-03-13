@@ -16,7 +16,7 @@ export const mentors: Mentor[] = [
     description: "Founder of OLX and FJ Labs",
     bio: "Fabrice Grinda is a French-American serial entrepreneur and investor. As a prominent angel investor, he has backed hundreds of startups globally through his investment vehicle. Grinda's entrepreneurial background includes founding and scaling multiple successful marketplace businesses. His investment thesis often centers on marketplace models and network-effect businesses. He is known for his data-driven approach to identifying investment opportunities across diverse geographic markets.",
     imageUrl: "/lovable-uploads/12acce9a-72bb-4ea2-a0d0-ebdf7c4eb2b7.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Edward Lando",
@@ -24,15 +24,15 @@ export const mentors: Mentor[] = [
     description: "Serial entrepreneur and investor",
     bio: "Edward Lando is a serial entrepreneur and investor based in the United States. He co-founded Pareto Holdings, an early-stage investment firm and venture studio that has made over 900 investments globally. Lando is also the co-founder and former CEO of Goody, a gifting app that simplifies sending gifts. He is known for combining capital investment with hands-on mentorship to help startups thrive. Lando maintains a notable presence in the startup community by championing founders and scalable technologies.",
     imageUrl: "/lovable-uploads/6b47b599-6ded-4b14-a09b-44c0dbad8481.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Abhi Ramesh",
     linkedIn: "https://www.linkedin.com/in/abhiramesh/",
     description: "Founder & CEO at Misfits Market",
-    bio: "Abhi Ramesh is the founder and CEO of Misfits Market, a U.S.-based company addressing food waste by delivering surplus and \"imperfect\" produce to consumers at discounted prices. Under his leadership, Misfits Market has expanded rapidly, reflecting strong consumer interest in sustainability and affordable food options. Ramesh's business model combines environmental impact with cost savings, promoting a more equitable food system. He is recognized for using innovative supply-chain strategies to reduce waste and improve food distribution.",
+    bio: 'Abhi Ramesh is the founder and CEO of Misfits Market, a U.S.-based company addressing food waste by delivering surplus and "imperfect" produce to consumers at discounted prices. Under his leadership, Misfits Market has expanded rapidly, reflecting strong consumer interest in sustainability and affordable food options. Ramesh\'s business model combines environmental impact with cost savings, promoting a more equitable food system. He is recognized for using innovative supply-chain strategies to reduce waste and improve food distribution.',
     imageUrl: "/lovable-uploads/7d1b363b-018d-4f30-a2db-f2eb6515cc8e.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Zach Bookman",
@@ -40,7 +40,7 @@ export const mentors: Mentor[] = [
     description: "Co-founder & CEO at OpenGov",
     bio: "Zach Bookman is the co-founder and CEO of OpenGov, a technology platform that provides cloud-based solutions for public sector budgeting, performance management, and citizen engagement. He envisions a more transparent and efficient government through data-driven decision-making. Bookman's leadership reflects a commitment to civic innovation and the modernization of public-sector tools. By partnering with governments, he aims to optimize resource allocation and enhance public trust.",
     imageUrl: "/lovable-uploads/1cc17b96-3462-4d26-974f-15ba3628034c.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Eric Glyman",
@@ -48,7 +48,7 @@ export const mentors: Mentor[] = [
     description: "Co-founder & CEO at Ramp",
     bio: "Eric Glyman is the co-founder and CEO of Ramp, a financial technology company offering corporate cards and spend-management software designed to increase financial efficiency. Glyman's approach emphasizes transparency and automation to help businesses cut wasteful spending. Under his guidance, Ramp has positioned itself as an innovative player in the fintech landscape. His leadership centers on simplifying complex financial processes and empowering companies to make data-driven decisions.",
     imageUrl: "/lovable-uploads/3a89b51a-b995-42c3-85a2-c29983c21e46.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Francis Pedraza",
@@ -56,7 +56,7 @@ export const mentors: Mentor[] = [
     description: "Founder at Invisible Technologies",
     bio: "Francis Pedraza is the founder of Invisible Technologies, a company that provides remote talent and process automation solutions. He's known for his innovative approach to building scalable service businesses and his unique perspective on leadership and company culture.",
     imageUrl: "/lovable-uploads/dc5b5f95-0b6e-493c-b293-4e43ce71392a.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Eric Wu",
@@ -64,7 +64,7 @@ export const mentors: Mentor[] = [
     description: "Founder at Opendoor",
     bio: "Eric Wu is the co-founder of Opendoor, a digital platform for residential real estate transactions. He has founded multiple successful companies and has a track record of disrupting traditional industries with technology-driven solutions. Wu's expertise spans real estate tech, marketplaces, and scaling high-growth startups.",
     imageUrl: "/lovable-uploads/b44fbc4b-212b-49e6-adcc-bf0072f797ed.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Cyan Banister",
@@ -72,7 +72,7 @@ export const mentors: Mentor[] = [
     description: "Ex-Partner at Founders Fund",
     bio: "Cyan Banister is a prominent angel investor and entrepreneur. She served as a partner at Founders Fund and has made early investments in companies like SpaceX, Uber, and Postmates. As the founder of Zivity, she brings firsthand entrepreneurial experience to her advisory roles. Banister is known for her contrarian investment approach and for backing unconventional founders.",
     imageUrl: "/lovable-uploads/56ab8193-d996-4fc8-954d-c71a3d96bd5a.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Venus Williams",
@@ -80,7 +80,7 @@ export const mentors: Mentor[] = [
     description: "Tennis champion and entrepreneur",
     bio: "Venus Williams is a legendary tennis champion who has successfully transitioned into entrepreneurship and investing. She has founded multiple businesses including her activewear brand EleVen and interior design firm V Starr. Williams brings her championship mindset and global influence to her business ventures and investments, with a focus on wellness, women's empowerment, and equality.",
     imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Sarah Guo",
@@ -88,7 +88,7 @@ export const mentors: Mentor[] = [
     description: "Founder at Conviction VC",
     bio: "Sarah Guo is the founder of Conviction VC, a venture capital firm focused on early-stage technology companies. Previously, she was a General Partner at Greylock Partners, where she led investments in AI, cybersecurity, and enterprise software. Guo brings deep technical knowledge and operational insights to her role as an investor and advisor to founders.",
     imageUrl: "/lovable-uploads/67bf0c08-24a9-4e1d-bb41-9318d2c672e8.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Gokul Rajaram",
@@ -96,7 +96,7 @@ export const mentors: Mentor[] = [
     description: "Investor & Board Member at Coinbase and Pinterest",
     bio: "Gokul Rajaram is a seasoned product and business leader who has made significant contributions at companies like Facebook, Google, DoorDash, and Square. His experience spans product development, business strategy, and growth initiatives. Rajaram serves on the boards of multiple public and private companies, providing strategic guidance derived from his extensive career in technology.",
     imageUrl: "/lovable-uploads/98179821-cd4d-4a1e-9c84-8544e48e694f.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Max Altman",
@@ -104,7 +104,7 @@ export const mentors: Mentor[] = [
     description: "Founder & GP at Saga Ventures",
     bio: "Max Altman is the Founder and General Partner at Saga Ventures, an early-stage venture capital firm. His investment focus spans AI, developer tools, and enterprise software. Altman brings a unique perspective to his role as an investor, combining technical acumen with strategic business insights to support founders building transformative companies.",
     imageUrl: "/lovable-uploads/dad2a4c2-5fc0-4074-8dac-8294428f754e.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Liu Jiang",
@@ -112,7 +112,7 @@ export const mentors: Mentor[] = [
     description: "Founder & GP at Sunflower and former Sequoia Partner",
     bio: "Liu Jiang is a U.S.-based engineering leader and startup advisor. She leverages a strong technical background to guide product development and software architecture. Jiang's advisory work includes optimizing organizational processes and scaling engineering teams. Her experience spans multiple tech segments, reflecting a versatile problem-solving skill set. She is committed to nurturing inclusive, innovative environments that empower teams to excel.",
     imageUrl: "/lovable-uploads/6c5fe0c4-03d3-4457-b3b6-e5f0a5cb69c6.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Reilly Opelka",
@@ -120,7 +120,7 @@ export const mentors: Mentor[] = [
     description: "Tennis player, Investor and Art Guru",
     bio: "Reilly Opelka is a professional tennis player and investor with interests spanning sports, technology, and art. He brings a unique perspective to his investment activities, combining his experiences as a professional athlete with a keen eye for emerging trends and opportunities. Opelka is known for his thoughtful approach to both his athletic career and his business ventures.",
     imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Khaled Helioui",
@@ -128,7 +128,7 @@ export const mentors: Mentor[] = [
     description: "Co-Founder of Plural.",
     bio: "Khaled Helioui is a UK-based investor and entrepreneur. He is the co-founder of Plural, an investment platform that invests serious time and early-stage venture capital to back Europe's next generation of iconic founders. Helioui leverages extensive experience and a broad network to provide strategic support, helping founders build legendary companies capable of having a GDP-level impact. He also serves on the boards of Mos.com, Dott, and GoMyCode.",
     imageUrl: "/lovable-uploads/khaled-helioui.png",
-    country: "UK"
+    country: "UK",
   },
   {
     name: "Tadas Burgaila",
@@ -136,7 +136,7 @@ export const mentors: Mentor[] = [
     description: "Co-Founder at Kilo Health.",
     bio: "Tadas Burgaila is a Lithuania-based entrepreneur and co-founder of Kilo Health, a digital health platform with over four million customers. He has launched more than 100 projects, including building the world's second-largest wallpaper website at age 16. Burgaila champions bold ideas and employee well-being, fostering a thriving environment for a team of over 800 people. He is also a co-founder of Unicorns.lt, aimed at cultivating Lithuania's ecosystem for future entrepreneurs and unicorns.",
     imageUrl: "/lovable-uploads/tadas-burgaila.jpeg",
-    country: "Lithuania"
+    country: "Lithuania",
   },
   {
     name: "Hervé Bredin",
@@ -144,8 +144,8 @@ export const mentors: Mentor[] = [
     description: "Co-Founder of pyannoteAI & CNRS Researcher",
     bio: "Hervé Bredin is a renowned researcher and entrepreneur in the field of audio processing and machine learning. As a co-founder of pyannoteAI and a researcher at CNRS (France's National Center for Scientific Research), he specializes in developing innovative solutions for speaker diarization and audio analysis. His work bridges academic research with practical applications, making advanced audio technology accessible to developers worldwide.",
     imageUrl: "/lovable-uploads/herve-bredin.jpeg",
-    country: "France"
-  }
+    country: "France",
+  },
 ];
 
 // Backlog mentors (not displayed on the page)
@@ -156,7 +156,7 @@ export const backlogMentors: Mentor[] = [
     description: "Early-stage investor and founder",
     bio: "Ben Cambier is a partner at Pareto Holdings, where he focuses on building and investing in early-stage companies. His role involves identifying and partnering with high-potential startups at their formative stages. Cambier leverages firsthand entrepreneurial insights to guide companies toward sustainable growth. He provides both financial backing and strategic counsel, aiming to de-risk the path to market traction. Through active involvement, he fosters a supportive ecosystem that empowers emerging tech ventures.",
     imageUrl: "/lovable-uploads/b4e34a3e-e7d3-4045-a380-3fe37f7b05ce.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Pietro Invernizzi",
@@ -164,7 +164,7 @@ export const backlogMentors: Mentor[] = [
     description: "Investor and entrepreneur",
     bio: "Pietro Invernizzi is an entrepreneur and investor based in the United Kingdom. He focuses on supporting emerging startups through both capital deployment and advisory services. Invernizzi takes a hands-on approach, helping founders navigate the challenges of early-stage company building. His cross-border perspective allows him to spot international opportunities and bridge diverse markets. He believes in fostering collaborative ecosystems that nurture disruptive ideas and sustainable growth.",
     imageUrl: "/lovable-uploads/687c5fe9-ccfa-4d12-bdb9-066f37806034.png",
-    country: "UK"
+    country: "UK",
   },
   {
     name: "Grant Gordon",
@@ -172,7 +172,7 @@ export const backlogMentors: Mentor[] = [
     description: "Founder & CEO at Artemis",
     bio: "Grant Gordon is a philanthropist and entrepreneur dedicated to building stronger communities and creating opportunities for people to thrive. He is the founder and chair of The Childhood Trust, London's child poverty charity, and has been awarded an OBE for his services to philanthropy, including during the COVID-19 response. Gordon also serves as board chair across a portfolio of UK charities, including The Cabrach Trust and The Reekimlane Foundation. His leadership emphasizes strategic growth, product excellence, and customer-centric innovation. By balancing vision with practical business strategies, he aims to establish his ventures as forward-thinking industry players.",
     imageUrl: "/lovable-uploads/29fe48b3-0fa6-425e-abc6-7add6c5d7236.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Arthur Querou",
@@ -180,7 +180,7 @@ export const backlogMentors: Mentor[] = [
     description: "Founder & CEO at PlayPlay",
     bio: "Arthur Querou is the founder and CEO of PlayPlay, a company that simplifies video creation for businesses, enabling them to produce engaging content quickly. Querou's vision centers on user-friendly design and intuitive technology. Under his leadership, PlayPlay addresses the rising demand for dynamic, multimedia marketing solutions. He strives to democratize professional-grade video production, allowing teams to communicate their stories more effectively.",
     imageUrl: "/lovable-uploads/8545216b-c853-4042-b152-cada13843026.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Nicolas Douay",
@@ -188,7 +188,7 @@ export const backlogMentors: Mentor[] = [
     description: "Technology entrepreneur and investor",
     bio: "Nicolas Douay is a French technology entrepreneur and investor. He actively seeks out disruptive ideas and teams, providing both funding and operational guidance. Douay's background includes hands-on experience in launching and scaling tech ventures. He is a proponent of strengthening France's position in the global startup ecosystem. His dual role as entrepreneur and investor reflects a commitment to empowering the next wave of innovation.",
     imageUrl: "/lovable-uploads/e838327a-3836-4221-bb14-73a96f840ec9.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Mathias Adam",
@@ -196,7 +196,7 @@ export const backlogMentors: Mentor[] = [
     description: "Technology leader and advisor",
     bio: "Mathias Adam is a French technology leader and advisor. He assists organizations in implementing digital strategies, often bridging technical and managerial disciplines. Adam's approach highlights the importance of agile processes and data-driven decision-making. As an advisor, he emphasizes collaboration and continuous innovation to stay competitive. His guidance helps companies navigate complex technological landscapes and drive sustainable transformation.",
     imageUrl: "/lovable-uploads/296914cf-fcac-4a48-9c42-8e9bc9b50f4a.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Sylvain Gariel",
@@ -204,7 +204,7 @@ export const backlogMentors: Mentor[] = [
     description: "Technology entrepreneur and business leader",
     bio: "Sylvain Gariel is a French technology entrepreneur and business leader. He focuses on catalyzing innovation through effective leadership and cross-functional collaboration. Gariel has co-founded ventures that harness emerging technologies to solve practical challenges. His background spans technical, operational, and commercial responsibilities. By fostering a culture of ambition and resilience, he aims to propel France's technology sector forward.",
     imageUrl: "/lovable-uploads/9ae2e248-a5a6-4e6d-be4d-3c747a6426de.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Arthur Waller",
@@ -212,7 +212,7 @@ export const backlogMentors: Mentor[] = [
     description: "Co-founder & CEO at Pennylane",
     bio: "Arthur Waller is the co-founder and CEO of Pennylane, a French company that combines accounting, billing, and financial analytics into one integrated platform.",
     imageUrl: "/lovable-uploads/ecc7349b-b875-4cdb-8e87-9c6a4dda4f28.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Alexandre Yazdi",
@@ -220,7 +220,7 @@ export const backlogMentors: Mentor[] = [
     description: "Co-founder & CEO at Voodoo",
     bio: "Alexandre Yazdi is a successful French entrepreneur who co-founded and serves as CEO of Voodoo, a mobile game publisher that has become one of the world's leading mobile game companies. Under his leadership, Voodoo has published numerous hit games and expanded its global presence. Yazdi's business strategy combines data-driven development with innovative marketing approaches.",
     imageUrl: "/lovable-uploads/2c496de7-e447-40fc-9bc9-d3c5ec2d8b71.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Michal Valko",
@@ -228,7 +228,7 @@ export const backlogMentors: Mentor[] = [
     description: "Research scientist and AI expert",
     bio: "Michal Valko is a distinguished research scientist specializing in artificial intelligence and machine learning. Based in France, he contributes to advancing the field through innovative research approaches and academic leadership. Valko's work explores the theoretical foundations and practical applications of AI systems. His research has implications for various industries seeking to implement cutting-edge AI solutions.",
     imageUrl: "/lovable-uploads/9b10dc7d-bdd5-4a3f-b04b-51ac68f019ff.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Jean Ponce",
@@ -236,7 +236,7 @@ export const backlogMentors: Mentor[] = [
     description: "Computer vision researcher and academic leader",
     bio: "Jean Ponce is a renowned computer vision researcher and academic leader based in France. His work focuses on developing algorithms and models that enable computers to interpret and understand visual information. Ponce has made significant contributions to the fields of 3D computer vision and object recognition. Through his research and teaching, he shapes the next generation of computer vision specialists and contributes to advancements in AI-powered visual technologies.",
     imageUrl: "/lovable-uploads/1429b1d7-6575-4620-97cd-fee282a06662.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Boaz Avital",
@@ -244,7 +244,7 @@ export const backlogMentors: Mentor[] = [
     description: "Engineering leader and startup advisor",
     bio: "Boaz Avital is an engineering leader and startup advisor based in the United States. He leverages his technical expertise to guide companies through critical growth stages and technological challenges. Avital specializes in scaling engineering teams and implementing effective development processes. As an advisor, he helps startups establish solid technical foundations while maintaining innovation velocity. His approach balances engineering excellence with business objectives.",
     imageUrl: "/lovable-uploads/8754e353-9082-4238-926b-13289a92cdce.png",
-    country: "USA"
+    country: "USA",
   },
   {
     name: "Jean-Daniel Guyot",
@@ -252,7 +252,7 @@ export const backlogMentors: Mentor[] = [
     description: "Serial entrepreneur and investor",
     bio: "Jean-Daniel Guyot is a French serial entrepreneur and investor with a track record of building and scaling technology companies. He combines business vision with technical understanding to identify promising opportunities. Guyot actively supports the French startup ecosystem through mentorship and investments. His entrepreneurial journey provides valuable insights for founders navigating similar paths. As an investor, he seeks ventures with disruptive potential and strong execution capabilities.",
     imageUrl: "/lovable-uploads/9df83c61-279d-4084-b315-55d7f8d3b272.png",
-    country: "France"
+    country: "France",
   },
   {
     name: "Jack Pierse",
@@ -260,7 +260,7 @@ export const backlogMentors: Mentor[] = [
     description: "Co-founder & CFO at Wayflyer",
     bio: "Jack Pierse is the co-founder and CFO of Wayflyer, an Irish company that provides revenue-based financing and marketing analytics for e-commerce businesses. He has helped build Wayflyer into a significant player in the alternative financing space. Pierse's approach combines financial expertise with e-commerce insights to help online businesses scale effectively. His leadership focuses on creating accessible funding solutions that align with the unique needs of digital merchants.",
     imageUrl: "/lovable-uploads/675c3651-db8d-4edd-9ff6-3ffd7210745e.png",
-    country: "Ireland"
+    country: "Ireland",
   },
   {
     name: "Serena Williams",
@@ -268,6 +268,6 @@ export const backlogMentors: Mentor[] = [
     description: "Tennis champion, entrepreneur and investor",
     bio: "Serena Williams is an accomplished tennis champion, entrepreneur, and investor based in the United States. Beyond her legendary sports career, she has established herself as a formidable presence in business and investment. Williams has founded and invested in numerous ventures, with a focus on supporting diverse founders and innovative companies. Her investment philosophy emphasizes companies that align with her values of inclusivity and empowerment. Williams brings her championship mindset and global influence to her role as a business leader and mentor.",
     imageUrl: "/lovable-uploads/fc28bb63-8d48-4262-a6db-0b61a7a4595b.png",
-    country: "USA"
-  }
+    country: "USA",
+  },
 ];

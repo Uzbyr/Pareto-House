@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -43,52 +42,70 @@ const App = () => (
               <Route path="/perks" element={<Perks />} />
               <Route path="/faq" element={<FAQ />} />
               <Route path="/tech-partners" element={<TechPartners />} />
-              
+
               {/* Admin Routes */}
               <Route path="/admin/login" element={<AdminLogin />} />
-              <Route path="/admin/dashboard" element={
-                <ProtectedRoute>
-                  <AdminLayout>
-                    <Dashboard />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/applications" element={
-                <ProtectedRoute>
-                  <AdminLayout>
-                    <Applications />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/analytics" element={
-                <ProtectedRoute>
-                  <AdminLayout>
-                    <Analytics />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/funnel" element={
-                <ProtectedRoute>
-                  <AdminLayout>
-                    <Funnel />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/users" element={
-                <ProtectedRoute requiredRole="super_admin">
-                  <AdminLayout>
-                    <Users />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              <Route path="/admin/settings" element={
-                <ProtectedRoute>
-                  <AdminLayout>
-                    <Settings />
-                  </AdminLayout>
-                </ProtectedRoute>
-              } />
-              
+              <Route
+                path="/admin/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout>
+                      <Dashboard />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/applications"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout>
+                      <Applications />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/analytics"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout>
+                      <Analytics />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/funnel"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout>
+                      <Funnel />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/users"
+                element={
+                  <ProtectedRoute requiredRole="super_admin">
+                    <AdminLayout>
+                      <Users />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/admin/settings"
+                element={
+                  <ProtectedRoute>
+                    <AdminLayout>
+                      <Settings />
+                    </AdminLayout>
+                  </ProtectedRoute>
+                }
+              />
+
               {/* Catch-all route */}
               <Route path="*" element={<NotFound />} />
             </Routes>

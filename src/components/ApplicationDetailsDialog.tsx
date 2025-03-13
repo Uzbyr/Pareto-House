@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -28,7 +27,7 @@ import {
   GraduationCap,
   Building,
   Users,
-  MapPin
+  MapPin,
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { supabase } from "@/integrations/supabase/client";
@@ -83,46 +82,46 @@ const ApplicationDetailsDialog = ({
   onFlagToggle,
 }: ApplicationDetailsDialogProps) => {
   const [secureUrls, setSecureUrls] = useState<Record<string, string>>({});
-  
+
   useEffect(() => {
     const getSecureUrls = async () => {
       if (!application) return;
-      
+
       const urlMap: Record<string, string> = {};
-      
+
       if (application.resumeFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.resumeFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['resume'] = data.signedUrl;
+          urlMap["resume"] = data.signedUrl;
         }
       }
-      
+
       if (application.deckFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.deckFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['deck'] = data.signedUrl;
+          urlMap["deck"] = data.signedUrl;
         }
       }
-      
+
       if (application.memoFile) {
         const { data } = await supabase.storage
-          .from('documents')
+          .from("documents")
           .createSignedUrl(application.memoFile, 3600);
-          
+
         if (data?.signedUrl) {
-          urlMap['memo'] = data.signedUrl;
+          urlMap["memo"] = data.signedUrl;
         }
       }
-      
+
       setSecureUrls(urlMap);
     };
-    
+
     if (open && application) {
       getSecureUrls();
     }
@@ -146,7 +145,9 @@ const ApplicationDetailsDialog = ({
         <DialogHeader className="border-b border-zinc-700 pb-4">
           <DialogTitle className="text-xl font-bold flex items-center justify-between">
             <div className="flex items-center">
-              <span>Application #{application.id}: {application.name}</span>
+              <span>
+                Application #{application.id}: {application.name}
+              </span>
               {application.flagged && (
                 <Flag className="ml-2 h-4 w-4 text-amber-400" />
               )}
@@ -158,7 +159,7 @@ const ApplicationDetailsDialog = ({
                     variant="outline"
                     size="sm"
                     className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
-                    onClick={() => onNavigate('prev')}
+                    onClick={() => onNavigate("prev")}
                     title="Previous Application (←)"
                   >
                     <ChevronLeft className="h-4 w-4" />
@@ -168,7 +169,7 @@ const ApplicationDetailsDialog = ({
                     variant="outline"
                     size="sm"
                     className="h-8 w-8 p-0 border-zinc-700 text-gray-300 hover:bg-zinc-700"
-                    onClick={() => onNavigate('next')}
+                    onClick={() => onNavigate("next")}
                     title="Next Application (→)"
                   >
                     <ChevronRight className="h-4 w-4" />
@@ -219,7 +220,7 @@ const ApplicationDetailsDialog = ({
                   variant="outline"
                   size="sm"
                   className={`${
-                    application.flagged 
+                    application.flagged
                       ? "text-amber-400 border-amber-400/20 hover:bg-amber-400/10 hover:text-amber-300"
                       : "text-gray-400 border-gray-400/20 hover:bg-gray-400/10 hover:text-gray-300"
                   }`}
@@ -273,7 +274,9 @@ const ApplicationDetailsDialog = ({
             <TabsContent value="education" className="space-y-4">
               <div className="bg-zinc-900 rounded-md p-4 space-y-3">
                 <div>
-                  <span className="text-sm text-gray-400">Education Level:</span>
+                  <span className="text-sm text-gray-400">
+                    Education Level:
+                  </span>
                   <p className="text-white">
                     <GraduationCap className="h-4 w-4 inline mr-1 text-gray-400" />
                     {application.educationLevel || "Not specified"}
@@ -297,19 +300,27 @@ const ApplicationDetailsDialog = ({
                 )}
                 {application.graduationYear && (
                   <div>
-                    <span className="text-sm text-gray-400">Expected Graduation:</span>
+                    <span className="text-sm text-gray-400">
+                      Expected Graduation:
+                    </span>
                     <p className="text-white">{application.graduationYear}</p>
                   </div>
                 )}
                 {application.preparatoryClasses && (
                   <div>
-                    <span className="text-sm text-gray-400">Preparatory Classes:</span>
-                    <p className="text-white">{application.preparatoryClasses}</p>
+                    <span className="text-sm text-gray-400">
+                      Preparatory Classes:
+                    </span>
+                    <p className="text-white">
+                      {application.preparatoryClasses}
+                    </p>
                   </div>
                 )}
                 {application.studentSocieties && (
                   <div>
-                    <span className="text-sm text-gray-400">Student Societies:</span>
+                    <span className="text-sm text-gray-400">
+                      Student Societies:
+                    </span>
                     <p className="text-white">
                       <Users className="h-4 w-4 inline mr-1 text-gray-400" />
                       {application.studentSocieties}
@@ -323,7 +334,9 @@ const ApplicationDetailsDialog = ({
               <div className="bg-zinc-900 rounded-md p-4 space-y-3">
                 {application.buildingCompany && (
                   <div>
-                    <span className="text-sm text-gray-400">Building Company:</span>
+                    <span className="text-sm text-gray-400">
+                      Building Company:
+                    </span>
                     <p className="text-white flex items-center">
                       <Building className="h-4 w-4 mr-1 text-gray-400" />
                       {application.buildingCompany}
@@ -332,30 +345,43 @@ const ApplicationDetailsDialog = ({
                 )}
                 {application.companyContext && (
                   <div>
-                    <span className="text-sm text-gray-400">Company Context:</span>
-                    <p className="text-white whitespace-pre-wrap">{application.companyContext}</p>
+                    <span className="text-sm text-gray-400">
+                      Company Context:
+                    </span>
+                    <p className="text-white whitespace-pre-wrap">
+                      {application.companyContext}
+                    </p>
                   </div>
                 )}
                 {application.categoryOfInterest && (
                   <div>
-                    <span className="text-sm text-gray-400">Category of Interest:</span>
-                    <p className="text-white">{application.categoryOfInterest}</p>
+                    <span className="text-sm text-gray-400">
+                      Category of Interest:
+                    </span>
+                    <p className="text-white">
+                      {application.categoryOfInterest}
+                    </p>
                   </div>
                 )}
                 <div>
-                  <span className="text-sm text-gray-400">Submission Date:</span>
+                  <span className="text-sm text-gray-400">
+                    Submission Date:
+                  </span>
                   <p className="text-white">{application.submissionDate}</p>
                 </div>
                 <div>
                   <span className="text-sm text-gray-400">Status:</span>
-                  <p className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
-                    application.status === "approved" 
-                      ? "bg-green-400/10 text-green-400" 
-                      : application.status === "rejected"
-                      ? "bg-red-400/10 text-red-400" 
-                      : "bg-yellow-400/10 text-yellow-400"
-                  }`}>
-                    {application.status.charAt(0).toUpperCase() + application.status.slice(1)}
+                  <p
+                    className={`inline-flex items-center px-2 py-1 rounded-full text-xs font-medium ${
+                      application.status === "approved"
+                        ? "bg-green-400/10 text-green-400"
+                        : application.status === "rejected"
+                          ? "bg-red-400/10 text-red-400"
+                          : "bg-yellow-400/10 text-yellow-400"
+                    }`}
+                  >
+                    {application.status.charAt(0).toUpperCase() +
+                      application.status.slice(1)}
                   </p>
                 </div>
               </div>
@@ -365,41 +391,55 @@ const ApplicationDetailsDialog = ({
               <div className="bg-zinc-900 rounded-md p-4 space-y-3">
                 {application.hasCompetitionExperience && (
                   <div>
-                    <span className="text-sm text-gray-400">Competition Experience:</span>
-                    <p className="text-white">{application.hasCompetitionExperience}</p>
+                    <span className="text-sm text-gray-400">
+                      Competition Experience:
+                    </span>
+                    <p className="text-white">
+                      {application.hasCompetitionExperience}
+                    </p>
                   </div>
                 )}
-                {application.competitionResults && application.competitionResults.length > 0 && (
-                  <div>
-                    <span className="text-sm text-gray-400">Competition Results:</span>
-                    <ul className="mt-1 space-y-1">
-                      {application.competitionResults.map((result, index) => (
-                        <li key={index} className="text-white">• {result}</li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
-                {application.competitiveProfiles && application.competitiveProfiles.length > 0 && (
-                  <div>
-                    <span className="text-sm text-gray-400">Competitive Profiles:</span>
-                    <ul className="mt-1 space-y-1">
-                      {application.competitiveProfiles.map((profile, index) => (
-                        <li key={index}>
-                          <Button 
-                            variant="outline" 
-                            size="sm"
-                            className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                            onClick={() => window.open(profile, '_blank')}
-                          >
-                            <Globe className="h-4 w-4 mr-2" />
-                            View Profile {index + 1}
-                            <ExternalLink className="h-3 w-3 ml-1" />
-                          </Button>
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                )}
+                {application.competitionResults &&
+                  application.competitionResults.length > 0 && (
+                    <div>
+                      <span className="text-sm text-gray-400">
+                        Competition Results:
+                      </span>
+                      <ul className="mt-1 space-y-1">
+                        {application.competitionResults.map((result, index) => (
+                          <li key={index} className="text-white">
+                            • {result}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  )}
+                {application.competitiveProfiles &&
+                  application.competitiveProfiles.length > 0 && (
+                    <div>
+                      <span className="text-sm text-gray-400">
+                        Competitive Profiles:
+                      </span>
+                      <ul className="mt-1 space-y-1">
+                        {application.competitiveProfiles.map(
+                          (profile, index) => (
+                            <li key={index}>
+                              <Button
+                                variant="outline"
+                                size="sm"
+                                className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
+                                onClick={() => window.open(profile, "_blank")}
+                              >
+                                <Globe className="h-4 w-4 mr-2" />
+                                View Profile {index + 1}
+                                <ExternalLink className="h-3 w-3 ml-1" />
+                              </Button>
+                            </li>
+                          ),
+                        )}
+                      </ul>
+                    </div>
+                  )}
               </div>
             </TabsContent>
 
@@ -409,12 +449,14 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">Resume:</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(secureUrls['resume'], '_blank')}
-                        disabled={!secureUrls['resume']}
+                        onClick={() =>
+                          window.open(secureUrls["resume"], "_blank")
+                        }
+                        disabled={!secureUrls["resume"]}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Resume
@@ -425,14 +467,18 @@ const ApplicationDetailsDialog = ({
                 )}
                 {application.deckFile && (
                   <div>
-                    <span className="text-sm text-gray-400">Deck Presentation:</span>
+                    <span className="text-sm text-gray-400">
+                      Deck Presentation:
+                    </span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(secureUrls['deck'], '_blank')}
-                        disabled={!secureUrls['deck']}
+                        onClick={() =>
+                          window.open(secureUrls["deck"], "_blank")
+                        }
+                        disabled={!secureUrls["deck"]}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Deck
@@ -445,12 +491,14 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">Memo:</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(secureUrls['memo'], '_blank')}
-                        disabled={!secureUrls['memo']}
+                        onClick={() =>
+                          window.open(secureUrls["memo"], "_blank")
+                        }
+                        disabled={!secureUrls["memo"]}
                       >
                         <FileText className="h-4 w-4 mr-2" />
                         View Memo
@@ -461,13 +509,17 @@ const ApplicationDetailsDialog = ({
                 )}
                 {application.videoUrl && (
                   <div>
-                    <span className="text-sm text-gray-400">Video Presentation:</span>
+                    <span className="text-sm text-gray-400">
+                      Video Presentation:
+                    </span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.videoUrl, '_blank')}
+                        onClick={() =>
+                          window.open(application.videoUrl, "_blank")
+                        }
                       >
                         <Video className="h-4 w-4 mr-2" />
                         Watch Video
@@ -476,9 +528,14 @@ const ApplicationDetailsDialog = ({
                     </div>
                   </div>
                 )}
-                {!application.resumeFile && !application.deckFile && !application.memoFile && !application.videoUrl && (
-                  <p className="text-gray-400 italic">No documents uploaded</p>
-                )}
+                {!application.resumeFile &&
+                  !application.deckFile &&
+                  !application.memoFile &&
+                  !application.videoUrl && (
+                    <p className="text-gray-400 italic">
+                      No documents uploaded
+                    </p>
+                  )}
               </div>
             </TabsContent>
 
@@ -488,11 +545,13 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">Website:</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.websiteUrl, '_blank')}
+                        onClick={() =>
+                          window.open(application.websiteUrl, "_blank")
+                        }
                       >
                         <Globe className="h-4 w-4 mr-2" />
                         {application.websiteUrl}
@@ -505,11 +564,13 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">LinkedIn:</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.linkedinUrl, '_blank')}
+                        onClick={() =>
+                          window.open(application.linkedinUrl, "_blank")
+                        }
                       >
                         <Linkedin className="h-4 w-4 mr-2" />
                         LinkedIn Profile
@@ -522,11 +583,11 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">X (Twitter):</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.xUrl, '_blank')}
+                        onClick={() => window.open(application.xUrl, "_blank")}
                       >
                         <Twitter className="h-4 w-4 mr-2" />
                         X Profile
@@ -539,11 +600,13 @@ const ApplicationDetailsDialog = ({
                   <div>
                     <span className="text-sm text-gray-400">GitHub:</span>
                     <div className="mt-1">
-                      <Button 
-                        variant="outline" 
+                      <Button
+                        variant="outline"
                         size="sm"
                         className="text-blue-400 border-blue-400/20 hover:bg-blue-400/10"
-                        onClick={() => window.open(application.githubUrl, '_blank')}
+                        onClick={() =>
+                          window.open(application.githubUrl, "_blank")
+                        }
                       >
                         <Globe className="h-4 w-4 mr-2" />
                         GitHub Profile
@@ -552,9 +615,14 @@ const ApplicationDetailsDialog = ({
                     </div>
                   </div>
                 )}
-                {!application.websiteUrl && !application.linkedinUrl && !application.xUrl && !application.githubUrl && (
-                  <p className="text-gray-400 italic">No external links provided</p>
-                )}
+                {!application.websiteUrl &&
+                  !application.linkedinUrl &&
+                  !application.xUrl &&
+                  !application.githubUrl && (
+                    <p className="text-gray-400 italic">
+                      No external links provided
+                    </p>
+                  )}
               </div>
             </TabsContent>
           </Tabs>
@@ -564,7 +632,9 @@ const ApplicationDetailsDialog = ({
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-y-1">
               {keyboardShortcutsInfo.map((item, idx) => (
                 <div key={idx} className="flex items-center gap-2">
-                  <kbd className="px-1.5 py-0.5 bg-zinc-700 rounded-md text-gray-300">{item.key}</kbd>
+                  <kbd className="px-1.5 py-0.5 bg-zinc-700 rounded-md text-gray-300">
+                    {item.key}
+                  </kbd>
                   <span>{item.action}</span>
                 </div>
               ))}

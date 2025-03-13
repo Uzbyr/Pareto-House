@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import {
   BarChart,
@@ -22,7 +21,9 @@ const reviewerData = [
 const ReviewerConsistencyChart = () => {
   return (
     <Card className="bg-zinc-800 border-zinc-700 p-6 mb-6">
-      <h2 className="text-xl font-bold text-white mb-6">Reviewer Consistency</h2>
+      <h2 className="text-xl font-bold text-white mb-6">
+        Reviewer Consistency
+      </h2>
       <div className="h-80">
         <ResponsiveContainer width="100%" height="100%">
           <BarChart
@@ -50,17 +51,14 @@ const ReviewerConsistencyChart = () => {
               dataKey="consistency"
               fill="#8B5CF6"
             />
-            <Bar 
-              name="Acceptance Rate (%)" 
-              dataKey="accepted" 
-              fill="#10B981" 
-            />
+            <Bar name="Acceptance Rate (%)" dataKey="accepted" fill="#10B981" />
           </BarChart>
         </ResponsiveContainer>
       </div>
       <p className="text-sm text-gray-400 mt-4">
-        Consistency score is calculated based on decision alignment with other reviewers on the same applications.
-        Higher scores indicate greater consistency with the overall team's decisions.
+        Consistency score is calculated based on decision alignment with other
+        reviewers on the same applications. Higher scores indicate greater
+        consistency with the overall team's decisions.
       </p>
     </Card>
   );
