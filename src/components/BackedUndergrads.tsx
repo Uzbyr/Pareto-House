@@ -97,7 +97,7 @@ const BackedUndergrads = () => {
         const el = viewportRef.current;
         const maxScrollLeft = el.scrollWidth - el.clientWidth;
         const currentScrollLeft = el.scrollLeft;
-        const speed = 2; // adjust speed as desired
+        const speed = 1; // adjust speed as desired
 
         // If we've hit the right edge, switch to negative direction
         if (currentScrollLeft >= maxScrollLeft) {
