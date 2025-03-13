@@ -33,6 +33,7 @@ export const useApplicationManagement = () => {
       }
 
       if (data) {
+        console.log("data", data);
         const formattedApplications = data.map(
           (app: Tables<"applications">) => ({
             id: app.id,
@@ -62,11 +63,7 @@ export const useApplicationManagement = () => {
             githubUrl: app.github_url,
             categoryOfInterest: app.category_of_interest,
             hasCompetitionExperience: app.has_competition_experience,
-            competitionResults: app.competition_results
-              ? typeof app.competition_results === "string"
-                ? JSON.parse(app.competition_results)
-                : app.competition_results
-              : [],
+            competitionResults: app.competition_results,
             competitiveProfiles: app.competitive_profiles || [],
           }),
         );

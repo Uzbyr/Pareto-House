@@ -1,4 +1,3 @@
-
 import React from "react";
 import { MapPin } from "lucide-react";
 import { Application } from "@/types/application";
@@ -9,7 +8,7 @@ interface PersonalInfoSectionProps {
 
 const PersonalInfoSection = ({ application }: PersonalInfoSectionProps) => {
   return (
-    <div className="space-y-3">
+    <div className="space-y-2">
       <h3 className="text-lg font-medium text-white">Personal Information</h3>
       <div className="bg-zinc-900 rounded-md p-4 space-y-3">
         <div>

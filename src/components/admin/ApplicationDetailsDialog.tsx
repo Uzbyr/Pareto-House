@@ -1,4 +1,3 @@
-
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -146,22 +145,25 @@ const ApplicationDetailsDialog = ({
             />
           )}
 
-          <div className="space-y-6">
+          <div className="space-y-2">
             <PersonalInfoSection application={application} />
             <Separator className="border-zinc-700" />
-            
+
             <EducationSection application={application} />
             <Separator className="border-zinc-700" />
-            
+
             <ProjectSection application={application} />
             <Separator className="border-zinc-700" />
-            
+
             <CompetitionSection application={application} />
             <Separator className="border-zinc-700" />
-            
-            <DocumentsSection application={application} secureUrls={secureUrls} />
+
+            <DocumentsSection
+              application={application}
+              secureUrls={secureUrls}
+            />
             <Separator className="border-zinc-700" />
-            
+
             <LinksSection application={application} />
           </div>
 

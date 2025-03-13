@@ -32,7 +32,7 @@ export interface Application {
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string[];
+  competitionResults?: string;
   competitiveProfiles?: string[];
   resumeFile?: string;
   deckFile?: string;

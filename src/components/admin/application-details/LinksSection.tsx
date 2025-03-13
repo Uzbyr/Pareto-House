@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Globe, Linkedin, Twitter, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";

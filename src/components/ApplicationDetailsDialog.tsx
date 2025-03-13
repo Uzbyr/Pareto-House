@@ -60,7 +60,7 @@ interface Application {
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string[];
+  competitionResults?: string;
   competitiveProfiles?: string[];
 }
 
@@ -405,13 +405,9 @@ const ApplicationDetailsDialog = ({
                       <span className="text-sm text-gray-400">
                         Competition Results:
                       </span>
-                      <ul className="mt-1 space-y-1">
-                        {application.competitionResults.map((result, index) => (
-                          <li key={index} className="text-white">
-                            • {result}
-                          </li>
-                        ))}
-                      </ul>
+                      <p className="text-white">
+                        {application.competitionResults}
+                      </p>
                     </div>
                   )}
                 {application.competitiveProfiles &&

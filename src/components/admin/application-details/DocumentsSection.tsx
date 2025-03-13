@@ -1,4 +1,3 @@
-
 import React from "react";
 import { FileText, Video, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -9,7 +8,10 @@ interface DocumentsSectionProps {
   secureUrls: Record<string, string>;
 }
 
-const DocumentsSection = ({ application, secureUrls }: DocumentsSectionProps) => {
+const DocumentsSection = ({
+  application,
+  secureUrls,
+}: DocumentsSectionProps) => {
   return (
     <div className="space-y-3">
       <h3 className="text-lg font-medium text-white">Documents</h3>

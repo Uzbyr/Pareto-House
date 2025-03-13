@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Globe, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -15,27 +14,24 @@ const CompetitionSection = ({ application }: CompetitionSectionProps) => {
       <div className="bg-zinc-900 rounded-md p-4 space-y-3">
         {application.hasCompetitionExperience && (
           <div>
-            <span className="text-sm text-gray-400">Competition Experience:</span>
+            <span className="text-sm text-gray-400">
+              Competition Experience:
+            </span>
             <p className="text-white">{application.hasCompetitionExperience}</p>
           </div>
         )}
-        {application.competitionResults &&
-          application.competitionResults.length > 0 && (
-            <div>
-              <span className="text-sm text-gray-400">Competition Results:</span>
-              <ul className="mt-1 space-y-1">
-                {application.competitionResults.map((result, index) => (
-                  <li key={index} className="text-white">
-                    • {result}
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
+        {application.competitionResults && (
+          <div>
+            <span className="text-sm text-gray-400">Competition Results:</span>
+            <p className="text-white">{application.competitionResults}</p>
+          </div>
+        )}
         {application.competitiveProfiles &&
           application.competitiveProfiles.length > 0 && (
             <div>
-              <span className="text-sm text-gray-400">Competitive Profiles:</span>
+              <span className="text-sm text-gray-400">
+                Competitive Profiles:
+              </span>
               <ul className="mt-1 space-y-1">
                 {application.competitiveProfiles.map((profile, index) => (
                   <li key={index}>
@@ -55,9 +51,13 @@ const CompetitionSection = ({ application }: CompetitionSectionProps) => {
             </div>
           )}
         {!application.hasCompetitionExperience &&
-          (!application.competitionResults || application.competitionResults.length === 0) &&
-          (!application.competitiveProfiles || application.competitiveProfiles.length === 0) && (
-            <p className="text-gray-400 italic">No competition information provided</p>
+          (!application.competitionResults ||
+            application.competitionResults.length === 0) &&
+          (!application.competitiveProfiles ||
+            application.competitiveProfiles.length === 0) && (
+            <p className="text-gray-400 italic">
+              No competition information provided
+            </p>
           )}
       </div>
     </div>
