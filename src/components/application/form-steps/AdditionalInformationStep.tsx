@@ -1,3 +1,4 @@
+
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -42,7 +43,7 @@ const AdditionalInformationStep = memo(
 
       <div className="space-y-2">
         <Label htmlFor="linkedInUrl">
-          LinkedIn Profile URL<span className="text-red-500">*</span>
+          LinkedIn Profile URL (Optional)
         </Label>
         <Input
           id="linkedInUrl"
@@ -51,7 +52,6 @@ const AdditionalInformationStep = memo(
           value={formData.linkedInUrl}
           onChange={handleInputChange}
           className="bg-zinc-800 border-zinc-700"
-          required
         />
       </div>
 

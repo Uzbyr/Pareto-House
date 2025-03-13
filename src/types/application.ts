@@ -1,3 +1,4 @@
+
 export interface Application {
   id: string;
   name: string;
@@ -20,7 +21,7 @@ export interface Application {
   companyContext?: string;
   websiteUrl?: string;
   xUrl?: string;
-  linkedinUrl?: string;
+  linkedinUrl?: string; // Already optional with ?
   educationLevel?: string;
   highSchool?: string;
   githubUrl?: string;

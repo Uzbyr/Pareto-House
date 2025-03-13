@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -26,7 +25,6 @@ const useApplicationForm = ({
   );
   const [isFormDirty, setIsFormDirty] = useState(false);
 
-  // Set university to "Other" when country is "Other"
   useEffect(() => {
     if (formData.country === "Other") {
       setFormData((prev) => ({
@@ -234,13 +232,7 @@ const useApplicationForm = ({
       setLoading(true);
 
       try {
-        if (!formData.linkedInUrl) {
-          toast.error("Please provide your LinkedIn profile URL.");
-          setLoading(false);
-          return;
-        }
-
-        if (!validateLinkedInUrl(formData.linkedInUrl)) {
+        if (formData.linkedInUrl && !validateLinkedInUrl(formData.linkedInUrl)) {
           toast.error(
             "Please enter a valid LinkedIn URL (should start with https://www.linkedin.com/).",
           );
@@ -256,7 +248,6 @@ const useApplicationForm = ({
               : formData.university;
         }
 
-        // Get the actual country value (either from the dropdown or the "other" field)
         const countryValue = 
           formData.country === "Other" ? formData.otherCountry : formData.country;
 
@@ -304,7 +295,7 @@ const useApplicationForm = ({
           website_url:
             formData.buildingCompany === "yes" ? formData.websiteUrl : null,
           video_url: formData.videoUrl || null,
-          linkedin_url: formData.linkedInUrl,
+          linkedin_url: formData.linkedInUrl || null,
           github_url: formData.githubUrl || null,
           x_url: formData.xUrl || null,
           resume_file: resumeFilePath,
@@ -367,7 +358,7 @@ const useApplicationForm = ({
           websiteUrl:
             formData.buildingCompany === "yes" ? formData.websiteUrl : "",
           videoUrl: formData.videoUrl || "",
-          linkedInUrl: formData.linkedInUrl,
+          linkedInUrl: formData.linkedInUrl || "",
           githubUrl: formData.githubUrl || "",
           xUrl: formData.xUrl || "",
           categoryOfInterest: formData.categoryOfInterest || "",
