@@ -232,7 +232,10 @@ const useApplicationForm = ({
       setLoading(true);
 
       try {
-        if (formData.linkedInUrl && !validateLinkedInUrl(formData.linkedInUrl)) {
+        if (
+          formData.linkedInUrl &&
+          !validateLinkedInUrl(formData.linkedInUrl)
+        ) {
           toast.error(
             "Please enter a valid LinkedIn URL (should start with https://www.linkedin.com/).",
           );
@@ -248,8 +251,10 @@ const useApplicationForm = ({
               : formData.university;
         }
 
-        const countryValue = 
-          formData.country === "Other" ? formData.otherCountry : formData.country;
+        const countryValue =
+          formData.country === "Other"
+            ? formData.otherCountry
+            : formData.country;
 
         let resumeFilePath = null;
         let deckFilePath = null;

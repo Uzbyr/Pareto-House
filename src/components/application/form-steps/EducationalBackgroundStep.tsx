@@ -1,4 +1,3 @@
-
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -70,7 +69,9 @@ const EducationalBackgroundStep = memo(
               </Label>
               <Select
                 value={formData.university}
-                onValueChange={(value) => handleSelectChange("university", value)}
+                onValueChange={(value) =>
+                  handleSelectChange("university", value)
+                }
               >
                 <SelectTrigger className="bg-zinc-800 border-zinc-700">
                   <SelectValue placeholder="Select your university" />
@@ -89,7 +90,9 @@ const EducationalBackgroundStep = memo(
           {formData.university === "Other" && (
             <div className="space-y-2">
               <Label htmlFor="otherUniversity">
-                {formData.country === "Other" ? "University" : "Specify University"}
+                {formData.country === "Other"
+                  ? "University"
+                  : "Specify University"}
                 <span className="text-red-500">*</span>
               </Label>
               <Input

@@ -1,4 +1,3 @@
-
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -281,7 +280,7 @@ const PersonalInformationStep = memo(
               ))}
             </SelectContent>
           </Select>
-          
+
           {formData.country === "Other" && (
             <div className="mt-2">
               <Input
