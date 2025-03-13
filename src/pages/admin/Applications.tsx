@@ -1,7 +1,7 @@
 import { useRef } from "react";
 import { Card } from "@/components/ui/card";
 import { useHotkeys } from "react-hotkeys-hook";
-import ApplicationDetailsDialog from "@/components/ApplicationDetailsDialog";
+import ApplicationDetailsDialog from "@/components/admin/ApplicationDetailsDialog";
 import BatchComparisonDialog from "@/components/BatchComparisonDialog";
 import KeyboardShortcutsHelp from "@/components/KeyboardShortcutsHelp";
 import ApplicationFilters from "@/components/admin/ApplicationFilters";

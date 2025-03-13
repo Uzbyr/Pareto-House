@@ -1,3 +1,4 @@
+
 import React, { useEffect, useState } from "react";
 import {
   Dialog,
@@ -5,19 +6,19 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Flag, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Application } from "@/types/application";
 import { supabase } from "@/integrations/supabase/client";
 
-import PersonalInfoTab from "./application-details/PersonalInfoTab";
-import EducationTab from "./application-details/EducationTab";
-import ProjectTab from "./application-details/ProjectTab";
-import CompetitionTab from "./application-details/CompetitionTab";
-import DocumentsTab from "./application-details/DocumentsTab";
-import LinksTab from "./application-details/LinksTab";
+import PersonalInfoSection from "./application-details/PersonalInfoSection";
+import EducationSection from "./application-details/EducationSection";
+import ProjectSection from "./application-details/ProjectSection";
+import CompetitionSection from "./application-details/CompetitionSection";
+import DocumentsSection from "./application-details/DocumentsSection";
+import LinksSection from "./application-details/LinksSection";
 import StatusActions from "./application-details/StatusActions";
+import { Separator } from "@/components/ui/separator";
 
 interface ApplicationDetailsDialogProps {
   application: Application | null;
@@ -145,40 +146,24 @@ const ApplicationDetailsDialog = ({
             />
           )}
 
-          <Tabs defaultValue="personal" className="w-full">
-            <TabsList className="mb-4 bg-zinc-900">
-              <TabsTrigger value="personal">Personal Info</TabsTrigger>
-              <TabsTrigger value="education">Education</TabsTrigger>
-              <TabsTrigger value="project">Project</TabsTrigger>
-              <TabsTrigger value="competition">Competition</TabsTrigger>
-              <TabsTrigger value="documents">Documents</TabsTrigger>
-              <TabsTrigger value="links">Links</TabsTrigger>
-            </TabsList>
-
-            <TabsContent value="personal">
-              <PersonalInfoTab application={application} />
-            </TabsContent>
-
-            <TabsContent value="education">
-              <EducationTab application={application} />
-            </TabsContent>
-
-            <TabsContent value="project">
-              <ProjectTab application={application} />
-            </TabsContent>
-
-            <TabsContent value="competition">
-              <CompetitionTab application={application} />
-            </TabsContent>
-
-            <TabsContent value="documents">
-              <DocumentsTab application={application} secureUrls={secureUrls} />
-            </TabsContent>
-
-            <TabsContent value="links">
-              <LinksTab application={application} />
-            </TabsContent>
-          </Tabs>
+          <div className="space-y-6">
+            <PersonalInfoSection application={application} />
+            <Separator className="border-zinc-700" />
+            
+            <EducationSection application={application} />
+            <Separator className="border-zinc-700" />
+            
+            <ProjectSection application={application} />
+            <Separator className="border-zinc-700" />
+            
+            <CompetitionSection application={application} />
+            <Separator className="border-zinc-700" />
+            
+            <DocumentsSection application={application} secureUrls={secureUrls} />
+            <Separator className="border-zinc-700" />
+            
+            <LinksSection application={application} />
+          </div>
 
           <div className="mt-4 text-xs text-gray-500 border-t border-zinc-700 pt-4">
             <h4 className="mb-1 text-gray-400">Keyboard Shortcuts:</h4>
