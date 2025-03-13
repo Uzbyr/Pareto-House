@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -103,7 +104,8 @@ const Mentors = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300"
+                className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                onClick={() => handleMentorClick(mentor)}
               >
                 <div className="flex items-start gap-4">
                   {mentor.imageUrl ? (
@@ -121,12 +123,9 @@ const Mentors = () => {
                   )}
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
-                      <button
-                        onClick={() => handleMentorClick(mentor)}
-                        className="text-xl font-semibold hover:text-pareto-pink transition-colors text-left"
-                      >
+                      <span className="text-xl font-semibold text-left">
                         {mentor.name}
-                      </button>
+                      </span>
                       <span
                         className="text-lg"
                         aria-label={countryInfo.name}
@@ -144,7 +143,7 @@ const Mentors = () => {
                         </span>
                       </p>
                     )}
-                    <div className="flex gap-3">
+                    <div className="flex gap-3" onClick={(e) => e.stopPropagation()}>
                       <a
                         href={mentor.linkedIn}
                         target="_blank"
