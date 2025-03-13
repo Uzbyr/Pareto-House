@@ -1,4 +1,3 @@
-
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -52,6 +51,13 @@ const undergrads: Undergrad[] = [
     university: "Stanford University",
     achievement: "Founder & CEO at Swish Robotics",
     description: "Building embodied intelligence for the home at Swish Robotics. Through Pareto's network, Shadi connected with leading robotics experts and investors who helped refine his vision for home automation. The fellowship provided critical early-stage funding and technical advisors that accelerated Swish Robotics' product development and go-to-market strategy."
+  },
+  {
+    name: "Zilin Dong",
+    imageUrl: "/lovable-uploads/bd372fdd-df3e-40e1-a62d-ce8a61c518bf.png",
+    university: "Vanderbilt University",
+    achievement: "Founder of Stealth Startup",
+    description: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture capital connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution."
   }
 ];
 
