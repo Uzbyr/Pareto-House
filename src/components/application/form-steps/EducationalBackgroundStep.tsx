@@ -1,3 +1,4 @@
+
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -62,30 +63,35 @@ const EducationalBackgroundStep = memo(
       {(formData.educationLevel === "university" ||
         !formData.educationLevel) && (
         <>
-          <div className="space-y-2">
-            <Label htmlFor="university">
-              University<span className="text-red-500">*</span>
-            </Label>
-            <Select
-              value={formData.university}
-              onValueChange={(value) => handleSelectChange("university", value)}
-            >
-              <SelectTrigger className="bg-zinc-800 border-zinc-700">
-                <SelectValue placeholder="Select your university" />
-              </SelectTrigger>
-              <SelectContent>
-                {availableUniversities.map((uni) => (
-                  <SelectItem key={uni} value={uni}>
-                    {uni}
-                  </SelectItem>
-                ))}
-              </SelectContent>
-            </Select>
-          </div>
+          {formData.country !== "Other" && (
+            <div className="space-y-2">
+              <Label htmlFor="university">
+                University<span className="text-red-500">*</span>
+              </Label>
+              <Select
+                value={formData.university}
+                onValueChange={(value) => handleSelectChange("university", value)}
+              >
+                <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                  <SelectValue placeholder="Select your university" />
+                </SelectTrigger>
+                <SelectContent>
+                  {availableUniversities.map((uni) => (
+                    <SelectItem key={uni} value={uni}>
+                      {uni}
+                    </SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
 
           {formData.university === "Other" && (
             <div className="space-y-2">
-              <Label htmlFor="otherUniversity">Specify University</Label>
+              <Label htmlFor="otherUniversity">
+                {formData.country === "Other" ? "University" : "Specify University"}
+                <span className="text-red-500">*</span>
+              </Label>
               <Input
                 id="otherUniversity"
                 name="otherUniversity"

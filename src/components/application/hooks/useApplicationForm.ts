@@ -26,6 +26,16 @@ const useApplicationForm = ({
   );
   const [isFormDirty, setIsFormDirty] = useState(false);
 
+  // Set university to "Other" when country is "Other"
+  useEffect(() => {
+    if (formData.country === "Other") {
+      setFormData((prev) => ({
+        ...prev,
+        university: "Other",
+      }));
+    }
+  }, [formData.country]);
+
   useEffect(() => {
     if (
       formData.country &&
