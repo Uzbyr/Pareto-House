@@ -103,11 +103,9 @@ const FellowshipPerks = () => {
       <div className="container mx-auto px-4">
         <motion.div
           initial={{
-            opacity: 0,
             y: 20,
           }}
           whileInView={{
-            opacity: 1,
             y: 0,
           }}
           viewport={{
@@ -130,7 +128,7 @@ const FellowshipPerks = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
           {perks.map((perk, index) => (
             <motion.div
-              key={index}
+              key={perk.title}
               initial={{
                 opacity: 0,
                 y: 20,
@@ -146,7 +144,7 @@ const FellowshipPerks = () => {
                 duration: 0.6,
                 delay: index * 0.1,
               }}
-              className="bg-white dark:bg-pareto-black p-8 rounded-lg hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+              className="bg-white dark:bg-pareto-black p-8 rounded-lg"
             >
               <div className="mb-6">{perk.icon}</div>
               <h3 className="text-xl font-semibold mb-3">{perk.title}</h3>
