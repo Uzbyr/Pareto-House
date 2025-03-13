@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Globe, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -51,8 +52,7 @@ const CompetitionSection = ({ application }: CompetitionSectionProps) => {
             </div>
           )}
         {!application.hasCompetitionExperience &&
-          (!application.competitionResults ||
-            application.competitionResults.length === 0) &&
+          !application.competitionResults &&
           (!application.competitiveProfiles ||
             application.competitiveProfiles.length === 0) && (
             <p className="text-gray-400 italic">

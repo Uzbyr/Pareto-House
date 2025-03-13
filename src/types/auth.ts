@@ -1,3 +1,4 @@
+
 import { Session } from "@supabase/supabase-js";
 
 export interface AuthUser {
@@ -32,7 +33,7 @@ export interface Application {
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string;
+  competitionResults?: string; // Changed from string[] to string
   competitiveProfiles?: string[];
   resumeFile?: string;
   deckFile?: string;

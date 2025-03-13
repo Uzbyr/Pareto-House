@@ -1,3 +1,4 @@
+
 export interface Application {
   id: string;
   name: string;
@@ -26,7 +27,7 @@ export interface Application {
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string[];
+  competitionResults?: string; // Changed from string[] to string to match the data format
   competitiveProfiles?: string[];
 }
 

@@ -1,3 +1,4 @@
+
 import { useState, useCallback, useEffect } from "react";
 import { useAuth } from "@/contexts/AuthContext";
 import { Application } from "@/types/application";
@@ -63,7 +64,7 @@ export const useApplicationManagement = () => {
             githubUrl: app.github_url,
             categoryOfInterest: app.category_of_interest,
             hasCompetitionExperience: app.has_competition_experience,
-            competitionResults: app.competition_results,
+            competitionResults: app.competition_results, // This is a string in the database
             competitiveProfiles: app.competitive_profiles || [],
           }),
         );
