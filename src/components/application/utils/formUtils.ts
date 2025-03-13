@@ -1,6 +1,7 @@
 // University data organized by country
 export const universities = {
   "United States": [
+    "MIT",
     "Harvard",
     "Stanford",
     "Berkeley", 
