@@ -1,3 +1,4 @@
+
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -280,6 +281,20 @@ const PersonalInformationStep = memo(
               ))}
             </SelectContent>
           </Select>
+          
+          {formData.country === "Other" && (
+            <div className="mt-2">
+              <Input
+                id="otherCountry"
+                name="otherCountry"
+                placeholder="Enter your country"
+                value={formData.otherCountry}
+                onChange={handleInputChange}
+                className="bg-zinc-800 border-zinc-700"
+                required
+              />
+            </div>
+          )}
         </div>
         <div className="space-y-2">
           <Label htmlFor="nationality">

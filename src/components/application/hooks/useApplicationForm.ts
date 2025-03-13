@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -28,6 +29,7 @@ const useApplicationForm = ({
   useEffect(() => {
     if (
       formData.country &&
+      formData.country !== "Other" &&
       universities[formData.country as keyof typeof universities]
     ) {
       const countryUniversities =
@@ -101,6 +103,18 @@ const useApplicationForm = ({
       }
       if (!validateEmail(formData.email)) {
         toast.error("Please enter a valid email address.");
+        return;
+      }
+      if (!formData.country) {
+        toast.error("Please select your country of residence.");
+        return;
+      }
+      if (formData.country === "Other" && !formData.otherCountry) {
+        toast.error("Please specify your country of residence.");
+        return;
+      }
+      if (!formData.nationality) {
+        toast.error("Please select your nationality.");
         return;
       }
     } else if (currentStep === 2) {
@@ -232,6 +246,10 @@ const useApplicationForm = ({
               : formData.university;
         }
 
+        // Get the actual country value (either from the dropdown or the "other" field)
+        const countryValue = 
+          formData.country === "Other" ? formData.otherCountry : formData.country;
+
         let resumeFilePath = null;
         let deckFilePath = null;
         let memoFilePath = null;
@@ -252,7 +270,7 @@ const useApplicationForm = ({
           first_name: formData.firstName,
           last_name: formData.lastName,
           email: formData.email,
-          country: formData.country,
+          country: countryValue,
           nationality: formData.nationality,
           education_level: formData.educationLevel,
           university:
@@ -308,7 +326,7 @@ const useApplicationForm = ({
           firstName: formData.firstName,
           lastName: formData.lastName,
           email: formData.email,
-          country: formData.country,
+          country: countryValue,
           nationality: formData.nationality,
           educationLevel: formData.educationLevel,
           university:

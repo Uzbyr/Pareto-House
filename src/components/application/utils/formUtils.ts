@@ -1,3 +1,4 @@
+
 // University data organized by country
 export const universities = {
   "United States": [
@@ -73,7 +74,7 @@ export const validateGitHubUrl = (url: string): boolean => {
 };
 
 // List of countries
-export const countries = Object.keys(universities);
+export const countries = [...Object.keys(universities), "Other"];
 
 // Initial form data
 export const initialFormData = {
@@ -81,6 +82,7 @@ export const initialFormData = {
   lastName: "",
   email: "",
   country: "",
+  otherCountry: "",
   nationality: "",
   educationLevel: "university",
   university: "",
