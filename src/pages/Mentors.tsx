@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -15,6 +14,7 @@ import {
 import { ScrollArea } from "@/components/ui/scroll-area";
 import Navigation from "../components/Navigation";
 import { mentors, backlogMentors, Mentor } from "@/data/mentors";
+import Footer from "../components/Footer";
 
 const Mentors = () => {
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
@@ -143,7 +143,10 @@ const Mentors = () => {
                         </span>
                       </p>
                     )}
-                    <div className="flex gap-3" onClick={(e) => e.stopPropagation()}>
+                    <div
+                      className="flex gap-3"
+                      onClick={(e) => e.stopPropagation()}
+                    >
                       <a
                         href={mentor.linkedIn}
                         target="_blank"
@@ -240,6 +243,8 @@ const Mentors = () => {
           </div>
         </DialogContent>
       </Dialog>
+
+      <Footer />
     </div>
   );
 };

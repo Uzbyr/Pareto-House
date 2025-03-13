@@ -22,6 +22,7 @@ import Funnel from "./pages/admin/Funnel";
 import Users from "./pages/admin/Users";
 import Settings from "./pages/admin/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +34,7 @@ const App = () => (
           <Toaster />
           <Sonner />
           <BrowserRouter>
+            <ScrollToTop />
             <Routes>
               {/* Public Routes */}
               <Route path="/" element={<Index />} />

@@ -8,6 +8,7 @@ import {
 } from "../components/ui/accordion";
 import BackToHomeButton from "../components/application/BackToHomeButton";
 import Navigation from "../components/Navigation";
+import Footer from "../components/Footer";
 
 const FAQ = () => {
   const faqSections = [
@@ -150,6 +151,7 @@ const FAQ = () => {
           </div>
         </motion.div>
       </div>
+      <Footer />
     </div>
   );
 };

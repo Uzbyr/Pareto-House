@@ -4,127 +4,127 @@ export type Json =
   | boolean
   | null
   | { [key: string]: Json | undefined }
-  | Json[]
+  | Json[];
 
 export type Database = {
   public: {
     Tables: {
       applications: {
         Row: {
-          building_company: string
-          category_of_interest: string | null
-          company_context: string | null
-          competition_results: string | null
-          competitive_profiles: string[] | null
-          country: string
-          deck_file: string | null
-          education_level: string
-          email: string
-          first_name: string
-          flagged: boolean | null
-          github_url: string | null
-          graduation_year: string
-          has_competition_experience: string | null
-          high_school: string | null
-          id: string
-          last_name: string
-          linkedin_url: string
-          major: string | null
-          memo_file: string | null
-          nationality: string
-          preparatory_classes: string | null
-          resume_file: string | null
-          status: string
-          student_societies: string | null
-          submission_date: string
-          university: string | null
-          video_url: string | null
-          website_url: string | null
-          x_url: string | null
-        }
+          building_company: string;
+          category_of_interest: string | null;
+          company_context: string | null;
+          competition_results: string | null;
+          competitive_profiles: string[] | null;
+          country: string;
+          deck_file: string | null;
+          education_level: string;
+          email: string;
+          first_name: string;
+          flagged: boolean | null;
+          github_url: string | null;
+          graduation_year: string;
+          has_competition_experience: string | null;
+          high_school: string | null;
+          id: string;
+          last_name: string;
+          linkedin_url: string;
+          major: string | null;
+          memo_file: string | null;
+          nationality: string;
+          preparatory_classes: string | null;
+          resume_file: string | null;
+          status: string;
+          student_societies: string | null;
+          submission_date: string;
+          university: string | null;
+          video_url: string | null;
+          website_url: string | null;
+          x_url: string | null;
+        };
         Insert: {
-          building_company: string
-          category_of_interest?: string | null
-          company_context?: string | null
-          competition_results?: string | null
-          competitive_profiles?: string[] | null
-          country: string
-          deck_file?: string | null
-          education_level?: string
-          email: string
-          first_name: string
-          flagged?: boolean | null
-          github_url?: string | null
-          graduation_year: string
-          has_competition_experience?: string | null
-          high_school?: string | null
-          id?: string
-          last_name: string
-          linkedin_url?: string
-          major?: string | null
-          memo_file?: string | null
-          nationality: string
-          preparatory_classes?: string | null
-          resume_file?: string | null
-          status?: string
-          student_societies?: string | null
-          submission_date?: string
-          university?: string | null
-          video_url?: string | null
-          website_url?: string | null
-          x_url?: string | null
-        }
+          building_company: string;
+          category_of_interest?: string | null;
+          company_context?: string | null;
+          competition_results?: string | null;
+          competitive_profiles?: string[] | null;
+          country: string;
+          deck_file?: string | null;
+          education_level?: string;
+          email: string;
+          first_name: string;
+          flagged?: boolean | null;
+          github_url?: string | null;
+          graduation_year: string;
+          has_competition_experience?: string | null;
+          high_school?: string | null;
+          id?: string;
+          last_name: string;
+          linkedin_url?: string;
+          major?: string | null;
+          memo_file?: string | null;
+          nationality: string;
+          preparatory_classes?: string | null;
+          resume_file?: string | null;
+          status?: string;
+          student_societies?: string | null;
+          submission_date?: string;
+          university?: string | null;
+          video_url?: string | null;
+          website_url?: string | null;
+          x_url?: string | null;
+        };
         Update: {
-          building_company?: string
-          category_of_interest?: string | null
-          company_context?: string | null
-          competition_results?: string | null
-          competitive_profiles?: string[] | null
-          country?: string
-          deck_file?: string | null
-          education_level?: string
-          email?: string
-          first_name?: string
-          flagged?: boolean | null
-          github_url?: string | null
-          graduation_year?: string
-          has_competition_experience?: string | null
-          high_school?: string | null
-          id?: string
-          last_name?: string
-          linkedin_url?: string
-          major?: string | null
-          memo_file?: string | null
-          nationality?: string
-          preparatory_classes?: string | null
-          resume_file?: string | null
-          status?: string
-          student_societies?: string | null
-          submission_date?: string
-          university?: string | null
-          video_url?: string | null
-          website_url?: string | null
-          x_url?: string | null
-        }
-        Relationships: []
-      }
-    }
+          building_company?: string;
+          category_of_interest?: string | null;
+          company_context?: string | null;
+          competition_results?: string | null;
+          competitive_profiles?: string[] | null;
+          country?: string;
+          deck_file?: string | null;
+          education_level?: string;
+          email?: string;
+          first_name?: string;
+          flagged?: boolean | null;
+          github_url?: string | null;
+          graduation_year?: string;
+          has_competition_experience?: string | null;
+          high_school?: string | null;
+          id?: string;
+          last_name?: string;
+          linkedin_url?: string;
+          major?: string | null;
+          memo_file?: string | null;
+          nationality?: string;
+          preparatory_classes?: string | null;
+          resume_file?: string | null;
+          status?: string;
+          student_societies?: string | null;
+          submission_date?: string;
+          university?: string | null;
+          video_url?: string | null;
+          website_url?: string | null;
+          x_url?: string | null;
+        };
+        Relationships: [];
+      };
+    };
     Views: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Functions: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     Enums: {
-      [_ in never]: never
-    }
+      [_ in never]: never;
+    };
     CompositeTypes: {
-      [_ in never]: never
-    }
-  }
-}
+      [_ in never]: never;
+    };
+  };
+};
 
-type PublicSchema = Database[Extract<keyof Database, "public">]
+type PublicSchema = Database[Extract<keyof Database, "public">];
 
 export type Tables<
   PublicTableNameOrOptions extends
@@ -137,7 +137,7 @@ export type Tables<
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? (Database[PublicTableNameOrOptions["schema"]]["Tables"] &
       Database[PublicTableNameOrOptions["schema"]]["Views"])[TableName] extends {
-      Row: infer R
+      Row: infer R;
     }
     ? R
     : never
@@ -145,11 +145,11 @@ export type Tables<
         PublicSchema["Views"])
     ? (PublicSchema["Tables"] &
         PublicSchema["Views"])[PublicTableNameOrOptions] extends {
-        Row: infer R
+        Row: infer R;
       }
       ? R
       : never
-    : never
+    : never;
 
 export type TablesInsert<
   PublicTableNameOrOptions extends
@@ -160,17 +160,17 @@ export type TablesInsert<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Insert: infer I
+      Insert: infer I;
     }
     ? I
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Insert: infer I
+        Insert: infer I;
       }
       ? I
       : never
-    : never
+    : never;
 
 export type TablesUpdate<
   PublicTableNameOrOptions extends
@@ -181,17 +181,17 @@ export type TablesUpdate<
     : never = never,
 > = PublicTableNameOrOptions extends { schema: keyof Database }
   ? Database[PublicTableNameOrOptions["schema"]]["Tables"][TableName] extends {
-      Update: infer U
+      Update: infer U;
     }
     ? U
     : never
   : PublicTableNameOrOptions extends keyof PublicSchema["Tables"]
     ? PublicSchema["Tables"][PublicTableNameOrOptions] extends {
-        Update: infer U
+        Update: infer U;
       }
       ? U
       : never
-    : never
+    : never;
 
 export type Enums<
   PublicEnumNameOrOptions extends
@@ -204,14 +204,14 @@ export type Enums<
   ? Database[PublicEnumNameOrOptions["schema"]]["Enums"][EnumName]
   : PublicEnumNameOrOptions extends keyof PublicSchema["Enums"]
     ? PublicSchema["Enums"][PublicEnumNameOrOptions]
-    : never
+    : never;
 
 export type CompositeTypes<
   PublicCompositeTypeNameOrOptions extends
     | keyof PublicSchema["CompositeTypes"]
     | { schema: keyof Database },
   CompositeTypeName extends PublicCompositeTypeNameOrOptions extends {
-    schema: keyof Database
+    schema: keyof Database;
   }
     ? keyof Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"]
     : never = never,
@@ -219,4 +219,4 @@ export type CompositeTypes<
   ? Database[PublicCompositeTypeNameOrOptions["schema"]]["CompositeTypes"][CompositeTypeName]
   : PublicCompositeTypeNameOrOptions extends keyof PublicSchema["CompositeTypes"]
     ? PublicSchema["CompositeTypes"][PublicCompositeTypeNameOrOptions]
-    : never
+    : never;
