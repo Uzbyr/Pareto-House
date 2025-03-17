@@ -15,8 +15,7 @@ const Index = () => {
   const handleAdminLogin = () => {
     navigate("/admin/login");
   };
-  return (
-    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
+  return <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       <Navigation />
 
       {/* Hero Section */}
@@ -37,59 +36,40 @@ const Index = () => {
             </h2>
           </div>
 
-          <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto">
-            Join a community of exceptional undergrads, access unparalleled
-            opportunities, and accelerate your path to the top of the tech
-            ecosystem.
-          </p>
+          <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto">Join a community of the top 0.1% of STEM undergrads worldwide, access unparalleled opportunities, and accelerate your path to the top of the tech ecosystem.</p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-20">
-            <Link
-              to="/apply"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
-            >
+            <Link to="/apply" className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm">
               Apply Now
               <ArrowRight className="w-5 h-5" />
             </Link>
-            <a
-              href="https://pareto20.com?ref=pareto-fellowship"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"
-            >
+            <a href="https://pareto20.com?ref=pareto-fellowship" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20">
               About Pareto
             </a>
           </div>
 
           {/* Stats Section */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
-            {[
-              {
-                number: "50",
-                label: "Fellows Per Batch",
-              },
-              {
-                number: "30+",
-                label: "Universities",
-              },
-              {
-                number: "$100K",
-                label: "Potential Check",
-              },
-              {
-                number: "50+",
-                label: "Tech Partners",
-              },
-            ].map((stat, index) => (
-              <div key={index} className="text-center">
+            {[{
+            number: "50",
+            label: "Fellows Per Batch"
+          }, {
+            number: "30+",
+            label: "Universities"
+          }, {
+            number: "$100K",
+            label: "Potential Check"
+          }, {
+            number: "50+",
+            label: "Tech Partners"
+          }].map((stat, index) => <div key={index} className="text-center">
                 <div className="text-3xl md:text-4xl font-bold text-pareto-pink mb-2">
                   {stat.number}
                 </div>
                 <div className="text-sm text-black/60 dark:text-white/60 uppercase tracking-wider">
                   {stat.label}
                 </div>
-              </div>
-            ))}
+              </div>)}
           </div>
         </div>
 
@@ -131,19 +111,13 @@ const Index = () => {
       <div className="border-t border-black/10 dark:border-white/10 py-6">
         <div className="container mx-auto px-4">
           <div className="flex justify-end">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
-              onClick={handleAdminLogin}
-            >
+            <Button variant="ghost" size="sm" className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink" onClick={handleAdminLogin}>
               <Lock className="w-4 h-4 mr-2" />
               Admin Login
             </Button>
           </div>
         </div>
       </div>
-    </div>
-  );
+    </div>;
 };
 export default Index;
