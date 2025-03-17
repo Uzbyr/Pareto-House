@@ -10,7 +10,6 @@ import FinalCTA from "../components/FinalCTA";
 import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
-
 const Index = () => {
   const navigate = useNavigate();
   const handleAdminLogin = () => {
@@ -121,5 +120,4 @@ const Index = () => {
       </div>
     </div>;
 };
-
 export default Index;
