@@ -17,6 +17,7 @@ import {
   DialogTitle,
   DialogDescription,
 } from "./ui/dialog";
+
 const targetUniversities = {
   "United States": [
     "Harvard University",
@@ -64,6 +65,7 @@ const targetUniversities = {
     "Hebrew University of Jerusalem",
   ],
 };
+
 const perks = [
   {
     icon: <UserRoundCog className="w-12 h-12 text-pareto-pink" />,
@@ -75,7 +77,7 @@ const perks = [
     icon: <Users className="w-12 h-12 text-pareto-pink" />,
     title: "Elite Peer Network",
     description:
-      "The most exclusive community of amazingly talented and ambitious undergrads from all over the world",
+      "The world's most elite group of young generational talents in Mathematics, Physics, and Computer Science.",
   },
   {
     icon: <PiggyBank className="w-12 h-12 text-pareto-pink" />,
@@ -96,6 +98,7 @@ const perks = [
       "Access to internships at the most competitive startups in Silicon Valley and connections with people who can transform your career trajectory",
   },
 ];
+
 const FellowshipPerks = () => {
   const [showUniversities, setShowUniversities] = useState(false);
   return (
@@ -235,4 +238,5 @@ const FellowshipPerks = () => {
     </div>
   );
 };
+
 export default FellowshipPerks;
