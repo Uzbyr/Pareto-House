@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -23,7 +22,7 @@ const Navigation = () => {
               className="w-36 md:w-44"
             />
           </Link>
-          
+
           <div className="flex items-center gap-2">
             {/* Desktop Navigation */}
             <div className="hidden md:flex items-center gap-2">
@@ -58,10 +57,10 @@ const Navigation = () => {
                 FAQ
               </Link>
             </div>
-            
+
             {/* Mobile Navigation */}
             <MobileNav />
-            
+
             {/* Apply Now Button - Always visible */}
             <Link
               to="/apply"

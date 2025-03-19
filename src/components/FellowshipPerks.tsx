@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -14,9 +13,9 @@ const FellowshipPerks = () => {
   return (
     <div className="bg-black/5 dark:bg-white/5 py-32">
       <div className="container mx-auto px-4">
-        <SectionHeader 
-          title="Fellowship Perks" 
-          description="As a Pareto Fellow, you get access to exclusive benefits and opportunities" 
+        <SectionHeader
+          title="Fellowship Perks"
+          description="As a Pareto Fellow, you get access to exclusive benefits and opportunities"
         />
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
@@ -63,9 +62,9 @@ const FellowshipPerks = () => {
         </motion.div>
       </div>
 
-      <UniversitiesDialog 
-        open={showUniversities} 
-        onOpenChange={setShowUniversities} 
+      <UniversitiesDialog
+        open={showUniversities}
+        onOpenChange={setShowUniversities}
       />
     </div>
   );

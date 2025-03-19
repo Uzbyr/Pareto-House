@@ -1,4 +1,3 @@
-
 import React from "react";
 import { School } from "lucide-react";
 import {
@@ -33,26 +32,24 @@ const UniversitiesDialog: React.FC<UniversitiesDialogProps> = ({
         </DialogHeader>
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-4">
-          {Object.entries(targetUniversities).map(
-            ([country, universities]) => (
-              <div
-                key={country}
-                className="bg-black/5 dark:bg-white/5 p-4 rounded-lg"
-              >
-                <h3 className="font-semibold text-lg mb-2">{country}</h3>
-                <ul className="space-y-1">
-                  {universities.map((university, index) => (
-                    <li
-                      key={index}
-                      className="text-sm text-black/70 dark:text-white/70"
-                    >
-                      {university}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )
-          )}
+          {Object.entries(targetUniversities).map(([country, universities]) => (
+            <div
+              key={country}
+              className="bg-black/5 dark:bg-white/5 p-4 rounded-lg"
+            >
+              <h3 className="font-semibold text-lg mb-2">{country}</h3>
+              <ul className="space-y-1">
+                {universities.map((university, index) => (
+                  <li
+                    key={index}
+                    className="text-sm text-black/70 dark:text-white/70"
+                  >
+                    {university}
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
         </div>
       </DialogContent>
     </Dialog>

@@ -16,7 +16,7 @@ const undergrads: Undergrad[] = [
     university: "University of Oxford",
     achievement: "Co-Founder at Canopy Labs",
     description:
-      "Building virtual humans that are indistinguishable from real ones. Through Pareto's network, Anu connected with top AI researchers and secured early investment that helped accelerate his venture's development and recruit key engineering talent.",
+      "As a founder, partnering with Pareto has been one of the best decisions we’ve made. Their level of involvement goes way beyond typical investors—they’ve been hands-on in opening doors to helping us raise, shaping our go-to-market approach, and accelerating us in every way. Having Pareto on board feels like having an extension of our own team, genuinely invested in our long-term success.",
   },
   {
     name: "Elias Fizesan",
@@ -24,7 +24,7 @@ const undergrads: Undergrad[] = [
     university: "Columbia University",
     achievement: "Co-Founder at Canopy Labs",
     description:
-      "Building virtual humans that are indistinguishable from real ones. Pareto's mentorship program and investor connections helped Elias refine his vision and secure the initial funding round that made the company's breakthrough technology possible.",
+      "Pareto has been a force of nature when it comes to supporting founders after partnering with them. They've truly had an immeasurable impact on our company, which is rare to find among investors. From assisting with hiring and network expansion to GTM strategy and customer acquisition, Pareto has you covered in every way!",
   },
   {
     name: "Marieliesse Gouilliard",
@@ -56,7 +56,7 @@ const undergrads: Undergrad[] = [
     university: "Stanford University",
     achievement: "Founder & CEO at Swish Robotics",
     description:
-      "Building embodied intelligence for the home at Swish Robotics. Through Pareto's network, Shadi connected with leading robotics experts and investors who helped refine his vision for home automation. The fellowship provided critical early-stage funding and technical advisors that accelerated Swish Robotics' product development and go-to-market strategy.",
+      "Pareto has been instrumental in building Swish, providing invaluable support - whether through investor and partner introductions, GTM strategy discussions, or connecting us with like-minded founders. The team is engaged, genuine, and truly invested in our success - we’re proud to call them our partners.",
   },
   {
     name: "Zilin Dong",

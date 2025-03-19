@@ -1,4 +1,3 @@
-
 export const targetUniversities = {
   "United States": [
     "Harvard University",

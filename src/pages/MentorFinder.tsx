@@ -64,7 +64,7 @@ const mentorsData: Mentor[] = [
     linkedIn: "https://www.linkedin.com/in/abhiramesh/",
   },
   {
-    name: "Zach Bookman",
+    name: "Zac Bookman",
     country: "USA",
     expertise: [
       "government technology",

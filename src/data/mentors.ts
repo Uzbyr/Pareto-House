@@ -35,10 +35,10 @@ export const mentors: Mentor[] = [
     country: "USA",
   },
   {
-    name: "Zach Bookman",
+    name: "Zac Bookman",
     linkedIn: "https://www.linkedin.com/in/zacharybookman/",
     description: "Co-founder & CEO at OpenGov",
-    bio: "Zach Bookman is the co-founder and CEO of OpenGov, a technology platform that provides cloud-based solutions for public sector budgeting, performance management, and citizen engagement. He envisions a more transparent and efficient government through data-driven decision-making. Bookman's leadership reflects a commitment to civic innovation and the modernization of public-sector tools. By partnering with governments, he aims to optimize resource allocation and enhance public trust.",
+    bio: "Zac Bookman is the co-founder and CEO of OpenGov, a technology platform that provides cloud-based solutions for public sector budgeting, performance management, and citizen engagement. He envisions a more transparent and efficient government through data-driven decision-making. Bookman's leadership reflects a commitment to civic innovation and the modernization of public-sector tools. By partnering with governments, he aims to optimize resource allocation and enhance public trust.",
     imageUrl: "/lovable-uploads/1cc17b96-3462-4d26-974f-15ba3628034c.png",
     country: "USA",
   },

@@ -1,4 +1,3 @@
-
 import React from "react";
 import { motion } from "framer-motion";
 
@@ -7,7 +6,10 @@ interface SectionHeaderProps {
   description: string;
 }
 
-const SectionHeader: React.FC<SectionHeaderProps> = ({ title, description }) => {
+const SectionHeader: React.FC<SectionHeaderProps> = ({
+  title,
+  description,
+}) => {
   return (
     <motion.div
       initial={{

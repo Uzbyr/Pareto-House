@@ -1,12 +1,11 @@
-
 import React from "react";
 import { motion } from "framer-motion";
-import { 
-  UserRoundCog, 
-  Users, 
-  PiggyBank, 
-  Cloud, 
-  TrendingUp 
+import {
+  UserRoundCog,
+  Users,
+  PiggyBank,
+  Cloud,
+  TrendingUp,
 } from "lucide-react";
 
 interface PerkCardProps {
@@ -17,12 +16,12 @@ interface PerkCardProps {
   onShowUniversities?: () => void;
 }
 
-const PerkCard: React.FC<PerkCardProps> = ({ 
-  title, 
-  description, 
-  iconType, 
-  index, 
-  onShowUniversities 
+const PerkCard: React.FC<PerkCardProps> = ({
+  title,
+  description,
+  iconType,
+  index,
+  onShowUniversities,
 }) => {
   // Map icon type to the appropriate Lucide icon component
   const renderIcon = () => {
@@ -78,9 +77,7 @@ const PerkCard: React.FC<PerkCardProps> = ({
           </p>
         </div>
       ) : (
-        <p className="text-black/70 dark:text-white/70">
-          {description}
-        </p>
+        <p className="text-black/70 dark:text-white/70">{description}</p>
       )}
     </motion.div>
   );
