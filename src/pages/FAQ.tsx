@@ -163,7 +163,7 @@ const FAQ = () => {
                 <h2 className="text-2xl font-semibold text-pareto-pink">
                   {section.title}
                 </h2>
-                <Accordion type="multiple" collapsible className="space-y-4">
+                <Accordion type="multiple" className="space-y-4">
                   {section.items.map((item, itemIndex) => (
                     <AccordionItem
                       key={itemIndex}
