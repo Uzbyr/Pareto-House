@@ -16,14 +16,27 @@ const FAQ = () => {
       title: "General Information",
       items: [
         {
-          question: "What is the Pareto Fellowship?",
+          question: "What exactly is the Pareto Fellowship?",
           answer:
-            "The Pareto Fellowship is an undergraduate program designed to empower emerging leaders and innovators. The fellowship provides mentorship, professional development, and hands-on project or research opportunities, all inspired by the Pareto Principle—that focusing on a few critical areas can drive significant impact.",
+            "The Pareto Fellowship is an elite community designed to nurture extraordinary undergraduates excelling in mathematics, computer science, physics, and entrepreneurship. Our goal is to empower fellows with mentorship, resources, and connections to amplify their potential and change their career trajectory.",
         },
         {
-          question: "Why is it called the Pareto Fellowship?",
-          answer:
-            'The name "Pareto" is inspired by the Pareto Principle (also known as the 80/20 rule), which suggests that a small number of causes can lead to a large portion of the outcomes. Our program embraces this philosophy by helping fellows focus on key challenges and opportunities to maximize their impact.',
+          question: 'Why the name "Pareto Fellowship"?',
+          answer: (
+            <div>
+              The fellowship is named after Pareto because it's managed and
+              funded by{" "}
+              <a
+                className="text-pareto-pink underline"
+                target="_blank"
+                href="https://pareto20.com?ref=pareto-fellowship"
+              >
+                Pareto
+              </a>
+              , a small group of dedicated individuals who invest in and build
+              innovative companies.
+            </div>
+          ),
         },
       ],
     },
@@ -33,17 +46,27 @@ const FAQ = () => {
         {
           question: "Who is eligible to apply?",
           answer:
-            "The fellowship is open to undergraduate students enrolled in accredited institutions. Ideal candidates typically have a strong academic record, demonstrated leadership potential, and a passion for innovation. Specific eligibility criteria—including academic standing, field of study, or year of study—are detailed on our application page.",
+            "We accept undergraduate students from all over the world. It's highly recommended that applicants have demonstrated deep interest or even obsession with STEM fields and/or computer science. If you consider yourself part of the top 0.1% of the next generation's best engineers, researchers, and founders, this fellowship is designed for you.",
         },
         {
           question: "How do I apply for the fellowship?",
-          answer:
-            "Applications are submitted online through our dedicated application portal. Prospective fellows will need to provide a resume, a statement of purpose outlining their goals and interests, academic transcripts, and letters of recommendation. Detailed application instructions can be found on our website.",
+          answer: (
+            <div>
+              Applications can be submitted through this very website. You will
+              need to provide details about your background, achievements a nd
+              interests. You can apply{" "}
+              <Link to="/apply" className="text-pareto-pink underline">
+                {" "}
+                here
+              </Link>
+              .
+            </div>
+          ),
         },
         {
-          question: "What is the application deadline?",
+          question: "When is the application deadline?",
           answer:
-            "Application deadlines may vary by cycle. Please refer to our official website for the most current deadline and timeline information.",
+            "The application deadline for our next cohort is the 30th of April. We encourage applying early as we review applications on a rolling basis.",
         },
       ],
     },
@@ -51,25 +74,19 @@ const FAQ = () => {
       title: "Selection Process & Program Details",
       items: [
         {
-          question: "What does the selection process entail?",
+          question: "What does the selection process look like?",
           answer:
-            "Our selection process begins with a thorough review of application materials. Shortlisted candidates are then invited to participate in an interview. The selection committee evaluates applications based on academic achievements, leadership potential, innovative mindset, and alignment with the fellowship's mission.",
+            "Our selection process involves an initial screening, followed by interviews with the Pareto team and selected mentors. Candidates will also participate in a brief, engaging challenge designed to demonstrate their creativity, analytical skills, and problem-solving abilities.",
         },
         {
-          question: "What is the duration of the fellowship?",
+          question: "How long does the fellowship last?",
           answer:
-            "The fellowship duration varies by program cycle. Detailed information about the program's schedule—including orientation sessions and project phases—is provided upon selection.",
+            "Students remain fellows for the entirety of their undergraduate studies, from freshman year through senior year, benefiting from continuous support, mentorship, and community engagement. Fellows can join at any point during their undergraduate period.",
         },
         {
-          question:
-            "What types of projects or initiatives will fellows engage in?",
+          question: "What commitments are expected of fellows?",
           answer:
-            "Fellows can expect to work on projects that may include research, community initiatives, or collaborative ventures with industry partners. The specific nature of the projects is tailored to both the fellows' interests and the program's focus areas, ensuring real-world experience and skill development.",
-        },
-        {
-          question: "Are there any commitments or obligations for fellows?",
-          answer:
-            "Yes. Fellows are expected to actively participate in scheduled events, workshops, and project work. This commitment ensures a collaborative learning environment and maximizes the benefits of the fellowship for everyone involved.",
+            "Fellows commit to actively participating in mentorship sessions, regular cohort meetings, and completing their selected project. While highly flexible, the fellowship values proactive engagement and genuine collaboration.",
         },
       ],
     },
@@ -77,14 +94,14 @@ const FAQ = () => {
       title: "Benefits & Support",
       items: [
         {
-          question: "What benefits do fellows receive?",
+          question: "What specific benefits do fellows receive?",
           answer:
-            "Fellows gain access to a network of mentors, industry professionals, and academic leaders. Benefits include:\n\n• Mentorship and guidance from experienced professionals\n• Access to exclusive networking events and workshops\n• Opportunities for hands-on project experience\n• In some cases, financial support or a stipend to cover academic or project-related expenses\n\nFor a detailed breakdown of benefits, please visit our benefits page.",
+            "Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and “lifetime membership” in our community.",
         },
         {
-          question: "Will there be an orientation or training provided?",
+          question: "Is there an orientation or training provided?",
           answer:
-            "Yes. All selected fellows participate in an orientation session at the start of the program. Ongoing training and professional development workshops are also integral parts of the fellowship experience.",
+            "No formal training is provided. The fellowship is a platform that gathers the best people within the same community, enabling them to experience unforgettable moments together and accelerating their path to becoming leaders in the tech and research ecosystems.",
         },
       ],
     },
@@ -94,12 +111,28 @@ const FAQ = () => {
         {
           question: "How competitive is the Pareto Fellowship?",
           answer:
-            "The fellowship is competitive, with selections based on academic excellence, leadership, and a commitment to innovative problem-solving. We encourage all eligible candidates to apply and share their unique perspectives.",
+            "The Pareto Fellowship is extremely competitive. Most fellows are medalists - often multiple gold medalists - in prestigious international competitions like IMO, IPhO, IOI, and others. We do not focus on diversity for diversity's sake; we exclusively seek the best of the best.",
         },
         {
-          question: "Who can I contact if I have more questions?",
-          answer:
-            "If you need further information or assistance during the application process, please contact our support team. We're here to help!",
+          question: "Who can I reach out to if I have further questions?",
+          answer: (
+            <div>
+              We're here to help! For any inquiries, please contact Jules at{" "}
+              <a
+                className="text-pareto-pink underline"
+                href="mailto:jules@pareto20.com"
+              >
+                jules@pareto20.com
+              </a>{" "}
+              or{" "}
+              <a
+                className="text-pareto-pink underline"
+                href="https://wa.me/33777002975"
+              >
+                +33777002975
+              </a>
+            </div>
+          ),
         },
       ],
     },
@@ -130,7 +163,7 @@ const FAQ = () => {
                 <h2 className="text-2xl font-semibold text-pareto-pink">
                   {section.title}
                 </h2>
-                <Accordion type="single" collapsible className="space-y-4">
+                <Accordion type="multiple" collapsible className="space-y-4">
                   {section.items.map((item, itemIndex) => (
                     <AccordionItem
                       key={itemIndex}
