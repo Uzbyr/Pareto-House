@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -11,97 +10,90 @@ import FinalCTA from "../components/FinalCTA";
 import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
-import { Hero } from "../components/ui/hero";
-import { BackgroundPaths } from "../components/ui/background-paths";
-
 const Index = () => {
   const navigate = useNavigate();
   const handleAdminLogin = () => {
     navigate("/admin/login");
   };
-  
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       <Navigation />
 
-      {/* Hero Section with Background Paths */}
-      <div className="relative min-h-[80vh]">
-        <BackgroundPaths 
-          title="Pareto Fellowship" 
-          buttonText="Discover Excellence"
-          buttonLink="/apply"
-          showButton={false}
-        />
-        
-        <Hero
-          title={
-            <div>
-              <div className="text-pareto-pink mb-8 tracking-tight relative inline-block">
-                The Pareto Fellowship
+      {/* Hero Section */}
+      <div className="container mx-auto px-4 pt-36 md:pt-56 pb-20 flex flex-col justify-center min-h-[80vh]">
+        <div className="max-w-4xl mx-auto text-center">
+          <div className="mb-8">
+            <h1 className="text-pareto-pink text-5xl md:text-6xl lg:text-7xl font-bold mb-8 tracking-tight relative inline-block">
+              The Pareto Fellowship
+              <span className="hover-underline-animation"></span>
+            </h1>
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold mb-6 tracking-tight leading-tight inline-block">
+              The Most Ambitious{" "}
+              <span className="title-hover text-pareto-pink relative inline-block">
+                Undergraduate
                 <span className="hover-underline-animation"></span>
-              </div>
-              <div className="mb-6 tracking-tight leading-tight inline-block">
-                The Most Ambitious{" "}
-                <span className="title-hover text-pareto-pink relative inline-block">
-                  Undergraduate
-                  <span className="hover-underline-animation"></span>
-                </span>{" "}
-                Community
-              </div>
-            </div>
-          }
-          subtitle="Join a community of the top 0.1% of STEM undergrads worldwide, access unparalleled opportunities, and accelerate your path to the top of the tech ecosystem."
-          actions={[
-            {
-              label: "Apply Now",
-              href: "/apply",
-              variant: "pink",
-            },
-            {
-              label: "About Pareto",
-              href: "https://pareto20.com?ref=pareto-fellowship",
-              variant: "outline",
-            },
-          ]}
-          actionsClassName="mt-8 mb-20"
-        />
-      </div>
+              </span>{" "}
+              Community
+            </h2>
+          </div>
 
-      {/* Stats Section */}
-      <div className="container mx-auto px-4">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
-          {[
-            {
-              number: "50",
-              label: "Fellows Per Batch",
-            },
-            {
-              number: "30+",
-              label: "Universities",
-            },
-            {
-              number: "$100K",
-              label: "Potential Check",
-            },
-            {
-              number: "50+",
-              label: "Tech Partners",
-            },
-          ].map((stat, index) => (
-            <div key={index} className="text-center">
-              <div className="text-3xl md:text-4xl font-bold text-pareto-pink mb-2">
-                {stat.number}
+          <p className="text-xl md:text-2xl text-black/80 dark:text-white/80 mb-16 max-w-2xl mx-auto">
+            Join a community of the top 0.1% of STEM undergrads worldwide,
+            access unparalleled opportunities, and accelerate your path to the
+            top of the tech ecosystem.
+          </p>
+
+          <div className="flex flex-wrap gap-4 justify-center mb-20">
+            <Link
+              to="/apply"
+              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
+            >
+              Apply Now
+              <ArrowRight className="w-5 h-5" />
+            </Link>
+            <a
+              href="https://pareto20.com?ref=pareto-fellowship"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-2 px-8 py-4 bg-black/10 dark:bg-white/10 text-black dark:text-white hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-semibold rounded-sm border border-black/20 dark:border-white/20"
+            >
+              About Pareto
+            </a>
+          </div>
+
+          {/* Stats Section */}
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 max-w-3xl mx-auto mb-20">
+            {[
+              {
+                number: "50",
+                label: "Fellows Per Batch",
+              },
+              {
+                number: "30+",
+                label: "Universities",
+              },
+              {
+                number: "$100K",
+                label: "Potential Check",
+              },
+              {
+                number: "50+",
+                label: "Tech Partners",
+              },
+            ].map((stat, index) => (
+              <div key={index} className="text-center">
+                <div className="text-3xl md:text-4xl font-bold text-pareto-pink mb-2">
+                  {stat.number}
+                </div>
+                <div className="text-sm text-black/60 dark:text-white/60 uppercase tracking-wider">
+                  {stat.label}
+                </div>
               </div>
-              <div className="text-sm text-black/60 dark:text-white/60 uppercase tracking-wider">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
 
-      {/* Universities Section */}
-      <div className="container mx-auto px-4">
+        {/* Universities Section */}
         <div className="relative overflow-hidden py-10 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5 rounded-lg mt-20">
           <div className="absolute inset-0 bg-gradient-to-r from-white via-transparent to-white dark:from-pareto-black dark:via-transparent dark:to-pareto-black z-10 pointer-events-none" />
           <h2 className="text-sm uppercase tracking-widest mb-6 text-pareto-pink text-center relative z-20">
