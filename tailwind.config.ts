@@ -1,4 +1,3 @@
-
 import type { Config } from "tailwindcss";
 
 export default {
@@ -39,8 +38,6 @@ export default {
         "fade-up": "fadeUp 0.5s ease-out forwards",
         "fade-in": "fadeIn 0.5s ease-out forwards",
         scroll: "scroll 20s linear infinite",
-        "star-movement-top": "starMovementTop 6s linear infinite",
-        "star-movement-bottom": "starMovementBottom 6s linear infinite",
       },
       keyframes: {
         fadeUp: {
@@ -54,14 +51,6 @@ export default {
         scroll: {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
-        },
-        starMovementTop: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(100%)" },
-        },
-        starMovementBottom: {
-          "0%": { transform: "translateX(0%)" },
-          "100%": { transform: "translateX(-100%)" },
         },
       },
     },
