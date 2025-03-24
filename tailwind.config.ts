@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -52,6 +53,9 @@ export default {
           "0%": { transform: "translateX(0)" },
           "100%": { transform: "translateX(-50%)" },
         },
+      },
+      backgroundImage: {
+        "gradient-conic": "conic-gradient(var(--conic-position), var(--tw-gradient-stops))",
       },
     },
   },
