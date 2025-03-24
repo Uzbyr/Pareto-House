@@ -1,3 +1,4 @@
+
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -10,6 +11,8 @@ import FinalCTA from "../components/FinalCTA";
 import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
+import { StarBorder } from "../components/ui/star-border";
+
 const Index = () => {
   const navigate = useNavigate();
   const handleAdminLogin = () => {
@@ -44,13 +47,16 @@ const Index = () => {
           </p>
 
           <div className="flex flex-wrap gap-4 justify-center mb-20">
-            <Link
-              to="/apply"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-lg font-semibold rounded-sm"
+            <StarBorder 
+              as={Link} 
+              to="/apply" 
+              color="#FFC0CB"
+              className="group text-lg font-semibold"
             >
               Apply Now
-              <ArrowRight className="w-5 h-5" />
-            </Link>
+              <ArrowRight className="inline-block w-5 h-5 ml-2 transition-transform group-hover:translate-x-1" />
+            </StarBorder>
+            
             <a
               href="https://pareto20.com?ref=pareto-fellowship"
               target="_blank"
