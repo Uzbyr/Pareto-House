@@ -12,6 +12,7 @@ import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
 import { Hero } from "../components/ui/hero";
+import { BackgroundPaths } from "../components/ui/background-paths";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -23,39 +24,48 @@ const Index = () => {
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       <Navigation />
 
-      {/* Hero Section */}
-      <Hero
-        title={
-          <div>
-            <div className="text-pareto-pink mb-8 tracking-tight relative inline-block">
-              The Pareto Fellowship
-              <span className="hover-underline-animation"></span>
-            </div>
-            <div className="mb-6 tracking-tight leading-tight inline-block">
-              The Most Ambitious{" "}
-              <span className="title-hover text-pareto-pink relative inline-block">
-                Undergraduate
+      {/* Hero Section with Background Paths */}
+      <div className="relative min-h-[80vh]">
+        <div className="absolute inset-0 z-0">
+          <BackgroundPaths 
+            title="Pareto Fellowship" 
+            showButton={false}
+          />
+        </div>
+        
+        <Hero
+          title={
+            <div>
+              <div className="text-pareto-pink mb-8 tracking-tight relative inline-block">
+                The Pareto Fellowship
                 <span className="hover-underline-animation"></span>
-              </span>{" "}
-              Community
+              </div>
+              <div className="mb-6 tracking-tight leading-tight inline-block">
+                The Most Ambitious{" "}
+                <span className="title-hover text-pareto-pink relative inline-block">
+                  Undergraduate
+                  <span className="hover-underline-animation"></span>
+                </span>{" "}
+                Community
+              </div>
             </div>
-          </div>
-        }
-        subtitle="Join a community of the top 0.1% of STEM undergrads worldwide, access unparalleled opportunities, and accelerate your path to the top of the tech ecosystem."
-        actions={[
-          {
-            label: "Apply Now",
-            href: "/apply",
-            variant: "pink",
-          },
-          {
-            label: "About Pareto",
-            href: "https://pareto20.com?ref=pareto-fellowship",
-            variant: "outline",
-          },
-        ]}
-        actionsClassName="mt-8 mb-20"
-      />
+          }
+          subtitle="Join a community of the top 0.1% of STEM undergrads worldwide, access unparalleled opportunities, and accelerate your path to the top of the tech ecosystem."
+          actions={[
+            {
+              label: "Apply Now",
+              href: "/apply",
+              variant: "pink",
+            },
+            {
+              label: "About Pareto",
+              href: "https://pareto20.com?ref=pareto-fellowship",
+              variant: "outline",
+            },
+          ]}
+          actionsClassName="mt-8 mb-20"
+        />
+      </div>
 
       {/* Stats Section */}
       <div className="container mx-auto px-4">
