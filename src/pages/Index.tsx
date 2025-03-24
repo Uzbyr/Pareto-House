@@ -26,12 +26,12 @@ const Index = () => {
 
       {/* Hero Section with Background Paths */}
       <div className="relative min-h-[80vh]">
-        <div className="absolute inset-0 z-0">
-          <BackgroundPaths 
-            title="Pareto Fellowship" 
-            showButton={false}
-          />
-        </div>
+        <BackgroundPaths 
+          title="Pareto Fellowship" 
+          buttonText="Discover Excellence"
+          buttonLink="/apply"
+          showButton={false}
+        />
         
         <Hero
           title={
