@@ -43,14 +43,6 @@ export const mentors: Mentor[] = [
     country: "USA",
   },
   {
-    name: "Eric Glyman",
-    linkedIn: "https://www.linkedin.com/in/eglyman/",
-    description: "Co-founder & CEO at Ramp",
-    bio: "Eric Glyman is the co-founder and CEO of Ramp, a financial technology company offering corporate cards and spend-management software designed to increase financial efficiency. Glyman's approach emphasizes transparency and automation to help businesses cut wasteful spending. Under his guidance, Ramp has positioned itself as an innovative player in the fintech landscape. His leadership centers on simplifying complex financial processes and empowering companies to make data-driven decisions.",
-    imageUrl: "/lovable-uploads/3a89b51a-b995-42c3-85a2-c29983c21e46.png",
-    country: "USA",
-  },
-  {
     name: "Francis Pedraza",
     linkedIn: "https://www.linkedin.com/in/francispedraza/",
     description: "Founder at Invisible Technologies",
