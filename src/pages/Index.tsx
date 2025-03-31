@@ -1,4 +1,3 @@
-
 import { useNavigate } from "react-router-dom";
 import { ArrowRight, Lock } from "lucide-react";
 import { Link } from "react-router-dom";
