@@ -46,7 +46,7 @@ const handler = async (req: Request): Promise<Response> => {
       subject: "✅ We've Received Your Pareto Fellowship Application",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
-          <img src="https://pareto.io/assets/logo.png" alt="Pareto Fellowship" style="max-width: 150px; margin-bottom: 20px;">
+          <img src="https://paretofellowship.com/logo.png" alt="Pareto Fellowship" style="max-width: 150px; margin-bottom: 20px;">
           <p>Dear ${firstName} ${lastName},</p>
           <p>Thank you for applying to the Pareto Fellowship. We've received your application and are impressed by your achievements.</p>
           <p><strong>Next Steps: 👣</strong></p>

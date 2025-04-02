@@ -16,11 +16,7 @@ const Navigation = () => {
       <div className="container mx-auto px-4 py-3">
         <div className="flex justify-between items-center">
           <Link to="/">
-            <img
-              src="/lovable-uploads/f136e975-2a52-41a5-9cd9-e464dda2a69b.png"
-              alt="Pareto Logo"
-              className="w-36 md:w-44"
-            />
+            <img src="/logo.png" alt="Pareto Logo" className="w-36 md:w-44" />
           </Link>
 
           <div className="flex items-center gap-2">
