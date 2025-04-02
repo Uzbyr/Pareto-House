@@ -27,6 +27,9 @@ const StatusActions = ({
       // First update the status
       onStatusChange(application.id, "approved");
 
+      // Show a loading toast while sending the email
+      toast.loading("Sending acceptance email...");
+
       // Then send the acceptance email
       const { data, error } = await supabase.functions.invoke("send-acceptance-email", {
         body: { 
@@ -40,7 +43,10 @@ const StatusActions = ({
         console.error("Error sending acceptance email:", error);
         toast.error("Application approved but failed to send acceptance email");
       } else {
-        toast.success("Application approved and acceptance email sent successfully");
+        // Remove loading toast and show success message with email confirmation
+        toast.success(`Acceptance email sent to ${application.email}`, {
+          description: "The applicant has been notified of their acceptance to the fellowship."
+        });
         console.log("Acceptance email response:", data);
       }
     } catch (err) {
