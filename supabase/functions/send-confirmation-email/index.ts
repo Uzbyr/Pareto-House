@@ -41,21 +41,20 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send({
       from: "Pareto Fellowship <noreply@pareto.io>",
       to: [email],
-      subject: "Your Pareto Fellowship Application",
+      subject: "✅ We've Received Your Pareto Fellowship Application",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
           <img src="https://pareto.io/assets/logo.png" alt="Pareto Fellowship" style="max-width: 150px; margin-bottom: 20px;">
-          <h1 style="color: #ff338f;">Application Received</h1>
-          <p>Hello ${firstName} ${lastName},</p>
-          <p>Thank you for applying to the Pareto Fellowship! We've received your application and will review it shortly.</p>
-          <p>Here's what happens next:</p>
-          <ol>
-            <li>Our team will review your application</li>
-            <li>If selected, you'll be invited to the next stage of our process</li>
-            <li>We aim to respond to all applicants within 2-3 weeks</li>
-          </ol>
-          <p>If you have any questions in the meantime, please don't hesitate to contact us.</p>
-          <p>Best regards,<br>The Pareto Fellowship Team</p>
+          <p>Dear ${firstName} ${lastName},</p>
+          <p>Thank you for applying to the Pareto Fellowship. We've received your application and are impressed by your achievements.</p>
+          <p><strong>Next Steps: 👣</strong></p>
+          <ul>
+            <li>🔍 Our selection committee will review your application shortly</li>
+            <li>📞 Shortlisted candidates will be invited for interviews</li>
+            <li>🎉 Final selections will be announced by 05/15/2025</li>
+          </ul>
+          <p>If you have any questions in the meantime, please don't hesitate to reach out.</p>
+          <p>Best regards,<br><br>The Pareto team</p>
           <div style="margin-top: 30px; padding-top: 20px; border-top: 1px solid #eee; font-size: 12px; color: #777;">
             <p>This is an automated message. Please do not reply to this email.</p>
           </div>
