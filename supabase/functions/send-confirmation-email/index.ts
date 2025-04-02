@@ -40,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending confirmation email to ${email}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Pareto Fellowship <noreply@pareto.io>",
+      from: "Pareto Fellowship <noreply@transactional.paretofellowship.com>",
       to: [email],
       subject: "✅ We've Received Your Pareto Fellowship Application",
       html: `
