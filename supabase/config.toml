@@ -1,1 +1,38 @@
+
 project_id = "ieariyszxnffkktxaehz"
+
+[api]
+enabled = true
+port = 54321
+schemas = ["public", "storage", "graphql_public"]
+
+[db]
+port = 54322
+
+[studio]
+port = 54323
+
+[inbucket]
+port = 54324
+
+[auth]
+enabled = true
+port = 54325
+
+[storage]
+enabled = true
+
+[realtime]
+enabled = true
+
+[analytics]
+enabled = true
+port = 54327
+
+[vector]
+enabled = true
+port = 54328
+
+[functions]
+[functions.send-confirmation-email]
+verify_jwt = true

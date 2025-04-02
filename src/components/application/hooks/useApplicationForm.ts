@@ -1,3 +1,4 @@
+
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -226,6 +227,22 @@ const useApplicationForm = ({
     }));
   }, []);
 
+  const sendConfirmationEmail = async (firstName: string, lastName: string, email: string) => {
+    try {
+      const { error } = await supabase.functions.invoke("send-confirmation-email", {
+        body: { firstName, lastName, email },
+      });
+
+      if (error) {
+        console.error("Error sending confirmation email:", error);
+      } else {
+        console.log("Confirmation email sent successfully");
+      }
+    } catch (error) {
+      console.error("Error invoking email function:", error);
+    }
+  };
+
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
       e.preventDefault();
@@ -388,6 +405,13 @@ const useApplicationForm = ({
         localStorage.setItem(
           "applicationCount",
           (parseInt(appCount) + 1).toString(),
+        );
+
+        // Send confirmation email
+        await sendConfirmationEmail(
+          formData.firstName,
+          formData.lastName,
+          formData.email
         );
 
         setTimeout(() => {
