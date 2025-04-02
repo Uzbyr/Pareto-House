@@ -50,22 +50,6 @@ export const mentors: Mentor[] = [
     imageUrl: "/lovable-uploads/dc5b5f95-0b6e-493c-b293-4e43ce71392a.png",
     country: "USA",
   },
-  // {
-  //   name: "Eric Wu",
-  //   linkedIn: "https://www.linkedin.com/in/ericwu01/",
-  //   description: "Founder at Opendoor",
-  //   bio: "Eric Wu is the co-founder of Opendoor, a digital platform for residential real estate transactions. He has founded multiple successful companies and has a track record of disrupting traditional industries with technology-driven solutions. Wu's expertise spans real estate tech, marketplaces, and scaling high-growth startups.",
-  //   imageUrl: "/lovable-uploads/b44fbc4b-212b-49e6-adcc-bf0072f797ed.png",
-  //   country: "USA",
-  // },
-  // {
-  //   name: "Cyan Banister",
-  //   linkedIn: "https://www.linkedin.com/in/cyantechnology/",
-  //   description: "Ex-Partner at Founders Fund",
-  //   bio: "Cyan Banister is a prominent angel investor and entrepreneur. She served as a partner at Founders Fund and has made early investments in companies like SpaceX, Uber, and Postmates. As the founder of Zivity, she brings firsthand entrepreneurial experience to her advisory roles. Banister is known for her contrarian investment approach and for backing unconventional founders.",
-  //   imageUrl: "/lovable-uploads/56ab8193-d996-4fc8-954d-c71a3d96bd5a.png",
-  //   country: "USA",
-  // },
   {
     name: "Venus Williams",
     linkedIn: "https://www.linkedin.com/in/venus-williams-187738a7/",
@@ -74,14 +58,6 @@ export const mentors: Mentor[] = [
     imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
     country: "USA",
   },
-  // {
-  //   name: "Sarah Guo",
-  //   linkedIn: "https://www.linkedin.com/in/sarahguo/",
-  //   description: "Founder at Conviction VC",
-  //   bio: "Sarah Guo is the founder of Conviction VC, a venture capital firm focused on early-stage technology companies. Previously, she was a General Partner at Greylock Partners, where she led investments in AI, cybersecurity, and enterprise software. Guo brings deep technical knowledge and operational insights to her role as an investor and advisor to founders.",
-  //   imageUrl: "/lovable-uploads/67bf0c08-24a9-4e1d-bb41-9318d2c672e8.png",
-  //   country: "USA",
-  // },
   {
     name: "Gokul Rajaram",
     linkedIn: "https://www.linkedin.com/in/gokulrajaram1/",
@@ -108,6 +84,7 @@ export const mentors: Mentor[] = [
   },
   {
     name: "Reilly Opelka",
+    linkedIn: "", // Adding the missing linkedIn property
     description: "Tennis player, Investor and Art Guru",
     bio: "Reilly Opelka is a professional tennis player and investor with interests spanning sports, technology, and art. He brings a unique perspective to his investment activities, combining his experiences as a professional athlete with a keen eye for emerging trends and opportunities. Opelka is known for his thoughtful approach to both his athletic career and his business ventures.",
     imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",

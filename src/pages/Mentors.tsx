@@ -149,7 +149,7 @@ const Mentors = () => {
                       className="flex gap-3"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      {mentor.linkedin && (
+                      {mentor.linkedIn && (
                         <a
                           href={mentor.linkedIn}
                           target="_blank"
