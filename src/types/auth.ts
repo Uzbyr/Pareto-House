@@ -2,7 +2,7 @@ import { Session } from "@supabase/supabase-js";
 
 export interface AuthUser {
   email: string;
-  role: "admin" | "super_admin" | "analyst" | "fellow" | "alumni";
+  role: "admin" | "super_admin" | "analyst";
 }
 
 export interface Application {
@@ -16,6 +16,7 @@ export interface Application {
   submissionDate: string;
   status: "pending" | "approved" | "rejected";
   flagged?: boolean;
+  // New fields from Supabase schema
   country?: string;
   nationality?: string;
   graduationYear?: string;
@@ -31,7 +32,7 @@ export interface Application {
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string;
+  competitionResults?: string; // Changed from string[] to string
   competitiveProfiles?: string[];
   resumeFile?: string;
   deckFile?: string;
