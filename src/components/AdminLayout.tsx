@@ -1,6 +1,8 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
+import { canAccessAdminDashboard } from "@/utils/authUtils";
 import {
   BarChart3,
   FileText,
@@ -19,6 +21,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
   const { logout, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
+
+  // If user is not an admin type, redirect them
+  if (user && !canAccessAdminDashboard(user.role)) {
+    navigate("/profile");
+    return null;
+  }
 
   const handleLogout = () => {
     logout();
