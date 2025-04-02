@@ -53,16 +53,6 @@ const Applications = () => {
   );
 
   useHotkeys(
-    "a",
-    () => {
-      if (isDetailsOpen && selectedApplication) {
-        updateApplicationStatus(selectedApplication.id, "approved");
-      }
-    },
-    [isDetailsOpen, selectedApplication],
-  );
-
-  useHotkeys(
     "r",
     () => {
       if (isDetailsOpen && selectedApplication) {
