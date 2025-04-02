@@ -74,14 +74,14 @@ export const mentors: Mentor[] = [
     imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
     country: "USA",
   },
-  {
-    name: "Sarah Guo",
-    linkedIn: "https://www.linkedin.com/in/sarahguo/",
-    description: "Founder at Conviction VC",
-    bio: "Sarah Guo is the founder of Conviction VC, a venture capital firm focused on early-stage technology companies. Previously, she was a General Partner at Greylock Partners, where she led investments in AI, cybersecurity, and enterprise software. Guo brings deep technical knowledge and operational insights to her role as an investor and advisor to founders.",
-    imageUrl: "/lovable-uploads/67bf0c08-24a9-4e1d-bb41-9318d2c672e8.png",
-    country: "USA",
-  },
+  // {
+  //   name: "Sarah Guo",
+  //   linkedIn: "https://www.linkedin.com/in/sarahguo/",
+  //   description: "Founder at Conviction VC",
+  //   bio: "Sarah Guo is the founder of Conviction VC, a venture capital firm focused on early-stage technology companies. Previously, she was a General Partner at Greylock Partners, where she led investments in AI, cybersecurity, and enterprise software. Guo brings deep technical knowledge and operational insights to her role as an investor and advisor to founders.",
+  //   imageUrl: "/lovable-uploads/67bf0c08-24a9-4e1d-bb41-9318d2c672e8.png",
+  //   country: "USA",
+  // },
   {
     name: "Gokul Rajaram",
     linkedIn: "https://www.linkedin.com/in/gokulrajaram1/",
@@ -137,6 +137,14 @@ export const mentors: Mentor[] = [
     bio: "Hervé Bredin is a renowned researcher and entrepreneur in the field of audio processing and machine learning. As a co-founder of pyannoteAI and a researcher at CNRS (France's National Center for Scientific Research), he specializes in developing innovative solutions for speaker diarization and audio analysis. His work bridges academic research with practical applications, making advanced audio technology accessible to developers worldwide.",
     imageUrl: "/lovable-uploads/herve-bredin.jpeg",
     country: "France",
+  },
+  {
+    name: "Christian Reber",
+    linkedIn: "https://www.linkedin.com/in/christianreber/",
+    description: "Founder of Pitch and Superlist & GP at Interface",
+    bio: "Product guy, entrepreneur & investor. Strong passion for delightful user experiences and innovative design and technology.",
+    imageUrl: "/lovable-uploads/christian-reber.jpeg",
+    country: "Germany",
   },
 ];
 
