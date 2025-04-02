@@ -31,3 +31,6 @@ port = 54327
 [functions]
 [functions.send-confirmation-email]
 verify_jwt = true
+
+[functions.send-acceptance-email]
+verify_jwt = true

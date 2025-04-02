@@ -1,3 +1,4 @@
+
 import React from "react";
 import { Application, ApplicationUpdateFunctions } from "@/types/application";
 import {
@@ -11,6 +12,8 @@ import {
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
 import { CheckCircle, XCircle, Clock, FileSearch, Flag } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
+import { toast } from "sonner";
 
 interface ApplicationsTableProps {
   applications: Application[];
@@ -24,6 +27,38 @@ const ApplicationsTable = ({
   updateFunctions,
 }: ApplicationsTableProps) => {
   const { updateApplicationStatus, toggleFlagApplication } = updateFunctions;
+
+  const handleApprove = async (app: Application) => {
+    try {
+      if (app.status === "approved") {
+        toast.info("Application is already approved");
+        return;
+      }
+
+      // First update the status
+      updateApplicationStatus(app.id, "approved");
+
+      // Then send the acceptance email
+      const { data, error } = await supabase.functions.invoke("send-acceptance-email", {
+        body: { 
+          firstName: app.name.split(' ')[0], 
+          lastName: app.name.split(' ').slice(1).join(' '),
+          email: app.email
+        },
+      });
+
+      if (error) {
+        console.error("Error sending acceptance email:", error);
+        toast.error("Application approved but failed to send acceptance email");
+      } else {
+        toast.success("Application approved and acceptance email sent");
+        console.log("Acceptance email response:", data);
+      }
+    } catch (err) {
+      console.error("Error in approval process:", err);
+      toast.error("Error in approval process");
+    }
+  };
 
   return (
     <Table>
@@ -110,9 +145,8 @@ const ApplicationsTable = ({
                       size="sm"
                       variant="ghost"
                       className="h-8 w-8 p-0 text-green-500 hover:text-green-400 hover:bg-green-400/10"
-                      onClick={() =>
-                        updateApplicationStatus(app.id, "approved")
-                      }
+                      onClick={() => handleApprove(app)}
+                      title="Approve and Send Acceptance Email"
                     >
                       <CheckCircle className="h-4 w-4" />
                       <span className="sr-only">Approve</span>
