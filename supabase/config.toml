@@ -17,7 +17,6 @@ port = 54324
 
 [auth]
 enabled = true
-port = 54325
 
 [storage]
 enabled = true
@@ -28,10 +27,6 @@ enabled = true
 [analytics]
 enabled = true
 port = 54327
-
-[vector]
-enabled = true
-port = 54328
 
 [functions]
 [functions.send-confirmation-email]
