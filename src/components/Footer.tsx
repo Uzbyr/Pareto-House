@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
-import { Instagram, Linkedin, Twitter } from "lucide-react";
+import { Instagram, Linkedin } from "lucide-react";
+import { SiX } from "@icons-pack/react-simple-icons";
 
 const Footer = () => {
   return (
@@ -30,12 +31,12 @@ const Footer = () => {
           <div className="flex gap-6">
             <div className="flex gap-4">
               <a
-                href="https://twitter.com/ParetoCommunity"
+                href="https://x.com/paretoholdings"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
               >
-                <Twitter className="w-5 h-5" />
+                <SiX className="w-5 h-5" />
               </a>
               <a
                 href="https://www.linkedin.com/company/pareto-fellowship"
@@ -45,14 +46,16 @@ const Footer = () => {
               >
                 <Linkedin className="w-5 h-5" />
               </a>
-              <a
-                href="https://www.instagram.com/pareto_fellowship"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
-              >
-                <Instagram className="w-5 h-5" />
-              </a>
+              {false && (
+                <a
+                  href="https://www.instagram.com/pareto_fellowship"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
+                >
+                  <Instagram className="w-5 h-5" />
+                </a>
+              )}
             </div>
           </div>
         </div>
