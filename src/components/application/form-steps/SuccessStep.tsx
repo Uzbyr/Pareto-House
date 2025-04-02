@@ -1,4 +1,3 @@
-
 import { memo } from "react";
 import { Button } from "@/components/ui/button";
 import { Check, Mail } from "lucide-react";
@@ -19,7 +18,10 @@ const SuccessStep = memo(({ onReturnHome }: SuccessStepProps) => (
     </p>
     <div className="flex items-center justify-center gap-2 text-gray-400 mb-8">
       <Mail className="h-4 w-4" />
-      <span>A confirmation email has been sent to your email address with next steps.</span>
+      <span>
+        A confirmation email has been sent to your email address with next
+        steps.
+      </span>
     </div>
     <Button
       onClick={onReturnHome}

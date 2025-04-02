@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -227,11 +226,18 @@ const useApplicationForm = ({
     }));
   }, []);
 
-  const sendConfirmationEmail = async (firstName: string, lastName: string, email: string) => {
+  const sendConfirmationEmail = async (
+    firstName: string,
+    lastName: string,
+    email: string,
+  ) => {
     try {
-      const { error } = await supabase.functions.invoke("send-confirmation-email", {
-        body: { firstName, lastName, email },
-      });
+      const { error } = await supabase.functions.invoke(
+        "send-confirmation-email",
+        {
+          body: { firstName, lastName, email },
+        },
+      );
 
       if (error) {
         console.error("Error sending confirmation email:", error);
@@ -411,7 +417,7 @@ const useApplicationForm = ({
         await sendConfirmationEmail(
           formData.firstName,
           formData.lastName,
-          formData.email
+          formData.email,
         );
 
         setTimeout(() => {
