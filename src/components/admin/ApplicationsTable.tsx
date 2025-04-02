@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Application, ApplicationUpdateFunctions } from "@/types/application";
 import {
@@ -39,13 +38,16 @@ const ApplicationsTable = ({
       updateApplicationStatus(app.id, "approved");
 
       // Then send the acceptance email
-      const { data, error } = await supabase.functions.invoke("send-acceptance-email", {
-        body: { 
-          firstName: app.name.split(' ')[0], 
-          lastName: app.name.split(' ').slice(1).join(' '),
-          email: app.email
+      const { data, error } = await supabase.functions.invoke(
+        "send-acceptance-email",
+        {
+          body: {
+            firstName: app.name.split(" ")[0],
+            lastName: app.name.split(" ").slice(1).join(" "),
+            email: app.email,
+          },
         },
-      });
+      );
 
       if (error) {
         console.error("Error sending acceptance email:", error);

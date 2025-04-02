@@ -149,14 +149,16 @@ const Mentors = () => {
                       className="flex gap-3"
                       onClick={(e) => e.stopPropagation()}
                     >
-                      <a
-                        href={mentor.linkedIn}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
-                      >
-                        <Linkedin className="w-5 h-5" />
-                      </a>
+                      {mentor.linkedin && (
+                        <a
+                          href={mentor.linkedIn}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink transition-colors"
+                        >
+                          <Linkedin className="w-5 h-5" />
+                        </a>
+                      )}
                       {mentor.twitter && (
                         <a
                           href={mentor.twitter}

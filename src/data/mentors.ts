@@ -68,7 +68,7 @@ export const mentors: Mentor[] = [
   // },
   {
     name: "Venus Williams",
-    linkedIn: "https://www.linkedin.com/in/venuswilliams/",
+    linkedIn: "https://www.linkedin.com/in/venus-williams-187738a7/",
     description: "Tennis champion and entrepreneur",
     bio: "Venus Williams is a legendary tennis champion who has successfully transitioned into entrepreneurship and investing. She has founded multiple businesses including her activewear brand EleVen and interior design firm V Starr. Williams brings her championship mindset and global influence to her business ventures and investments, with a focus on wellness, women's empowerment, and equality.",
     imageUrl: "/lovable-uploads/18ade8c8-718c-4260-9dd6-c32709b1f948.png",
@@ -100,7 +100,7 @@ export const mentors: Mentor[] = [
   },
   {
     name: "Liu Jiang",
-    linkedIn: "https://www.linkedin.com/in/liujiang/",
+    linkedIn: "https://www.linkedin.com/in/liujiang1/",
     description: "Founder & GP at Sunflower and former Sequoia Partner",
     bio: "Liu Jiang is a U.S.-based engineering leader and startup advisor. She leverages a strong technical background to guide product development and software architecture. Jiang's advisory work includes optimizing organizational processes and scaling engineering teams. Her experience spans multiple tech segments, reflecting a versatile problem-solving skill set. She is committed to nurturing inclusive, innovative environments that empower teams to excel.",
     imageUrl: "/lovable-uploads/6c5fe0c4-03d3-4457-b3b6-e5f0a5cb69c6.png",
@@ -108,7 +108,6 @@ export const mentors: Mentor[] = [
   },
   {
     name: "Reilly Opelka",
-    linkedIn: "https://www.linkedin.com/in/reillyopelka/",
     description: "Tennis player, Investor and Art Guru",
     bio: "Reilly Opelka is a professional tennis player and investor with interests spanning sports, technology, and art. He brings a unique perspective to his investment activities, combining his experiences as a professional athlete with a keen eye for emerging trends and opportunities. Opelka is known for his thoughtful approach to both his athletic career and his business ventures.",
     imageUrl: "/lovable-uploads/3cfd928c-129d-4412-8860-6361ee0774ab.png",

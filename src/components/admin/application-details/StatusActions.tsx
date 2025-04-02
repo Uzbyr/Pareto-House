@@ -1,4 +1,3 @@
-
 import React from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Clock, Flag } from "lucide-react";
@@ -31,13 +30,16 @@ const StatusActions = ({
       toast.loading("Sending acceptance email...");
 
       // Then send the acceptance email
-      const { data, error } = await supabase.functions.invoke("send-acceptance-email", {
-        body: { 
-          firstName: application.name.split(' ')[0], 
-          lastName: application.name.split(' ').slice(1).join(' '),
-          email: application.email
+      const { data, error } = await supabase.functions.invoke(
+        "send-acceptance-email",
+        {
+          body: {
+            firstName: application.name.split(" ")[0],
+            lastName: application.name.split(" ").slice(1).join(" "),
+            email: application.email,
+          },
         },
-      });
+      );
 
       if (error) {
         console.error("Error sending acceptance email:", error);
@@ -45,7 +47,8 @@ const StatusActions = ({
       } else {
         // Remove loading toast and show success message with email confirmation
         toast.success(`Acceptance email sent to ${application.email}`, {
-          description: "The applicant has been notified of their acceptance to the fellowship."
+          description:
+            "The applicant has been notified of their acceptance to the fellowship.",
         });
         console.log("Acceptance email response:", data);
       }

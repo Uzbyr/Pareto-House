@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 
@@ -18,7 +17,8 @@ interface AcceptanceData {
 }
 
 const generateTemporaryPassword = (): string => {
-  const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+  const chars =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
   let password = "";
   for (let i = 0; i < 10; i++) {
     password += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -29,7 +29,11 @@ const generateTemporaryPassword = (): string => {
 const getDeadlineDate = (): string => {
   const deadline = new Date();
   deadline.setDate(deadline.getDate() + 7);
-  return deadline.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+  return deadline.toLocaleDateString("en-US", {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  });
 };
 
 const handler = async (req: Request): Promise<Response> => {
@@ -55,7 +59,8 @@ const handler = async (req: Request): Promise<Response> => {
     }
 
     // Generate a temporary password if not provided
-    const temporaryPassword = acceptanceData.temporaryPassword || generateTemporaryPassword();
+    const temporaryPassword =
+      acceptanceData.temporaryPassword || generateTemporaryPassword();
     const deadlineDate = getDeadlineDate();
 
     console.log(`Sending acceptance email to ${email}`);
