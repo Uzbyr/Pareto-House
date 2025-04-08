@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -27,6 +28,7 @@ import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import FellowLayout from "./components/FellowLayout";
 import FellowDashboard from "./pages/FellowDashboard";
+import FellowProfile from "./pages/FellowProfile";
 import Onboarding from "./pages/Onboarding";
 
 const queryClient = new QueryClient();
@@ -141,6 +143,16 @@ const App = () => (
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
                         <FellowDashboard />
+                      </FellowLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/fellowship/profile"
+                  element={
+                    <ProtectedRoute requiredRoles={["fellow", "admin"]}>
+                      <FellowLayout>
+                        <FellowProfile />
                       </FellowLayout>
                     </ProtectedRoute>
                   }

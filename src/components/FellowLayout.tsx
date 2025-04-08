@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -10,6 +11,7 @@ import {
   MessageCircle,
   Settings,
   LogOut,
+  User,
 } from "lucide-react";
 import { toast } from "sonner";
 
@@ -35,6 +37,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
 
   const navItems = [
     { label: "Dashboard", path: "/fellowship", icon: Home },
+    { label: "Profile", path: "/fellowship/profile", icon: User },
     { label: "Events", path: "/fellowship/events", icon: Calendar },
     { label: "Resources", path: "/fellowship/resources", icon: BookOpen },
     { label: "Network", path: "/fellowship/network", icon: Users },
