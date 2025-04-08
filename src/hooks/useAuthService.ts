@@ -3,9 +3,9 @@ import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { getUserRole } from "@/utils/authUtils";
-import { AuthState, AuthActions } from "@/contexts/auth/types";
+import { AuthState, AuthActions, AuthStateSetters } from "@/contexts/auth/types";
 
-export const useAuthService = (): AuthState & AuthActions => {
+export const useAuthService = (): AuthState & AuthActions & AuthStateSetters => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthState['user']>(null);
   const [session, setSession] = useState<Session | null>(null);
@@ -86,7 +86,7 @@ export const useAuthService = (): AuthState & AuthActions => {
     logout,
     changePassword,
     isPareto20Email,
-    // These setter functions are for the AuthProvider to use
+    // These setter functions are exposed for the AuthProvider to use
     setIsAuthenticated,
     setUser,
     setSession, 

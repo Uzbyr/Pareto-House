@@ -24,6 +24,14 @@ export interface AuthActions {
   isPareto20Email: (email: string) => boolean;
 }
 
+// Add this new interface for internal setter functions
+export interface AuthStateSetters {
+  setIsAuthenticated: (value: boolean) => void;
+  setUser: (user: AuthContextType['user']) => void;
+  setSession: (session: Session | null) => void;
+  setRequirePasswordChange: (value: boolean) => void;
+}
+
 export interface MetricsState {
   siteMetrics: SiteMetrics;
 }

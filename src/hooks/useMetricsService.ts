@@ -1,7 +1,7 @@
 
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Application, MetricsState, MetricsActions } from "@/contexts/auth/types";
+import { Application, MetricsState, MetricsActions, AuthContextType } from "@/contexts/auth/types";
 import { collectRealMetrics } from "@/utils/metricsUtils";
 import {
   getStoredApplications,
@@ -10,7 +10,7 @@ import {
   storePageViews,
 } from "@/utils/storageUtils";
 
-export const useMetricsService = (isAuthenticated: boolean, user: MetricsState['siteMetrics']['user']): MetricsState & MetricsActions => {
+export const useMetricsService = (isAuthenticated: boolean, currentUser: AuthContextType['user']): MetricsState & MetricsActions => {
   const [applications, setApplications] = useState<Application[]>(
     getStoredApplications(),
   );
@@ -57,7 +57,7 @@ export const useMetricsService = (isAuthenticated: boolean, user: MetricsState['
 
   useEffect(() => {
     const fetchApplications = async () => {
-      if (isAuthenticated && user) {
+      if (isAuthenticated && currentUser) {
         try {
           const { data, error } = await supabase
             .from("applications")
@@ -92,7 +92,7 @@ export const useMetricsService = (isAuthenticated: boolean, user: MetricsState['
     };
 
     fetchApplications();
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, currentUser]);
 
   useEffect(() => {
     refreshMetrics();
