@@ -58,63 +58,49 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   useEffect(() => {
     const setupAuth = async () => {
-      try {
-        const { data: sessionData } = await supabase.auth.getSession();
-        const currentSession = sessionData.session;
+      const { data: sessionData } = await supabase.auth.getSession();
+      const currentSession = sessionData.session;
+      
+      setSession(currentSession);
+      setIsAuthenticated(!!currentSession);
+      
+      if (currentSession?.user) {
+        // Get user role from database
+        const role = await getUserRole(currentSession.user.id);
         
-        setSession(currentSession);
-        setIsAuthenticated(!!currentSession);
+        setUser({
+          email: currentSession.user.email || '',
+          role: role,
+        });
         
-        if (currentSession?.user) {
-          // Get user role from database
-          const role = await getUserRole(currentSession.user.id);
-          
-          setUser({
-            email: currentSession.user.email || '',
-            role: role,
-          });
-          
-          // Check if user needs to change password
-          const requireChange = currentSession.user.user_metadata?.require_password_change === true;
-          setRequirePasswordChange(requireChange);
-        }
-      } catch (error) {
-        console.error("Auth setup error:", error);
-        // Set default values in case of error
-        setIsAuthenticated(false);
-        setUser(null);
-      } finally {
-        setLoading(false);
+        // Check if user needs to change password
+        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
+        setRequirePasswordChange(requireChange);
       }
+      
+      setLoading(false);
     };
     
     setupAuth();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, currentSession) => {
+    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
       
-      // When auth state changes, we fetch the user role
       if (currentSession?.user) {
-        // Use setTimeout to avoid potential recursive RLS issues
-        setTimeout(async () => {
-          try {
-            const role = await getUserRole(currentSession.user.id);
-            
-            setUser({
-              email: currentSession.user.email || '',
-              role: role,
-            });
-            
-            // Check if user needs to change password
-            const requireChange = currentSession.user.user_metadata?.require_password_change === true;
-            setRequirePasswordChange(requireChange);
-          } catch (error) {
-            console.error("Error setting user role:", error);
-          }
-        }, 0);
+        // Get user role from database
+        const role = await getUserRole(currentSession.user.id);
+        
+        setUser({
+          email: currentSession.user.email || '',
+          role: role,
+        });
+        
+        // Check if user needs to change password
+        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
+        setRequirePasswordChange(requireChange);
       } else {
         setUser(null);
         setRequirePasswordChange(false);

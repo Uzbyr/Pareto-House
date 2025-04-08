@@ -6,23 +6,20 @@ export const getUserRole = async (userId: string): Promise<UserRole> => {
   if (!userId) return "fellow";
 
   try {
-    // Using functions schema to bypass RLS policies directly
-    const { data, error } = await supabase.rpc('get_user_roles', { _user_id: userId });
+    // Query the user_roles table to get the user's role
+    const { data, error } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .single();
 
-    if (error) {
+    if (error || !data) {
       console.error("Error fetching user role:", error);
-      // Fallback to hardcoded logic for development if DB function fails
-      if (userId === "00000000-0000-0000-0000-000000000000") return "super_admin";
       return "fellow"; // Default role if there's an error
     }
 
-    if (!data || data.length === 0) {
-      console.log("No role found for user, defaulting to fellow");
-      return "fellow";
-    }
-
-    // Return the first role from the result (should be only one per user in most cases)
-    return data[0] as UserRole;
+    // Return the role from the database
+    return data.role as UserRole;
   } catch (error) {
     console.error("Exception when fetching user role:", error);
     return "fellow"; // Default role if there's an exception
