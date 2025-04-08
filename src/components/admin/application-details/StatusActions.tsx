@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Clock, Flag, Mail } from "lucide-react";
@@ -38,10 +39,50 @@ const StatusActions = ({
       // First update the status
       onStatusChange(application.id, "approved");
 
-      // Show a loading toast while sending the email
-      toast.loading("Sending acceptance email...");
+      // Show a loading toast while processing
+      const loadingToast = toast.loading("Processing application approval...");
 
-      // Then send the acceptance email
+      // Generate a temporary password
+      const temporaryPassword = generateTemporaryPassword();
+      
+      // Create the Supabase user account with the temporary password
+      const { data: userData, error: userError } = await supabase.auth.admin.createUser({
+        email: application.email,
+        password: temporaryPassword,
+        email_confirm: true,
+        user_metadata: {
+          first_name: application.name.split(" ")[0],
+          last_name: application.name.split(" ").slice(1).join(" "),
+          require_password_change: true,
+          approved_date: new Date().toISOString(),
+        },
+      });
+
+      if (userError) {
+        console.error("Error creating user account:", userError);
+        toast.error("Failed to create user account. The applicant may already have an account.");
+        // If user creation fails, continue with the email to provide login instructions
+      } else {
+        console.log("User created successfully:", userData);
+        
+        // Assign the fellow role to the user
+        if (userData.user) {
+          const { error: roleError } = await supabase
+            .from("user_roles")
+            .insert({
+              user_id: userData.user.id,
+              role: "fellow",
+              cohort: new Date().getFullYear().toString(),
+            });
+
+          if (roleError) {
+            console.error("Error assigning fellow role:", roleError);
+            toast.error("User created but role assignment failed");
+          }
+        }
+      }
+
+      // Then send the acceptance email with login credentials
       const { data, error } = await supabase.functions.invoke(
         "send-acceptance-email",
         {
@@ -49,15 +90,19 @@ const StatusActions = ({
             firstName: application.name.split(" ")[0],
             lastName: application.name.split(" ").slice(1).join(" "),
             email: application.email,
+            temporaryPassword,
           },
-        },
+        }
       );
+
+      // Remove the loading toast
+      toast.dismiss(loadingToast);
 
       if (error) {
         console.error("Error sending acceptance email:", error);
         toast.error("Application approved but failed to send acceptance email");
       } else {
-        // Remove loading toast and show success message with email confirmation
+        // Show success message with email confirmation
         toast.success(`Acceptance email sent to ${application.email}`, {
           description:
             "The applicant has been notified of their acceptance to the fellowship.",
@@ -68,6 +113,16 @@ const StatusActions = ({
       console.error("Error in approval process:", err);
       toast.error("Error in approval process");
     }
+  };
+
+  // Function to generate a random temporary password
+  const generateTemporaryPassword = (): string => {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
+    let password = "";
+    for (let i = 0; i < 12; i++) {
+      password += chars.charAt(Math.floor(Math.random() * chars.length));
+    }
+    return password;
   };
 
   return (
@@ -120,12 +175,12 @@ const StatusActions = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Approve Application</AlertDialogTitle>
             <AlertDialogDescription>
-              This will approve {application.name}'s application and send an
-              acceptance email to{" "}
-              <span className="font-medium text-foreground">
-                {application.email}
-              </span>
-              .
+              This will approve {application.name}'s application and:
+              <ul className="list-disc ml-5 mt-2">
+                <li>Create a user account with a temporary password</li>
+                <li>Assign the fellow role to the user</li>
+                <li>Send an acceptance email with login instructions</li>
+              </ul>
               <div className="mt-2 flex items-center p-2 bg-yellow-500/10 text-yellow-500 rounded-md">
                 <Mail className="h-5 w-5 mr-2" />
                 The applicant will receive an email with login credentials.
@@ -139,7 +194,7 @@ const StatusActions = ({
               className="bg-green-600 hover:bg-green-700 text-white"
             >
               <CheckCircle className="h-4 w-4 mr-2" />
-              Approve & Send Email
+              Approve & Create Account
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -25,6 +26,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [user, setUser] = useState<AuthUser | null>(null);
   const [session, setSession] = useState<Session | null>(null);
   const [loading, setLoading] = useState(true);
+  const [requirePasswordChange, setRequirePasswordChange] = useState<boolean>(false);
   const [applications, setApplications] = useState<Application[]>(
     getStoredApplications(),
   );
@@ -63,6 +65,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: session.user.email,
           role: getUserRole(session.user.email),
         });
+        
+        // Check if user needs to change password
+        const requireChange = session.user.user_metadata?.require_password_change === true;
+        setRequirePasswordChange(requireChange);
       }
       setLoading(false);
     });
@@ -77,8 +83,13 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: session.user.email,
           role: getUserRole(session.user.email),
         });
+        
+        // Check if user needs to change password
+        const requireChange = session.user.user_metadata?.require_password_change === true;
+        setRequirePasswordChange(requireChange);
       } else {
         setUser(null);
+        setRequirePasswordChange(false);
       }
     });
 
@@ -201,6 +212,29 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated(false);
     setUser(null);
     setSession(null);
+    setRequirePasswordChange(false);
+  };
+
+  const changePassword = async (newPassword: string): Promise<boolean> => {
+    try {
+      const { error } = await supabase.auth.updateUser({ 
+        password: newPassword,
+        data: {
+          require_password_change: false
+        }
+      });
+
+      if (error) {
+        console.error("Password change error:", error.message);
+        return false;
+      }
+
+      setRequirePasswordChange(false);
+      return true;
+    } catch (error) {
+      console.error("Password change error:", error);
+      return false;
+    }
   };
 
   if (loading) {
@@ -213,8 +247,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         isAuthenticated,
         user,
         session,
+        requirePasswordChange,
         login,
         logout,
+        changePassword,
         isPareto20Email,
         siteMetrics,
         refreshMetrics,

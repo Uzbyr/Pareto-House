@@ -16,6 +16,7 @@ import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
 import AdminLogin from "./pages/AdminLogin";
+import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
 import Analytics from "./pages/admin/Analytics";
@@ -48,6 +49,16 @@ const App = () => (
               <Route path="/faq" element={<FAQ />} />
               <Route path="/tech-partners" element={<TechPartners />} />
               <Route path="/login" element={<AdminLogin />} />
+              
+              {/* Password Change Route */}
+              <Route
+                path="/change-password"
+                element={
+                  <ProtectedRoute>
+                    <ChangePassword />
+                  </ProtectedRoute>
+                }
+              />
 
               {/* Admin Routes */}
               <Route
