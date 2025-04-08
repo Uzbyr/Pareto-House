@@ -1,21 +1,20 @@
-
 import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import { useNavigate } from "react-router-dom";
-import { 
-  Calendar as CalendarIcon, 
-  BookOpen, 
-  Users, 
+import {
+  Calendar as CalendarIcon,
+  BookOpen,
+  Users,
   Award,
-  ArrowRight
+  ArrowRight,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 const FellowDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  
+
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -34,13 +33,14 @@ const FellowDashboard = () => {
             <h2 className="text-xl font-bold text-white">Fellows Directory</h2>
           </div>
           <p className="text-gray-400 mb-4">
-            Connect with your cohort and explore fellow members' profiles. Build your network within the Pareto community.
+            Connect with your cohort and explore fellow members' profiles. Build
+            your network within the Pareto community.
           </p>
           <div className="mt-auto">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate('/fellowship/directory')}
+              onClick={() => navigate("/fellowship/directory")}
             >
               View Directory
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -55,13 +55,14 @@ const FellowDashboard = () => {
             <h2 className="text-xl font-bold text-white">Events Calendar</h2>
           </div>
           <p className="text-gray-400 mb-4">
-            All upcoming mentor talks, workshops, and networking events. Never miss an opportunity to learn and connect.
+            All upcoming mentor talks, workshops, and networking events. Never
+            miss an opportunity to learn and connect.
           </p>
           <div className="mt-auto">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate('/fellowship/events')}
+              onClick={() => navigate("/fellowship/events")}
             >
               View Calendar
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -73,16 +74,19 @@ const FellowDashboard = () => {
         <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
             <Award className="h-6 w-6 text-pareto-pink mr-2" />
-            <h2 className="text-xl font-bold text-white">Opportunities Board</h2>
+            <h2 className="text-xl font-bold text-white">
+              Opportunities Board
+            </h2>
           </div>
           <p className="text-gray-400 mb-4">
-            Exclusive internships, grants, and competitions for Pareto fellows. Find your next career-advancing opportunity.
+            Exclusive internships, grants, and competitions for Pareto fellows.
+            Find your next career-advancing opportunity.
           </p>
           <div className="mt-auto">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate('/fellowship/opportunities')}
+              onClick={() => navigate("/fellowship/opportunities")}
             >
               View Opportunities
               <ArrowRight className="ml-2 h-4 w-4" />
@@ -97,13 +101,14 @@ const FellowDashboard = () => {
             <h2 className="text-xl font-bold text-white">Resource Library</h2>
           </div>
           <p className="text-gray-400 mb-4">
-            Curated content and tools from our mentors. Access educational resources and expert guidance materials.
+            Curated content and tools from our mentors. Access educational
+            resources and expert guidance materials.
           </p>
           <div className="mt-auto">
-            <Button 
-              variant="outline" 
+            <Button
+              variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate('/fellowship/resources')}
+              onClick={() => navigate("/fellowship/resources")}
             >
               Browse Resources
               <ArrowRight className="ml-2 h-4 w-4" />

@@ -7,7 +7,7 @@ import ScrollingUniversities from "../components/ScrollingUniversities";
 import FellowshipPerks from "../components/FellowshipPerks";
 import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
-import TopInvestors from "../components/TopInvestors";
+// import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
 
@@ -117,10 +117,11 @@ const Index = () => {
       {/* Backed Undergrads Section */}
       <BackedUndergrads />
 
-      {/* Top Investors Section */}
+      {/*
       <div className="container mx-auto px-4">
         <TopInvestors />
       </div>
+      */}
 
       {/* Final CTA Section */}
       <FinalCTA />

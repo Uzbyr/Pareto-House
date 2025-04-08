@@ -27,6 +27,16 @@ const MobileNav = () => {
         <DrawerContent className="h-[60vh] pt-10">
           <nav className="flex flex-col gap-6 px-4">
             <Link
+              to="/"
+              className={`text-xl py-4 border-b ${
+                isActive("/")
+                  ? "text-pareto-pink font-medium border-pareto-pink"
+                  : "text-black/80 dark:text-white/80 border-black/10 dark:border-white/10"
+              }`}
+            >
+              Home
+            </Link>
+            <Link
               to="/mentors"
               className={`text-xl py-4 border-b ${
                 isActive("/mentors")
@@ -35,16 +45,6 @@ const MobileNav = () => {
               }`}
             >
               Mentors
-            </Link>
-            <Link
-              to="/perks"
-              className={`text-xl py-4 border-b ${
-                isActive("/perks")
-                  ? "text-pareto-pink font-medium border-pareto-pink"
-                  : "text-black/80 dark:text-white/80 border-black/10 dark:border-white/10"
-              }`}
-            >
-              Perks
             </Link>
             <Link
               to="/faq"

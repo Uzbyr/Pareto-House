@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -52,7 +51,7 @@ const FellowDirectory = () => {
           fellow.first_name?.toLowerCase().includes(query) ||
           fellow.last_name?.toLowerCase().includes(query) ||
           fellow.university?.toLowerCase().includes(query) ||
-          fellow.major?.toLowerCase().includes(query)
+          fellow.major?.toLowerCase().includes(query),
       );
       setFilteredFellows(filtered);
     }
@@ -80,7 +79,10 @@ const FellowDirectory = () => {
     }
   };
 
-  const getInitials = (firstName: string | null, lastName: string | null): string => {
+  const getInitials = (
+    firstName: string | null,
+    lastName: string | null,
+  ): string => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`;
   };
 
@@ -118,7 +120,10 @@ const FellowDirectory = () => {
                 <div className="flex items-center space-x-4">
                   <Avatar className="h-16 w-16 border-2 border-pareto-pink">
                     {fellow.profile_picture_url ? (
-                      <AvatarImage src={fellow.profile_picture_url} alt={`${fellow.first_name} ${fellow.last_name}`} />
+                      <AvatarImage
+                        src={fellow.profile_picture_url}
+                        alt={`${fellow.first_name} ${fellow.last_name}`}
+                      />
                     ) : (
                       <AvatarFallback className="bg-zinc-700 text-white text-xl">
                         {getInitials(fellow.first_name, fellow.last_name)}
@@ -130,10 +135,15 @@ const FellowDirectory = () => {
                       {fellow.first_name} {fellow.last_name}
                     </h3>
                     {fellow.university && (
-                      <p className="text-sm text-gray-400">{fellow.university}</p>
+                      <p className="text-sm text-gray-400">
+                        {fellow.university}
+                      </p>
                     )}
                     {fellow.major && (
-                      <Badge variant="outline" className="mt-1 text-xs bg-zinc-700 hover:bg-zinc-600">
+                      <Badge
+                        variant="outline"
+                        className="mt-1 text-xs bg-zinc-700 hover:bg-zinc-600"
+                      >
                         {fellow.major}
                       </Badge>
                     )}
@@ -141,7 +151,9 @@ const FellowDirectory = () => {
                 </div>
 
                 {fellow.bio && (
-                  <p className="text-sm text-gray-300 mt-4 line-clamp-3">{fellow.bio}</p>
+                  <p className="text-sm text-gray-300 mt-4 line-clamp-3">
+                    {fellow.bio}
+                  </p>
                 )}
 
                 <div className="flex gap-2 mt-4">
@@ -152,7 +164,11 @@ const FellowDirectory = () => {
                       className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
                       asChild
                     >
-                      <a href={fellow.linkedin_url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={fellow.linkedin_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -173,7 +189,11 @@ const FellowDirectory = () => {
                       className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
                       asChild
                     >
-                      <a href={fellow.github_url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={fellow.github_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -194,7 +214,11 @@ const FellowDirectory = () => {
                       className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
                       asChild
                     >
-                      <a href={fellow.website_url} target="_blank" rel="noopener noreferrer">
+                      <a
+                        href={fellow.website_url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
                         <svg
                           xmlns="http://www.w3.org/2000/svg"
                           width="16"
@@ -213,7 +237,9 @@ const FellowDirectory = () => {
             ))
           ) : (
             <div className="col-span-full text-center py-10">
-              <p className="text-gray-400">No fellows found matching your search.</p>
+              <p className="text-gray-400">
+                No fellows found matching your search.
+              </p>
             </div>
           )}
         </div>

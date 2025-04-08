@@ -1,10 +1,23 @@
-
 import React, { useState } from "react";
-import { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from "@/components/ui/card";
+import {
+  Card,
+  CardHeader,
+  CardTitle,
+  CardDescription,
+  CardContent,
+  CardFooter,
+} from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { Search, Calendar, Briefcase, Award, TrendingUp, Star } from "lucide-react";
+import {
+  Search,
+  Calendar,
+  Briefcase,
+  Award,
+  TrendingUp,
+  Star,
+} from "lucide-react";
 
 // Sample data for internship opportunities
 const opportunities = [
@@ -15,11 +28,13 @@ const opportunities = [
     location: "San Francisco, CA (Hybrid)",
     type: "Internship",
     deadline: "May 15, 2025",
-    description: "Work with our alignment team to improve AI models' capacity to follow complex human intentions safely and reliably.",
-    requirements: "Strong background in ML, experience with transformer models, Python proficiency",
+    description:
+      "Work with our alignment team to improve AI models' capacity to follow complex human intentions safely and reliably.",
+    requirements:
+      "Strong background in ML, experience with transformer models, Python proficiency",
     tags: ["AI", "Machine Learning", "Research"],
     featured: true,
-    applyUrl: "#apply"
+    applyUrl: "#apply",
   },
   {
     id: 2,
@@ -28,11 +43,12 @@ const opportunities = [
     location: "Remote",
     type: "Internship",
     deadline: "May 28, 2025",
-    description: "Join our team working on helpful, harmless, and honest AI systems. Help develop improved techniques for AI alignment and safety.",
+    description:
+      "Join our team working on helpful, harmless, and honest AI systems. Help develop improved techniques for AI alignment and safety.",
     requirements: "ML background, interest in AI safety, strong coding skills",
     tags: ["AI Safety", "Deep Learning", "Python"],
     featured: true,
-    applyUrl: "#apply"
+    applyUrl: "#apply",
   },
   {
     id: 3,
@@ -41,11 +57,13 @@ const opportunities = [
     location: "Seattle, WA",
     type: "Internship",
     deadline: "June 1, 2025",
-    description: "Build economic infrastructure for the internet by solving complex problems in payments, fraud prevention, and financial services.",
-    requirements: "Strong coding skills, systems design knowledge, any language experience",
+    description:
+      "Build economic infrastructure for the internet by solving complex problems in payments, fraud prevention, and financial services.",
+    requirements:
+      "Strong coding skills, systems design knowledge, any language experience",
     tags: ["Fintech", "Payments", "Software Engineering"],
     featured: false,
-    applyUrl: "#apply"
+    applyUrl: "#apply",
   },
   {
     id: 4,
@@ -54,11 +72,13 @@ const opportunities = [
     location: "Remote",
     type: "Internship",
     deadline: "June 15, 2025",
-    description: "Work with our team to build and improve our data science platform, helping organizations process massive amounts of data.",
-    requirements: "Experience with Python/SQL, knowledge of ML frameworks, strong analytical skills",
+    description:
+      "Work with our team to build and improve our data science platform, helping organizations process massive amounts of data.",
+    requirements:
+      "Experience with Python/SQL, knowledge of ML frameworks, strong analytical skills",
     tags: ["Data Science", "Big Data", "Analytics"],
     featured: false,
-    applyUrl: "#apply"
+    applyUrl: "#apply",
   },
   {
     id: 5,
@@ -67,11 +87,13 @@ const opportunities = [
     location: "New York, NY",
     type: "Internship",
     deadline: "May 20, 2025",
-    description: "Help design the future of collaborative design tools. Work on user experience improvements and new feature designs.",
-    requirements: "Design portfolio, experience with design tools, user research skills",
+    description:
+      "Help design the future of collaborative design tools. Work on user experience improvements and new feature designs.",
+    requirements:
+      "Design portfolio, experience with design tools, user research skills",
     tags: ["Design", "UX/UI", "Product"],
     featured: true,
-    applyUrl: "#apply"
+    applyUrl: "#apply",
   },
   {
     id: 6,
@@ -80,40 +102,53 @@ const opportunities = [
     location: "Remote",
     type: "Internship",
     deadline: "June 30, 2025",
-    description: "Join our team to build the next generation of productivity tools that help people and companies organize their work.",
-    requirements: "React experience, interest in productivity software, CS fundamentals",
+    description:
+      "Join our team to build the next generation of productivity tools that help people and companies organize their work.",
+    requirements:
+      "React experience, interest in productivity software, CS fundamentals",
     tags: ["Product", "Frontend", "React"],
     featured: false,
-    applyUrl: "#apply"
-  }
+    applyUrl: "#apply",
+  },
 ];
 
 // Filters for opportunity search
-const tags = ["AI", "Machine Learning", "Software Engineering", "Data Science", "Design", "Product", "Remote", "Fintech"];
+const tags = [
+  "AI",
+  "Machine Learning",
+  "Software Engineering",
+  "Data Science",
+  "Design",
+  "Product",
+  "Remote",
+  "Fintech",
+];
 const types = ["Internship", "Fellowship", "Grant", "Competition"];
 
 const FellowOpportunities = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
   const [selectedType, setSelectedType] = useState<string | null>(null);
-  
+
   // Filter opportunities based on search term, tags, and type
-  const filteredOpportunities = opportunities.filter(opp => {
-    const matchesSearch = opp.company.toLowerCase().includes(searchTerm.toLowerCase()) || 
-                         opp.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         opp.description.toLowerCase().includes(searchTerm.toLowerCase());
-                         
-    const matchesTags = selectedTags.length === 0 || 
-                       opp.tags.some(tag => selectedTags.includes(tag));
-                       
+  const filteredOpportunities = opportunities.filter((opp) => {
+    const matchesSearch =
+      opp.company.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      opp.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      opp.description.toLowerCase().includes(searchTerm.toLowerCase());
+
+    const matchesTags =
+      selectedTags.length === 0 ||
+      opp.tags.some((tag) => selectedTags.includes(tag));
+
     const matchesType = !selectedType || opp.type === selectedType;
-    
+
     return matchesSearch && matchesTags && matchesType;
   });
 
   const toggleTag = (tag: string) => {
     if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter(t => t !== tag));
+      setSelectedTags(selectedTags.filter((t) => t !== tag));
     } else {
       setSelectedTags([...selectedTags, tag]);
     }
@@ -140,17 +175,17 @@ const FellowOpportunities = () => {
               onChange={(e) => setSearchTerm(e.target.value)}
             />
           </div>
-          
+
           <div>
             <h3 className="text-white font-medium mb-3">Filter by Tags</h3>
             <div className="flex flex-wrap gap-2">
-              {tags.map(tag => (
+              {tags.map((tag) => (
                 <Badge
                   key={tag}
                   variant={selectedTags.includes(tag) ? "default" : "outline"}
                   className={`cursor-pointer ${
-                    selectedTags.includes(tag) 
-                      ? "bg-pareto-pink hover:bg-pareto-pink/80 text-black" 
+                    selectedTags.includes(tag)
+                      ? "bg-pareto-pink hover:bg-pareto-pink/80 text-black"
                       : "hover:bg-zinc-700"
                   }`}
                   onClick={() => toggleTag(tag)}
@@ -160,20 +195,22 @@ const FellowOpportunities = () => {
               ))}
             </div>
           </div>
-          
+
           <div>
             <h3 className="text-white font-medium mb-3">Opportunity Type</h3>
             <div className="flex flex-wrap gap-2">
-              {types.map(type => (
+              {types.map((type) => (
                 <Badge
                   key={type}
                   variant={selectedType === type ? "default" : "outline"}
                   className={`cursor-pointer ${
-                    selectedType === type 
-                      ? "bg-pareto-pink hover:bg-pareto-pink/80 text-black" 
+                    selectedType === type
+                      ? "bg-pareto-pink hover:bg-pareto-pink/80 text-black"
                       : "hover:bg-zinc-700"
                   }`}
-                  onClick={() => setSelectedType(type === selectedType ? null : type)}
+                  onClick={() =>
+                    setSelectedType(type === selectedType ? null : type)
+                  }
                 >
                   {type}
                 </Badge>
@@ -191,8 +228,8 @@ const FellowOpportunities = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredOpportunities
-            .filter(opp => opp.featured)
-            .map(opportunity => (
+            .filter((opp) => opp.featured)
+            .map((opportunity) => (
               <OpportunityCard key={opportunity.id} opportunity={opportunity} />
             ))}
         </div>
@@ -206,14 +243,16 @@ const FellowOpportunities = () => {
         </h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredOpportunities.length > 0 ? (
-            filteredOpportunities.map(opportunity => (
+            filteredOpportunities.map((opportunity) => (
               <OpportunityCard key={opportunity.id} opportunity={opportunity} />
             ))
           ) : (
             <div className="col-span-2 text-center py-10">
-              <p className="text-gray-400 text-lg">No opportunities match your filters.</p>
-              <Button 
-                variant="outline" 
+              <p className="text-gray-400 text-lg">
+                No opportunities match your filters.
+              </p>
+              <Button
+                variant="outline"
                 className="mt-4 border-zinc-600 text-white hover:bg-zinc-700"
                 onClick={() => {
                   setSearchTerm("");
@@ -233,7 +272,7 @@ const FellowOpportunities = () => {
 
 // Opportunity Card Component
 interface OpportunityCardProps {
-  opportunity: typeof opportunities[0];
+  opportunity: (typeof opportunities)[0];
 }
 
 const OpportunityCard = ({ opportunity }: OpportunityCardProps) => {
@@ -264,15 +303,21 @@ const OpportunityCard = ({ opportunity }: OpportunityCardProps) => {
           <span>Deadline: {opportunity.deadline}</span>
         </div>
         <p className="text-gray-300">{opportunity.description}</p>
-        
+
         <div>
-          <h4 className="text-sm font-medium text-gray-400 mb-1">Requirements</h4>
+          <h4 className="text-sm font-medium text-gray-400 mb-1">
+            Requirements
+          </h4>
           <p className="text-gray-300 text-sm">{opportunity.requirements}</p>
         </div>
-        
+
         <div className="flex flex-wrap gap-2 pt-2">
-          {opportunity.tags.map(tag => (
-            <Badge key={tag} variant="outline" className="border-gray-600 text-gray-300">
+          {opportunity.tags.map((tag) => (
+            <Badge
+              key={tag}
+              variant="outline"
+              className="border-gray-600 text-gray-300"
+            >
               {tag}
             </Badge>
           ))}
