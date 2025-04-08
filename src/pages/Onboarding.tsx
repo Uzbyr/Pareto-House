@@ -1,4 +1,3 @@
-
 import React from "react";
 import OnboardingFlow from "@/components/OnboardingFlow";
 import { useAuth } from "@/contexts/AuthContext";

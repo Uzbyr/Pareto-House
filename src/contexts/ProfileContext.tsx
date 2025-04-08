@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
@@ -38,7 +37,11 @@ interface ProfileContextType {
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-export const ProfileProvider = ({ children }: { children: React.ReactNode }) => {
+export const ProfileProvider = ({
+  children,
+}: {
+  children: React.ReactNode;
+}) => {
   const { user, isAuthenticated, session } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -54,11 +57,11 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       // Use type assertion to specify the return type
-      const { data, error: queryError } = await supabase
-        .from('profiles')
-        .select('*')
-        .eq('id', session.user.id)
-        .single() as PostgrestSingleResponse<Profile>;
+      const { data, error: queryError } = (await supabase
+        .from("profiles")
+        .select("*")
+        .eq("user_id", session.user.id)
+        .single()) as PostgrestSingleResponse<Profile>;
 
       if (queryError) {
         console.error("Error fetching profile:", queryError);
@@ -80,11 +83,11 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
     try {
       setLoading(true);
-      
-      const { error: updateError } = await supabase
-        .from('profiles')
+
+      const { error: updateError } = (await supabase
+        .from("profiles")
         .update(updates)
-        .eq('id', session.user.id) as PostgrestSingleResponse<null>;
+        .eq("user_id", session.user.id)) as PostgrestSingleResponse<null>;
 
       if (updateError) {
         toast.error("Failed to update profile");
@@ -126,9 +129,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   return (
-    <ProfileContext.Provider value={value}>
-      {children}
-    </ProfileContext.Provider>
+    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
   );
 };
 

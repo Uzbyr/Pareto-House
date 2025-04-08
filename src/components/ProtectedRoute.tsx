@@ -1,4 +1,3 @@
-
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/auth";
@@ -34,7 +33,11 @@ const ProtectedRoute = ({
   }
 
   // Check if onboarding is required and not completed
-  if (requireOnboarding && user?.role !== "admin" && (!profile || !profile.onboarding_completed)) {
+  if (
+    requireOnboarding &&
+    user?.role !== "admin" &&
+    (!profile || !profile.onboarding_completed)
+  ) {
     return <Navigate to="/onboarding" replace />;
   }
 

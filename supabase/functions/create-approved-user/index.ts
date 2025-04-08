@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.36.0";
 
@@ -102,7 +101,7 @@ const handler = async (req: Request): Promise<Response> => {
           console.error("Error fetching application data:", appError);
         } else if (applicationData) {
           console.log("Application data found, creating profile");
-          
+
           // Create profile with data from application
           const profileData = {
             user_id: newUser.user.id,
@@ -134,16 +133,18 @@ const handler = async (req: Request): Promise<Response> => {
           }
         } else {
           console.log("No application data found for", userData.email);
-          
+
           // Create minimal profile with just name
           const { error: profileError } = await supabaseAdmin
             .from("profiles")
-            .insert([{
-              user_id: newUser.user.id,
-              first_name: userData.firstName,
-              last_name: userData.lastName,
-            }]);
-            
+            .insert([
+              {
+                user_id: newUser.user.id,
+                first_name: userData.firstName,
+                last_name: userData.lastName,
+              },
+            ]);
+
           if (profileError) {
             console.error("Error creating minimal user profile:", profileError);
           } else {

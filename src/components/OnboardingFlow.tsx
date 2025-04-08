@@ -45,7 +45,7 @@ const OnboardingFlow = () => {
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
 
   const handleInputChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({
@@ -72,7 +72,7 @@ const OnboardingFlow = () => {
 
     try {
       const filePath = `profile-pictures/${user.email?.split("@")[0]}-${Date.now()}`;
-      
+
       const { error: uploadError, data } = await supabase.storage
         .from("profiles")
         .upload(filePath, profilePicture);
@@ -83,7 +83,9 @@ const OnboardingFlow = () => {
         return null;
       }
 
-      const { data: urlData } = supabase.storage.from("profiles").getPublicUrl(filePath);
+      const { data: urlData } = supabase.storage
+        .from("profiles")
+        .getPublicUrl(filePath);
       return urlData.publicUrl;
     } catch (error) {
       console.error("Error in profile picture upload:", error);
@@ -126,7 +128,7 @@ const OnboardingFlow = () => {
       await completeOnboarding();
 
       toast.success("Onboarding completed successfully!");
-      
+
       if (user?.role === "fellow") {
         navigate("/fellowship");
       } else if (user?.role === "alumni") {
@@ -146,7 +148,9 @@ const OnboardingFlow = () => {
     return (
       <div className="space-y-6">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Personal Information</h1>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            Personal Information
+          </h1>
           <p className="text-gray-400">Tell us about yourself</p>
         </div>
 
@@ -216,8 +220,8 @@ const OnboardingFlow = () => {
 
         <div className="pt-4">
           <div className="flex justify-end">
-            <Button 
-              onClick={handleNextStep} 
+            <Button
+              onClick={handleNextStep}
               className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
             >
               Next Step
@@ -233,7 +237,9 @@ const OnboardingFlow = () => {
       <div className="space-y-6">
         <div className="mb-8">
           <h1 className="text-2xl font-bold text-white mb-2">Education</h1>
-          <p className="text-gray-400">Tell us about your educational background</p>
+          <p className="text-gray-400">
+            Tell us about your educational background
+          </p>
         </div>
 
         <div className="space-y-4">
@@ -248,7 +254,7 @@ const OnboardingFlow = () => {
               placeholder="University name"
             />
           </div>
-          
+
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="w-full">
               <Label htmlFor="major">Major</Label>
@@ -277,15 +283,15 @@ const OnboardingFlow = () => {
 
         <div className="pt-4">
           <div className="flex justify-between">
-            <Button 
+            <Button
               onClick={handlePrevStep}
-              variant="outline" 
+              variant="outline"
               className="border-zinc-700 hover:bg-zinc-800"
             >
               Previous
             </Button>
-            <Button 
-              onClick={handleNextStep} 
+            <Button
+              onClick={handleNextStep}
               className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
             >
               Next Step
@@ -300,41 +306,45 @@ const OnboardingFlow = () => {
     return (
       <div className="space-y-6">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">Profile Picture & Links</h1>
-          <p className="text-gray-400">Add a profile picture and your online presence</p>
+          <h1 className="text-2xl font-bold text-white mb-2">
+            Profile Picture & Links
+          </h1>
+          <p className="text-gray-400">
+            Add a profile picture and your online presence
+          </p>
         </div>
 
         <div className="flex flex-col items-center space-y-4 mb-6">
           <Avatar className="w-24 h-24">
-            <AvatarImage 
+            <AvatarImage
               src={
-                profilePicture 
-                  ? URL.createObjectURL(profilePicture) 
-                  : formData.profile_picture_url || "" 
-              } 
-              alt="Profile" 
+                profilePicture
+                  ? URL.createObjectURL(profilePicture)
+                  : formData.profile_picture_url || ""
+              }
+              alt="Profile"
             />
             <AvatarFallback className="bg-zinc-700 text-lg">
-              {formData.first_name && formData.last_name ? 
-                `${formData.first_name[0]}${formData.last_name[0]}` : 
-                "PF"}
+              {formData.first_name && formData.last_name
+                ? `${formData.first_name[0]}${formData.last_name[0]}`
+                : "PF"}
             </AvatarFallback>
           </Avatar>
-          
+
           <div className="flex items-center">
-            <Label 
-              htmlFor="picture" 
+            <Label
+              htmlFor="picture"
               className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md flex items-center gap-2"
             >
               <Upload size={16} />
               Upload Picture
             </Label>
-            <Input 
-              id="picture" 
-              type="file" 
+            <Input
+              id="picture"
+              type="file"
               accept="image/*"
               onChange={handleFileChange}
-              className="hidden" 
+              className="hidden"
             />
           </div>
         </div>
@@ -351,7 +361,7 @@ const OnboardingFlow = () => {
               placeholder="https://linkedin.com/in/..."
             />
           </div>
-          
+
           <div>
             <Label htmlFor="github_url">GitHub Profile</Label>
             <Input
@@ -391,16 +401,16 @@ const OnboardingFlow = () => {
 
         <div className="pt-4">
           <div className="flex justify-between">
-            <Button 
+            <Button
               onClick={handlePrevStep}
-              variant="outline" 
+              variant="outline"
               className="border-zinc-700 hover:bg-zinc-800"
             >
               Previous
             </Button>
-            <Button 
+            <Button
               onClick={handleSubmit}
-              disabled={loading} 
+              disabled={loading}
               className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
             >
               {loading ? "Completing..." : "Complete Onboarding"}
@@ -431,7 +441,11 @@ const OnboardingFlow = () => {
           <div className="flex justify-between mb-2">
             <span className="text-sm text-gray-400">Step {step} of 3</span>
             <span className="text-sm text-gray-400">
-              {step === 1 ? "Personal Information" : step === 2 ? "Education" : "Profile & Links"}
+              {step === 1
+                ? "Personal Information"
+                : step === 2
+                  ? "Education"
+                  : "Profile & Links"}
             </span>
           </div>
           <div className="w-full bg-zinc-700 h-2 rounded-full">
