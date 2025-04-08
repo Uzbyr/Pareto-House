@@ -1,3 +1,4 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.36.0";
 
@@ -24,7 +25,7 @@ const handler = async (req: Request): Promise<Response> => {
       "profiles",
       {
         public: true,
-        fileSizeLimit: 1024 * 1024 * 2, // 2MB limit
+        fileSizeLimit: 1024 * 1024 * 5, // Increased to 5MB limit
         allowedMimeTypes: [
           "image/png",
           "image/jpeg",
