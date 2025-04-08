@@ -10,10 +10,11 @@ import FinalCTA from "../components/FinalCTA";
 import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
+
 const Index = () => {
   const navigate = useNavigate();
-  const handleAdminLogin = () => {
-    navigate("/admin/login");
+  const handleLogin = () => {
+    navigate("/login");
   };
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
@@ -127,7 +128,7 @@ const Index = () => {
       {/* Footer */}
       <Footer />
 
-      {/* Admin Login Button */}
+      {/* Login Button */}
       <div className="border-t border-black/10 dark:border-white/10 py-6">
         <div className="container mx-auto px-4">
           <div className="flex justify-end">
@@ -135,10 +136,10 @@ const Index = () => {
               variant="ghost"
               size="sm"
               className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
-              onClick={handleAdminLogin}
+              onClick={handleLogin}
             >
               <Lock className="w-4 h-4 mr-2" />
-              Admin Login
+              Login
             </Button>
           </div>
         </div>
@@ -146,4 +147,5 @@ const Index = () => {
     </div>
   );
 };
+
 export default Index;

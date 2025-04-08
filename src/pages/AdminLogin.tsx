@@ -1,129 +1,125 @@
+
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
+import { useNavigate, useLocation } from "react-router-dom";
+import { useAuth } from "@/contexts/AuthContext";
+import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
+import { hasAdminPrivileges } from "@/utils/authUtils";
+import { toast } from "sonner";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loading, setLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+  
+  // Get the redirect path from location state or use default paths based on role
+  const from = (location.state as any)?.from?.pathname || "/admin/dashboard";
 
-  const isPareto20Email = (email: string) => {
-    return email.endsWith("@pareto20.com");
-  };
+  // If user is already authenticated, redirect based on role
+  if (isAuthenticated && user) {
+    if (hasAdminPrivileges(user.role)) {
+      navigate("/admin/dashboard", { replace: true });
+    } else if (user.role === "fellow") {
+      navigate("/fellowship", { replace: true });
+    } else if (user.role === "alumni") {
+      navigate("/alumni", { replace: true });
+    }
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLoading(true);
-
-    if (!email.trim() || !password.trim()) {
-      toast.error("Please enter both email and password");
-      setLoading(false);
-      return;
-    }
-
-    if (!isPareto20Email(email)) {
-      toast.error("Access restricted to @pareto20.com email addresses only");
-      setLoading(false);
-      return;
-    }
+    setIsLoading(true);
 
     try {
-      const { error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
+      const success = await login(email, password);
 
-      if (error) {
-        console.error("Login error:", error);
-        toast.error(error.message || "Invalid credentials");
+      if (success) {
+        toast.success("Login successful!");
+        
+        // Redirect based on user role
+        if (user?.role === "fellow") {
+          navigate("/fellowship", { replace: true });
+        } else if (user?.role === "alumni") {
+          navigate("/alumni", { replace: true });
+        } else {
+          // Admin or super_admin
+          navigate("/admin/dashboard", { replace: true });
+        }
       } else {
-        toast.success("Login successful");
-        navigate("/admin/dashboard");
+        toast.error("Invalid email or password");
       }
     } catch (error) {
-      toast.error("Login failed");
+      toast.error("An error occurred during login");
       console.error("Login error:", error);
     } finally {
-      setLoading(false);
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-zinc-900 to-black p-4">
-      <div className="w-full max-w-md space-y-8 bg-zinc-800/50 backdrop-blur-sm p-8 rounded-xl border border-zinc-700/50 shadow-xl">
-        <div className="text-center">
-          <Button
-            variant="ghost"
-            onClick={() => navigate("/")}
-            className="mb-4 text-gray-400 hover:text-white"
-          >
-            ← Back to Homepage
-          </Button>
-          <h2 className="text-3xl font-bold text-pareto-pink">Admin Portal</h2>
-          <p className="mt-2 text-gray-400">
-            Sign in to access the admin dashboard
+    <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-4">
+      <Card className="w-full max-w-md bg-zinc-800 border-zinc-700 p-8">
+        <div className="mb-8 text-center">
+          <img src="/logo.png" alt="Pareto Logo" className="h-12 mx-auto mb-6" />
+          <h1 className="text-2xl font-bold text-white">Login</h1>
+          <p className="text-zinc-400 mt-2">
+            Enter your credentials to access your account
           </p>
         </div>
-        <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-          <div className="space-y-4">
-            <div>
-              <Label
-                htmlFor="email"
-                className="text-sm font-medium text-gray-300"
-              >
-                Email Address
-              </Label>
-              <Input
-                id="email"
-                name="email"
-                type="email"
-                autoComplete="email"
-                required
-                className="mt-1 bg-zinc-900/70 border-zinc-700 text-white"
-                placeholder="name@pareto20.com"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-              />
-              <p className="mt-1 text-xs text-gray-400">
-                Only @pareto20.com email addresses are allowed
-              </p>
-            </div>
-            <div>
-              <Label
-                htmlFor="password"
-                className="text-sm font-medium text-gray-300"
-              >
-                Password
-              </Label>
-              <Input
-                id="password"
-                name="password"
-                type="password"
-                autoComplete="current-password"
-                required
-                className="mt-1 bg-zinc-900/70 border-zinc-700 text-white"
-                placeholder="••••••••"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </div>
+
+        <form onSubmit={handleSubmit} className="space-y-4">
+          <div>
+            <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1">
+              Email
+            </label>
+            <Input
+              id="email"
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              placeholder="you@example.com"
+              className="bg-zinc-700 border-zinc-600 text-white"
+              required
+            />
+          </div>
+
+          <div>
+            <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-1">
+              Password
+            </label>
+            <Input
+              id="password"
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              placeholder="••••••••"
+              className="bg-zinc-700 border-zinc-600 text-white"
+              required
+            />
           </div>
 
           <Button
             type="submit"
-            variant="pink"
-            className="w-full py-6"
-            disabled={loading}
+            className="w-full bg-pareto-pink hover:bg-pink-600 text-black font-medium"
+            disabled={isLoading}
           >
-            {loading ? "Signing in..." : "Sign in"}
+            {isLoading ? "Logging in..." : "Login"}
           </Button>
         </form>
-      </div>
+
+        <div className="mt-6 text-center text-sm text-zinc-500">
+          <p>
+            Don't have a fellowship account yet?{" "}
+            <a href="/apply" className="text-pareto-pink hover:underline">
+              Apply now
+            </a>
+          </p>
+        </div>
+      </Card>
     </div>
   );
 };

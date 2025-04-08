@@ -1,5 +1,6 @@
+
 import { Link } from "react-router-dom";
-import { Instagram, Linkedin } from "lucide-react";
+import { Instagram, Linkedin, Lock } from "lucide-react";
 import { SiX } from "@icons-pack/react-simple-icons";
 
 const Footer = () => {
