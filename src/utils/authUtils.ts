@@ -31,7 +31,11 @@ export const canAccessRole = (userRole: UserRole | undefined, requiredRole: User
   if (userRole === "super_admin") return true;
   
   // Admins can access everything except super_admin routes
-  if (userRole === "admin") return requiredRole !== "super_admin";
+  // Fix: Ensure admins can access admin-specific routes
+  if (userRole === "admin") {
+    // Admin can access all routes except super_admin specific routes
+    return requiredRole !== "super_admin";
+  }
   
   // Regular users can only access their specific role pages
   return userRole === requiredRole;
