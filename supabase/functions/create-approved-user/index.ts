@@ -85,32 +85,6 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("User created successfully:", newUser);
 
-    // Assign the fellow role to the user
-    if (newUser.user) {
-      const { error: roleError } = await supabaseAdmin
-        .from("user_roles")
-        .insert({
-          user_id: newUser.user.id,
-          role: "fellow",
-          cohort: new Date().getFullYear().toString(),
-        });
-
-      if (roleError) {
-        console.error("Error assigning fellow role:", roleError);
-        return new Response(
-          JSON.stringify({
-            error: roleError.message,
-            message: "User created but role assignment failed",
-            temporaryPassword,
-          }),
-          {
-            status: 500,
-            headers: { "Content-Type": "application/json", ...corsHeaders },
-          },
-        );
-      }
-    }
-
     return new Response(
       JSON.stringify({
         success: true,
