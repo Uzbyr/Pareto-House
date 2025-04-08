@@ -1,8 +1,8 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
-import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 interface Profile {
   id: string;
@@ -56,12 +56,12 @@ export const ProfileProvider = ({
 
     try {
       setLoading(true);
-      // Use type assertion to specify the return type
-      const { data, error: queryError } = (await supabase
+      // Fix: remove the type assertion that was causing the infinite type instantiation
+      const { data, error: queryError } = await supabase
         .from("profiles")
         .select("*")
         .eq("user_id", session.user.id)
-        .single()) as PostgrestSingleResponse<Profile>;
+        .single();
 
       if (queryError) {
         console.error("Error fetching profile:", queryError);
@@ -69,7 +69,7 @@ export const ProfileProvider = ({
         return;
       }
 
-      setProfile(data);
+      setProfile(data as Profile);
     } catch (err) {
       console.error("Exception fetching profile:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
@@ -84,10 +84,11 @@ export const ProfileProvider = ({
     try {
       setLoading(true);
 
-      const { error: updateError } = (await supabase
+      // Fix: remove the type assertion that was causing the infinite type instantiation
+      const { error: updateError } = await supabase
         .from("profiles")
         .update(updates)
-        .eq("user_id", session.user.id)) as PostgrestSingleResponse<null>;
+        .eq("user_id", session.user.id);
 
       if (updateError) {
         toast.error("Failed to update profile");
