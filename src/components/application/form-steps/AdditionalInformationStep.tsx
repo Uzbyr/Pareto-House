@@ -41,6 +41,30 @@ const AdditionalInformationStep = memo(
       <h2 className="text-2xl font-bold mb-4">Additional Information</h2>
 
       <div className="space-y-2">
+        <Label htmlFor="videoUrl">
+          Video Presentation URL<span className="text-red-500">*</span>
+        </Label>
+        <Input
+          id="videoUrl"
+          name="videoUrl"
+          placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
+          value={formData.videoUrl}
+          onChange={handleInputChange}
+          className="bg-zinc-800 border-zinc-700"
+          onClick={(e) => e.stopPropagation()} // Prevent form submission on click
+          onKeyDown={(e) => {
+            // Prevent form submission when pressing Enter in the URL field
+            if (e.key === "Enter") {
+              e.preventDefault();
+            }
+          }}
+        />
+        <p className="text-xs text-zinc-500 mt-1">
+          Upload a 1-2 minute video presentation about yourself and your goals
+        </p>
+      </div>
+
+      <div className="space-y-2">
         <Label htmlFor="linkedInUrl">LinkedIn Profile URL (Optional)</Label>
         <Input
           id="linkedInUrl"
@@ -76,28 +100,6 @@ const AdditionalInformationStep = memo(
             className="bg-zinc-800 border-zinc-700"
           />
         </div>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="videoUrl">Video Presentation URL</Label>
-        <Input
-          id="videoUrl"
-          name="videoUrl"
-          placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
-          value={formData.videoUrl}
-          onChange={handleInputChange}
-          className="bg-zinc-800 border-zinc-700"
-          onClick={(e) => e.stopPropagation()} // Prevent form submission on click
-          onKeyDown={(e) => {
-            // Prevent form submission when pressing Enter in the URL field
-            if (e.key === "Enter") {
-              e.preventDefault();
-            }
-          }}
-        />
-        <p className="text-xs text-zinc-500 mt-1">
-          Upload a 1-2 minute video presentation about yourself and your goals
-        </p>
       </div>
 
       <div className="space-y-2">

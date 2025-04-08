@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CheckCircle, XCircle, Clock, Flag, Mail } from "lucide-react";
@@ -121,8 +120,12 @@ const StatusActions = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Approve Application</AlertDialogTitle>
             <AlertDialogDescription>
-              This will approve {application.name}'s application and send an acceptance email to{" "}
-              <span className="font-medium text-foreground">{application.email}</span>.
+              This will approve {application.name}'s application and send an
+              acceptance email to{" "}
+              <span className="font-medium text-foreground">
+                {application.email}
+              </span>
+              .
               <div className="mt-2 flex items-center p-2 bg-yellow-500/10 text-yellow-500 rounded-md">
                 <Mail className="h-5 w-5 mr-2" />
                 The applicant will receive an email with login credentials.
@@ -131,7 +134,7 @@ const StatusActions = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleApprove}
               className="bg-green-600 hover:bg-green-700 text-white"
             >

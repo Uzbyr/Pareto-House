@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Application, ApplicationUpdateFunctions } from "@/types/application";
 import {
@@ -11,7 +10,14 @@ import {
 } from "@/components/ui/table";
 import { Button } from "@/components/ui/button";
 import { formatDate } from "@/lib/utils";
-import { CheckCircle, XCircle, Clock, FileSearch, Flag, Mail } from "lucide-react";
+import {
+  CheckCircle,
+  XCircle,
+  Clock,
+  FileSearch,
+  Flag,
+  Mail,
+} from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 import {
@@ -45,14 +51,14 @@ const ApplicationsTable = ({
       toast.info("Application is already approved");
       return;
     }
-    
+
     setAppToApprove(app);
     setShowApproveDialog(true);
   };
 
   const handleApprove = async () => {
     if (!appToApprove) return;
-    
+
     try {
       // First update the status
       updateApplicationStatus(appToApprove.id, "approved");
@@ -203,7 +209,9 @@ const ApplicationsTable = ({
                         size="sm"
                         variant="ghost"
                         className="h-8 w-8 p-0 text-yellow-500 hover:text-yellow-400 hover:bg-yellow-400/10"
-                        onClick={() => updateApplicationStatus(app.id, "pending")}
+                        onClick={() =>
+                          updateApplicationStatus(app.id, "pending")
+                        }
                       >
                         <Clock className="h-4 w-4" />
                         <span className="sr-only">Mark as Pending</span>
@@ -228,8 +236,12 @@ const ApplicationsTable = ({
           <AlertDialogHeader>
             <AlertDialogTitle>Approve Application</AlertDialogTitle>
             <AlertDialogDescription>
-              This will approve {appToApprove?.name}'s application and send an acceptance email to{" "}
-              <span className="font-medium text-foreground">{appToApprove?.email}</span>.
+              This will approve {appToApprove?.name}'s application and send an
+              acceptance email to{" "}
+              <span className="font-medium text-foreground">
+                {appToApprove?.email}
+              </span>
+              .
               <div className="mt-2 flex items-center p-2 bg-yellow-500/10 text-yellow-500 rounded-md">
                 <Mail className="h-5 w-5 mr-2" />
                 The applicant will receive an email with login credentials.
@@ -238,7 +250,7 @@ const ApplicationsTable = ({
           </AlertDialogHeader>
           <AlertDialogFooter>
             <AlertDialogCancel>Cancel</AlertDialogCancel>
-            <AlertDialogAction 
+            <AlertDialogAction
               onClick={handleApprove}
               className="bg-green-600 hover:bg-green-700 text-white"
             >
