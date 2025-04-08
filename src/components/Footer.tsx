@@ -14,15 +14,7 @@ const Footer = () => {
             </Link>
           </div>
 
-          <div className="mb-6 md:mb-0">
-            <Link
-              to="/login"
-              className="flex items-center text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300"
-            >
-              <Lock className="h-3.5 w-3.5 mr-1.5" />
-              Login
-            </Link>
-          </div>
+          <div className="mb-6 md:mb-0"><a href="https://www.youtube.com/watch?v=lc8ourcIe10" target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300">Build brutally or don't</a></div>
 
           <div className="flex gap-6">
             <div className="flex gap-4">
