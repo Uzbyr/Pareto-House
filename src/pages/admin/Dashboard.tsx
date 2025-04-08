@@ -1,3 +1,4 @@
+
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/contexts/AuthContext";
@@ -10,12 +11,13 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { Clock, RefreshCw } from "lucide-react";
+import { Clock, RefreshCw, FileText } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
+import { Link } from "react-router-dom";
 
 interface ApplicationStats {
   total: number;
@@ -133,17 +135,23 @@ const Dashboard = () => {
 
       {/* Stats Overview */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        <Card className="bg-zinc-800 border-zinc-700 p-6">
-          <h3 className="text-gray-400 text-sm font-medium">
-            Total Applications
-          </h3>
-          <p className="text-4xl font-bold text-white mt-2">
-            {stats?.total || 0}
-          </p>
-          <div className="mt-4">
-            <Progress value={100} className="h-1 bg-zinc-700" />
-          </div>
-        </Card>
+        <Link to="/admin/applications" className="block">
+          <Card className="bg-zinc-800 border-zinc-700 p-6 hover:bg-zinc-700 transition-colors">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-gray-400 text-sm font-medium">
+                Total Applications
+              </h3>
+              <FileText className="h-5 w-5 text-gray-400" />
+            </div>
+            <p className="text-4xl font-bold text-white mt-2">
+              {stats?.total || 0}
+            </p>
+            <div className="mt-4">
+              <Progress value={100} className="h-1 bg-zinc-700" />
+            </div>
+            <p className="text-xs text-gray-400 mt-2">Click to view all applications</p>
+          </Card>
+        </Link>
 
         <Card className="bg-zinc-800 border-zinc-700 p-6">
           <h3 className="text-gray-400 text-sm font-medium">Approved</h3>
@@ -212,6 +220,21 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
       </Card>
+      
+      {/* Call to action button for applications */}
+      <div className="flex justify-center">
+        <Button 
+          asChild
+          variant="default" 
+          size="lg" 
+          className="bg-pareto-pink hover:bg-pink-600 text-black font-medium px-8"
+        >
+          <Link to="/admin/applications" className="flex items-center gap-2">
+            <FileText className="h-5 w-5" />
+            View All Applications
+          </Link>
+        </Button>
+      </div>
     </div>
   );
 };
