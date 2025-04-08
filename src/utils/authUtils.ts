@@ -7,15 +7,21 @@ export const getUserRole = async (userId: string): Promise<UserRole> => {
 
   try {
     // Query the user_roles table to get the user's role
+    // With RLS policies in place, users can now access their own roles
     const { data, error } = await supabase
       .from("user_roles")
       .select("role")
       .eq("user_id", userId)
       .single();
 
-    if (error || !data) {
+    if (error) {
       console.error("Error fetching user role:", error);
       return "fellow"; // Default role if there's an error
+    }
+
+    if (!data) {
+      console.log("No role found for user, defaulting to fellow");
+      return "fellow"; // Default role if no role is found
     }
 
     // Return the role from the database
@@ -43,7 +49,6 @@ export const canAccessRole = (userRole: UserRole | undefined, requiredRole: User
   if (userRole === "super_admin") return true;
   
   // Admins can access everything except super_admin routes
-  // Fix: Ensure admins can access admin-specific routes
   if (userRole === "admin") {
     // Admin can access all routes except super_admin specific routes
     return requiredRole !== "super_admin";

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -65,8 +66,10 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsAuthenticated(!!currentSession);
       
       if (currentSession?.user) {
+        console.log("Setting up auth for user:", currentSession.user.id);
         // Get user role from database
         const role = await getUserRole(currentSession.user.id);
+        console.log("User role from getUserRole:", role);
         
         setUser({
           email: currentSession.user.email || '',
@@ -90,17 +93,22 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       setIsAuthenticated(!!currentSession);
       
       if (currentSession?.user) {
-        // Get user role from database
-        const role = await getUserRole(currentSession.user.id);
-        
-        setUser({
-          email: currentSession.user.email || '',
-          role: role,
-        });
-        
-        // Check if user needs to change password
-        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
-        setRequirePasswordChange(requireChange);
+        console.log("Auth state changed for user:", currentSession.user.id);
+        // Use setTimeout to avoid potential recursion issues with RLS policies
+        setTimeout(async () => {
+          // Get user role from database
+          const role = await getUserRole(currentSession.user.id);
+          console.log("User role from onAuthStateChange:", role);
+          
+          setUser({
+            email: currentSession.user.email || '',
+            role: role,
+          });
+          
+          // Check if user needs to change password
+          const requireChange = currentSession.user.user_metadata?.require_password_change === true;
+          setRequirePasswordChange(requireChange);
+        }, 0);
       } else {
         setUser(null);
         setRequirePasswordChange(false);
