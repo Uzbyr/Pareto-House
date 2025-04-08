@@ -1,3 +1,4 @@
+
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -50,6 +51,7 @@ const AdditionalInformationStep = memo(
           placeholder="Link to a short video presentation of yourself (YouTube, Vimeo, etc.)"
           value={formData.videoUrl}
           onChange={handleInputChange}
+          required
           className="bg-zinc-800 border-zinc-700"
           onClick={(e) => e.stopPropagation()} // Prevent form submission on click
           onKeyDown={(e) => {
@@ -60,7 +62,7 @@ const AdditionalInformationStep = memo(
           }}
         />
         <p className="text-xs text-zinc-500 mt-1">
-          Upload a 1-2 minute video presentation about yourself and your goals
+          Upload a 1-2 minute video presentation about yourself and your goals (required)
         </p>
       </div>
 

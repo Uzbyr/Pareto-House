@@ -255,6 +255,12 @@ const useApplicationForm = ({
       setLoading(true);
 
       try {
+        if (!formData.videoUrl) {
+          toast.error("Please provide a video presentation URL.");
+          setLoading(false);
+          return;
+        }
+
         if (
           formData.linkedInUrl &&
           !validateLinkedInUrl(formData.linkedInUrl)

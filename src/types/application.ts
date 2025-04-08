@@ -1,3 +1,4 @@
+
 export interface Application {
   id: string;
   name: string;
@@ -10,7 +11,7 @@ export interface Application {
   resumeFile?: string;
   deckFile?: string;
   memoFile?: string;
-  videoUrl?: string;
+  videoUrl: string; // No longer optional (removed ? mark)
   country?: string;
   nationality?: string;
   graduationYear?: string;
@@ -20,13 +21,13 @@ export interface Application {
   companyContext?: string;
   websiteUrl?: string;
   xUrl?: string;
-  linkedinUrl?: string; // Already optional with ?
+  linkedinUrl?: string;
   educationLevel?: string;
   highSchool?: string;
   githubUrl?: string;
   categoryOfInterest?: string;
   hasCompetitionExperience?: string;
-  competitionResults?: string; // Changed from string[] to string to match the data format
+  competitionResults?: string;
   competitiveProfiles?: string[];
 }
 
