@@ -1,62 +1,42 @@
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Session } from "@supabase/supabase-js";
-import {
-  AuthContextType,
-  Application,
-  AuthUser,
-  SiteMetrics,
-  UserRole,
-} from "@/types/auth";
-import { getUserRole, isPareto20Email } from "@/utils/authUtils";
-import { collectRealMetrics } from "@/utils/metricsUtils";
-import {
-  getStoredApplications,
-  storeApplications,
-  getStoredPageViews,
-  storePageViews,
-  getStoredVisitorData,
-  storeVisitorData,
-} from "@/utils/storageUtils";
+import { AuthContextType } from "@/types/auth";
+import { getUserRole } from "@/utils/authUtils";
+import { useAuthService } from "@/hooks/useAuthService";
+import { useMetricsService } from "@/hooks/useMetricsService";
+import { useVisitorTracking } from "@/hooks/useVisitorTracking";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
-  const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<AuthUser | null>(null);
-  const [session, setSession] = useState<Session | null>(null);
-  const [loading, setLoading] = useState(true);
-  const [requirePasswordChange, setRequirePasswordChange] = useState<boolean>(false);
-  const [applications, setApplications] = useState<Application[]>(
-    getStoredApplications(),
-  );
-  const [siteMetrics, setSiteMetrics] =
-    useState<SiteMetrics>(collectRealMetrics());
+  // Use our custom hooks to manage state and functionality
+  const {
+    isAuthenticated,
+    user,
+    session,
+    requirePasswordChange,
+    login,
+    logout,
+    changePassword,
+    isPareto20Email,
+    setIsAuthenticated,
+    setUser,
+    setSession,
+    setRequirePasswordChange
+  } = useAuthService();
 
-  const [sessionId] = useState<string>(() => {
-    let id = sessionStorage.getItem("visitorSessionId");
-    if (!id) {
-      id = Math.random().toString(36).substring(2, 15);
-      sessionStorage.setItem("visitorSessionId", id);
+  const { sessionId } = useVisitorTracking();
 
-      const visitorData = getStoredVisitorData();
-      const today = new Date().toLocaleDateString("en-US", {
-        month: "short",
-        day: "numeric",
-      });
+  const {
+    siteMetrics,
+    refreshMetrics,
+    getApplications,
+    submitApplication,
+    trackPageVisit,
+  } = useMetricsService(isAuthenticated, user);
 
-      visitorData.total += 1;
-      visitorData.byDate[today] = (visitorData.byDate[today] || 0) + 1;
-
-      storeVisitorData(visitorData);
-    }
-    return id;
-  });
-
-  const [pageViews, setPageViews] =
-    useState<Record<string, number>>(getStoredPageViews());
-
+  // Auth initialization and state change subscription
   useEffect(() => {
     const setupAuth = async () => {
       const { data: sessionData } = await supabase.auth.getSession();
@@ -81,7 +61,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         setRequirePasswordChange(requireChange);
       }
       
-      setLoading(false);
     };
     
     setupAuth();
@@ -118,161 +97,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     return () => subscription.unsubscribe();
   }, []);
 
-  const trackPageVisit = (pageName: string) => {
-    setPageViews((prevViews) => {
-      const newViews = {
-        ...prevViews,
-        [pageName]: (prevViews[pageName] || 0) + 1,
-      };
-      storePageViews(newViews);
-      return newViews;
-    });
-  };
-
-  const submitApplication = (
-    applicationData: Omit<Application, "id" | "submissionDate" | "status">,
-  ) => {
-    const newApplication: Application = {
-      ...applicationData,
-      id: crypto.randomUUID(),
-      submissionDate: new Date().toISOString(),
-      status: "pending",
-    };
-
-    setApplications((prevApps) => {
-      const updatedApps = [...prevApps, newApplication];
-      storeApplications(updatedApps);
-      return updatedApps;
-    });
-  };
-
-  const refreshMetrics = () => {
-    setSiteMetrics(collectRealMetrics());
-  };
-
-  const getApplications = (): Application[] => {
-    return applications;
-  };
-
-  useEffect(() => {
-    const fetchApplications = async () => {
-      if (isAuthenticated && user) {
-        try {
-          const { data, error } = await supabase
-            .from("applications")
-            .select("*");
-
-          if (error) {
-            console.error("Error fetching applications:", error);
-            return;
-          }
-
-          if (data) {
-            const formattedApplications = data.map((app) => ({
-              id: app.id.toString(),
-              name: `${app.first_name} ${app.last_name}`,
-              email: app.email,
-              school: app.university,
-              major: app.major,
-              resumeUrl: app.resume_file,
-              videoUrl: app.video_url,
-              submissionDate: app.submission_date,
-              status: app.status as "pending" | "approved" | "rejected",
-              flagged: app.flagged,
-            }));
-
-            setApplications(formattedApplications);
-            storeApplications(formattedApplications);
-          }
-        } catch (error) {
-          console.error("Error in fetching applications:", error);
-        }
-      }
-    };
-
-    fetchApplications();
-  }, [isAuthenticated, user]);
-
-  useEffect(() => {
-    refreshMetrics();
-  }, [applications, pageViews]);
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      const interval = setInterval(() => {
-        refreshMetrics();
-      }, 30000);
-
-      return () => clearInterval(interval);
-    }
-  }, [isAuthenticated]);
-
-  const login = async (email: string, password: string): Promise<boolean> => {
-    try {
-      const { data, error } = await supabase.auth.signInWithPassword({
-        email,
-        password,
-      });
-
-      if (error) {
-        console.error("Login error:", error.message);
-        return false;
-      }
-
-      return true;
-    } catch (error) {
-      console.error("Login error:", error);
-      return false;
-    }
-  };
-
-  const logout = async () => {
-    try {
-      setIsAuthenticated(false);
-      setUser(null);
-      setSession(null);
-      setRequirePasswordChange(false);
-      
-      const { error } = await supabase.auth.signOut();
-      if (error) {
-        console.error("Logout error:", error.message);
-        throw error;
-      }
-    } catch (error) {
-      console.error("Logout error:", error);
-      setIsAuthenticated(false);
-      setUser(null);
-      setSession(null);
-      setRequirePasswordChange(false);
-    }
-  };
-
-  const changePassword = async (newPassword: string): Promise<boolean> => {
-    try {
-      const { error } = await supabase.auth.updateUser({ 
-        password: newPassword,
-        data: {
-          require_password_change: false
-        }
-      });
-
-      if (error) {
-        console.error("Password change error:", error.message);
-        return false;
-      }
-
-      setRequirePasswordChange(false);
-      return true;
-    } catch (error) {
-      console.error("Password change error:", error);
-      return false;
-    }
-  };
-
-  if (loading) {
+  // Loading state replaced with early return of a loading component
+  if (!user && isAuthenticated) {
     return <div>Loading...</div>;
   }
 
+  // Provide the complete auth context
   return (
     <AuthContext.Provider
       value={{
