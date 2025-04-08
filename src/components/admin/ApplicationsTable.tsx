@@ -57,16 +57,6 @@ const ApplicationsTable = ({
     setShowApproveDialog(true);
   };
 
-  // Function to generate a random temporary password
-  const generateTemporaryPassword = (): string => {
-    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-    let password = "";
-    for (let i = 0; i < 12; i++) {
-      password += chars.charAt(Math.floor(Math.random() * chars.length));
-    }
-    return password;
-  };
-
   const handleApprove = async () => {
     if (!appToApprove) return;
 
@@ -77,48 +67,43 @@ const ApplicationsTable = ({
       // Show a loading toast while processing
       const loadingToast = toast.loading("Processing application approval...");
 
-      // Generate a temporary password
-      const temporaryPassword = generateTemporaryPassword();
-      
-      // Create the Supabase user account with the temporary password
-      const { data: userData, error: userError } = await supabase.auth.admin.createUser({
-        email: appToApprove.email,
-        password: temporaryPassword,
-        email_confirm: true,
-        user_metadata: {
-          first_name: appToApprove.name.split(" ")[0],
-          last_name: appToApprove.name.split(" ").slice(1).join(" "),
-          require_password_change: true,
-          approved_date: new Date().toISOString(),
-        },
-      });
+      // Call the edge function to create the user account
+      const { data, error } = await supabase.functions.invoke(
+        "create-approved-user",
+        {
+          body: {
+            firstName: appToApprove.name.split(" ")[0],
+            lastName: appToApprove.name.split(" ").slice(1).join(" "),
+            email: appToApprove.email,
+            approved_date: new Date().toISOString(),
+          },
+        }
+      );
 
-      if (userError) {
-        console.error("Error creating user account:", userError);
-        toast.error("Failed to create user account. The applicant may already have an account.");
-        // If user creation fails, continue with the email to provide login instructions
-      } else {
-        console.log("User created successfully:", userData);
+      if (error) {
+        console.error("Error creating user account:", error);
+        toast.dismiss(loadingToast);
+        toast.error("Failed to create user account. Please try again.");
+        return;
+      }
+
+      if (data?.error) {
+        console.error("Error response from create-approved-user:", data.error);
+        toast.dismiss(loadingToast);
+        toast.error(data.message || "Failed to create user account.");
         
-        // Assign the fellow role to the user
-        if (userData.user) {
-          const { error: roleError } = await supabase
-            .from("user_roles")
-            .insert({
-              user_id: userData.user.id,
-              role: "fellow",
-              cohort: new Date().getFullYear().toString(),
-            });
-
-          if (roleError) {
-            console.error("Error assigning fellow role:", roleError);
-            toast.error("User created but role assignment failed");
-          }
+        // If user already exists, continue with sending the email
+        if (data.error.includes("already exists")) {
+          console.log("User already exists, proceeding with acceptance email.");
+        } else {
+          return;
         }
       }
 
+      const temporaryPassword = data?.temporaryPassword;
+
       // Then send the acceptance email with login credentials
-      const { data, error } = await supabase.functions.invoke(
+      const { data: emailData, error: emailError } = await supabase.functions.invoke(
         "send-acceptance-email",
         {
           body: {
@@ -133,8 +118,8 @@ const ApplicationsTable = ({
       // Remove the loading toast
       toast.dismiss(loadingToast);
 
-      if (error) {
-        console.error("Error sending acceptance email:", error);
+      if (emailError) {
+        console.error("Error sending acceptance email:", emailError);
         toast.error("Application approved but failed to send acceptance email");
       } else {
         // Show success message with email confirmation
@@ -142,7 +127,7 @@ const ApplicationsTable = ({
           description:
             "The applicant has been notified of their acceptance to the fellowship.",
         });
-        console.log("Acceptance email response:", data);
+        console.log("Acceptance email response:", emailData);
       }
     } catch (err) {
       console.error("Error in approval process:", err);
