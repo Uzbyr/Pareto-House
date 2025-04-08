@@ -51,17 +51,18 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
     }
 
     // For routes specifically for fellows or alumni
-    if ((requiredRole === "fellow" || requiredRole === "alumni") && 
-        user?.role !== requiredRole && 
-        user?.role !== "admin" && 
-        user?.role !== "super_admin") {
-      // Redirect to appropriate dashboard
-      if (user?.role === "fellow") {
-        return <Navigate to="/fellowship" replace />;
-      } else if (user?.role === "alumni") {
-        return <Navigate to="/alumni" replace />;
-      } else {
-        return <Navigate to="/admin/dashboard" replace />;
+    if (requiredRole === "fellow" || requiredRole === "alumni") {
+      if (user?.role !== requiredRole && 
+          user?.role !== "admin" && 
+          user?.role !== "super_admin") {
+        // Redirect to appropriate dashboard
+        if (user?.role === "fellow") {
+          return <Navigate to="/fellowship" replace />;
+        } else if (user?.role === "alumni") {
+          return <Navigate to="/alumni" replace />;
+        } else {
+          return <Navigate to="/admin/dashboard" replace />;
+        }
       }
     }
   }
