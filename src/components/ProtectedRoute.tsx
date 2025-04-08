@@ -52,16 +52,18 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
     // For routes specifically for fellows or alumni
     if (requiredRole === "fellow" || requiredRole === "alumni") {
-      // Check if user role matches required role or is an admin/super_admin
+      // Variable to track if user has access
       let hasAccess = false;
       
-      // Check each possible valid role separately to avoid type comparison errors
-      if (user?.role === requiredRole) {
-        hasAccess = true;
-      } else if (user?.role === "admin") {
-        hasAccess = true;
-      } else if (user?.role === "super_admin") {
-        hasAccess = true;
+      if (user) {
+        // Check each possible valid role case
+        if (user.role === requiredRole) {
+          hasAccess = true;
+        } else if (user.role === "admin") {
+          hasAccess = true;
+        } else if (user.role === "super_admin") {
+          hasAccess = true;
+        }
       }
         
       if (!hasAccess) {
