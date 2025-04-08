@@ -31,6 +31,7 @@ import FellowProfile from "./pages/FellowProfile";
 import Onboarding from "./pages/Onboarding";
 import FellowDirectory from "./pages/FellowDirectory";
 import FellowEvents from "./pages/FellowEvents";
+import FellowOpportunities from "./pages/FellowOpportunities";
 
 const queryClient = new QueryClient();
 
@@ -179,6 +180,16 @@ const App = () => (
                   }
                 />
                 <Route
+                  path="/fellowship/opportunities"
+                  element={
+                    <ProtectedRoute requiredRoles={["fellow", "admin"]}>
+                      <FellowLayout>
+                        <FellowOpportunities />
+                      </FellowLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
                   path="/fellowship/:section"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
@@ -189,7 +200,7 @@ const App = () => (
                   }
                 />
 
-                {/* Alumni Routes - can use the same layout as fellows but with different access */}
+                {/* Alumni Routes */}
                 <Route
                   path="/alumni"
                   element={
