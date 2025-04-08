@@ -38,13 +38,13 @@ interface ProfileContextType {
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
 export const ProfileProvider = ({ children }: { children: React.ReactNode }) => {
-  const { user, isAuthenticated } = useAuth();
+  const { user, isAuthenticated, session } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<Error | null>(null);
 
   const fetchProfile = async () => {
-    if (!isAuthenticated || !user) {
+    if (!isAuthenticated || !user || !session) {
       setProfile(null);
       setLoading(false);
       return;
@@ -52,20 +52,20 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
     try {
       setLoading(true);
-      // Use custom query to work around type issues with new "profiles" table
-      const { data, error } = await supabase
-        .from("profiles")
-        .select("*")
-        .eq("id", user.id)
+      // Use a generic query approach that doesn't rely on type checking
+      const { data, error: queryError } = await supabase
+        .from('profiles')
+        .select('*')
+        .eq('id', session.user.id)
         .single();
 
-      if (error) {
-        console.error("Error fetching profile:", error);
-        setError(new Error(error.message));
+      if (queryError) {
+        console.error("Error fetching profile:", queryError);
+        setError(new Error(queryError.message));
         return;
       }
 
-      setProfile(data as unknown as Profile);
+      setProfile(data as Profile);
     } catch (err) {
       console.error("Exception fetching profile:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
@@ -75,21 +75,21 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
   };
 
   const updateProfile = async (updates: Partial<Profile>) => {
-    if (!user) return;
+    if (!user || !session) return;
 
     try {
       setLoading(true);
       
-      // Use custom query to work around type issues
-      const { error } = await supabase
-        .from("profiles")
+      // Use a generic query approach that doesn't rely on type checking
+      const { error: updateError } = await supabase
+        .from('profiles')
         .update(updates)
-        .eq("id", user.id);
+        .eq('id', session.user.id);
 
-      if (error) {
+      if (updateError) {
         toast.error("Failed to update profile");
-        console.error("Error updating profile:", error);
-        setError(new Error(error.message));
+        console.error("Error updating profile:", updateError);
+        setError(new Error(updateError.message));
         return;
       }
 
