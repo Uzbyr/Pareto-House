@@ -108,6 +108,72 @@ export type Database = {
         }
         Relationships: []
       }
+      profiles: {
+        Row: {
+          bio: string | null
+          building_company: string | null
+          company_context: string | null
+          country: string | null
+          first_name: string | null
+          github_url: string | null
+          graduation_year: string | null
+          id: string
+          last_name: string | null
+          linkedin_url: string | null
+          major: string | null
+          nationality: string | null
+          onboarding_completed: boolean | null
+          preparatory_classes: string | null
+          profile_picture_url: string | null
+          student_societies: string | null
+          university: string | null
+          website_url: string | null
+          x_url: string | null
+        }
+        Insert: {
+          bio?: string | null
+          building_company?: string | null
+          company_context?: string | null
+          country?: string | null
+          first_name?: string | null
+          github_url?: string | null
+          graduation_year?: string | null
+          id: string
+          last_name?: string | null
+          linkedin_url?: string | null
+          major?: string | null
+          nationality?: string | null
+          onboarding_completed?: boolean | null
+          preparatory_classes?: string | null
+          profile_picture_url?: string | null
+          student_societies?: string | null
+          university?: string | null
+          website_url?: string | null
+          x_url?: string | null
+        }
+        Update: {
+          bio?: string | null
+          building_company?: string | null
+          company_context?: string | null
+          country?: string | null
+          first_name?: string | null
+          github_url?: string | null
+          graduation_year?: string | null
+          id?: string
+          last_name?: string | null
+          linkedin_url?: string | null
+          major?: string | null
+          nationality?: string | null
+          onboarding_completed?: boolean | null
+          preparatory_classes?: string | null
+          profile_picture_url?: string | null
+          student_societies?: string | null
+          university?: string | null
+          website_url?: string | null
+          x_url?: string | null
+        }
+        Relationships: []
+      }
       user_roles: {
         Row: {
           cohort: string | null

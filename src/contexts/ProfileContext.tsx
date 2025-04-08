@@ -52,9 +52,9 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
     try {
       setLoading(true);
-      // Use a generic query approach that doesn't rely on type checking
-      const { data, error: queryError } = await supabase
-        .from('profiles')
+      // Using type assertion to work around TypeScript errors since the table exists in Supabase but not in types yet
+      const { data, error: queryError } = await (supabase
+        .from('profiles') as any)
         .select('*')
         .eq('id', session.user.id)
         .single();
@@ -65,7 +65,8 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
         return;
       }
 
-      setProfile(data as Profile);
+      // Cast data to Profile type
+      setProfile(data as unknown as Profile);
     } catch (err) {
       console.error("Exception fetching profile:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
@@ -80,9 +81,9 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       
-      // Use a generic query approach that doesn't rely on type checking
-      const { error: updateError } = await supabase
-        .from('profiles')
+      // Using type assertion to work around TypeScript errors
+      const { error: updateError } = await (supabase
+        .from('profiles') as any)
         .update(updates)
         .eq('id', session.user.id);
 
