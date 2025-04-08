@@ -1,3 +1,4 @@
+
 import { UserRole } from "@/types/auth";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -51,6 +52,7 @@ export const canAccessRole = (
   if (userRole === "super_admin") return true;
 
   // Admins can access everything except super_admin routes
+  // Special case: Admins can access fellow routes
   if (userRole === "admin") {
     return requiredRole !== "super_admin";
   }
