@@ -122,6 +122,14 @@ export const mentors: Mentor[] = [
     imageUrl: "/lovable-uploads/christian-reber.jpeg",
     country: "Germany",
   },
+  {
+    name: "Carlos Eduardo Espinal",
+    linkedIn: "https://www.linkedin.com/in/carloseduardoespinal/",
+    description: "VC partner backing Europe’s top startups.",
+    bio: "As Managing Partner at Seedcamp, I've helped shape one of Europe’s leading seed-stage VC firms, backing over 450 startups including Revolut, WISE, and Synthesia. Beyond funding, I champion founder support through initiatives like Seedsummit, the This Much I Know podcast, and my book, Fundraising Fieldguide.",
+    imageUrl: "/lovable-uploads/carlos-eduardo.jpeg",
+    country: "UK",
+  },
 ];
 
 // Backlog mentors (not displayed on the page)
