@@ -57,6 +57,7 @@ const handler = async (req: Request): Promise<Response> => {
     const temporaryPassword = generateTemporaryPassword();
 
     // Create the user account with the temporary password
+    // Role assignment will be handled by the database trigger
     const { data: newUser, error: userError } =
       await supabaseAdmin.auth.admin.createUser({
         email: userData.email,
