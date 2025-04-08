@@ -43,41 +43,16 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       role: "admin" as const,
     },
     {
-      label: "Analytics",
-      path: "/admin/analytics",
-      icon: BarChart3,
-      role: "admin" as const,
-    },
-    {
-      label: "Funnel Analysis",
-      path: "/admin/funnel",
-      icon: LineChart,
-      role: "admin" as const,
-    },
-    {
-      label: "Admin Users",
-      path: "/admin/users",
-      icon: Users,
-      role: "super_admin" as const,
-    },
-    {
-      label: "Settings",
-      path: "/admin/settings",
-      icon: Settings,
-      role: "admin" as const,
-    },
-    // New routes for fellows and alumni
-    {
       label: "Fellowship",
       path: "/fellowship",
       icon: GraduationCap,
-      role: "fellow" as const,
+      role: "admin" as const,
     },
     {
       label: "Alumni Network",
       path: "/alumni",
       icon: BookOpen,
-      role: "alumni" as const,
+      role: "admin" as const,
     },
   ];
 
