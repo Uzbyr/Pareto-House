@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContextType } from "@/types/auth";
@@ -23,7 +22,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     setIsAuthenticated,
     setUser,
     setSession,
-    setRequirePasswordChange
+    setRequirePasswordChange,
   } = useAuthService();
 
   const { sessionId } = useVisitorTracking();
@@ -41,28 +40,28 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     const setupAuth = async () => {
       const { data: sessionData } = await supabase.auth.getSession();
       const currentSession = sessionData.session;
-      
+
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
-      
+
       if (currentSession?.user) {
         console.log("Setting up auth for user:", currentSession.user.id);
         // Get user role from database
         const role = await getUserRole(currentSession.user.id);
         console.log("User role from getUserRole:", role);
-        
+
         setUser({
-          email: currentSession.user.email || '',
+          email: currentSession.user.email || "",
           role: role,
         });
-        
+
         // Check if user needs to change password
-        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
+        const requireChange =
+          currentSession.user.user_metadata?.require_password_change === true;
         setRequirePasswordChange(requireChange);
       }
-      
     };
-    
+
     setupAuth();
 
     const {
@@ -70,7 +69,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
-      
+
       if (currentSession?.user) {
         console.log("Auth state changed for user:", currentSession.user.id);
         // Use setTimeout to avoid potential recursion issues with RLS policies
@@ -78,14 +77,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           // Get user role from database
           const role = await getUserRole(currentSession.user.id);
           console.log("User role from onAuthStateChange:", role);
-          
+
           setUser({
-            email: currentSession.user.email || '',
+            email: currentSession.user.email || "",
             role: role,
           });
-          
+
           // Check if user needs to change password
-          const requireChange = currentSession.user.user_metadata?.require_password_change === true;
+          const requireChange =
+            currentSession.user.user_metadata?.require_password_change === true;
           setRequirePasswordChange(requireChange);
         }, 0);
       } else {

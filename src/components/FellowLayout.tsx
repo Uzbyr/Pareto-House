@@ -1,4 +1,3 @@
-
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -40,7 +39,11 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
     { label: "Resources", path: "/fellowship/resources", icon: BookOpen },
     { label: "Network", path: "/fellowship/network", icon: Users },
     { label: "Progress", path: "/fellowship/progress", icon: Award },
-    { label: "Discussions", path: "/fellowship/discussions", icon: MessageCircle },
+    {
+      label: "Discussions",
+      path: "/fellowship/discussions",
+      icon: MessageCircle,
+    },
     { label: "Settings", path: "/fellowship/settings", icon: Settings },
   ];
 
@@ -49,7 +52,9 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
       {/* Sidebar */}
       <div className="w-64 bg-zinc-800 border-r border-zinc-700 flex flex-col">
         <div className="p-4 border-b border-zinc-700">
-          <h1 className="text-xl font-bold text-pareto-pink">Pareto Fellowship</h1>
+          <h1 className="text-xl font-bold text-pareto-pink">
+            Pareto Fellowship
+          </h1>
         </div>
 
         <nav className="flex-1 overflow-y-auto py-4">

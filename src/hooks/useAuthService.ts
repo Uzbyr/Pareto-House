@@ -1,15 +1,21 @@
-
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
 import { getUserRole } from "@/utils/authUtils";
-import { AuthState, AuthActions, AuthStateSetters } from "@/contexts/auth/types";
+import {
+  AuthState,
+  AuthActions,
+  AuthStateSetters,
+} from "@/contexts/auth/types";
 
-export const useAuthService = (): AuthState & AuthActions & AuthStateSetters => {
+export const useAuthService = (): AuthState &
+  AuthActions &
+  AuthStateSetters => {
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
-  const [user, setUser] = useState<AuthState['user']>(null);
+  const [user, setUser] = useState<AuthState["user"]>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [requirePasswordChange, setRequirePasswordChange] = useState<boolean>(false);
+  const [requirePasswordChange, setRequirePasswordChange] =
+    useState<boolean>(false);
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
@@ -36,7 +42,7 @@ export const useAuthService = (): AuthState & AuthActions & AuthStateSetters => 
       setUser(null);
       setSession(null);
       setRequirePasswordChange(false);
-      
+
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error("Logout error:", error.message);
@@ -53,11 +59,11 @@ export const useAuthService = (): AuthState & AuthActions & AuthStateSetters => 
 
   const changePassword = async (newPassword: string): Promise<boolean> => {
     try {
-      const { error } = await supabase.auth.updateUser({ 
+      const { error } = await supabase.auth.updateUser({
         password: newPassword,
         data: {
-          require_password_change: false
-        }
+          require_password_change: false,
+        },
       });
 
       if (error) {
@@ -89,7 +95,7 @@ export const useAuthService = (): AuthState & AuthActions & AuthStateSetters => 
     // These setter functions are exposed for the AuthProvider to use
     setIsAuthenticated,
     setUser,
-    setSession, 
-    setRequirePasswordChange
+    setSession,
+    setRequirePasswordChange,
   };
 };

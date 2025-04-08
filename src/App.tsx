@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -49,7 +48,7 @@ const App = () => (
               <Route path="/faq" element={<FAQ />} />
               <Route path="/tech-partners" element={<TechPartners />} />
               <Route path="/login" element={<AdminLogin />} />
-              
+
               {/* Password Change Route */}
               <Route
                 path="/change-password"
@@ -64,7 +63,7 @@ const App = () => (
               <Route
                 path="/admin/dashboard"
                 element={
-                  <ProtectedRoute requiredRole="admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Dashboard />
                     </AdminLayout>
@@ -74,7 +73,7 @@ const App = () => (
               <Route
                 path="/admin/applications"
                 element={
-                  <ProtectedRoute requiredRole="admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Applications />
                     </AdminLayout>
@@ -84,7 +83,7 @@ const App = () => (
               <Route
                 path="/admin/analytics"
                 element={
-                  <ProtectedRoute requiredRole="admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Analytics />
                     </AdminLayout>
@@ -94,7 +93,7 @@ const App = () => (
               <Route
                 path="/admin/funnel"
                 element={
-                  <ProtectedRoute requiredRole="admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Funnel />
                     </AdminLayout>
@@ -104,7 +103,7 @@ const App = () => (
               <Route
                 path="/admin/users"
                 element={
-                  <ProtectedRoute requiredRole="super_admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Users />
                     </AdminLayout>
@@ -114,7 +113,7 @@ const App = () => (
               <Route
                 path="/admin/settings"
                 element={
-                  <ProtectedRoute requiredRole="admin">
+                  <ProtectedRoute requiredRoles={["admin"]}>
                     <AdminLayout>
                       <Settings />
                     </AdminLayout>
@@ -126,7 +125,7 @@ const App = () => (
               <Route
                 path="/fellowship"
                 element={
-                  <ProtectedRoute requiredRole="fellow">
+                  <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                     <FellowLayout>
                       <FellowDashboard />
                     </FellowLayout>
@@ -136,7 +135,7 @@ const App = () => (
               <Route
                 path="/fellowship/:section"
                 element={
-                  <ProtectedRoute requiredRole="fellow">
+                  <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                     <FellowLayout>
                       <FellowDashboard />
                     </FellowLayout>
@@ -148,7 +147,7 @@ const App = () => (
               <Route
                 path="/alumni"
                 element={
-                  <ProtectedRoute requiredRole="alumni">
+                  <ProtectedRoute requiredRoles={["alumni", "admin"]}>
                     <FellowLayout>
                       <FellowDashboard />
                     </FellowLayout>

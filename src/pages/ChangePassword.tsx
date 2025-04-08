@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -45,7 +44,7 @@ const ChangePassword = () => {
     const hasLowercase = /[a-z]/.test(newPassword);
     const hasNumber = /[0-9]/.test(newPassword);
     const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
-    
+
     // Calculate score
     let score = 0;
     if (hasMinLength) score += 1;
@@ -53,10 +52,10 @@ const ChangePassword = () => {
     if (hasLowercase) score += 1;
     if (hasNumber) score += 1;
     if (hasSpecial) score += 1;
-    
+
     // Password is strong if it meets at least 4 criteria
     const isStrong = score >= 4;
-    
+
     setPasswordStrength({
       score,
       isStrong,
@@ -70,23 +69,23 @@ const ChangePassword = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validate passwords
     if (newPassword !== confirmPassword) {
       toast.error("Passwords do not match");
       return;
     }
-    
+
     if (!passwordStrength.isStrong) {
       toast.error("Please create a stronger password");
       return;
     }
-    
+
     setIsLoading(true);
-    
+
     try {
       const success = await changePassword(newPassword);
-      
+
       if (success) {
         toast.success("Password changed successfully");
         // Navigate to the appropriate dashboard based on role
@@ -117,8 +116,14 @@ const ChangePassword = () => {
     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-zinc-800 border-zinc-700 p-8">
         <div className="mb-8 text-center">
-          <img src="/logo.png" alt="Pareto Logo" className="h-12 mx-auto mb-6" />
-          <h1 className="text-2xl font-bold text-white">Change Your Password</h1>
+          <img
+            src="/logo.png"
+            alt="Pareto Logo"
+            className="h-12 mx-auto mb-6"
+          />
+          <h1 className="text-2xl font-bold text-white">
+            Change Your Password
+          </h1>
           <p className="text-zinc-400 mt-2">
             Please create a strong password for your account
           </p>
@@ -126,7 +131,10 @@ const ChangePassword = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="newPassword" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="newPassword"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               New Password
             </label>
             <div className="relative">
@@ -151,42 +159,70 @@ const ChangePassword = () => {
                 )}
               </button>
             </div>
-            
+
             {/* Password strength meter */}
             {newPassword && (
               <div className="mt-2">
                 <div className="flex justify-between text-xs text-zinc-400 mb-1">
                   <span>Password strength</span>
-                  <span className={passwordStrength.isStrong ? "text-green-500" : "text-yellow-500"}>
-                    {passwordStrength.score > 0 ? `${passwordStrength.score}/5` : "Very weak"}
+                  <span
+                    className={
+                      passwordStrength.isStrong
+                        ? "text-green-500"
+                        : "text-yellow-500"
+                    }
+                  >
+                    {passwordStrength.score > 0
+                      ? `${passwordStrength.score}/5`
+                      : "Very weak"}
                   </span>
                 </div>
                 <div className="h-1 w-full bg-zinc-700 rounded">
-                  <div 
+                  <div
                     className={`h-full rounded ${getStrengthColor()}`}
                     style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
                   ></div>
                 </div>
-                
+
                 <ul className="mt-3 space-y-1 text-xs">
-                  <li className={`flex items-center ${passwordStrength.hasMinLength ? "text-green-400" : "text-zinc-400"}`}>
-                    <div className="mr-1">{passwordStrength.hasMinLength ? "✓" : "○"}</div>
+                  <li
+                    className={`flex items-center ${passwordStrength.hasMinLength ? "text-green-400" : "text-zinc-400"}`}
+                  >
+                    <div className="mr-1">
+                      {passwordStrength.hasMinLength ? "✓" : "○"}
+                    </div>
                     At least 8 characters
                   </li>
-                  <li className={`flex items-center ${passwordStrength.hasUppercase ? "text-green-400" : "text-zinc-400"}`}>
-                    <div className="mr-1">{passwordStrength.hasUppercase ? "✓" : "○"}</div>
+                  <li
+                    className={`flex items-center ${passwordStrength.hasUppercase ? "text-green-400" : "text-zinc-400"}`}
+                  >
+                    <div className="mr-1">
+                      {passwordStrength.hasUppercase ? "✓" : "○"}
+                    </div>
                     Uppercase letter (A-Z)
                   </li>
-                  <li className={`flex items-center ${passwordStrength.hasLowercase ? "text-green-400" : "text-zinc-400"}`}>
-                    <div className="mr-1">{passwordStrength.hasLowercase ? "✓" : "○"}</div>
+                  <li
+                    className={`flex items-center ${passwordStrength.hasLowercase ? "text-green-400" : "text-zinc-400"}`}
+                  >
+                    <div className="mr-1">
+                      {passwordStrength.hasLowercase ? "✓" : "○"}
+                    </div>
                     Lowercase letter (a-z)
                   </li>
-                  <li className={`flex items-center ${passwordStrength.hasNumber ? "text-green-400" : "text-zinc-400"}`}>
-                    <div className="mr-1">{passwordStrength.hasNumber ? "✓" : "○"}</div>
+                  <li
+                    className={`flex items-center ${passwordStrength.hasNumber ? "text-green-400" : "text-zinc-400"}`}
+                  >
+                    <div className="mr-1">
+                      {passwordStrength.hasNumber ? "✓" : "○"}
+                    </div>
                     Number (0-9)
                   </li>
-                  <li className={`flex items-center ${passwordStrength.hasSpecial ? "text-green-400" : "text-zinc-400"}`}>
-                    <div className="mr-1">{passwordStrength.hasSpecial ? "✓" : "○"}</div>
+                  <li
+                    className={`flex items-center ${passwordStrength.hasSpecial ? "text-green-400" : "text-zinc-400"}`}
+                  >
+                    <div className="mr-1">
+                      {passwordStrength.hasSpecial ? "✓" : "○"}
+                    </div>
                     Special character (!@#$%^&*...)
                   </li>
                 </ul>
@@ -195,7 +231,10 @@ const ChangePassword = () => {
           </div>
 
           <div>
-            <label htmlFor="confirmPassword" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="confirmPassword"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Confirm Password
             </label>
             <Input
@@ -207,15 +246,23 @@ const ChangePassword = () => {
               className="bg-zinc-700 border-zinc-600 text-white"
               required
             />
-            {newPassword && confirmPassword && newPassword !== confirmPassword && (
-              <p className="mt-1 text-xs text-red-400">Passwords do not match</p>
-            )}
+            {newPassword &&
+              confirmPassword &&
+              newPassword !== confirmPassword && (
+                <p className="mt-1 text-xs text-red-400">
+                  Passwords do not match
+                </p>
+              )}
           </div>
 
           <Button
             type="submit"
             className="w-full bg-pareto-pink hover:bg-pink-600 text-black font-medium"
-            disabled={isLoading || !passwordStrength.isStrong || newPassword !== confirmPassword}
+            disabled={
+              isLoading ||
+              !passwordStrength.isStrong ||
+              newPassword !== confirmPassword
+            }
           >
             {isLoading ? (
               "Changing Password..."

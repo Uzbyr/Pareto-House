@@ -1,4 +1,3 @@
-
 import { Card } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { useAuth } from "@/contexts/AuthContext";
@@ -149,7 +148,9 @@ const Dashboard = () => {
             <div className="mt-4">
               <Progress value={100} className="h-1 bg-zinc-700" />
             </div>
-            <p className="text-xs text-gray-400 mt-2">Click to view all applications</p>
+            <p className="text-xs text-gray-400 mt-2">
+              Click to view all applications
+            </p>
           </Card>
         </Link>
 
@@ -220,13 +221,13 @@ const Dashboard = () => {
           </ResponsiveContainer>
         </div>
       </Card>
-      
+
       {/* Call to action button for applications */}
       <div className="flex justify-center">
-        <Button 
+        <Button
           asChild
-          variant="default" 
-          size="lg" 
+          variant="default"
+          size="lg"
           className="bg-pareto-pink hover:bg-pink-600 text-black font-medium px-8"
         >
           <Link to="/admin/applications" className="flex items-center gap-2">

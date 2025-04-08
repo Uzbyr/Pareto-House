@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -15,7 +14,7 @@ const AdminLogin = () => {
   const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  
+
   // Get the redirect path from location state or use default paths based on role
   const from = (location.state as any)?.from?.pathname || "/admin/dashboard";
 
@@ -39,7 +38,7 @@ const AdminLogin = () => {
 
       if (success) {
         toast.success("Login successful!");
-        
+
         // Redirect based on user role
         if (user?.role === "fellow") {
           navigate("/fellowship", { replace: true });
@@ -64,7 +63,11 @@ const AdminLogin = () => {
     <div className="min-h-screen bg-zinc-900 flex items-center justify-center p-4">
       <Card className="w-full max-w-md bg-zinc-800 border-zinc-700 p-8">
         <div className="mb-8 text-center">
-          <img src="/logo.png" alt="Pareto Logo" className="h-12 mx-auto mb-6" />
+          <img
+            src="/logo.png"
+            alt="Pareto Logo"
+            className="h-12 mx-auto mb-6"
+          />
           <h1 className="text-2xl font-bold text-white">Login</h1>
           <p className="text-zinc-400 mt-2">
             Enter your credentials to access your account
@@ -73,7 +76,10 @@ const AdminLogin = () => {
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label htmlFor="email" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="email"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Email
             </label>
             <Input
@@ -88,7 +94,10 @@ const AdminLogin = () => {
           </div>
 
           <div>
-            <label htmlFor="password" className="block text-sm font-medium text-zinc-300 mb-1">
+            <label
+              htmlFor="password"
+              className="block text-sm font-medium text-zinc-300 mb-1"
+            >
               Password
             </label>
             <Input

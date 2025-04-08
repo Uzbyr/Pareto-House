@@ -1,7 +1,11 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
-import { Application, MetricsState, MetricsActions, AuthContextType } from "@/contexts/auth/types";
+import {
+  Application,
+  MetricsState,
+  MetricsActions,
+  AuthContextType,
+} from "@/contexts/auth/types";
 import { collectRealMetrics } from "@/utils/metricsUtils";
 import {
   getStoredApplications,
@@ -10,14 +14,17 @@ import {
   storePageViews,
 } from "@/utils/storageUtils";
 
-export const useMetricsService = (isAuthenticated: boolean, currentUser: AuthContextType['user']): MetricsState & MetricsActions => {
+export const useMetricsService = (
+  isAuthenticated: boolean,
+  currentUser: AuthContextType["user"],
+): MetricsState & MetricsActions => {
   const [applications, setApplications] = useState<Application[]>(
     getStoredApplications(),
   );
-  const [siteMetrics, setSiteMetrics] = useState<MetricsState['siteMetrics']>(
-    collectRealMetrics(),
-  );
-  const [pageViews, setPageViews] = useState<Record<string, number>>(getStoredPageViews());
+  const [siteMetrics, setSiteMetrics] =
+    useState<MetricsState["siteMetrics"]>(collectRealMetrics());
+  const [pageViews, setPageViews] =
+    useState<Record<string, number>>(getStoredPageViews());
 
   const trackPageVisit = (pageName: string) => {
     setPageViews((prevViews) => {

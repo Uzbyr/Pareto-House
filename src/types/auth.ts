@@ -58,7 +58,7 @@ export interface SiteMetrics {
   rejectedApplications: number;
   topPages: PageView[];
   conversionRate: number;
-  
+
   // These properties are used in the analytics pages
   visitors: {
     total: number;
@@ -117,6 +117,8 @@ export interface AuthContextType {
   siteMetrics: SiteMetrics;
   refreshMetrics: () => void;
   getApplications: () => Application[];
-  submitApplication: (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => void;
+  submitApplication: (
+    applicationData: Omit<Application, "id" | "submissionDate" | "status">,
+  ) => void;
   trackPageVisit: (pageName: string) => void;
 }

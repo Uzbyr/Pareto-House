@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
@@ -6,7 +5,7 @@ import { toast } from "sonner";
  * Handles the approval process for an application, including:
  * 1. Creating a user account
  * 2. Sending an acceptance email with login credentials
- * 
+ *
  * @param firstName - Applicant's first name
  * @param lastName - Applicant's last name
  * @param email - Applicant's email
@@ -15,7 +14,7 @@ import { toast } from "sonner";
 export const handleApplicationApproval = async (
   firstName: string,
   lastName: string,
-  email: string
+  email: string,
 ): Promise<boolean> => {
   // Show a loading toast while processing
   const loadingToast = toast.loading("Processing application approval...");
@@ -31,7 +30,7 @@ export const handleApplicationApproval = async (
           email,
           approved_date: new Date().toISOString(),
         },
-      }
+      },
     );
 
     if (error) {
@@ -45,7 +44,7 @@ export const handleApplicationApproval = async (
       console.error("Error response from create-approved-user:", data.error);
       toast.dismiss(loadingToast);
       toast.error(data.message || "Failed to create user account.");
-      
+
       // If user already exists, continue with sending the email
       if (data.error.includes("already exists")) {
         console.log("User already exists, proceeding with acceptance email.");
@@ -57,17 +56,15 @@ export const handleApplicationApproval = async (
     const temporaryPassword = data?.temporaryPassword;
 
     // Then send the acceptance email with login credentials
-    const { data: emailData, error: emailError } = await supabase.functions.invoke(
-      "send-acceptance-email",
-      {
+    const { data: emailData, error: emailError } =
+      await supabase.functions.invoke("send-acceptance-email", {
         body: {
           firstName,
           lastName,
           email,
           temporaryPassword,
         },
-      }
-    );
+      });
 
     // Remove the loading toast
     toast.dismiss(loadingToast);

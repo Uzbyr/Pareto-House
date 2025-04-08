@@ -1,4 +1,3 @@
-
 import { memo } from "react";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -62,7 +61,8 @@ const AdditionalInformationStep = memo(
           }}
         />
         <p className="text-xs text-zinc-500 mt-1">
-          Upload a 1-2 minute video presentation about yourself and your goals (required)
+          Upload a 1-2 minute video presentation about yourself and your goals
+          (required)
         </p>
       </div>
 

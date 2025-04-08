@@ -1,4 +1,3 @@
-
 import { Link } from "react-router-dom";
 import { Instagram, Linkedin, Lock } from "lucide-react";
 import { SiX } from "@icons-pack/react-simple-icons";
@@ -14,7 +13,16 @@ const Footer = () => {
             </Link>
           </div>
 
-          <div className="mb-6 md:mb-0"><a href="https://www.youtube.com/watch?v=lc8ourcIe10" target="_blank" rel="noopener noreferrer" className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300">Build brutally or don't</a></div>
+          <div className="mb-6 md:mb-0">
+            <a
+              href="https://www.youtube.com/watch?v=lc8ourcIe10"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300"
+            >
+              Build brutally or don't
+            </a>
+          </div>
 
           <div className="flex gap-6">
             <div className="flex gap-4">
@@ -50,6 +58,6 @@ const Footer = () => {
       </div>
     </footer>
   );
-}
+};
 
 export default Footer;

@@ -1,18 +1,17 @@
-
-import { AuthContextType, SiteMetrics, Application, UserRole } from "@/types/auth";
-import { Session } from "@supabase/supabase-js";
-
-// Export relevant types for use in our auth-related files
-export type {
+import {
   AuthContextType,
   SiteMetrics,
   Application,
-  UserRole
-};
+  UserRole,
+} from "@/types/auth";
+import { Session } from "@supabase/supabase-js";
+
+// Export relevant types for use in our auth-related files
+export type { AuthContextType, SiteMetrics, Application, UserRole };
 
 export interface AuthState {
   isAuthenticated: boolean;
-  user: AuthContextType['user'];
+  user: AuthContextType["user"];
   session: Session | null;
   requirePasswordChange: boolean;
 }
@@ -27,7 +26,7 @@ export interface AuthActions {
 // Add this new interface for internal setter functions
 export interface AuthStateSetters {
   setIsAuthenticated: (value: boolean) => void;
-  setUser: (user: AuthContextType['user']) => void;
+  setUser: (user: AuthContextType["user"]) => void;
   setSession: (session: Session | null) => void;
   setRequirePasswordChange: (value: boolean) => void;
 }
@@ -39,6 +38,8 @@ export interface MetricsState {
 export interface MetricsActions {
   refreshMetrics: () => void;
   getApplications: () => Application[];
-  submitApplication: (applicationData: Omit<Application, "id" | "submissionDate" | "status">) => void;
+  submitApplication: (
+    applicationData: Omit<Application, "id" | "submissionDate" | "status">,
+  ) => void;
   trackPageVisit: (pageName: string) => void;
 }
