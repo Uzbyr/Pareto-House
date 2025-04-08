@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -18,7 +17,7 @@ import { useAuth } from "@/contexts/AuthContext";
 import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
-import { FileUpload, Upload } from "lucide-react";
+import { Upload } from "lucide-react";
 
 const OnboardingFlow = () => {
   const { profile, updateProfile, completeOnboarding } = useProfile();
@@ -72,10 +71,8 @@ const OnboardingFlow = () => {
     if (!profilePicture || !user) return null;
 
     try {
-      // Create a unique file path
       const filePath = `profile-pictures/${user.email?.split("@")[0]}-${Date.now()}`;
       
-      // Upload the file
       const { error: uploadError, data } = await supabase.storage
         .from("profiles")
         .upload(filePath, profilePicture);
@@ -86,7 +83,6 @@ const OnboardingFlow = () => {
         return null;
       }
 
-      // Get the public URL
       const { data: urlData } = supabase.storage.from("profiles").getPublicUrl(filePath);
       return urlData.publicUrl;
     } catch (error) {
@@ -96,7 +92,6 @@ const OnboardingFlow = () => {
   };
 
   const handleNextStep = () => {
-    // Validate current step
     if (step === 1) {
       if (!formData.first_name || !formData.last_name) {
         toast.error("Please provide your first and last name");
@@ -115,7 +110,6 @@ const OnboardingFlow = () => {
     setLoading(true);
 
     try {
-      // Upload profile picture if selected
       let pictureUrl = formData.profile_picture_url;
       if (profilePicture) {
         const uploadedUrl = await uploadProfilePicture();
@@ -124,18 +118,15 @@ const OnboardingFlow = () => {
         }
       }
 
-      // Update the profile with all collected data
       await updateProfile({
         ...formData,
         profile_picture_url: pictureUrl,
       });
 
-      // Mark onboarding as complete
       await completeOnboarding();
 
       toast.success("Onboarding completed successfully!");
       
-      // Redirect based on user role
       if (user?.role === "fellow") {
         navigate("/fellowship");
       } else if (user?.role === "alumni") {
@@ -335,7 +326,7 @@ const OnboardingFlow = () => {
               htmlFor="picture" 
               className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md flex items-center gap-2"
             >
-              <FileUpload size={16} />
+              <Upload size={16} />
               Upload Picture
             </Label>
             <Input 
@@ -436,7 +427,6 @@ const OnboardingFlow = () => {
   return (
     <div className="min-h-screen bg-zinc-900 flex flex-col items-center justify-center p-4">
       <Card className="w-full max-w-3xl p-6 bg-zinc-800 border-zinc-700">
-        {/* Progress indicator */}
         <div className="w-full mb-8">
           <div className="flex justify-between mb-2">
             <span className="text-sm text-gray-400">Step {step} of 3</span>

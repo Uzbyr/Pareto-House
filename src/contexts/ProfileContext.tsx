@@ -52,10 +52,11 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
     try {
       setLoading(true);
+      // Use custom query to work around type issues with new "profiles" table
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .eq("id", user.email ? user.email.split("@")[0] : user.email)
+        .eq("id", user.id)
         .single();
 
       if (error) {
@@ -64,7 +65,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
         return;
       }
 
-      setProfile(data as Profile);
+      setProfile(data as unknown as Profile);
     } catch (err) {
       console.error("Exception fetching profile:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
@@ -79,10 +80,11 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       
+      // Use custom query to work around type issues
       const { error } = await supabase
         .from("profiles")
         .update(updates)
-        .eq("id", user.email ? user.email.split("@")[0] : user.email);
+        .eq("id", user.id);
 
       if (error) {
         toast.error("Failed to update profile");
