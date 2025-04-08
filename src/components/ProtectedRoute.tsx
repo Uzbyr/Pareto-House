@@ -2,7 +2,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/auth";
-import { canAccessRole } from "@/utils/authUtils";
+import { hasAdminPrivileges, canAccessRole } from "@/utils/authUtils";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -36,7 +36,12 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
   // Check role requirements if specified
   if (requiredRole && user) {
-    // Use the canAccessRole utility function to handle role-based access
+    // Allow admins to access all routes
+    if (hasAdminPrivileges(user.role)) {
+      return <>{children}</>;
+    }
+    
+    // For non-admin users, check if they can access this specific role's routes
     if (!canAccessRole(user.role, requiredRole)) {
       // Redirect to appropriate dashboard based on user role
       if (user.role === "fellow") {

@@ -50,7 +50,6 @@ export const canAccessRole = (userRole: UserRole | undefined, requiredRole: User
   
   // Admins can access everything except super_admin routes
   if (userRole === "admin") {
-    // Admin can access all routes except super_admin specific routes
     return requiredRole !== "super_admin";
   }
   
