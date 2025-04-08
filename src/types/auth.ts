@@ -1,4 +1,3 @@
-
 import { Session } from "@supabase/supabase-js";
 
 export interface AuthUser {
@@ -6,7 +5,7 @@ export interface AuthUser {
   role: UserRole;
 }
 
-export type UserRole = "admin" | "super_admin" | "analyst" | "fellow" | "alumni";
+export type UserRole = "admin" | "super_admin" | "fellow" | "alumni";
 
 export interface Application {
   id: string;
