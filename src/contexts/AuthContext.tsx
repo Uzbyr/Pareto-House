@@ -57,35 +57,49 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
     useState<Record<string, number>>(getStoredPageViews());
 
   useEffect(() => {
-    supabase.auth.getSession().then(({ data: { session } }) => {
-      setSession(session);
-      setIsAuthenticated(!!session);
-      if (session?.user?.email) {
+    const setupAuth = async () => {
+      const { data: sessionData } = await supabase.auth.getSession();
+      const currentSession = sessionData.session;
+      
+      setSession(currentSession);
+      setIsAuthenticated(!!currentSession);
+      
+      if (currentSession?.user) {
+        // Get user role from database
+        const role = await getUserRole(currentSession.user.id);
+        
         setUser({
-          email: session.user.email,
-          role: getUserRole(session.user.email),
+          email: currentSession.user.email || '',
+          role: role,
         });
         
         // Check if user needs to change password
-        const requireChange = session.user.user_metadata?.require_password_change === true;
+        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
         setRequirePasswordChange(requireChange);
       }
+      
       setLoading(false);
-    });
+    };
+    
+    setupAuth();
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-      setIsAuthenticated(!!session);
-      if (session?.user?.email) {
+    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
+      setSession(currentSession);
+      setIsAuthenticated(!!currentSession);
+      
+      if (currentSession?.user) {
+        // Get user role from database
+        const role = await getUserRole(currentSession.user.id);
+        
         setUser({
-          email: session.user.email,
-          role: getUserRole(session.user.email),
+          email: currentSession.user.email || '',
+          role: role,
         });
         
         // Check if user needs to change password
-        const requireChange = session.user.user_metadata?.require_password_change === true;
+        const requireChange = currentSession.user.user_metadata?.require_password_change === true;
         setRequirePasswordChange(requireChange);
       } else {
         setUser(null);

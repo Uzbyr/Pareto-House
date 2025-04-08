@@ -1,17 +1,29 @@
 
 import { UserRole } from "@/types/auth";
+import { supabase } from "@/integrations/supabase/client";
 
-export const getUserRole = (email: string): UserRole => {
-  if (!email) return "fellow";
+export const getUserRole = async (userId: string): Promise<UserRole> => {
+  if (!userId) return "fellow";
 
-  if (email === "superadmin@pareto20.com") return "super_admin";
-  if (email === "admin@pareto20.com") return "admin";
-  
-  // Check for alumni email pattern if needed
-  // if (email.includes("alumni")) return "alumni";
+  try {
+    // Query the user_roles table to get the user's role
+    const { data, error } = await supabase
+      .from("user_roles")
+      .select("role")
+      .eq("user_id", userId)
+      .single();
 
-  // By default, assume this is a fellow
-  return "fellow";
+    if (error || !data) {
+      console.error("Error fetching user role:", error);
+      return "fellow"; // Default role if there's an error
+    }
+
+    // Return the role from the database
+    return data.role as UserRole;
+  } catch (error) {
+    console.error("Exception when fetching user role:", error);
+    return "fellow"; // Default role if there's an exception
+  }
 };
 
 export const isPareto20Email = (email: string) => {
