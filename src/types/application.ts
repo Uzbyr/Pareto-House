@@ -29,6 +29,7 @@ export interface Application {
   hasCompetitionExperience?: string;
   competitionResults?: string;
   competitiveProfiles?: string[];
+  userRole?: "fellow" | "alumni" | "admin"; // Add the new user role field
 }
 
 export interface ApplicationUpdateFunctions {

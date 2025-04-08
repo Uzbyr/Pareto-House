@@ -1,9 +1,10 @@
+
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
-  requiredRole?: "admin" | "super_admin" | "analyst";
+  requiredRole?: "admin" | "super_admin" | "analyst" | "fellow" | "alumni";
 }
 
 const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
@@ -19,9 +20,11 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   if (
     requiredRole &&
     user?.role !== requiredRole &&
-    user?.role !== "super_admin"
+    user?.role !== "super_admin" &&
+    // Admin can always access any route
+    (requiredRole !== "admin" || user?.role !== "admin")
   ) {
-    // Super admins can access any route, otherwise check specific role
+    // Super admins and admins can access any route, otherwise check specific role
     return <Navigate to="/admin/dashboard" replace />;
   }
 

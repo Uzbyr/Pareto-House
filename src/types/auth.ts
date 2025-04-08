@@ -1,8 +1,9 @@
+
 import { Session } from "@supabase/supabase-js";
 
 export interface AuthUser {
   email: string;
-  role: "admin" | "super_admin" | "analyst";
+  role: "admin" | "super_admin" | "analyst" | "fellow" | "alumni";
 }
 
 export interface Application {

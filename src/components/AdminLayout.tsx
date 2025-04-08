@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -9,6 +10,8 @@ import {
   LogOut,
   Settings,
   Users,
+  Graduation,
+  BookOpen,
 } from "lucide-react";
 
 interface AdminLayoutProps {
@@ -27,9 +30,24 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
 
   const navItems = [
     { label: "Dashboard", path: "/admin/dashboard", icon: Home },
-    { label: "Applications", path: "/admin/applications", icon: FileText },
-    { label: "Analytics", path: "/admin/analytics", icon: BarChart3 },
-    { label: "Funnel Analysis", path: "/admin/funnel", icon: LineChart },
+    { 
+      label: "Applications", 
+      path: "/admin/applications", 
+      icon: FileText,
+      role: "admin" as const
+    },
+    { 
+      label: "Analytics", 
+      path: "/admin/analytics", 
+      icon: BarChart3,
+      role: "admin" as const
+    },
+    { 
+      label: "Funnel Analysis", 
+      path: "/admin/funnel", 
+      icon: LineChart,
+      role: "admin" as const
+    },
     {
       label: "Admin Users",
       path: "/admin/users",
@@ -42,12 +60,37 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       icon: Settings,
       role: "admin" as const,
     },
+    // New routes for fellows and alumni
+    {
+      label: "Fellowship",
+      path: "/fellowship",
+      icon: Graduation,
+      role: "fellow" as const,
+    },
+    {
+      label: "Alumni Network",
+      path: "/alumni",
+      icon: BookOpen,
+      role: "alumni" as const,
+    },
   ];
 
   // Filter menu items based on user role
   const filteredNavItems = navItems.filter((item) => {
     if (!item.role) return true;
-    return user?.role === item.role || user?.role === "super_admin";
+    
+    // Super admins can see everything
+    if (user?.role === "super_admin") return true;
+    
+    // Admins can see admin items
+    if (user?.role === "admin" && 
+        (item.role === "admin" || !["super_admin", "fellow", "alumni"].includes(item.role))) 
+      return true;
+    
+    // Fellows and alumni can only see their specific items and general items
+    if (user?.role === item.role || !item.role) return true;
+    
+    return false;
   });
 
   return (
