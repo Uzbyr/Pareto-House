@@ -50,21 +50,12 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
       }
     }
 
-    // Route specifically for fellows
-    if (requiredRole === "fellow" && user?.role !== "fellow" && user?.role !== "admin" && user?.role !== "super_admin") {
-      // Redirect non-fellows to their dashboard if they're not admins
-      return <Navigate to="/admin/dashboard" replace />;
-    }
-
-    // Route specifically for alumni
-    if (requiredRole === "alumni" && user?.role !== "alumni" && user?.role !== "admin" && user?.role !== "super_admin") {
-      // Redirect non-alumni to their dashboard if they're not admins
-      return <Navigate to="/admin/dashboard" replace />;
-    }
-
-    // For users with specific roles that don't match the requirement
-    if (user?.role !== requiredRole && user?.role !== "admin" && user?.role !== "super_admin") {
-      // Redirect to appropriate dashboard based on role
+    // For routes specifically for fellows or alumni
+    if ((requiredRole === "fellow" || requiredRole === "alumni") && 
+        user?.role !== requiredRole && 
+        user?.role !== "admin" && 
+        user?.role !== "super_admin") {
+      // Redirect to appropriate dashboard
       if (user?.role === "fellow") {
         return <Navigate to="/fellowship" replace />;
       } else if (user?.role === "alumni") {

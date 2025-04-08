@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -7,6 +6,7 @@ import {
   Application,
   AuthUser,
   SiteMetrics,
+  UserRole,
 } from "@/types/auth";
 import { getUserRole, isPareto20Email } from "@/utils/authUtils";
 import { collectRealMetrics } from "@/utils/metricsUtils";
@@ -206,13 +206,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const logout = async () => {
     try {
-      // Clear state first to prevent UI flashes during logout
       setIsAuthenticated(false);
       setUser(null);
       setSession(null);
       setRequirePasswordChange(false);
       
-      // Then perform the actual logout from Supabase
       const { error } = await supabase.auth.signOut();
       if (error) {
         console.error("Logout error:", error.message);
@@ -220,7 +218,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       }
     } catch (error) {
       console.error("Logout error:", error);
-      // Even if there's an error, we want to clear the local state
       setIsAuthenticated(false);
       setUser(null);
       setSession(null);
