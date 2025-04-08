@@ -1,20 +1,21 @@
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { Application } from "@/types/auth";
 import { useNavigate } from "react-router-dom";
-import { Calendar as CalendarIcon, BookOpen, Users, Award } from "lucide-react";
+import { 
+  Calendar as CalendarIcon, 
+  BookOpen, 
+  Users, 
+  Award,
+  ArrowRight
+} from "lucide-react";
+import { Button } from "@/components/ui/button";
 
 const FellowDashboard = () => {
   const { user } = useAuth();
   const navigate = useNavigate();
-  const [fellowApplication, setFellowApplication] =
-    useState<Application | null>(null);
-
-  // In a real app, you would fetch fellow-specific data here
-  // This is just placeholder content for now
-
+  
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
@@ -24,52 +25,90 @@ const FellowDashboard = () => {
         </p>
       </div>
 
-      {/* Quick stats */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col">
+      {/* Main sections */}
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
+        {/* Fellows Directory */}
+        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
-            <CalendarIcon className="h-5 w-5 text-pareto-pink mr-2" />
-            <h3 className="text-gray-400 text-sm font-medium">
-              Upcoming Events
-            </h3>
+            <Users className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Fellows Directory</h2>
           </div>
-          <p className="text-2xl font-bold text-white">3</p>
-          <p className="text-gray-400 text-sm mt-2">
-            Next: Founder Showcase (Apr 15)
+          <p className="text-gray-400 mb-4">
+            Connect with your cohort and explore fellow members' profiles. Build your network within the Pareto community.
           </p>
+          <div className="mt-auto">
+            <Button 
+              variant="outline" 
+              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
+              onClick={() => navigate('/fellowship/directory')}
+            >
+              View Directory
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </Card>
 
-        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col">
+        {/* Events Calendar */}
+        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
-            <BookOpen className="h-5 w-5 text-pareto-pink mr-2" />
-            <h3 className="text-gray-400 text-sm font-medium">
-              Learning Resources
-            </h3>
+            <CalendarIcon className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Events Calendar</h2>
           </div>
-          <p className="text-2xl font-bold text-white">12</p>
-          <p className="text-gray-400 text-sm mt-2">
-            4 new resources this week
+          <p className="text-gray-400 mb-4">
+            All upcoming mentor talks, workshops, and networking events. Never miss an opportunity to learn and connect.
           </p>
+          <div className="mt-auto">
+            <Button 
+              variant="outline" 
+              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
+              onClick={() => navigate('/fellowship/events')}
+            >
+              View Calendar
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </Card>
 
-        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col">
+        {/* Opportunities Board */}
+        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
-            <Users className="h-5 w-5 text-pareto-pink mr-2" />
-            <h3 className="text-gray-400 text-sm font-medium">
-              Fellow Network
-            </h3>
+            <Award className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Opportunities Board</h2>
           </div>
-          <p className="text-2xl font-bold text-white">127</p>
-          <p className="text-gray-400 text-sm mt-2">Connect with your cohort</p>
+          <p className="text-gray-400 mb-4">
+            Exclusive internships, grants, and competitions for Pareto fellows. Find your next career-advancing opportunity.
+          </p>
+          <div className="mt-auto">
+            <Button 
+              variant="outline" 
+              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
+              onClick={() => navigate('/fellowship/opportunities')}
+            >
+              View Opportunities
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </Card>
 
-        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col">
+        {/* Resource Library */}
+        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
-            <Award className="h-5 w-5 text-pareto-pink mr-2" />
-            <h3 className="text-gray-400 text-sm font-medium">Your Progress</h3>
+            <BookOpen className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Resource Library</h2>
           </div>
-          <p className="text-2xl font-bold text-white">78%</p>
-          <p className="text-gray-400 text-sm mt-2">Fellowship completion</p>
+          <p className="text-gray-400 mb-4">
+            Curated content and tools from our mentors. Access educational resources and expert guidance materials.
+          </p>
+          <div className="mt-auto">
+            <Button 
+              variant="outline" 
+              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
+              onClick={() => navigate('/fellowship/resources')}
+            >
+              Browse Resources
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </div>
         </Card>
       </div>
 
@@ -89,73 +128,6 @@ const FellowDashboard = () => {
           />
         </div>
       </Card>
-
-      {/* Main content area */}
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
-        <Card className="bg-zinc-800 border-zinc-700 p-6 lg:col-span-2">
-          <h2 className="text-xl font-bold text-white mb-4">
-            Your Fellowship Journey
-          </h2>
-          <div className="space-y-4">
-            <div className="bg-zinc-700 p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="font-medium text-white">Onboarding</h3>
-                <span className="px-2 py-1 bg-green-900 text-green-300 text-xs rounded-full">
-                  Complete
-                </span>
-              </div>
-            </div>
-            <div className="bg-zinc-700 p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="font-medium text-white">Founder Matching</h3>
-                <span className="px-2 py-1 bg-green-900 text-green-300 text-xs rounded-full">
-                  Complete
-                </span>
-              </div>
-            </div>
-            <div className="bg-zinc-700 p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="font-medium text-white">Project Development</h3>
-                <span className="px-2 py-1 bg-yellow-900 text-yellow-300 text-xs rounded-full">
-                  In Progress
-                </span>
-              </div>
-            </div>
-            <div className="bg-zinc-700 p-4 rounded-md">
-              <div className="flex justify-between items-center">
-                <h3 className="font-medium text-white">Demo Day Preparation</h3>
-                <span className="px-2 py-1 bg-zinc-600 text-gray-300 text-xs rounded-full">
-                  Not Started
-                </span>
-              </div>
-            </div>
-          </div>
-        </Card>
-
-        <Card className="bg-zinc-800 border-zinc-700 p-6">
-          <h2 className="text-xl font-bold text-white mb-4">Announcements</h2>
-          <div className="space-y-4">
-            <div className="border-l-2 border-pareto-pink pl-4">
-              <p className="text-gray-300">
-                New workshop added: "Fundraising Strategies"
-              </p>
-              <p className="text-xs text-gray-400 mt-1">1 day ago</p>
-            </div>
-            <div className="border-l-2 border-pareto-pink pl-4">
-              <p className="text-gray-300">
-                Founder Showcase scheduled for April 15th
-              </p>
-              <p className="text-xs text-gray-400 mt-1">3 days ago</p>
-            </div>
-            <div className="border-l-2 border-pareto-pink pl-4">
-              <p className="text-gray-300">
-                Office hours with mentor Jane Smith open for booking
-              </p>
-              <p className="text-xs text-gray-400 mt-1">1 week ago</p>
-            </div>
-          </div>
-        </Card>
-      </div>
     </div>
   );
 };

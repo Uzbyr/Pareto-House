@@ -37,16 +37,11 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
 
   const navItems = [
     { label: "Dashboard", path: "/fellowship", icon: Home },
-    { label: "Profile", path: "/fellowship/profile", icon: User },
-    { label: "Events", path: "/fellowship/events", icon: Calendar },
+    { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
+    { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
+    { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
     { label: "Resources", path: "/fellowship/resources", icon: BookOpen },
-    { label: "Network", path: "/fellowship/network", icon: Users },
-    { label: "Progress", path: "/fellowship/progress", icon: Award },
-    {
-      label: "Discussions",
-      path: "/fellowship/discussions",
-      icon: MessageCircle,
-    },
+    { label: "Discussions", path: "/fellowship/discussions", icon: MessageCircle },
     { label: "Settings", path: "/fellowship/settings", icon: Settings },
   ];
 
@@ -89,14 +84,24 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
               </p>
             </div>
           </div>
-          <Button
-            variant="outline"
-            className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700"
-            onClick={handleLogout}
-          >
-            <LogOut className="h-4 w-4 mr-2" />
-            Sign Out
-          </Button>
+          <div className="flex gap-2">
+            <Button
+              variant="outline"
+              className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
+              onClick={() => navigate("/fellowship/profile")}
+            >
+              <User className="h-4 w-4 mr-2" />
+              Profile
+            </Button>
+            <Button
+              variant="outline"
+              className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
+              onClick={handleLogout}
+            >
+              <LogOut className="h-4 w-4 mr-2" />
+              Sign Out
+            </Button>
+          </div>
         </div>
       </div>
 
