@@ -3,6 +3,7 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
+import { PostgrestSingleResponse } from "@supabase/supabase-js";
 
 interface Profile {
   id: string;
@@ -52,12 +53,12 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
 
     try {
       setLoading(true);
-      // Use a more direct type assertion approach
-      const result = await supabase.from('profiles') as any;
-      const { data, error: queryError } = await result
+      // Use type assertion to specify the return type
+      const { data, error: queryError } = await supabase
+        .from('profiles')
         .select('*')
         .eq('id', session.user.id)
-        .single();
+        .single() as PostgrestSingleResponse<Profile>;
 
       if (queryError) {
         console.error("Error fetching profile:", queryError);
@@ -65,8 +66,7 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
         return;
       }
 
-      // Set the profile with proper type casting
-      setProfile(data as Profile);
+      setProfile(data);
     } catch (err) {
       console.error("Exception fetching profile:", err);
       setError(err instanceof Error ? err : new Error(String(err)));
@@ -81,11 +81,10 @@ export const ProfileProvider = ({ children }: { children: React.ReactNode }) => 
     try {
       setLoading(true);
       
-      // Use a more direct type assertion approach 
-      const result = await supabase.from('profiles') as any;
-      const { error: updateError } = await result
+      const { error: updateError } = await supabase
+        .from('profiles')
         .update(updates)
-        .eq('id', session.user.id);
+        .eq('id', session.user.id) as PostgrestSingleResponse<null>;
 
       if (updateError) {
         toast.error("Failed to update profile");
