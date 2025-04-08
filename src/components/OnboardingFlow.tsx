@@ -21,7 +21,7 @@ import { Upload } from "lucide-react";
 
 const OnboardingFlow = () => {
   const { profile, updateProfile, completeOnboarding } = useProfile();
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const navigate = useNavigate();
 
   const [step, setStep] = useState<number>(1);
@@ -68,12 +68,12 @@ const OnboardingFlow = () => {
   };
 
   const uploadProfilePicture = async (): Promise<string | null> => {
-    if (!profilePicture || !user) return null;
+    if (!profilePicture || !session) return null;
 
     try {
       const fileExtension = profilePicture.name.split('.').pop() || '';
       
-      const filePath = `users/${user.id}/${Date.now()}.${fileExtension}`;
+      const filePath = `users/${session.user.id}/${Date.now()}.${fileExtension}`;
 
       const { error: uploadError, data } = await supabase.storage
         .from("profiles")

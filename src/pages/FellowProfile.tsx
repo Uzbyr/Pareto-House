@@ -28,7 +28,7 @@ const FellowProfile = () => {
     loading: profileLoading,
     refreshProfile,
   } = useProfile();
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const [editMode, setEditMode] = useState(false);
   const [loading, setLoading] = useState(false);
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -92,11 +92,11 @@ const FellowProfile = () => {
   };
 
   const uploadProfilePicture = async (): Promise<string | null> => {
-    if (!profilePicture || !user) return profile?.profile_picture_url || null;
+    if (!profilePicture || !session) return profile?.profile_picture_url || null;
 
     try {
       const fileExtension = profilePicture.name.split('.').pop() || '';
-      const filePath = `users/${user.id}/${Date.now()}.${fileExtension}`;
+      const filePath = `users/${session.user.id}/${Date.now()}.${fileExtension}`;
 
       const { error: uploadError, data } = await supabase.storage
         .from("profiles")
