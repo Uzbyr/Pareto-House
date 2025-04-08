@@ -2,6 +2,7 @@
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/auth";
+import { canAccessRole } from "@/utils/authUtils";
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -35,45 +36,15 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
 
   // Check role requirements if specified
   if (requiredRole && user) {
-    // Super admins can access any route
-    if (user.role === "super_admin") {
-      return <>{children}</>;
-    }
-    
-    // Admins can access admin routes, fellow routes, and alumni routes
-    if (user.role === "admin") {
-      // Admin can access all routes except super_admin specific routes
-      if (requiredRole !== "super_admin") {
-        return <>{children}</>;
+    // Use the canAccessRole utility function to handle role-based access
+    if (!canAccessRole(user.role, requiredRole)) {
+      // Redirect to appropriate dashboard based on user role
+      if (user.role === "fellow") {
+        return <Navigate to="/fellowship" replace />;
+      } else if (user.role === "alumni") {
+        return <Navigate to="/alumni" replace />;
       } else {
         return <Navigate to="/admin/dashboard" replace />;
-      }
-    }
-
-    // For routes specifically for fellows or alumni
-    if (requiredRole === "fellow" || requiredRole === "alumni") {
-      // Variable to track if user has access
-      let hasAccess = false;
-      
-      // Check if the user role exactly matches the required role
-      if (user.role === requiredRole) {
-        hasAccess = true;
-      }
-      
-      // Check if user has admin privileges (which can access fellow/alumni routes)
-      if (user.role === "admin" || user.role === "super_admin") {
-        hasAccess = true;
-      }
-        
-      if (!hasAccess) {
-        // Redirect to appropriate dashboard based on user role
-        if (user.role === "fellow") {
-          return <Navigate to="/fellowship" replace />;
-        } else if (user.role === "alumni") {
-          return <Navigate to="/alumni" replace />;
-        } else {
-          return <Navigate to="/admin/dashboard" replace />;
-        }
       }
     }
   }
