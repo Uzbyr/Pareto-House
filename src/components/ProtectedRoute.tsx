@@ -55,25 +55,21 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
       // Variable to track if user has access
       let hasAccess = false;
       
-      if (user) {
-        // Check each role separately to avoid TypeScript errors
-        if (user.role === requiredRole) {
-          hasAccess = true;
-        }
-        // These are separate string literal type checks to avoid TypeScript comparison errors
-        if (user.role === "admin") {
-          hasAccess = true;
-        }
-        if (user.role === "super_admin") {
-          hasAccess = true;
-        }
+      // Check if the user role exactly matches the required role
+      if (user.role === requiredRole) {
+        hasAccess = true;
+      }
+      
+      // Check if user has admin privileges (which can access fellow/alumni routes)
+      if (user.role === "admin" || user.role === "super_admin") {
+        hasAccess = true;
       }
         
       if (!hasAccess) {
         // Redirect to appropriate dashboard based on user role
-        if (user?.role === "fellow") {
+        if (user.role === "fellow") {
           return <Navigate to="/fellowship" replace />;
-        } else if (user?.role === "alumni") {
+        } else if (user.role === "alumni") {
           return <Navigate to="/alumni" replace />;
         } else {
           return <Navigate to="/admin/dashboard" replace />;
