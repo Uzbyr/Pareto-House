@@ -10,7 +10,7 @@ import {
   LogOut,
   Settings,
   Users,
-  Graduation,
+  GraduationCap,
   BookOpen,
 } from "lucide-react";
 
@@ -64,7 +64,7 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     {
       label: "Fellowship",
       path: "/fellowship",
-      icon: Graduation,
+      icon: GraduationCap,
       role: "fellow" as const,
     },
     {
