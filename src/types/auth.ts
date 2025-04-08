@@ -59,6 +59,51 @@ export interface SiteMetrics {
   rejectedApplications: number;
   topPages: PageView[];
   conversionRate: number;
+  
+  // These properties are used in the analytics pages
+  visitors: {
+    total: number;
+    byDate: Array<{
+      date: string;
+      visitors: number;
+      pageViews: number;
+    }>;
+  };
+  applications: {
+    total: number;
+    approved: number;
+    pending: number;
+    rejected: number;
+    completionRate: number;
+    byDay: Array<{
+      name: string;
+      applications: number;
+    }>;
+  };
+  conversionFunnel: {
+    stages: Array<{
+      name: string;
+      value: number;
+    }>;
+    dropoffRates: Array<{
+      x: number;
+      y: number;
+      z: number;
+      name: string;
+    }>;
+    timeSpent: Array<{
+      name: string;
+      timeSpent: number;
+    }>;
+  };
+  trafficSources: Array<{
+    name: string;
+    value: number;
+  }>;
+  pagePopularity: Array<{
+    name: string;
+    views: number;
+  }>;
 }
 
 export interface AuthContextType {

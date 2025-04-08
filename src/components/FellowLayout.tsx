@@ -12,6 +12,7 @@ import {
   Settings,
   LogOut,
 } from "lucide-react";
+import { toast } from "sonner";
 
 interface FellowLayoutProps {
   children: React.ReactNode;
@@ -22,9 +23,15 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const handleLogout = () => {
-    logout();
-    navigate("/admin/login");
+  const handleLogout = async () => {
+    try {
+      await logout();
+      toast.success("Successfully logged out");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout error:", error);
+      toast.error("There was an issue logging out");
+    }
   };
 
   const navItems = [

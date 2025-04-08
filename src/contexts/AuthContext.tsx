@@ -205,14 +205,27 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   };
 
   const logout = async () => {
-    const { error } = await supabase.auth.signOut();
-    if (error) {
-      console.error("Logout error:", error.message);
+    try {
+      // Clear state first to prevent UI flashes during logout
+      setIsAuthenticated(false);
+      setUser(null);
+      setSession(null);
+      setRequirePasswordChange(false);
+      
+      // Then perform the actual logout from Supabase
+      const { error } = await supabase.auth.signOut();
+      if (error) {
+        console.error("Logout error:", error.message);
+        throw error;
+      }
+    } catch (error) {
+      console.error("Logout error:", error);
+      // Even if there's an error, we want to clear the local state
+      setIsAuthenticated(false);
+      setUser(null);
+      setSession(null);
+      setRequirePasswordChange(false);
     }
-    setIsAuthenticated(false);
-    setUser(null);
-    setSession(null);
-    setRequirePasswordChange(false);
   };
 
   const changePassword = async (newPassword: string): Promise<boolean> => {

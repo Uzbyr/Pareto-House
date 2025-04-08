@@ -1,3 +1,4 @@
+
 import { SiteMetrics } from "@/types/auth";
 import {
   getStoredApplications,
@@ -126,6 +127,19 @@ export const collectRealMetrics = (): SiteMetrics => {
   ];
 
   return {
+    // Basic metrics
+    totalVisitors: visitorsTotal,
+    visitorsByDate: visitorsData.map(({ date, visitors }) => [date, visitors]),
+    applicationsCount: totalApplications,
+    pendingApplications: pendingCount,
+    approvedApplications: approvedCount,
+    rejectedApplications: rejectedCount,
+    topPages: pagePopularity.map(({ name, views }) => ({ path: name, count: views })),
+    conversionRate: totalApplications > 0
+      ? Math.floor((totalApplications / (funnelStages[1].value || 1)) * 100)
+      : 68,
+      
+    // Extended metrics for analytics pages
     visitors: {
       total: visitorsTotal,
       byDate: visitorsData,
