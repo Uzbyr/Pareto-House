@@ -105,7 +105,7 @@ const handler = async (req: Request): Promise<Response> => {
           
           // Create profile with data from application
           const profileData = {
-            id: newUser.user.id,
+            user_id: newUser.user.id,
             first_name: userData.firstName,
             last_name: userData.lastName,
             university: applicationData.university,
@@ -139,7 +139,7 @@ const handler = async (req: Request): Promise<Response> => {
           const { error: profileError } = await supabaseAdmin
             .from("profiles")
             .insert([{
-              id: newUser.user.id,
+              user_id: newUser.user.id,
               first_name: userData.firstName,
               last_name: userData.lastName,
             }]);
