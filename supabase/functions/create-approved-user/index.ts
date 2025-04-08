@@ -87,6 +87,74 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("User created successfully:", newUser);
 
+    // Fetch application data to copy to profile
+    if (newUser.user) {
+      try {
+        // Get application data by email
+        console.log("Fetching application data for", userData.email);
+        const { data: applicationData, error: appError } = await supabaseAdmin
+          .from("applications")
+          .select("*")
+          .eq("email", userData.email)
+          .single();
+
+        if (appError) {
+          console.error("Error fetching application data:", appError);
+        } else if (applicationData) {
+          console.log("Application data found, creating profile");
+          
+          // Create profile with data from application
+          const profileData = {
+            id: newUser.user.id,
+            first_name: userData.firstName,
+            last_name: userData.lastName,
+            university: applicationData.university,
+            major: applicationData.major,
+            graduation_year: applicationData.graduation_year,
+            preparatory_classes: applicationData.preparatory_classes,
+            student_societies: applicationData.student_societies,
+            building_company: applicationData.building_company,
+            company_context: applicationData.company_context,
+            website_url: applicationData.website_url,
+            linkedin_url: applicationData.linkedin_url,
+            x_url: applicationData.x_url,
+            github_url: applicationData.github_url,
+            country: applicationData.country,
+            nationality: applicationData.nationality,
+          };
+
+          const { error: profileError } = await supabaseAdmin
+            .from("profiles")
+            .insert([profileData]);
+
+          if (profileError) {
+            console.error("Error creating user profile:", profileError);
+          } else {
+            console.log("User profile created successfully");
+          }
+        } else {
+          console.log("No application data found for", userData.email);
+          
+          // Create minimal profile with just name
+          const { error: profileError } = await supabaseAdmin
+            .from("profiles")
+            .insert([{
+              id: newUser.user.id,
+              first_name: userData.firstName,
+              last_name: userData.lastName,
+            }]);
+            
+          if (profileError) {
+            console.error("Error creating minimal user profile:", profileError);
+          } else {
+            console.log("Minimal user profile created successfully");
+          }
+        }
+      } catch (err) {
+        console.error("Error while creating user profile:", err);
+      }
+    }
+
     return new Response(
       JSON.stringify({
         success: true,
