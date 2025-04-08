@@ -34,14 +34,14 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
   }
 
   // Check role requirements if specified
-  if (requiredRole) {
+  if (requiredRole && user) {
     // Super admins can access any route
-    if (user?.role === "super_admin") {
+    if (user.role === "super_admin") {
       return <>{children}</>;
     }
     
     // Admins can access admin routes, fellow routes, and alumni routes
-    if (user?.role === "admin") {
+    if (user.role === "admin") {
       // Admin can access all routes except super_admin specific routes
       if (requiredRole !== "super_admin") {
         return <>{children}</>;
@@ -56,12 +56,15 @@ const ProtectedRoute = ({ children, requiredRole }: ProtectedRouteProps) => {
       let hasAccess = false;
       
       if (user) {
-        // Check each possible valid role case
+        // Check each role separately to avoid TypeScript errors
         if (user.role === requiredRole) {
           hasAccess = true;
-        } else if (user.role === "admin") {
+        }
+        // These are separate string literal type checks to avoid TypeScript comparison errors
+        if (user.role === "admin") {
           hasAccess = true;
-        } else if (user.role === "super_admin") {
+        }
+        if (user.role === "super_admin") {
           hasAccess = true;
         }
       }
