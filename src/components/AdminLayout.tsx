@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -13,9 +14,18 @@ import {
   BookOpen,
 } from "lucide-react";
 import { toast } from "sonner";
+import { UserRole } from "@/types/auth";
 
 interface AdminLayoutProps {
   children: React.ReactNode;
+}
+
+// Create a type for navigation items to ensure proper typing
+interface NavItem {
+  label: string;
+  path: string;
+  icon: React.ElementType;
+  role?: UserRole;
 }
 
 const AdminLayout = ({ children }: AdminLayoutProps) => {
@@ -34,25 +44,26 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
     }
   };
 
-  const navItems = [
+  // Define navItems with proper typing
+  const navItems: NavItem[] = [
     { label: "Dashboard", path: "/admin/dashboard", icon: Home },
     {
       label: "Applications",
       path: "/admin/applications",
       icon: FileText,
-      role: "admin" as const,
+      role: "admin",
     },
     {
       label: "Fellowship",
       path: "/fellowship",
       icon: GraduationCap,
-      role: "admin" as const,
+      role: "admin",
     },
     {
       label: "Alumni Network",
       path: "/alumni",
       icon: BookOpen,
-      role: "admin" as const,
+      role: "admin",
     },
   ];
 
