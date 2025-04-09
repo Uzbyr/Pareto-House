@@ -35,9 +35,7 @@ interface Profile {
   video_url?: string | null;
   website_url?: string | null;
   x_url?: string | null;
-  bio?: string | null;
   profile_picture_url?: string | null;
-  profile_url?: string | null;
   onboarding_completed?: boolean;
 }
 
@@ -84,6 +82,7 @@ export const ProfileProvider = ({
         return;
       }
 
+      console.log("Fetched profile data:", data);
       setProfile(data as Profile);
     } catch (err) {
       console.error("Exception fetching profile:", err);

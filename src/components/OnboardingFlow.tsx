@@ -35,7 +35,6 @@ const OnboardingFlow = () => {
     graduation_year: profile?.graduation_year || "",
     country: profile?.country || "",
     nationality: profile?.nationality || "",
-    bio: profile?.bio || "",
     website_url: profile?.website_url || "",
     linkedin_url: profile?.linkedin_url || "",
     github_url: profile?.github_url || "",

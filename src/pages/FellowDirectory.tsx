@@ -23,7 +23,6 @@ interface Fellow {
   last_name: string | null;
   university: string | null;
   major: string | null;
-  bio: string | null;
   profile_picture_url: string | null;
   linkedin_url: string | null;
   github_url: string | null;
@@ -75,7 +74,6 @@ const FellowDirectory = () => {
         last_name: record.last_name,
         university: record.university,
         major: record.major,
-        bio: (record as any).bio ?? null,
         profile_picture_url: (record as any).profile_picture_url ?? (record as any).profile_url ?? null,
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,

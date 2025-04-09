@@ -36,7 +36,6 @@ const FellowProfile = () => {
   const [formData, setFormData] = useState({
     first_name: "",
     last_name: "",
-    bio: "",
     university: "",
     major: "",
     graduation_year: "",
@@ -57,7 +56,6 @@ const FellowProfile = () => {
       setFormData({
         first_name: profile.first_name || "",
         last_name: profile.last_name || "",
-        bio: profile.bio || "",
         university: profile.university || "",
         major: profile.major || "",
         graduation_year: profile.graduation_year || "",
@@ -284,9 +282,6 @@ const FellowProfile = () => {
 
             <Card className="bg-zinc-800 border-zinc-700 p-6 lg:col-span-2">
               <h2 className="text-xl font-bold text-white mb-4">About Me</h2>
-              <p className="text-gray-300 whitespace-pre-wrap mb-6">
-                {profile?.bio || "No bio provided yet."}
-              </p>
 
               <h3 className="text-lg font-medium text-white mt-6">Education</h3>
               <Separator className="my-2 bg-zinc-700" />

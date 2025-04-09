@@ -96,7 +96,6 @@ const handler = async (req: Request): Promise<Response> => {
             
             <p><strong>📝 Complete your profile details:</strong></p>
             <ul>
-              <li>Update your bio (250-500 words recommended)</li>
               <li>Add your LinkedIn, GitHub, and other relevant profiles</li>
               <li>List your key achievements and competition results</li>
               <li>Tag your areas of expertise and interests</li>

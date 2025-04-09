@@ -131,7 +131,7 @@ export type Database = {
           nationality: string
           onboarding_completed: boolean | null
           preparatory_classes: string | null
-          profile_url: string | null
+          profile_picture_url: string | null
           resume_file: string | null
           student_societies: string | null
           university: string | null
@@ -139,6 +139,7 @@ export type Database = {
           video_url: string | null
           website_url: string | null
           x_url: string | null
+          onboarding_completed: boolean
         }
         Insert: {
           building_company: string
@@ -162,7 +163,7 @@ export type Database = {
           nationality: string
           onboarding_completed?: boolean | null
           preparatory_classes?: string | null
-          profile_url?: string | null
+          profile_picture_url?: string | null
           resume_file?: string | null
           student_societies?: string | null
           university?: string | null
@@ -193,7 +194,7 @@ export type Database = {
           nationality?: string
           onboarding_completed?: boolean | null
           preparatory_classes?: string | null
-          profile_url?: string | null
+          profile_picture_url?: string | null
           resume_file?: string | null
           student_societies?: string | null
           university?: string | null
@@ -201,6 +202,7 @@ export type Database = {
           video_url?: string | null
           website_url?: string | null
           x_url?: string | null
+          onboarding_completed: boolean
         }
         Relationships: []
       }
