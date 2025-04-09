@@ -1,10 +1,11 @@
+
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 /**
  * Handles the approval process for an application, including:
  * 1. Creating a user account
- * 2. Sending an acceptance email with login credentials
+ * 2. Sending an acceptance email with login magic link
  *
  * @param firstName - Applicant's first name
  * @param lastName - Applicant's last name
@@ -53,16 +54,13 @@ export const handleApplicationApproval = async (
       }
     }
 
-    const temporaryPassword = data?.temporaryPassword;
-
-    // Then send the acceptance email with login credentials
+    // Send the acceptance email with magic link
     const { data: emailData, error: emailError } =
       await supabase.functions.invoke("send-acceptance-email", {
         body: {
           firstName,
           lastName,
           email,
-          temporaryPassword,
         },
       });
 

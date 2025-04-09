@@ -1,5 +1,7 @@
+
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 
 const resend = new Resend(Deno.env.get("RESEND_API_KEY"));
 
@@ -13,18 +15,7 @@ interface AcceptanceData {
   firstName: string;
   lastName: string;
   email: string;
-  temporaryPassword?: string;
 }
-
-const generateTemporaryPassword = (): string => {
-  const chars =
-    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789!@#$%^&*()";
-  let password = "";
-  for (let i = 0; i < 10; i++) {
-    password += chars.charAt(Math.floor(Math.random() * chars.length));
-  }
-  return password;
-};
 
 const getDeadlineDate = (): string => {
   const deadline = new Date();
@@ -58,9 +49,62 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    // Generate a temporary password if not provided
-    const temporaryPassword =
-      acceptanceData.temporaryPassword || generateTemporaryPassword();
+    // Check if environment variables are set
+    console.log("Checking environment variables");
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    
+    if (!supabaseUrl || !supabaseServiceRoleKey) {
+      console.error("Missing Supabase environment variables");
+      return new Response(
+        JSON.stringify({
+          error: "Server configuration error: Missing Supabase credentials",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    // Create Supabase client with service role key
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
+    
+    console.log(`Generating magic link for ${email}`);
+    
+    // Generate a sign-in link
+    const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
+      type: "magiclink",
+      email: email,
+      options: {
+        redirectTo: `${new URL(req.url).origin.replace('supabase', 'lovable-preview')}/auth-callback`,
+      }
+    });
+    
+    if (linkError) {
+      console.error("Error generating magic link:", linkError);
+      return new Response(
+        JSON.stringify({ error: linkError.message }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    const signInLink = linkData?.properties?.action_link;
+    
+    if (!signInLink) {
+      console.error("No action_link returned from Supabase");
+      return new Response(
+        JSON.stringify({ error: "Failed to generate sign-in link" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
     const deadlineDate = getDeadlineDate();
 
     console.log(`Sending acceptance email to ${email}`);
@@ -78,16 +122,16 @@ const handler = async (req: Request): Promise<Response> => {
           
           <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
             <h2 style="margin-top: 0; color: #2c3e50;">🚀 Your Pareto Journey Begins Now</h2>
-            <p>We've created your account on the Pareto Fellowship platform, your central hub for all fellowship activities:</p>
+            <p>We've created your account on the Pareto Fellowship platform, your central hub for all fellowship activities.</p>
             
-            <p><strong>Your credentials:</strong></p>
-            <ul>
-              <li>URL: <a href="https://paretofellowship.com" style="color: #3498db;">https://paretofellowship.com</a></li>
-              <li>Username: ${email}</li>
-              <li>Temporary Password: ${temporaryPassword}</li>
-            </ul>
+            <div style="text-align: center; margin: 30px 0;">
+              <a href="${signInLink}" style="background-color: #E91E63; color: white; padding: 12px 24px; text-decoration: none; border-radius: 4px; font-weight: bold; display: inline-block;">Sign In to Your Account</a>
+            </div>
             
-            <p style="color: #e74c3c;">🔐 <strong>Important:</strong> Please log in and change your password within 48 hours.</p>
+            <p>If the button doesn't work, you can also copy and paste this link into your browser:</p>
+            <p style="word-break: break-all; background-color: #f5f5f5; padding: 10px; border-radius: 4px;">${signInLink}</p>
+            
+            <p>This login link will expire in 24 hours. If you miss it, you can always request a new one by visiting <a href="https://paretofellowship.com/login" style="color: #3498db;">our login page</a>.</p>
           </div>
           
           <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
@@ -152,7 +196,6 @@ const handler = async (req: Request): Promise<Response> => {
       JSON.stringify({
         success: true,
         message: "Acceptance email sent successfully",
-        temporaryPassword,
       }),
       {
         status: 200,
