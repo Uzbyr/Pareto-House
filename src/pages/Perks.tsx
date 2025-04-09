@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -153,17 +154,18 @@ const Perks = () => {
   };
 
   const handleLoginClick = () => {
-    login("admin@pareto20.com", "admin123").then((success) => {
+    // Updated to only pass the email parameter, as required by the magic link login function
+    login("admin@pareto20.com").then((success) => {
       if (success) {
         toast({
-          title: "Login successful",
-          description: "You are now logged in as a Pareto Fellow.",
+          title: "Login email sent",
+          description: "Check your email for a magic link to log in as a Pareto Fellow.",
           duration: 3000,
         });
       } else {
         toast({
           title: "Login failed",
-          description: "Invalid credentials. Please try again.",
+          description: "Could not send the login link. Please try again.",
           variant: "destructive",
           duration: 3000,
         });
