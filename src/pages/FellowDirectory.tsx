@@ -77,8 +77,8 @@ const FellowDirectory = () => {
         last_name: record.last_name,
         university: record.university,
         major: record.major,
-        bio: record.bio || null,  // Use null if bio is undefined
-        profile_picture_url: record.profile_picture_url || record.profile_url || null,  // Handle both field names
+        bio: record.bio ?? null,  // Handle possibly undefined bio field
+        profile_picture_url: record.profile_picture_url ?? record.profile_url ?? null,  // Try both field names
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,
         website_url: record.website_url

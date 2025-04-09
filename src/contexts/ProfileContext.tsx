@@ -37,6 +37,7 @@ interface Profile {
   x_url?: string | null;
   bio?: string | null;
   profile_picture_url?: string | null;
+  profile_url?: string | null;
   onboarding_completed?: boolean;
 }
 
