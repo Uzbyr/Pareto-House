@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useNavigate } from "react-router-dom";
@@ -14,7 +15,7 @@ interface OnboardingFormData {
   graduation_year: string;
   country: string;
   nationality: string;
-  website_url: string;
+  video_url: string;
   linkedin_url: string;
   github_url: string;
   x_url: string;
@@ -66,7 +67,7 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     graduation_year: profile?.graduation_year || "",
     country: profile?.country || "",
     nationality: profile?.nationality || "",
-    website_url: profile?.website_url || "",
+    video_url: profile?.video_url || "",
     linkedin_url: profile?.linkedin_url || "",
     github_url: profile?.github_url || "",
     x_url: profile?.x_url || "",

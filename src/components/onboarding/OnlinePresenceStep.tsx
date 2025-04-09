@@ -27,14 +27,14 @@ const OnlinePresenceStep = () => {
 
       <div className="space-y-4">
         <div className="space-y-2">
-          <Label htmlFor="website_url">Personal Website URL</Label>
+          <Label htmlFor="video_url">Video Presentation URL</Label>
           <Input
-            id="website_url"
-            name="website_url"
-            value={formData.website_url || ""}
+            id="video_url"
+            name="video_url"
+            value={formData.video_url || ""}
             onChange={handleInputChange}
             className="bg-zinc-800 border-zinc-700"
-            placeholder="https://..."
+            placeholder="https://youtube.com/... or https://vimeo.com/..."
           />
         </div>
         
