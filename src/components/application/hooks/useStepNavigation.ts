@@ -76,14 +76,16 @@ const useStepNavigation = ({
       }
     }
 
-    setCurrentStep((prev) => prev + 1);
+    // Fix: Pass the direct next step number instead of a function
+    setCurrentStep(currentStep + 1);
     window.scrollTo(0, 0);
   }, [currentStep, formData, setCurrentStep, checkPreparatoryQuestion]);
 
   const prevStep = useCallback(() => {
-    setCurrentStep((prev) => prev - 1);
+    // Fix: Pass the direct previous step number instead of a function
+    setCurrentStep(currentStep - 1);
     window.scrollTo(0, 0);
-  }, [setCurrentStep]);
+  }, [setCurrentStep, currentStep]);
 
   return {
     nextStep,
