@@ -1,29 +1,39 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
 
 interface Profile {
-  id: string;
-  first_name: string | null;
-  last_name: string | null;
-  university: string | null;
-  major: string | null;
-  graduation_year: string | null;
-  preparatory_classes: string | null;
-  student_societies: string | null;
-  building_company: string | null;
-  company_context: string | null;
-  website_url: string | null;
-  linkedin_url: string | null;
-  x_url: string | null;
-  github_url: string | null;
-  profile_picture_url: string | null;
-  country: string | null;
-  nationality: string | null;
-  bio: string | null;
-  onboarding_completed: boolean;
+  building_company: string;
+  category_of_interest?: string | null;
+  company_context?: string | null;
+  competition_results?: string | null;
+  competitive_profiles?: string[] | null;
+  country: string;
+  deck_file?: string | null;
+  education_level?: string;
+  email: string;
+  first_name: string;
+  flagged?: boolean | null;
+  github_url?: string | null;
+  graduation_year: string;
+  has_competition_experience?: string | null;
+  high_school?: string | null;
+  id?: string;
+  last_name: string;
+  linkedin_url?: string | null;
+  major?: string | null;
+  memo_file?: string | null;
+  nationality: string;
+  preparatory_classes?: string | null;
+  resume_file?: string | null;
+  status?: string;
+  student_societies?: string | null;
+  submission_date?: string;
+  university?: string | null;
+  video_url?: string | null;
+  website_url?: string | null;
+  x_url?: string | null;
 }
 
 interface ProfileContextType {

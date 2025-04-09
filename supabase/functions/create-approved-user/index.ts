@@ -105,21 +105,36 @@ const handler = async (req: Request): Promise<Response> => {
           // Create profile with data from application
           const profileData = {
             user_id: newUser.user.id,
-            first_name: userData.firstName,
-            last_name: userData.lastName,
-            university: applicationData.university,
-            major: applicationData.major,
-            graduation_year: applicationData.graduation_year,
-            preparatory_classes: applicationData.preparatory_classes,
-            student_societies: applicationData.student_societies,
             building_company: applicationData.building_company,
+            category_of_interest: applicationData.category_of_interest,
             company_context: applicationData.company_context,
-            website_url: applicationData.website_url,
-            linkedin_url: applicationData.linkedin_url,
-            x_url: applicationData.x_url,
-            github_url: applicationData.github_url,
+            competition_results: applicationData.competition_results,
+            competitive_profiles: applicationData.competitive_profiles,
             country: applicationData.country,
+            deck_file: applicationData.deck_file,
+            education_level: applicationData.education_level,
+            email: applicationData.email,
+            first_name: applicationData.first_name,
+            github_url: applicationData.github_url,
+            graduation_year: applicationData.graduation_year,
+            has_competition_experience:
+              applicationData.has_competition_experience,
+            high_school: applicationData.high_school,
+            id: applicationData.id,
+            last_name: applicationData.last_name,
+            linkedin_url: applicationData.linkedin_url,
+            major: applicationData.major,
+            memo_file: applicationData.memo_file,
             nationality: applicationData.nationality,
+            preparatory_classes: applicationData.preparatory_classes,
+            profile_picture_url: applicationData.profile_picture_url,
+            resume_file: applicationData.resume_file,
+            status: applicationData.status,
+            student_societies: applicationData.student_societies,
+            university: applicationData.university,
+            video_url: applicationData.video_url,
+            website_url: applicationData.website_url,
+            x_url: applicationData.x_url,
           };
 
           const { error: profileError } = await supabaseAdmin
@@ -130,25 +145,6 @@ const handler = async (req: Request): Promise<Response> => {
             console.error("Error creating user profile:", profileError);
           } else {
             console.log("User profile created successfully");
-          }
-        } else {
-          console.log("No application data found for", userData.email);
-
-          // Create minimal profile with just name
-          const { error: profileError } = await supabaseAdmin
-            .from("profiles")
-            .insert([
-              {
-                user_id: newUser.user.id,
-                first_name: userData.firstName,
-                last_name: userData.lastName,
-              },
-            ]);
-
-          if (profileError) {
-            console.error("Error creating minimal user profile:", profileError);
-          } else {
-            console.log("Minimal user profile created successfully");
           }
         }
       } catch (err) {
