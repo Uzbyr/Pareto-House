@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -22,19 +21,11 @@ export const useAuthService = (): AuthState &
     try {
       console.log("Checking if user exists before sending magic link:", email);
       
-      // First, check if the user exists
-      const { data: users, error: userCheckError } = await supabase
-        .from('user_roles')
-        .select('user_id')
-        .eq('user_id', await getUserIdByEmail(email));
-      
-      if (userCheckError) {
-        console.error("Error checking if user exists:", userCheckError);
-        return false;
-      }
+      // First, check if the user exists using the more efficient method
+      const userId = await getUserIdByEmail(email);
       
       // If no user was found, return false
-      if (!users || users.length === 0) {
+      if (!userId) {
         console.error("User with this email does not exist");
         return false;
       }
@@ -62,21 +53,20 @@ export const useAuthService = (): AuthState &
     }
   };
   
-  // Helper function to get a user ID by email
+  // Updated helper function to get a user ID by email more efficiently
   const getUserIdByEmail = async (email: string): Promise<string | null> => {
     try {
-      const { data, error } = await supabase
-        .auth
-        .admin
-        .listUsers();
+      // Use the admin.getUserByEmail method instead of listing all users
+      const { data, error } = await supabase.functions.invoke("get-user-by-email", {
+        body: { email }
+      });
         
       if (error) {
-        console.error("Error fetching users:", error);
+        console.error("Error fetching user by email:", error);
         return null;
       }
       
-      const user = data.users.find(u => u.email === email);
-      return user ? user.id : null;
+      return data?.userId || null;
     } catch (error) {
       console.error("Error getting user ID by email:", error);
       return null;

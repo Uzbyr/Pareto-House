@@ -106,9 +106,13 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Creating Supabase client");
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
     
-    // Check if the user exists first
+    // Check if the user exists using more efficient filter
     console.log("Checking if user exists with email:", email);
-    const { data: { users }, error: userError } = await supabase.auth.admin.listUsers();
+    const { data: { users }, error: userError } = await supabase.auth.admin.listUsers({
+      filter: {
+        email: email
+      }
+    });
     
     if (userError) {
       console.error("Error checking if user exists:", userError);
@@ -123,7 +127,7 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
     
-    const userExists = users.some(user => user.email === email);
+    const userExists = users && users.length > 0;
     
     if (!userExists) {
       console.error("User does not exist with email:", email);
