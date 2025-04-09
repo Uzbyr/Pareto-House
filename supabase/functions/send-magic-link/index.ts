@@ -106,9 +106,42 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Creating Supabase client");
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
     
-    console.log("Generating sign-in link directly with Supabase client");
+    // Check if the user exists first
+    console.log("Checking if user exists with email:", email);
+    const { data: { users }, error: userError } = await supabase.auth.admin.listUsers();
     
-    // Use the admin client to generate a link WITHOUT sending an email
+    if (userError) {
+      console.error("Error checking if user exists:", userError);
+      return new Response(
+        JSON.stringify({ 
+          error: `Failed to check if user exists: ${userError.message}` 
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+    
+    const userExists = users.some(user => user.email === email);
+    
+    if (!userExists) {
+      console.error("User does not exist with email:", email);
+      return new Response(
+        JSON.stringify({ 
+          error: "No account found with this email",
+          exists: false 
+        }),
+        {
+          status: 404,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+    
+    console.log("Generating sign-in link for existing user");
+    
+    // Generate a sign-in link only for existing users
     const { data, error } = await supabase.auth.admin.generateLink({
       type: "magiclink",
       email: email,

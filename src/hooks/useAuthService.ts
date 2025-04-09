@@ -20,8 +20,27 @@ export const useAuthService = (): AuthState &
 
   const login = async (email: string): Promise<boolean> => {
     try {
-      console.log("Sending magic link for email:", email);
-      // Call our custom magic link edge function instead of using Supabase directly
+      console.log("Checking if user exists before sending magic link:", email);
+      
+      // First, check if the user exists
+      const { data: users, error: userCheckError } = await supabase
+        .from('user_roles')
+        .select('user_id')
+        .eq('user_id', await getUserIdByEmail(email));
+      
+      if (userCheckError) {
+        console.error("Error checking if user exists:", userCheckError);
+        return false;
+      }
+      
+      // If no user was found, return false
+      if (!users || users.length === 0) {
+        console.error("User with this email does not exist");
+        return false;
+      }
+      
+      // If user exists, proceed with sending magic link
+      console.log("User exists, sending magic link for email:", email);
       const response = await supabase.functions.invoke("send-magic-link", {
         body: {
           email,
@@ -40,6 +59,27 @@ export const useAuthService = (): AuthState &
     } catch (error) {
       console.error("Login error:", error);
       return false;
+    }
+  };
+  
+  // Helper function to get a user ID by email
+  const getUserIdByEmail = async (email: string): Promise<string | null> => {
+    try {
+      const { data, error } = await supabase
+        .auth
+        .admin
+        .listUsers();
+        
+      if (error) {
+        console.error("Error fetching users:", error);
+        return null;
+      }
+      
+      const user = data.users.find(u => u.email === email);
+      return user ? user.id : null;
+    } catch (error) {
+      console.error("Error getting user ID by email:", error);
+      return null;
     }
   };
 

@@ -42,7 +42,7 @@ const AdminLogin = () => {
         setMagicLinkSent(true);
         toast.success("Magic link sent! Check your email for login instructions.");
       } else {
-        toast.error("Failed to send magic link. Please try again.");
+        toast.error("No account found with this email. Please check the email or apply for the fellowship.");
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
