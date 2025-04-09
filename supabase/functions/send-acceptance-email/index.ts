@@ -72,12 +72,16 @@ const handler = async (req: Request): Promise<Response> => {
     
     console.log(`Generating magic link for ${email}`);
     
+    // Get the correct origin for the redirect URL
+    const requestUrl = new URL(req.url);
+    const origin = requestUrl.origin.replace('supabase', 'lovable-preview');
+    
     // Generate a sign-in link
     const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
       type: "magiclink",
       email: email,
       options: {
-        redirectTo: `${new URL(req.url).origin.replace('supabase', 'lovable-preview')}/auth-callback`,
+        redirectTo: `${origin}/auth-callback`,
       }
     });
     
