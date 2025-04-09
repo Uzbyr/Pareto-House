@@ -20,6 +20,7 @@ export const useAuthService = (): AuthState &
 
   const login = async (email: string): Promise<boolean> => {
     try {
+      console.log("Sending magic link for email:", email);
       // Call our custom magic link edge function instead of using Supabase directly
       const response = await supabase.functions.invoke("send-magic-link", {
         body: {
@@ -27,6 +28,8 @@ export const useAuthService = (): AuthState &
           redirectTo: window.location.origin,
         }
       });
+
+      console.log("Magic link response:", response);
 
       if (response.error) {
         console.error("Login error:", response.error);

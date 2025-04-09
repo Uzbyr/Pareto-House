@@ -23,6 +23,7 @@ const handler = async (req: Request): Promise<Response> => {
 
   try {
     const { email, redirectTo }: MagicLinkRequest = await req.json();
+    console.log(`Processing magic link for email: ${email} with redirect: ${redirectTo}`);
 
     if (!email) {
       return new Response(
@@ -36,15 +37,48 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Check if environment variables are set
+    const supabaseUrl = Deno.env.get("SUPABASE_URL");
+    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
+    const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
+    const resendApiKey = Deno.env.get("RESEND_API_KEY");
+
+    if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
+      console.error("Missing Supabase environment variables");
+      return new Response(
+        JSON.stringify({
+          error: "Server configuration error: Missing Supabase credentials",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    if (!resendApiKey) {
+      console.error("Missing Resend API Key");
+      return new Response(
+        JSON.stringify({
+          error: "Server configuration error: Missing email service credentials",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
+    }
+
+    console.log("Creating sign-in link via Supabase API");
     // Create a sign-in link that is valid for 24 hours
-    const { data: signInData, error: signInError } = await fetch(
-      `${Deno.env.get("SUPABASE_URL")}/auth/v1/otp`,
+    const response = await fetch(
+      `${supabaseUrl}/auth/v1/otp`,
       {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
-          apikey: Deno.env.get("SUPABASE_ANON_KEY") || "",
-          Authorization: `Bearer ${Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")}`,
+          apikey: supabaseAnonKey,
+          Authorization: `Bearer ${supabaseServiceRoleKey}`,
         },
         body: JSON.stringify({
           email,
@@ -54,17 +88,38 @@ const handler = async (req: Request): Promise<Response> => {
           },
         }),
       }
-    ).then((res) => res.json());
+    );
 
-    if (signInError) {
-      throw new Error(signInError.message);
+    if (!response.ok) {
+      const errorText = await response.text();
+      console.error("Supabase OTP API error:", response.status, errorText);
+      return new Response(
+        JSON.stringify({
+          error: `Failed to generate magic link: ${response.status} - ${errorText}`,
+        }),
+        {
+          status: response.status,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
-    const signInLink = signInData?.action_link;
+    const data = await response.json();
+    const signInLink = data?.action_link;
+    
     if (!signInLink) {
-      throw new Error("Failed to generate magic link");
+      console.error("No action_link returned from Supabase:", data);
+      return new Response(
+        JSON.stringify({ error: "Failed to generate magic link: No action link returned" }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        }
+      );
     }
 
+    console.log("Magic link generated successfully, sending custom email");
+    
     // Send the custom branded email with the magic link
     const emailResponse = await resend.emails.send({
       from: "Pareto Fellowship <noreply@transactional.paretofellowship.com>",
@@ -93,7 +148,7 @@ const handler = async (req: Request): Promise<Response> => {
       `,
     });
 
-    console.log("Custom magic link email sent successfully:", emailResponse);
+    console.log("Custom magic link email response:", emailResponse);
 
     return new Response(
       JSON.stringify({
@@ -107,10 +162,16 @@ const handler = async (req: Request): Promise<Response> => {
     );
   } catch (error: any) {
     console.error("Error sending magic link email:", error);
-    return new Response(JSON.stringify({ error: error.message }), {
-      status: 500,
-      headers: { "Content-Type": "application/json", ...corsHeaders },
-    });
+    return new Response(
+      JSON.stringify({ 
+        error: `Error sending magic link: ${error.message}`,
+        details: error.toString()
+      }),
+      {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      }
+    );
   }
 };
 
