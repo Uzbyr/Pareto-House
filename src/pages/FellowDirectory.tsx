@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -70,15 +69,14 @@ const FellowDirectory = () => {
         throw error;
       }
 
-      // Map the database results to match the Fellow interface
       const mappedData: Fellow[] = data.map(record => ({
         id: record.id,
         first_name: record.first_name,
         last_name: record.last_name,
         university: record.university,
         major: record.major,
-        bio: record.bio ?? null,  // Handle possibly undefined bio field
-        profile_picture_url: record.profile_picture_url ?? record.profile_url ?? null,  // Try both field names
+        bio: (record as any).bio ?? null,
+        profile_picture_url: (record as any).profile_picture_url ?? (record as any).profile_url ?? null,
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,
         website_url: record.website_url

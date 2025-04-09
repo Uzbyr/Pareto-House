@@ -100,7 +100,6 @@ export const ProfileProvider = ({
       setLoading(true);
 
       // Only update fields that are provided in the updates object
-      // This way we avoid the TypeScript error with required fields
       const { error: updateError } = await supabase
         .from("profiles")
         .update(updates)
