@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
@@ -16,7 +15,7 @@ interface MagicLinkRequest {
 
 const handler = async (req: Request): Promise<Response> => {
   console.log("Starting send-magic-link function handler");
-  
+
   // Handle CORS preflight requests
   if (req.method === "OPTIONS") {
     console.log("Handling OPTIONS request (CORS preflight)");
@@ -27,7 +26,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Parsing request body");
     const requestBody = await req.text();
     console.log("Request body:", requestBody);
-    
+
     let email, redirectTo;
     try {
       const parsed = JSON.parse(requestBody);
@@ -41,7 +40,7 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
@@ -54,108 +53,66 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 400,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    // Check if environment variables are set
-    console.log("Checking environment variables");
-    const supabaseUrl = Deno.env.get("SUPABASE_URL");
-    const supabaseAnonKey = Deno.env.get("SUPABASE_ANON_KEY");
-    const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-    const resendApiKey = Deno.env.get("RESEND_API_KEY");
-
-    console.log("Environment variables check:", {
-      supabaseUrl: supabaseUrl ? "✅ Set" : "❌ Missing",
-      supabaseAnonKey: supabaseAnonKey ? "✅ Set" : "❌ Missing",
-      supabaseServiceRoleKey: supabaseServiceRoleKey ? "✅ Set" : "❌ Missing",
-      resendApiKey: resendApiKey ? "✅ Set" : "❌ Missing"
-    });
-
-    if (!supabaseUrl || !supabaseAnonKey || !supabaseServiceRoleKey) {
-      console.error("Missing Supabase environment variables");
-      return new Response(
-        JSON.stringify({
-          error: "Server configuration error: Missing Supabase credentials",
-          details: {
-            supabaseUrl: !!supabaseUrl,
-            supabaseAnonKey: !!supabaseAnonKey,
-            supabaseServiceRoleKey: !!supabaseServiceRoleKey
-          }
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    if (!resendApiKey) {
-      console.error("Missing Resend API Key");
-      return new Response(
-        JSON.stringify({
-          error: "Server configuration error: Missing email service credentials",
-        }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
     console.log("Creating Supabase client");
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-    
+
     // Check if the user exists using more efficient filter
     console.log("Checking if user exists with email:", email);
-    const { data: { users }, error: userError } = await supabase.auth.admin.listUsers({
+    const {
+      data: { users },
+      error: userError,
+    } = await supabase.auth.admin.listUsers({
       filter: {
-        email: email
-      }
+        email: email,
+      },
     });
-    
+
     if (userError) {
       console.error("Error checking if user exists:", userError);
       return new Response(
-        JSON.stringify({ 
-          error: `Failed to check if user exists: ${userError.message}` 
+        JSON.stringify({
+          error: `Failed to check if user exists: ${userError.message}`,
         }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
-    
+
     const userExists = users && users.length > 0;
-    
+
     if (!userExists) {
       console.error("User does not exist with email:", email);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: "No account found with this email",
-          exists: false 
+          exists: false,
         }),
         {
           status: 404,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
-    
+
     console.log("Generating sign-in link for existing user");
-    
+
     // Generate a sign-in link only for existing users
     const { data, error } = await supabase.auth.admin.generateLink({
       type: "magiclink",
       email: email,
       options: {
         redirectTo: redirectTo,
-      }
+      },
     });
-    
+
     console.log("Generate link response:", data ? "Success" : "Failed");
-    
+
     if (error) {
       console.error("Error generating magic link:", error);
       return new Response(
@@ -165,30 +122,30 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
     const signInLink = data?.properties?.action_link;
     console.log("Sign-in link generated:", signInLink ? "✅ Yes" : "❌ No");
-    
+
     if (!signInLink) {
       console.error("No action_link returned from Supabase:", data);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: "Failed to generate magic link: No action link returned",
-          responseData: data
+          responseData: data,
         }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
     console.log("Magic link generated successfully, initializing Resend");
     const resend = new Resend(resendApiKey);
-    
+
     console.log("Sending custom email with Resend");
     // Send the custom branded email with the magic link
     try {
@@ -224,14 +181,14 @@ const handler = async (req: Request): Promise<Response> => {
       if (emailResponse.error) {
         console.error("Resend email error:", emailResponse.error);
         return new Response(
-          JSON.stringify({ 
+          JSON.stringify({
             error: "Failed to send email with magic link",
-            details: emailResponse.error
+            details: emailResponse.error,
           }),
           {
             status: 500,
             headers: { "Content-Type": "application/json", ...corsHeaders },
-          }
+          },
         );
       }
 
@@ -243,33 +200,33 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 200,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     } catch (emailError: any) {
       console.error("Resend API error:", emailError);
       return new Response(
-        JSON.stringify({ 
+        JSON.stringify({
           error: "Error sending email with Resend API",
-          details: emailError.toString()
+          details: emailError.toString(),
         }),
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
   } catch (error: any) {
     console.error("Unexpected error in send-magic-link function:", error);
     return new Response(
-      JSON.stringify({ 
+      JSON.stringify({
         error: `Error sending magic link: ${error.message}`,
         details: error.toString(),
-        stack: error.stack
+        stack: error.stack,
       }),
       {
         status: 500,
         headers: { "Content-Type": "application/json", ...corsHeaders },
-      }
+      },
     );
   }
 };

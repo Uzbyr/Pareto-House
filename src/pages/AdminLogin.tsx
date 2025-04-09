@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -40,9 +39,13 @@ const AdminLogin = () => {
 
       if (success) {
         setMagicLinkSent(true);
-        toast.success("Magic link sent! Check your email for login instructions.");
+        toast.success(
+          "Magic link sent! Check your email for login instructions.",
+        );
       } else {
-        toast.error("No account found with this email. Please check the email or apply for the fellowship.");
+        toast.error(
+          "No account found with this email. Please check the email or apply for the fellowship.",
+        );
       }
     } catch (error) {
       toast.error("An error occurred. Please try again.");
@@ -74,10 +77,12 @@ const AdminLogin = () => {
             </div>
             <h2 className="text-xl font-medium text-white">Check your inbox</h2>
             <p className="text-zinc-400">
-              We sent a magic link to <span className="text-white">{email}</span>
+              We sent a magic link to{" "}
+              <span className="text-white">{email}</span>
             </p>
             <p className="text-zinc-400">
-              Click the link in the email to sign in to your Pareto Fellowship account.
+              Click the link in the email to sign in to your Pareto Fellowship
+              account.
             </p>
             <Button
               onClick={() => setMagicLinkSent(false)}

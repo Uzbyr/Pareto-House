@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -159,7 +158,8 @@ const Perks = () => {
       if (success) {
         toast({
           title: "Login email sent",
-          description: "Check your email for a magic link to log in as a Pareto Fellow.",
+          description:
+            "Check your email for a magic link to log in as a Pareto Fellow.",
           duration: 3000,
         });
       } else {

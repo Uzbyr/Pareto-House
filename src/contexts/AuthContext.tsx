@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContextType } from "@/types/auth";
@@ -69,7 +68,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
       data: { subscription },
     } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
       console.log("Auth state change event:", event, !!currentSession);
-      
+
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
 

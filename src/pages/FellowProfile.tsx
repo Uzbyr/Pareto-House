@@ -92,10 +92,11 @@ const FellowProfile = () => {
   };
 
   const uploadProfilePicture = async (): Promise<string | null> => {
-    if (!profilePicture || !session) return profile?.profile_picture_url || null;
+    if (!profilePicture || !session)
+      return profile?.profile_picture_url || null;
 
     try {
-      const fileExtension = profilePicture.name.split('.').pop() || '';
+      const fileExtension = profilePicture.name.split(".").pop() || "";
       const filePath = `users/${session.user.id}/${Date.now()}.${fileExtension}`;
 
       const { error: uploadError, data } = await supabase.storage

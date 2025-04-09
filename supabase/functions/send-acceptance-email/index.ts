@@ -1,4 +1,3 @@
-
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
@@ -53,7 +52,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log("Checking environment variables");
     const supabaseUrl = Deno.env.get("SUPABASE_URL");
     const supabaseServiceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY");
-    
+
     if (!supabaseUrl || !supabaseServiceRoleKey) {
       console.error("Missing Supabase environment variables");
       return new Response(
@@ -63,41 +62,39 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
     // Create Supabase client with service role key
     const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
-    
+
     console.log(`Generating magic link for ${email}`);
-    
+
     // Get the correct origin for the redirect URL
     const requestUrl = new URL(req.url);
-    const origin = requestUrl.origin.replace('supabase', 'lovable-preview');
-    
+    const origin = requestUrl.origin.replace("supabase", "lovable-preview");
+
     // Generate a sign-in link
-    const { data: linkData, error: linkError } = await supabase.auth.admin.generateLink({
-      type: "magiclink",
-      email: email,
-      options: {
-        redirectTo: `${origin}/auth-callback`,
-      }
-    });
-    
+    const { data: linkData, error: linkError } =
+      await supabase.auth.admin.generateLink({
+        type: "magiclink",
+        email: email,
+        options: {
+          redirectTo: `${origin}/auth-callback`,
+        },
+      });
+
     if (linkError) {
       console.error("Error generating magic link:", linkError);
-      return new Response(
-        JSON.stringify({ error: linkError.message }),
-        {
-          status: 500,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
+      return new Response(JSON.stringify({ error: linkError.message }), {
+        status: 500,
+        headers: { "Content-Type": "application/json", ...corsHeaders },
+      });
     }
 
     const signInLink = linkData?.properties?.action_link;
-    
+
     if (!signInLink) {
       console.error("No action_link returned from Supabase");
       return new Response(
@@ -105,7 +102,7 @@ const handler = async (req: Request): Promise<Response> => {
         {
           status: 500,
           headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
+        },
       );
     }
 
