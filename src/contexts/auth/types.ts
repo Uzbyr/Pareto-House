@@ -1,3 +1,4 @@
+
 import {
   AuthContextType,
   SiteMetrics,
@@ -17,7 +18,7 @@ export interface AuthState {
 }
 
 export interface AuthActions {
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string) => Promise<boolean>;
   logout: () => Promise<void>;
   changePassword: (newPassword: string) => Promise<boolean>;
   isPareto20Email: (email: string) => boolean;

@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContextType } from "@/types/auth";
@@ -55,7 +56,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           role: role,
         });
 
-        // Check if user needs to change password
+        // Check if user needs to change password - with magic links this is less relevant
         const requireChange =
           currentSession.user.user_metadata?.require_password_change === true;
         setRequirePasswordChange(requireChange);

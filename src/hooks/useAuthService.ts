@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -14,14 +15,16 @@ export const useAuthService = (): AuthState &
   const [isAuthenticated, setIsAuthenticated] = useState<boolean>(false);
   const [user, setUser] = useState<AuthState["user"]>(null);
   const [session, setSession] = useState<Session | null>(null);
-  const [requirePasswordChange, setRequirePasswordChange] =
+  const [requirePasswordChange, setRequirePasswordChange] = 
     useState<boolean>(false);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string): Promise<boolean> => {
     try {
-      const { data, error } = await supabase.auth.signInWithPassword({
+      const { error } = await supabase.auth.signInWithOtp({
         email,
-        password,
+        options: {
+          emailRedirectTo: window.location.origin,
+        }
       });
 
       if (error) {

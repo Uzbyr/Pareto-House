@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -6,11 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { hasAdminPrivileges } from "@/utils/authUtils";
 import { toast } from "sonner";
+import { Mail } from "lucide-react";
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [magicLinkSent, setMagicLinkSent] = useState(false);
   const { login, isAuthenticated, user } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
@@ -34,25 +36,16 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
+      const success = await login(email);
 
       if (success) {
-        toast.success("Login successful!");
-
-        // Redirect based on user role
-        if (user?.role === "fellow") {
-          navigate("/fellowship", { replace: true });
-        } else if (user?.role === "alumni") {
-          navigate("/alumni", { replace: true });
-        } else {
-          // Admin or super_admin
-          navigate("/admin/dashboard", { replace: true });
-        }
+        setMagicLinkSent(true);
+        toast.success("Magic link sent! Check your email.");
       } else {
-        toast.error("Invalid email or password");
+        toast.error("Failed to send magic link. Please try again.");
       }
     } catch (error) {
-      toast.error("An error occurred during login");
+      toast.error("An error occurred. Please try again.");
       console.error("Login error:", error);
     } finally {
       setIsLoading(false);
@@ -70,55 +63,59 @@ const AdminLogin = () => {
           />
           <h1 className="text-2xl font-bold text-white">Login</h1>
           <p className="text-zinc-400 mt-2">
-            Enter your credentials to access your account
+            Enter your email to receive a magic link
           </p>
         </div>
 
-        <form onSubmit={handleSubmit} className="space-y-4">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-medium text-zinc-300 mb-1"
+        {magicLinkSent ? (
+          <div className="text-center space-y-4">
+            <div className="flex justify-center">
+              <Mail className="h-16 w-16 text-pareto-pink" />
+            </div>
+            <h2 className="text-xl font-medium text-white">Check your inbox</h2>
+            <p className="text-zinc-400">
+              We've sent a magic link to <span className="text-white">{email}</span>
+            </p>
+            <p className="text-zinc-400">
+              Click the link in the email to sign in to your account.
+            </p>
+            <Button
+              onClick={() => setMagicLinkSent(false)}
+              variant="outline"
+              className="mt-4 border-zinc-700 hover:bg-zinc-700"
             >
-              Email
-            </label>
-            <Input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              placeholder="you@example.com"
-              className="bg-zinc-700 border-zinc-600 text-white"
-              required
-            />
+              Use a different email
+            </Button>
           </div>
+        ) : (
+          <form onSubmit={handleSubmit} className="space-y-4">
+            <div>
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-zinc-300 mb-1"
+              >
+                Email
+              </label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="you@example.com"
+                className="bg-zinc-700 border-zinc-600 text-white"
+                required
+              />
+            </div>
 
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-medium text-zinc-300 mb-1"
+            <Button
+              type="submit"
+              className="w-full bg-pareto-pink hover:bg-pink-600 text-black font-medium"
+              disabled={isLoading}
             >
-              Password
-            </label>
-            <Input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="••••••••"
-              className="bg-zinc-700 border-zinc-600 text-white"
-              required
-            />
-          </div>
-
-          <Button
-            type="submit"
-            className="w-full bg-pareto-pink hover:bg-pink-600 text-black font-medium"
-            disabled={isLoading}
-          >
-            {isLoading ? "Logging in..." : "Login"}
-          </Button>
-        </form>
+              {isLoading ? "Sending..." : "Send Magic Link"}
+            </Button>
+          </form>
+        )}
 
         <div className="mt-6 text-center text-sm text-zinc-500">
           <p>
