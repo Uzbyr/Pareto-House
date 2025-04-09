@@ -150,7 +150,6 @@ export type Database = {
           competition_results: string | null;
           competitive_profiles: string[] | null;
           country: string;
-          deck_file: string | null;
           education_level: string;
           email: string;
           first_name: string;
@@ -166,7 +165,6 @@ export type Database = {
           nationality: string;
           preparatory_classes: string | null;
           profile_picture_url: string | null;
-          resume_file: string | null;
           status: string;
           student_societies: string | null;
           university: string | null;

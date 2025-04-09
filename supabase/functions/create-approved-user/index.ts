@@ -50,6 +50,26 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
+    // Fetch application data to copy to profile
+    console.log("Fetching application data for", userData.email);
+    const { data: applicationData, error: appError } = await supabaseAdmin
+      .from("applications")
+      .select("*")
+      .eq("email", userData.email)
+      .single();
+
+    if (appError) {
+      return new Response(
+        JSON.stringify({
+          error: "Could not find an application for this email",
+        }),
+        {
+          status: 400,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        },
+      );
+    }
+
     console.log(`Creating user account for ${userData.email}`);
 
     // Generate a temporary password
@@ -86,70 +106,51 @@ const handler = async (req: Request): Promise<Response> => {
 
     console.log("User created successfully:", newUser);
 
-    // Fetch application data to copy to profile
-    if (newUser.user) {
-      try {
-        // Get application data by email
-        console.log("Fetching application data for", userData.email);
-        const { data: applicationData, error: appError } = await supabaseAdmin
-          .from("applications")
-          .select("*")
-          .eq("email", userData.email)
-          .single();
+    const profileData = {
+      user_id: newUser.user.id,
+      building_company: applicationData.building_company,
+      category_of_interest: applicationData.category_of_interest,
+      company_context: applicationData.company_context,
+      competition_results: applicationData.competition_results,
+      competitive_profiles: applicationData.competitive_profiles,
+      country: applicationData.country,
+      education_level: applicationData.education_level,
+      email: applicationData.email,
+      first_name: applicationData.first_name,
+      github_url: applicationData.github_url,
+      graduation_year: applicationData.graduation_year,
+      has_competition_experience: applicationData.has_competition_experience,
+      high_school: applicationData.high_school,
+      id: applicationData.id,
+      last_name: applicationData.last_name,
+      linkedin_url: applicationData.linkedin_url,
+      major: applicationData.major,
+      memo_file: applicationData.memo_file,
+      nationality: applicationData.nationality,
+      preparatory_classes: applicationData.preparatory_classes,
+      resume_file: applicationData.resume_file,
+      student_societies: applicationData.student_societies,
+      university: applicationData.university,
+      video_url: applicationData.video_url,
+      website_url: applicationData.website_url,
+      x_url: applicationData.x_url,
+    };
 
-        if (appError) {
-          console.error("Error fetching application data:", appError);
-        } else if (applicationData) {
-          console.log("Application data found, creating profile");
+    const { error: profileError } = await supabaseAdmin
+      .from("profiles")
+      .insert([profileData]);
 
-          // Create profile with data from application
-          const profileData = {
-            user_id: newUser.user.id,
-            building_company: applicationData.building_company,
-            category_of_interest: applicationData.category_of_interest,
-            company_context: applicationData.company_context,
-            competition_results: applicationData.competition_results,
-            competitive_profiles: applicationData.competitive_profiles,
-            country: applicationData.country,
-            deck_file: applicationData.deck_file,
-            education_level: applicationData.education_level,
-            email: applicationData.email,
-            first_name: applicationData.first_name,
-            github_url: applicationData.github_url,
-            graduation_year: applicationData.graduation_year,
-            has_competition_experience:
-              applicationData.has_competition_experience,
-            high_school: applicationData.high_school,
-            id: applicationData.id,
-            last_name: applicationData.last_name,
-            linkedin_url: applicationData.linkedin_url,
-            major: applicationData.major,
-            memo_file: applicationData.memo_file,
-            nationality: applicationData.nationality,
-            preparatory_classes: applicationData.preparatory_classes,
-            profile_picture_url: applicationData.profile_picture_url,
-            resume_file: applicationData.resume_file,
-            status: applicationData.status,
-            student_societies: applicationData.student_societies,
-            university: applicationData.university,
-            video_url: applicationData.video_url,
-            website_url: applicationData.website_url,
-            x_url: applicationData.x_url,
-          };
-
-          const { error: profileError } = await supabaseAdmin
-            .from("profiles")
-            .insert([profileData]);
-
-          if (profileError) {
-            console.error("Error creating user profile:", profileError);
-          } else {
-            console.log("User profile created successfully");
-          }
-        }
-      } catch (err) {
-        console.error("Error while creating user profile:", err);
-      }
+    if (profileError) {
+      return new Response(
+        JSON.stringify({
+          error: profileError.message,
+          message: "Failed to create user profile",
+        }),
+        {
+          status: 500,
+          headers: { "Content-Type": "application/json", ...corsHeaders },
+        },
+      );
     }
 
     return new Response(

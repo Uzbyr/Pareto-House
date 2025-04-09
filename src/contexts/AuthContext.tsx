@@ -46,6 +46,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
       if (currentSession?.user) {
         console.log("Setting up auth for user:", currentSession.user.id);
+        console.log("currentSession", currentSession);
         // Get user role from database
         const role = await getUserRole(currentSession.user.id);
         console.log("User role from getUserRole:", role);

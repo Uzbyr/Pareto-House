@@ -82,7 +82,7 @@ const handler = async (req: Request): Promise<Response> => {
             
             <p><strong>Your credentials:</strong></p>
             <ul>
-              <li>URL: <a href="https://paretofellowship.com" style="color: #3498db;">https://paretofellowship.com</a></li>
+              <li>URL: <a href="https://paretofellowship.com/login" style="color: #3498db;">https://paretofellowship.com/login</a></li>
               <li>Username: ${email}</li>
               <li>Temporary Password: ${temporaryPassword}</li>
             </ul>
