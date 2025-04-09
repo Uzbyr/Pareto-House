@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -48,8 +49,7 @@ const FellowProfile = () => {
     website_url: "",
     linkedin_url: "",
     github_url: "",
-    x_url: "",
-    bio: "",
+    x_url: ""
   });
 
   useEffect(() => {
@@ -70,7 +70,6 @@ const FellowProfile = () => {
         linkedin_url: profile.linkedin_url || "",
         github_url: profile.github_url || "",
         x_url: profile.x_url || "",
-        bio: profile.bio || "",
       });
     }
   }, [profile]);
@@ -429,18 +428,6 @@ const FellowProfile = () => {
                       className="bg-zinc-700 border-zinc-600"
                     />
                   </div>
-                </div>
-
-                <div>
-                  <Label htmlFor="bio">Bio</Label>
-                  <Textarea
-                    id="bio"
-                    name="bio"
-                    value={formData.bio}
-                    onChange={handleInputChange}
-                    className="bg-zinc-700 border-zinc-600 h-32"
-                    placeholder="Tell us about yourself"
-                  />
                 </div>
 
                 <div className="grid grid-cols-2 gap-4">

@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -27,7 +28,6 @@ interface Fellow {
   linkedin_url: string | null;
   github_url: string | null;
   website_url: string | null;
-  bio: string | null;
 }
 
 const FellowDirectory = () => {
@@ -75,11 +75,10 @@ const FellowDirectory = () => {
         last_name: record.last_name,
         university: record.university,
         major: record.major,
-        profile_picture_url: record.profile_picture_url ?? record.profile_url ?? null,
+        profile_picture_url: record.profile_picture_url,
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,
-        website_url: record.website_url,
-        bio: record.bio ?? null
+        website_url: record.website_url
       }));
 
       setFellows(mappedData);
@@ -163,12 +162,6 @@ const FellowDirectory = () => {
                   </div>
                 </div>
 
-                {fellow.bio && (
-                  <p className="text-sm text-gray-300 mt-4 line-clamp-3">
-                    {fellow.bio}
-                  </p>
-                )}
-
                 <div className="flex gap-2 mt-4">
                   {fellow.linkedin_url && (
                     <Button
@@ -190,7 +183,7 @@ const FellowDirectory = () => {
                           className="bi bi-linkedin"
                           viewBox="0 0 16 16"
                         >
-                          <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878 1.216.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 1 16 8c0-4.42-3.58-8-8-8z" />
+                          <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878 1.216.08.217.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 1 16 8c0-4.42-3.58-8-8-8z" />
                         </svg>
                       </a>
                     </Button>

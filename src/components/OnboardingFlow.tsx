@@ -1,8 +1,8 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
 import { Card } from "@/components/ui/card";
 import {
   Select,
@@ -40,8 +40,7 @@ const OnboardingFlow = () => {
     linkedin_url: profile?.linkedin_url || "",
     github_url: profile?.github_url || "",
     x_url: profile?.x_url || "",
-    profile_picture_url: profile?.profile_picture_url || "",
-    bio: profile?.bio || "",
+    profile_picture_url: profile?.profile_picture_url || ""
   });
 
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -336,20 +335,6 @@ const OnboardingFlow = () => {
                 required
               />
             </div>
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="bio">Bio</Label>
-            <Textarea
-              id="bio"
-              name="bio"
-              value={formData.bio || ""}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700 h-32"
-              placeholder="Tell us about yourself, your interests, and what you're passionate about"
-            />
           </div>
         </div>
 
