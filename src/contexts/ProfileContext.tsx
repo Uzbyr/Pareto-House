@@ -97,9 +97,8 @@ export const ProfileProvider = ({
 
     try {
       setLoading(true);
-
       // Only update fields that are provided in the updates object
-      const { error: updateError } = await supabase
+      const { data, error: updateError } = await supabase
         .from("profiles")
         .update(updates)
         .eq("user_id", session.user.id);

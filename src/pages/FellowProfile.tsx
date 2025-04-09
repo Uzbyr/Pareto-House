@@ -110,6 +110,7 @@ const FellowProfile = () => {
       const { data: urlData } = supabase.storage
         .from("profiles")
         .getPublicUrl(filePath);
+
       return urlData.publicUrl;
     } catch (error) {
       console.error("Error in profile picture upload:", error);
