@@ -49,6 +49,7 @@ const FellowProfile = () => {
     linkedin_url: "",
     github_url: "",
     x_url: "",
+    bio: "",
   });
 
   useEffect(() => {
@@ -69,6 +70,7 @@ const FellowProfile = () => {
         linkedin_url: profile.linkedin_url || "",
         github_url: profile.github_url || "",
         x_url: profile.x_url || "",
+        bio: profile.bio || "",
       });
     }
   }, [profile]);

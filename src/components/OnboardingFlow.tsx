@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Upload } from "lucide-react";
 import { countries } from "@/components/application/utils/formUtils";
-import { nationalities } from "@/components/application/form-steps/PersonalInformationStep";
+import { nationalities } from "@/utils/formConstants";
 
 const OnboardingFlow = () => {
   const { profile, updateProfile, completeOnboarding } = useProfile();
