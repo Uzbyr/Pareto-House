@@ -26,6 +26,7 @@ interface OnboardingFormData {
   competition_results?: string;
   student_societies?: string;
   preparatory_classes?: string;
+  competitiveProfiles: string[];
 }
 
 interface OnboardingContextType {
@@ -42,6 +43,9 @@ interface OnboardingContextType {
   handleNextStep: () => void;
   handlePrevStep: () => void;
   handleSubmit: (e: React.FormEvent) => Promise<void>;
+  handleCompetitiveProfileAdd: () => void;
+  handleCompetitiveProfileChange: (index: number, value: string) => void;
+  handleCompetitiveProfileRemove: (index: number) => void;
 }
 
 const OnboardingContext = createContext<OnboardingContextType | undefined>(undefined);
@@ -74,6 +78,7 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     competition_results: profile?.competition_results || "",
     student_societies: profile?.student_societies || "",
     preparatory_classes: profile?.preparatory_classes || "",
+    competitiveProfiles: profile?.competitiveProfiles || [],
   });
   
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -99,6 +104,31 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     if (event.target.files && event.target.files[0]) {
       setProfilePicture(event.target.files[0]);
     }
+  };
+
+  const handleCompetitiveProfileAdd = () => {
+    setFormData((prev) => ({
+      ...prev,
+      competitiveProfiles: [...prev.competitiveProfiles, ""],
+    }));
+  };
+
+  const handleCompetitiveProfileChange = (index: number, value: string) => {
+    const updatedProfiles = [...formData.competitiveProfiles];
+    updatedProfiles[index] = value;
+    setFormData((prev) => ({
+      ...prev,
+      competitiveProfiles: updatedProfiles,
+    }));
+  };
+
+  const handleCompetitiveProfileRemove = (index: number) => {
+    const updatedProfiles = [...formData.competitiveProfiles];
+    updatedProfiles.splice(index, 1);
+    setFormData((prev) => ({
+      ...prev,
+      competitiveProfiles: updatedProfiles,
+    }));
   };
 
   const uploadProfilePicture = async (): Promise<string | null> => {
@@ -217,7 +247,10 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
         handleFileChange,
         handleNextStep,
         handlePrevStep,
-        handleSubmit
+        handleSubmit,
+        handleCompetitiveProfileAdd,
+        handleCompetitiveProfileChange,
+        handleCompetitiveProfileRemove
       }}
     >
       {children}

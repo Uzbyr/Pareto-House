@@ -4,20 +4,42 @@ import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useOnboarding } from "@/contexts/OnboardingContext";
+import { Plus, Trash2 } from "lucide-react";
 
 const OnlinePresenceStep = () => {
-  const { formData, handleInputChange, handleSubmit, handlePrevStep, loading } = useOnboarding();
+  const { 
+    formData, 
+    handleInputChange, 
+    handleSubmit, 
+    handlePrevStep, 
+    loading,
+    handleCompetitiveProfileAdd,
+    handleCompetitiveProfileChange,
+    handleCompetitiveProfileRemove
+  } = useOnboarding();
 
   return (
     <div className="space-y-6">
       <div className="mb-8">
         <h1 className="text-2xl font-bold text-white mb-2">Online Presence</h1>
-        <p className="text-gray-400">Add your professional links</p>
+        <p className="text-gray-400">Add your professional links and profiles</p>
       </div>
 
       <div className="space-y-4">
-        <div>
-          <Label htmlFor="linkedin_url">LinkedIn Profile</Label>
+        <div className="space-y-2">
+          <Label htmlFor="website_url">Personal Website URL</Label>
+          <Input
+            id="website_url"
+            name="website_url"
+            value={formData.website_url || ""}
+            onChange={handleInputChange}
+            className="bg-zinc-800 border-zinc-700"
+            placeholder="https://..."
+          />
+        </div>
+        
+        <div className="space-y-2">
+          <Label htmlFor="linkedin_url">LinkedIn Profile URL</Label>
           <Input
             id="linkedin_url"
             name="linkedin_url"
@@ -28,40 +50,67 @@ const OnlinePresenceStep = () => {
           />
         </div>
 
-        <div>
-          <Label htmlFor="github_url">GitHub Profile</Label>
-          <Input
-            id="github_url"
-            name="github_url"
-            value={formData.github_url || ""}
-            onChange={handleInputChange}
-            className="bg-zinc-800 border-zinc-700"
-            placeholder="https://github.com/..."
-          />
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="space-y-2">
+            <Label htmlFor="x_url">X (Twitter) Profile URL</Label>
+            <Input
+              id="x_url"
+              name="x_url"
+              value={formData.x_url || ""}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+              placeholder="https://x.com/..."
+            />
+          </div>
+
+          <div className="space-y-2">
+            <Label htmlFor="github_url">GitHub Profile URL</Label>
+            <Input
+              id="github_url"
+              name="github_url"
+              value={formData.github_url || ""}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+              placeholder="https://github.com/..."
+            />
+          </div>
         </div>
 
-        <div>
-          <Label htmlFor="website_url">Personal Website</Label>
-          <Input
-            id="website_url"
-            name="website_url"
-            value={formData.website_url || ""}
-            onChange={handleInputChange}
-            className="bg-zinc-800 border-zinc-700"
-            placeholder="https://..."
-          />
-        </div>
+        <div className="space-y-4">
+          <div className="flex items-center justify-between">
+            <Label>Competitive Programming Profiles</Label>
+            <Button
+              type="button"
+              onClick={handleCompetitiveProfileAdd}
+              variant="outline"
+              size="sm"
+              className="flex items-center gap-2"
+            >
+              <Plus className="h-4 w-4" />
+              Add Profile URL
+            </Button>
+          </div>
 
-        <div>
-          <Label htmlFor="x_url">X (Twitter) Profile</Label>
-          <Input
-            id="x_url"
-            name="x_url"
-            value={formData.x_url || ""}
-            onChange={handleInputChange}
-            className="bg-zinc-800 border-zinc-700"
-            placeholder="https://x.com/..."
-          />
+          {formData.competitiveProfiles && formData.competitiveProfiles.map((profile, index) => (
+            <div key={index} className="flex gap-2">
+              <Input
+                placeholder="Enter Codeforces/CPHOF/Atcoder/Codechef/IOI profile URL"
+                value={profile}
+                onChange={(e) =>
+                  handleCompetitiveProfileChange(index, e.target.value)
+                }
+                className="bg-zinc-800 border-zinc-700"
+              />
+              <Button
+                type="button"
+                onClick={() => handleCompetitiveProfileRemove(index)}
+                variant="destructive"
+                size="icon"
+              >
+                <Trash2 className="h-4 w-4" />
+              </Button>
+            </div>
+          ))}
         </div>
       </div>
 
