@@ -91,7 +91,7 @@ const OnlinePresenceStep = () => {
             </Button>
           </div>
 
-          {formData.competitiveProfiles && formData.competitiveProfiles.map((profile, index) => (
+          {formData.competitive_profiles && formData.competitive_profiles.map((profile, index) => (
             <div key={index} className="flex gap-2">
               <Input
                 placeholder="Enter Codeforces/CPHOF/Atcoder/Codechef/IOI profile URL"

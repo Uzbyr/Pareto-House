@@ -26,7 +26,7 @@ interface OnboardingFormData {
   competition_results?: string;
   student_societies?: string;
   preparatory_classes?: string;
-  competitiveProfiles: string[];
+  competitive_profiles: string[];
 }
 
 interface OnboardingContextType {
@@ -78,7 +78,7 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     competition_results: profile?.competition_results || "",
     student_societies: profile?.student_societies || "",
     preparatory_classes: profile?.preparatory_classes || "",
-    competitiveProfiles: profile?.competitiveProfiles || [],
+    competitive_profiles: profile?.competitive_profiles || [],
   });
   
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -109,25 +109,25 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
   const handleCompetitiveProfileAdd = () => {
     setFormData((prev) => ({
       ...prev,
-      competitiveProfiles: [...prev.competitiveProfiles, ""],
+      competitive_profiles: [...prev.competitive_profiles, ""],
     }));
   };
 
   const handleCompetitiveProfileChange = (index: number, value: string) => {
-    const updatedProfiles = [...formData.competitiveProfiles];
+    const updatedProfiles = [...formData.competitive_profiles];
     updatedProfiles[index] = value;
     setFormData((prev) => ({
       ...prev,
-      competitiveProfiles: updatedProfiles,
+      competitive_profiles: updatedProfiles,
     }));
   };
 
   const handleCompetitiveProfileRemove = (index: number) => {
-    const updatedProfiles = [...formData.competitiveProfiles];
+    const updatedProfiles = [...formData.competitive_profiles];
     updatedProfiles.splice(index, 1);
     setFormData((prev) => ({
       ...prev,
-      competitiveProfiles: updatedProfiles,
+      competitive_profiles: updatedProfiles,
     }));
   };
 
