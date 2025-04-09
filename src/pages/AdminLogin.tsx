@@ -63,7 +63,7 @@ const AdminLogin = () => {
           />
           <h1 className="text-2xl font-bold text-white">Login</h1>
           <p className="text-zinc-400 mt-2">
-            Enter your email to receive a custom branded magic link
+            Enter your email to receive a magic link
           </p>
         </div>
 
