@@ -1,6 +1,7 @@
 
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { Resend } from "npm:resend@2.0.0";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.38.4";
 
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
@@ -102,61 +103,27 @@ const handler = async (req: Request): Promise<Response> => {
       );
     }
 
-    console.log("Creating sign-in link via Supabase API");
-    console.log("OTP API URL:", `${supabaseUrl}/auth/v1/otp`);
+    console.log("Creating Supabase client");
+    const supabase = createClient(supabaseUrl, supabaseServiceRoleKey);
     
-    // Prepare the request body
-    const otpRequestBody = {
-      email,
+    console.log("Generating sign-in link directly with Supabase client");
+    
+    // Use the admin client to generate a link WITHOUT sending an email
+    const { data, error } = await supabase.auth.admin.generateLink({
       type: "magiclink",
+      email: email,
       options: {
-        redirect_to: redirectTo,
-      },
-    };
-    console.log("OTP request body:", JSON.stringify(otpRequestBody));
-    
-    // Create a sign-in link that is valid for 24 hours
-    console.log("Sending OTP request to Supabase");
-    const response = await fetch(
-      `${supabaseUrl}/auth/v1/otp`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          apikey: supabaseAnonKey,
-          Authorization: `Bearer ${supabaseServiceRoleKey}`,
-        },
-        body: JSON.stringify(otpRequestBody),
+        redirectTo: redirectTo,
       }
-    );
-
-    console.log("OTP API response status:", response.status);
-    const responseBody = await response.text();
-    console.log("OTP API response body:", responseBody);
-
-    if (!response.ok) {
-      console.error("Supabase OTP API error:", response.status, responseBody);
+    });
+    
+    console.log("Generate link response:", data ? "Success" : "Failed");
+    
+    if (error) {
+      console.error("Error generating magic link:", error);
       return new Response(
         JSON.stringify({
-          error: `Failed to generate magic link: ${response.status} - ${responseBody}`,
-        }),
-        {
-          status: response.status,
-          headers: { "Content-Type": "application/json", ...corsHeaders },
-        }
-      );
-    }
-
-    let data;
-    try {
-      data = JSON.parse(responseBody);
-      console.log("Parsed OTP API response:", data);
-    } catch (parseError) {
-      console.error("Error parsing OTP API response:", parseError);
-      return new Response(
-        JSON.stringify({ 
-          error: "Failed to parse OTP API response",
-          details: responseBody
+          error: `Failed to generate magic link: ${error.message}`,
         }),
         {
           status: 500,
@@ -164,8 +131,8 @@ const handler = async (req: Request): Promise<Response> => {
         }
       );
     }
-    
-    const signInLink = data?.action_link;
+
+    const signInLink = data?.properties?.action_link;
     console.log("Sign-in link generated:", signInLink ? "✅ Yes" : "❌ No");
     
     if (!signInLink) {
