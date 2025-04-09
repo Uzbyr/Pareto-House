@@ -16,6 +16,7 @@ import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
 import AdminLogin from "./pages/AdminLogin";
+import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
 import Analytics from "./pages/admin/Analytics";
@@ -31,7 +32,6 @@ import Onboarding from "./pages/Onboarding";
 import FellowDirectory from "./pages/FellowDirectory";
 import FellowEvents from "./pages/FellowEvents";
 import FellowOpportunities from "./pages/FellowOpportunities";
-import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -55,7 +55,6 @@ const App = () => (
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/tech-partners" element={<TechPartners />} />
                 <Route path="/login" element={<AdminLogin />} />
-                <Route path="/auth-callback" element={<AuthCallback />} />
 
                 {/* Onboarding Route */}
                 <Route
@@ -63,6 +62,16 @@ const App = () => (
                   element={
                     <ProtectedRoute requireOnboarding={false}>
                       <Onboarding />
+                    </ProtectedRoute>
+                  }
+                />
+
+                {/* Password Change Route */}
+                <Route
+                  path="/change-password"
+                  element={
+                    <ProtectedRoute>
+                      <ChangePassword />
                     </ProtectedRoute>
                   }
                 />

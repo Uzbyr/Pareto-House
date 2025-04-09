@@ -17,32 +17,15 @@ export const useAuthService = (): AuthState &
   const [requirePasswordChange, setRequirePasswordChange] =
     useState<boolean>(false);
 
-  const login = async (email: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<boolean> => {
     try {
-      console.log("Checking if user exists before sending magic link:", email);
-
-      // First, check if the user exists using the more efficient method
-      const userId = await getUserIdByEmail(email);
-
-      // If no user was found, return false
-      if (!userId) {
-        console.error("User with this email does not exist");
-        return false;
-      }
-
-      // If user exists, proceed with sending magic link
-      console.log("User exists, sending magic link for email:", email);
-      const response = await supabase.functions.invoke("send-magic-link", {
-        body: {
-          email,
-          redirectTo: `${window.location.origin}/auth-callback`,
-        },
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
       });
 
-      console.log("Magic link response:", response);
-
-      if (response.error) {
-        console.error("Login error:", response.error);
+      if (error) {
+        console.error("Login error:", error.message);
         return false;
       }
 
@@ -50,29 +33,6 @@ export const useAuthService = (): AuthState &
     } catch (error) {
       console.error("Login error:", error);
       return false;
-    }
-  };
-
-  // Updated helper function to get a user ID by email more efficiently
-  const getUserIdByEmail = async (email: string): Promise<string | null> => {
-    try {
-      // Use the admin.getUserByEmail method instead of listing all users
-      const { data, error } = await supabase.functions.invoke(
-        "get-user-by-email",
-        {
-          body: { email },
-        },
-      );
-
-      if (error) {
-        console.error("Error fetching user by email:", error);
-        return null;
-      }
-
-      return data?.userId || null;
-    } catch (error) {
-      console.error("Error getting user ID by email:", error);
-      return null;
     }
   };
 

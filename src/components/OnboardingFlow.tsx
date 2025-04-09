@@ -71,8 +71,8 @@ const OnboardingFlow = () => {
     if (!profilePicture || !session) return null;
 
     try {
-      const fileExtension = profilePicture.name.split(".").pop() || "";
-
+      const fileExtension = profilePicture.name.split('.').pop() || '';
+      
       const filePath = `users/${session.user.id}/${Date.now()}.${fileExtension}`;
 
       const { error: uploadError, data } = await supabase.storage

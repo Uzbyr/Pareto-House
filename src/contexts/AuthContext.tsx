@@ -55,7 +55,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           role: role,
         });
 
-        // Check if user needs to change password - with magic links this is less relevant
+        // Check if user needs to change password
         const requireChange =
           currentSession.user.user_metadata?.require_password_change === true;
         setRequirePasswordChange(requireChange);
@@ -66,9 +66,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (event, currentSession) => {
-      console.log("Auth state change event:", event, !!currentSession);
-
+    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
       setSession(currentSession);
       setIsAuthenticated(!!currentSession);
 

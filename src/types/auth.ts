@@ -110,7 +110,7 @@ export interface AuthContextType {
   user: AuthUser | null;
   session: Session | null;
   requirePasswordChange: boolean;
-  login: (email: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<boolean>;
   logout: () => Promise<void>;
   changePassword: (newPassword: string) => Promise<boolean>;
   isPareto20Email: (email: string) => boolean;
