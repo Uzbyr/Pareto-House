@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState } from "react";
 import { useProfile } from "@/contexts/ProfileContext";
 import { useNavigate } from "react-router-dom";
@@ -10,6 +9,7 @@ interface OnboardingFormData {
   first_name: string;
   last_name: string;
   university: string;
+  otherUniversity?: string;
   major: string;
   graduation_year: string;
   country: string;
@@ -19,6 +19,13 @@ interface OnboardingFormData {
   github_url: string;
   x_url: string;
   profile_picture_url: string;
+  education_level?: string;
+  high_school?: string;
+  category_of_interest?: string;
+  has_competition_experience?: string;
+  competition_results?: string;
+  student_societies?: string;
+  preparatory_classes?: string;
 }
 
 interface OnboardingContextType {
@@ -50,6 +57,7 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     first_name: profile?.first_name || "",
     last_name: profile?.last_name || "",
     university: profile?.university || "",
+    otherUniversity: "",
     major: profile?.major || "",
     graduation_year: profile?.graduation_year || "",
     country: profile?.country || "",
@@ -58,7 +66,14 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     linkedin_url: profile?.linkedin_url || "",
     github_url: profile?.github_url || "",
     x_url: profile?.x_url || "",
-    profile_picture_url: profile?.profile_picture_url || ""
+    profile_picture_url: profile?.profile_picture_url || "",
+    education_level: profile?.education_level || "university",
+    high_school: profile?.high_school || "",
+    category_of_interest: profile?.category_of_interest || "",
+    has_competition_experience: profile?.has_competition_experience || "",
+    competition_results: profile?.competition_results || "",
+    student_societies: profile?.student_societies || "",
+    preparatory_classes: profile?.preparatory_classes || "",
   });
   
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -119,7 +134,25 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
         toast.error("Please provide your first and last name");
         return;
       }
+    } else if (step === 2) {
+      if (formData.education_level === "university") {
+        if (!formData.university || !formData.major || !formData.graduation_year) {
+          toast.error("Please fill in all required university fields");
+          return;
+        }
+        
+        if (formData.university === "Other" && !formData.otherUniversity) {
+          toast.error("Please specify your university");
+          return;
+        }
+      } else if (formData.education_level === "highSchool") {
+        if (!formData.high_school || !formData.graduation_year) {
+          toast.error("Please fill in all required high school fields");
+          return;
+        }
+      }
     }
+    
     setStep((prev) => prev + 1);
   };
 
@@ -140,11 +173,16 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
         }
       }
 
-      await updateProfile({
+      const dataToUpdate: any = {
         ...formData,
         profile_picture_url: pictureUrl,
-      });
+      };
+      
+      if (formData.university === "Other" && formData.otherUniversity) {
+        dataToUpdate.university = formData.otherUniversity;
+      }
 
+      await updateProfile(dataToUpdate);
       await completeOnboarding();
 
       toast.success("Onboarding completed successfully!");
