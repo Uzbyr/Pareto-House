@@ -25,7 +25,7 @@ export const useAuthService = (): AuthState &
       const response = await supabase.functions.invoke("send-magic-link", {
         body: {
           email,
-          redirectTo: window.location.origin,
+          redirectTo: `${window.location.origin}/auth-callback`,
         }
       });
 

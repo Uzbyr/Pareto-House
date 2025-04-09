@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -31,6 +32,7 @@ import Onboarding from "./pages/Onboarding";
 import FellowDirectory from "./pages/FellowDirectory";
 import FellowEvents from "./pages/FellowEvents";
 import FellowOpportunities from "./pages/FellowOpportunities";
+import AuthCallback from "./pages/AuthCallback";
 
 const queryClient = new QueryClient();
 
@@ -54,6 +56,7 @@ const App = () => (
                 <Route path="/faq" element={<FAQ />} />
                 <Route path="/tech-partners" element={<TechPartners />} />
                 <Route path="/login" element={<AdminLogin />} />
+                <Route path="/auth-callback" element={<AuthCallback />} />
 
                 {/* Onboarding Route */}
                 <Route
