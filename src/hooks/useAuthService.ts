@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { Session } from "@supabase/supabase-js";
@@ -77,6 +78,11 @@ export const useAuthService = (): AuthState &
       return false;
     }
   };
+  
+  // Add the missing isPareto20Email function
+  const isPareto20Email = (email: string): boolean => {
+    return email.endsWith('@pareto20.com') || email.endsWith('@pareto.dev');
+  };
 
   console.log("user", user);
 
@@ -88,6 +94,7 @@ export const useAuthService = (): AuthState &
     login,
     logout,
     changePassword,
+    isPareto20Email,
     // These setter functions are exposed for the AuthProvider to use
     setIsAuthenticated,
     setUser,

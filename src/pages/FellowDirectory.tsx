@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useProfile } from "@/contexts/ProfileContext";
@@ -69,8 +70,22 @@ const FellowDirectory = () => {
         throw error;
       }
 
-      setFellows(data as Fellow[]);
-      setFilteredFellows(data as Fellow[]);
+      // Map the database results to match the Fellow interface
+      const mappedData: Fellow[] = data.map(record => ({
+        id: record.id,
+        first_name: record.first_name,
+        last_name: record.last_name,
+        university: record.university,
+        major: record.major,
+        bio: record.bio || null,  // Use null if bio is undefined
+        profile_picture_url: record.profile_picture_url || record.profile_url || null,  // Handle both field names
+        linkedin_url: record.linkedin_url,
+        github_url: record.github_url,
+        website_url: record.website_url
+      }));
+
+      setFellows(mappedData);
+      setFilteredFellows(mappedData);
     } catch (error) {
       console.error("Error fetching fellows:", error);
       toast.error("Failed to load fellows directory");
