@@ -37,3 +37,6 @@ verify_jwt = true
 
 [functions.create-approved-user]
 verify_jwt = true
+
+[functions.send-magic-link]
+verify_jwt = true

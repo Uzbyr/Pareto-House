@@ -40,7 +40,7 @@ const AdminLogin = () => {
 
       if (success) {
         setMagicLinkSent(true);
-        toast.success("Magic link sent! Check your email.");
+        toast.success("Magic link sent! Check your email for login instructions.");
       } else {
         toast.error("Failed to send magic link. Please try again.");
       }
@@ -63,7 +63,7 @@ const AdminLogin = () => {
           />
           <h1 className="text-2xl font-bold text-white">Login</h1>
           <p className="text-zinc-400 mt-2">
-            Enter your email to receive a magic link
+            Enter your email to receive a custom branded magic link
           </p>
         </div>
 
@@ -74,10 +74,10 @@ const AdminLogin = () => {
             </div>
             <h2 className="text-xl font-medium text-white">Check your inbox</h2>
             <p className="text-zinc-400">
-              We've sent a magic link to <span className="text-white">{email}</span>
+              We've sent a branded magic link to <span className="text-white">{email}</span>
             </p>
             <p className="text-zinc-400">
-              Click the link in the email to sign in to your account.
+              Click the link in the email to sign in to your Pareto Fellowship account.
             </p>
             <Button
               onClick={() => setMagicLinkSent(false)}
