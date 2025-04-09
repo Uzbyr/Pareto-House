@@ -139,7 +139,6 @@ export type Database = {
           video_url: string | null
           website_url: string | null
           x_url: string | null
-          onboarding_completed: boolean
         }
         Insert: {
           building_company: string
@@ -202,7 +201,6 @@ export type Database = {
           video_url?: string | null
           website_url?: string | null
           x_url?: string | null
-          onboarding_completed: boolean
         }
         Relationships: []
       }

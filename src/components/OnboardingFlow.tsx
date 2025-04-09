@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -19,6 +18,8 @@ import { toast } from "sonner";
 import { useNavigate } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { Upload } from "lucide-react";
+import { countries } from "@/components/application/utils/formUtils";
+import { nationalities } from "@/components/application/form-steps/PersonalInformationStep";
 
 const OnboardingFlow = () => {
   const { profile, updateProfile, completeOnboarding } = useProfile();
@@ -40,6 +41,7 @@ const OnboardingFlow = () => {
     github_url: profile?.github_url || "",
     x_url: profile?.x_url || "",
     profile_picture_url: profile?.profile_picture_url || "",
+    bio: profile?.bio || "",
   });
 
   const [profilePicture, setProfilePicture] = useState<File | null>(null);
@@ -227,29 +229,41 @@ const OnboardingFlow = () => {
             <Label htmlFor="country">
               Country of Residence<span className="text-red-500">*</span>
             </Label>
-            <Input
-              id="country"
-              name="country"
-              value={formData.country || ""}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700"
-              placeholder="Country of residence"
-              required
-            />
+            <Select
+              value={formData.country}
+              onValueChange={(value) => handleSelectChange("country", value)}
+            >
+              <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                <SelectValue placeholder="Select your country" />
+              </SelectTrigger>
+              <SelectContent>
+                {countries.map((country) => (
+                  <SelectItem key={country} value={country}>
+                    {country}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
           <div className="w-full">
             <Label htmlFor="nationality">
               Nationality<span className="text-red-500">*</span>
             </Label>
-            <Input
-              id="nationality"
-              name="nationality"
-              value={formData.nationality || ""}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700"
-              placeholder="Your nationality"
-              required
-            />
+            <Select
+              value={formData.nationality}
+              onValueChange={(value) => handleSelectChange("nationality", value)}
+            >
+              <SelectTrigger className="bg-zinc-800 border-zinc-700">
+                <SelectValue placeholder="Select your nationality" />
+              </SelectTrigger>
+              <SelectContent>
+                {nationalities.map((nationality) => (
+                  <SelectItem key={nationality} value={nationality}>
+                    {nationality}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
