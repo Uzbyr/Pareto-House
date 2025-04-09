@@ -74,7 +74,7 @@ const AdminLogin = () => {
             </div>
             <h2 className="text-xl font-medium text-white">Check your inbox</h2>
             <p className="text-zinc-400">
-              We've sent a branded magic link to <span className="text-white">{email}</span>
+              We sent a magic link to <span className="text-white">{email}</span>
             </p>
             <p className="text-zinc-400">
               Click the link in the email to sign in to your Pareto Fellowship account.
