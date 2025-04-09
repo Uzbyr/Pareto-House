@@ -1,3 +1,4 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
@@ -34,6 +35,9 @@ interface Profile {
   video_url?: string | null;
   website_url?: string | null;
   x_url?: string | null;
+  bio?: string | null;
+  profile_picture_url?: string | null;
+  onboarding_completed?: boolean;
 }
 
 interface ProfileContextType {

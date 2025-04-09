@@ -1,3 +1,4 @@
+
 import React from "react";
 import OnboardingFlow from "@/components/OnboardingFlow";
 import { useAuth } from "@/contexts/AuthContext";
@@ -8,7 +9,6 @@ import { Loader2 } from "lucide-react";
 const Onboarding = () => {
   const { isAuthenticated } = useAuth();
   const { profile, loading } = useProfile();
-  console.log("profile", profile);
 
   if (!isAuthenticated) {
     return <Navigate to="/login" replace />;

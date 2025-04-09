@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -156,9 +157,46 @@ const OnboardingFlow = () => {
           <p className="text-gray-400">Tell us about yourself</p>
         </div>
 
+        <div className="flex flex-col items-center space-y-4 mb-6">
+          <Avatar className="w-24 h-24">
+            <AvatarImage
+              src={
+                profilePicture
+                  ? URL.createObjectURL(profilePicture)
+                  : formData.profile_picture_url || ""
+              }
+              alt="Profile"
+            />
+            <AvatarFallback className="bg-zinc-700 text-lg">
+              {formData.first_name && formData.last_name
+                ? `${formData.first_name[0]}${formData.last_name[0]}`
+                : "PF"}
+            </AvatarFallback>
+          </Avatar>
+
+          <div className="flex items-center">
+            <Label
+              htmlFor="picture"
+              className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md flex items-center gap-2"
+            >
+              <Upload size={16} />
+              Upload Profile Picture
+            </Label>
+            <Input
+              id="picture"
+              type="file"
+              accept="image/*"
+              onChange={handleFileChange}
+              className="hidden"
+            />
+          </div>
+        </div>
+
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="w-full">
-            <Label htmlFor="first_name">First Name</Label>
+            <Label htmlFor="first_name">
+              First Name<span className="text-red-500">*</span>
+            </Label>
             <Input
               id="first_name"
               name="first_name"
@@ -166,10 +204,13 @@ const OnboardingFlow = () => {
               onChange={handleInputChange}
               className="bg-zinc-800 border-zinc-700"
               placeholder="First Name"
+              required
             />
           </div>
           <div className="w-full">
-            <Label htmlFor="last_name">Last Name</Label>
+            <Label htmlFor="last_name">
+              Last Name<span className="text-red-500">*</span>
+            </Label>
             <Input
               id="last_name"
               name="last_name"
@@ -177,27 +218,16 @@ const OnboardingFlow = () => {
               onChange={handleInputChange}
               className="bg-zinc-800 border-zinc-700"
               placeholder="Last Name"
-            />
-          </div>
-        </div>
-
-        <div className="space-y-4">
-          <div>
-            <Label htmlFor="bio">Bio</Label>
-            <Textarea
-              id="bio"
-              name="bio"
-              value={formData.bio || ""}
-              onChange={handleInputChange}
-              className="bg-zinc-800 border-zinc-700 h-32"
-              placeholder="Tell us about yourself, your interests, and what you're passionate about"
+              required
             />
           </div>
         </div>
 
         <div className="flex flex-col sm:flex-row gap-4">
           <div className="w-full">
-            <Label htmlFor="country">Country</Label>
+            <Label htmlFor="country">
+              Country of Residence<span className="text-red-500">*</span>
+            </Label>
             <Input
               id="country"
               name="country"
@@ -205,10 +235,13 @@ const OnboardingFlow = () => {
               onChange={handleInputChange}
               className="bg-zinc-800 border-zinc-700"
               placeholder="Country of residence"
+              required
             />
           </div>
           <div className="w-full">
-            <Label htmlFor="nationality">Nationality</Label>
+            <Label htmlFor="nationality">
+              Nationality<span className="text-red-500">*</span>
+            </Label>
             <Input
               id="nationality"
               name="nationality"
@@ -216,6 +249,7 @@ const OnboardingFlow = () => {
               onChange={handleInputChange}
               className="bg-zinc-800 border-zinc-700"
               placeholder="Your nationality"
+              required
             />
           </div>
         </div>
@@ -246,7 +280,9 @@ const OnboardingFlow = () => {
 
         <div className="space-y-4">
           <div>
-            <Label htmlFor="university">University</Label>
+            <Label htmlFor="university">
+              University<span className="text-red-500">*</span>
+            </Label>
             <Input
               id="university"
               name="university"
@@ -254,12 +290,15 @@ const OnboardingFlow = () => {
               onChange={handleInputChange}
               className="bg-zinc-800 border-zinc-700"
               placeholder="University name"
+              required
             />
           </div>
 
           <div className="flex flex-col sm:flex-row gap-4">
             <div className="w-full">
-              <Label htmlFor="major">Major</Label>
+              <Label htmlFor="major">
+                Major<span className="text-red-500">*</span>
+              </Label>
               <Input
                 id="major"
                 name="major"
@@ -267,10 +306,13 @@ const OnboardingFlow = () => {
                 onChange={handleInputChange}
                 className="bg-zinc-800 border-zinc-700"
                 placeholder="Your field of study"
+                required
               />
             </div>
             <div className="w-full">
-              <Label htmlFor="graduation_year">Graduation Year</Label>
+              <Label htmlFor="graduation_year">
+                Graduation Year<span className="text-red-500">*</span>
+              </Label>
               <Input
                 id="graduation_year"
                 name="graduation_year"
@@ -278,8 +320,23 @@ const OnboardingFlow = () => {
                 onChange={handleInputChange}
                 className="bg-zinc-800 border-zinc-700"
                 placeholder="Expected graduation year"
+                required
               />
             </div>
+          </div>
+        </div>
+
+        <div className="space-y-4">
+          <div>
+            <Label htmlFor="bio">Bio</Label>
+            <Textarea
+              id="bio"
+              name="bio"
+              value={formData.bio || ""}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700 h-32"
+              placeholder="Tell us about yourself, your interests, and what you're passionate about"
+            />
           </div>
         </div>
 
@@ -308,47 +365,8 @@ const OnboardingFlow = () => {
     return (
       <div className="space-y-6">
         <div className="mb-8">
-          <h1 className="text-2xl font-bold text-white mb-2">
-            Profile Picture & Links
-          </h1>
-          <p className="text-gray-400">
-            Add a profile picture and your online presence
-          </p>
-        </div>
-
-        <div className="flex flex-col items-center space-y-4 mb-6">
-          <Avatar className="w-24 h-24">
-            <AvatarImage
-              src={
-                profilePicture
-                  ? URL.createObjectURL(profilePicture)
-                  : formData.profile_picture_url || ""
-              }
-              alt="Profile"
-            />
-            <AvatarFallback className="bg-zinc-700 text-lg">
-              {formData.first_name && formData.last_name
-                ? `${formData.first_name[0]}${formData.last_name[0]}`
-                : "PF"}
-            </AvatarFallback>
-          </Avatar>
-
-          <div className="flex items-center">
-            <Label
-              htmlFor="picture"
-              className="cursor-pointer bg-zinc-800 hover:bg-zinc-700 px-4 py-2 rounded-md flex items-center gap-2"
-            >
-              <Upload size={16} />
-              Upload Picture
-            </Label>
-            <Input
-              id="picture"
-              type="file"
-              accept="image/*"
-              onChange={handleFileChange}
-              className="hidden"
-            />
-          </div>
+          <h1 className="text-2xl font-bold text-white mb-2">Online Presence</h1>
+          <p className="text-gray-400">Add your professional links</p>
         </div>
 
         <div className="space-y-4">
@@ -447,7 +465,7 @@ const OnboardingFlow = () => {
                 ? "Personal Information"
                 : step === 2
                   ? "Education"
-                  : "Profile & Links"}
+                  : "Online Presence"}
             </span>
           </div>
           <div className="w-full bg-zinc-700 h-2 rounded-full">
