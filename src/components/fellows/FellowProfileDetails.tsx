@@ -4,7 +4,8 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal } from "lucide-react";
 import { Fellow } from "@/types/fellow";
-import { Github, Linkedin } from 'lucide-react';
+import { Linkedin } from 'lucide-react';
+import { SiGithub} from "@icons-pack/react-simple-icons";
 
 interface FellowProfileDetailsProps {
   fellow: Fellow;
@@ -147,7 +148,7 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
                   asChild
                 >
                   <a href={fellow.github_url} target="_blank" rel="noopener noreferrer">
-                    <Github className="w-5 h-5" />
+                    <SiGithub className="w-5 h-5" />
                   </a>
                 </Button>
               )}
