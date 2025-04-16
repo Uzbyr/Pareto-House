@@ -32,6 +32,7 @@ import Onboarding from "./pages/Onboarding";
 import FellowDirectory from "./pages/fellowship/FellowDirectory";
 import FellowEvents from "./pages/fellowship/FellowEvents";
 import FellowOpportunities from "./pages/fellowship/FellowOpportunities";
+import FellowPerks from "./pages/fellowship/FellowPerks";
 
 const queryClient = new QueryClient();
 
@@ -196,6 +197,16 @@ const App = () => (
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
                         <FellowOpportunities />
+                      </FellowLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/fellowship/perks"
+                  element={
+                    <ProtectedRoute requiredRoles={["fellow", "admin"]}>
+                      <FellowLayout>
+                        <FellowPerks />
                       </FellowLayout>
                     </ProtectedRoute>
                   }
