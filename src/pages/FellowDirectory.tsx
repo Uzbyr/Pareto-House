@@ -58,7 +58,8 @@ const FellowDirectory = () => {
         profile_picture_url: record.profile_picture_url,
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,
-        website_url: record.website_url
+        website_url: record.website_url,
+        about: record.about
       }));
 
       setFellows(mappedData);
