@@ -14,7 +14,7 @@ const FellowDetailsModal = ({ fellow, isOpen, onClose }: FellowDetailsModalProps
   
   return (
     <Dialog open={isOpen} onOpenChange={(open) => !open && onClose()}>
-      <DialogContent className="sm:max-w-2xl bg-zinc-800 text-white border-zinc-700 rounded-lg">
+      <DialogContent size="big" className="bg-zinc-800 text-white border-zinc-700 rounded-lg">
         <DialogHeader>
           <DialogTitle className="text-xl font-semibold">Fellow Profile</DialogTitle>
         </DialogHeader>
