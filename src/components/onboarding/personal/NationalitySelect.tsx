@@ -44,4 +44,3 @@ const NationalitySelect: React.FC<NationalitySelectProps> = ({
 };
 
 export default NationalitySelect;
-
