@@ -1,6 +1,4 @@
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Fellow } from "@/types/fellow";
@@ -16,17 +14,65 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
   ): string => {
     return `${firstName?.charAt(0) || ""}${lastName?.charAt(0) || ""}`;
   };
+  
+  const getFullName = () => {
+    const firstName = fellow.first_name || "";
+    const lastInitial = fellow.last_name ? `${fellow.last_name.charAt(0)}.` : "";
+    return `${firstName} ${lastInitial}`;
+  };
+  
+  const getEducationInfo = () => {
+    if (!fellow.university && !fellow.high_school) return null;
+    
+    const schoolName = fellow.university || fellow.high_school;
+    const shortSchoolName = schoolName ? shortenSchoolName(schoolName) : "";
+    const gradYear = fellow.graduation_year ? `'${fellow.graduation_year.slice(-2)}` : "";
+    
+    return `${shortSchoolName} ${gradYear}`;
+  };
+  
+  const shortenSchoolName = (name: string | null) => {
+    if (!name) return "";
+    
+    const abbreviations: {[key: string]: string} = {
+      "Massachusetts Institute of Technology": "MIT",
+      "Cambridge University": "Camb",
+      "Princeton University": "Prince",
+      "Harvard University": "Harvard",
+      "Stanford University": "Stanford",
+      "University of Oxford": "Oxford",
+      "Yale University": "Yale",
+      "Columbia University": "Columbia",
+      "University of California": "UC",
+      "University of Pennsylvania": "UPenn",
+      "University of Chicago": "UChicago",
+      "University of Tokyo": "UTokyo",
+      "University of Jagiellonian": "UJ",
+    };
+    
+    for (const [fullName, abbrev] of Object.entries(abbreviations)) {
+      if (name.includes(fullName)) {
+        return abbrev;
+      }
+    }
+    
+    const parts = name.split(' ');
+    if (parts[0] === "University" && parts.length > 1) {
+      return `U${parts[1].charAt(0)}`;
+    }
+    return name.length > 5 ? name.substring(0, 5) : name;
+  };
 
   return (
     <Card
-      className="p-6 bg-zinc-800 border-zinc-700 hover:border-pareto-pink transition-all duration-300"
+      className="overflow-hidden transition-all duration-300 hover:border-pareto-pink border-zinc-700 bg-zinc-800"
     >
-      <div className="flex items-center space-x-4">
-        <Avatar className="h-16 w-16 border-2 border-pareto-pink">
+      <div className="flex flex-col items-center p-4">
+        <Avatar className="h-20 w-20 mb-3 border-2 border-pareto-pink">
           {fellow.profile_picture_url ? (
             <AvatarImage
               src={fellow.profile_picture_url}
-              alt={`${fellow.first_name} ${fellow.last_name}`}
+              alt={`${fellow.first_name || ''} ${fellow.last_name || ''}`}
             />
           ) : (
             <AvatarFallback className="bg-zinc-700 text-white text-xl">
@@ -34,30 +80,30 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
             </AvatarFallback>
           )}
         </Avatar>
-        <div>
-          <h3 className="text-lg font-semibold text-white">
-            {fellow.first_name} {fellow.last_name}
+        
+        <div className="text-center">
+          <h3 className="text-lg font-semibold text-white mb-0.5">
+            {getFullName()}
           </h3>
-          {fellow.university && (
-            <p className="text-sm text-gray-400">{fellow.university}</p>
+          {getEducationInfo() && (
+            <p className="text-sm text-gray-300 mb-0.5">
+              {getEducationInfo()}
+            </p>
           )}
           {fellow.major && (
-            <Badge
-              variant="outline"
-              className="mt-1 text-xs bg-zinc-700 hover:bg-zinc-600"
-            >
+            <p className="text-sm text-gray-400">
               {fellow.major}
-            </Badge>
+            </p>
           )}
         </div>
       </div>
 
-      <div className="flex gap-2 mt-4">
+      <div className="flex justify-center gap-2 p-3 pt-0 mb-1">
         {fellow.linkedin_url && (
           <Button
             variant="outline"
             size="icon"
-            className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
+            className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
           >
             <a
@@ -73,7 +119,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
                 className="bi bi-linkedin"
                 viewBox="0 0 16 16"
               >
-                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878 1.216.08.217.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 1 16 8c0-4.42-3.58-8-8-8z" />
+                <path d="M0 1.146C0 .513.526 0 1.175 0h13.65C15.474 0 16 .513 16 1.146v13.708c0 .633-.526 1.146-1.175 1.146H1.175C.526 16 0 15.487 0 14.854V1.146zm4.943 12.248V6.169H2.542v7.225h2.401zm-1.2-8.212c.837 0 1.358-.554 1.358-1.248-.015-.709-.52-1.248-1.342-1.248-.822 0-1.359.54-1.359 1.248 0 .694.521 1.248 1.327 1.248h.016zm4.908 8.212V9.359c0-.216.016-.432.08-.586.173-.431.568-.878 1.232-.878.869 0 1.216.662 1.216 1.634v3.865h2.401V9.25c0-2.22-1.184-3.252-2.764-3.252-1.274 0-1.845.7-2.165 1.193v.025h-.016a5.54 5.54 0 0 1 .016-.025V6.169h-2.4c.03.678 0 7.225 0 7.225h2.4z" />
               </svg>
             </a>
           </Button>
@@ -82,7 +128,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
           <Button
             variant="outline"
             size="icon"
-            className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
+            className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
           >
             <a
@@ -107,7 +153,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
           <Button
             variant="outline"
             size="icon"
-            className="h-9 w-9 rounded-full bg-zinc-700 hover:bg-zinc-600"
+            className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
           >
             <a

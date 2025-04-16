@@ -28,6 +28,7 @@ const FellowDirectory = () => {
           fellow.first_name?.toLowerCase().includes(query) ||
           fellow.last_name?.toLowerCase().includes(query) ||
           fellow.university?.toLowerCase().includes(query) ||
+          fellow.high_school?.toLowerCase().includes(query) ||
           fellow.major?.toLowerCase().includes(query),
       );
       setFilteredFellows(filtered);
@@ -51,7 +52,9 @@ const FellowDirectory = () => {
         first_name: record.first_name,
         last_name: record.last_name,
         university: record.university,
+        high_school: record.high_school,
         major: record.major,
+        graduation_year: record.graduation_year,
         profile_picture_url: record.profile_picture_url,
         linkedin_url: record.linkedin_url,
         github_url: record.github_url,
