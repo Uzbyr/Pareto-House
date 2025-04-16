@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 
 interface NavigationButtonsProps {
   onPrevious: () => void;
-  onSubmit: () => void;
+  onSubmit: (e?: React.FormEvent) => void; // Updated type definition to accept an optional event parameter
   loading: boolean;
 }
 
@@ -24,7 +24,7 @@ const NavigationButtons: React.FC<NavigationButtonsProps> = ({
           Previous
         </Button>
         <Button
-          onClick={onSubmit}
+          onClick={(e) => onSubmit(e)} // Forward the event to the onSubmit function
           disabled={loading}
           className="bg-pareto-pink hover:bg-pareto-pink/90 text-black"
         >
