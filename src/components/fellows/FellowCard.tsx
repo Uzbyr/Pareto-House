@@ -1,3 +1,4 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -5,9 +6,10 @@ import { Fellow } from "@/types/fellow";
 
 interface FellowCardProps {
   fellow: Fellow;
+  onClick: (fellow: Fellow) => void;
 }
 
-const FellowCard = ({ fellow }: FellowCardProps) => {
+const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
   const getInitials = (
     firstName: string | null,
     lastName: string | null,
@@ -65,7 +67,8 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:border-pareto-pink border-zinc-700 bg-zinc-800"
+      className="overflow-hidden transition-all duration-300 hover:border-pareto-pink border-zinc-700 bg-zinc-800 cursor-pointer"
+      onClick={() => onClick(fellow)}
     >
       <div className="flex flex-col items-center p-4">
         <Avatar className="h-20 w-20 mb-3 border-2 border-pareto-pink">
@@ -105,6 +108,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
             size="icon"
             className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
+            onClick={(e) => e.stopPropagation()}
           >
             <a
               href={fellow.linkedin_url}
@@ -130,6 +134,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
             size="icon"
             className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
+            onClick={(e) => e.stopPropagation()}
           >
             <a
               href={fellow.github_url}
@@ -155,6 +160,7 @@ const FellowCard = ({ fellow }: FellowCardProps) => {
             size="icon"
             className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
             asChild
+            onClick={(e) => e.stopPropagation()}
           >
             <a
               href={fellow.website_url}
