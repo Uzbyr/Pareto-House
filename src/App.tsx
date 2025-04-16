@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -15,7 +16,7 @@ import Perks from "./pages/Perks";
 import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
-import Login from "./pages/Login";  // Updated import path
+import Login from "./pages/Login";
 import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
@@ -26,12 +27,12 @@ import Settings from "./pages/admin/Settings";
 import ProtectedRoute from "./components/ProtectedRoute";
 import ScrollToTop from "./components/ScrollToTop";
 import FellowLayout from "./components/FellowLayout";
-import FellowDashboard from "./pages/FellowDashboard";
-import FellowProfile from "./pages/FellowProfile";
+import FellowDashboard from "./pages/fellowship/FellowDashboard";
+import FellowProfile from "./pages/fellowship/FellowProfile";
 import Onboarding from "./pages/Onboarding";
-import FellowDirectory from "./pages/FellowDirectory";
-import FellowEvents from "./pages/FellowEvents";
-import FellowOpportunities from "./pages/FellowOpportunities";
+import FellowDirectory from "./pages/fellowship/FellowDirectory";
+import FellowEvents from "./pages/fellowship/FellowEvents";
+import FellowOpportunities from "./pages/fellowship/FellowOpportunities";
 
 const queryClient = new QueryClient();
 
@@ -76,7 +77,7 @@ const App = () => (
             <Route element={<AuthProvider />}>
               <Route 
                 path="/login" 
-                element={<Login />}  // Updated component name
+                element={<Login />}
               />
 
               <Route element={<ProfileProvider />}>

@@ -47,6 +47,7 @@ const FellowDirectory = () => {
         throw error;
       }
 
+      console.log("Fetched profile data:", data);
       const mappedData: Fellow[] = data.map(record => ({
         id: record.id,
         first_name: record.first_name,
