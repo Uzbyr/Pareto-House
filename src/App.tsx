@@ -17,7 +17,6 @@ import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
 import Login from "./pages/Login";
-import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
 import Analytics from "./pages/admin/Analytics";
@@ -86,15 +85,6 @@ const App = () => (
                   element={
                     <ProtectedRoute requireOnboarding={false}>
                       <Onboarding />
-                    </ProtectedRoute>
-                  }
-                />
-
-                <Route
-                  path="/change-password"
-                  element={
-                    <ProtectedRoute>
-                      <ChangePassword />
                     </ProtectedRoute>
                   }
                 />
