@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -171,6 +170,7 @@ const FellowProfile = () => {
     competitive_profiles: profile.competitive_profiles,
     video_url: profile.video_url,
     x_url: profile.x_url,
+    nationality: profile.nationality
   } : null;
 
   const handleInputChange = (
