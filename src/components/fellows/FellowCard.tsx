@@ -67,7 +67,7 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
 
   return (
     <Card
-      className="overflow-hidden transition-all duration-300 hover:border-pareto-pink border-zinc-700 bg-zinc-800 cursor-pointer"
+      className="overflow-hidden transition-all duration-300 hover:border-pareto-pink border-zinc-700 bg-zinc-800 cursor-pointer rounded-lg" // Reduced roundness
       onClick={() => onClick(fellow)}
     >
       <div className="flex flex-col items-center p-4">
