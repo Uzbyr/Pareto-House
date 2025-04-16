@@ -37,6 +37,7 @@ interface Profile {
   x_url?: string | null;
   profile_picture_url?: string | null;
   onboarding_completed?: boolean;
+  about?: string | null; // Added the about field to the Profile interface
 }
 
 interface ProfileContextType {
