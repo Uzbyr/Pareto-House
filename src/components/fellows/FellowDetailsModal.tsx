@@ -1,3 +1,4 @@
+
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
@@ -52,11 +53,12 @@ const FellowDetailsModal = ({ fellow, isOpen, onClose }: FellowDetailsModalProps
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
           <div className="flex flex-col items-center py-4">
-            <Avatar className="h-32 w-32 mb-4 border-2 border-pareto-pink rounded-lg">
+            <Avatar className="h-32 w-32 mb-4 border-2 border-pareto-pink rounded-full overflow-hidden">
               {fellow.profile_picture_url ? (
                 <AvatarImage
                   src={fellow.profile_picture_url}
                   alt={getFullName()}
+                  className="object-cover w-full h-full"
                 />
               ) : (
                 <AvatarFallback className="bg-zinc-700 text-white text-3xl">
