@@ -3,8 +3,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Fellow } from "@/types/fellow";
-import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Linkedin, Globe, Twitter } from 'lucide-react';
+import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
+import { Linkedin, Globe } from 'lucide-react';
 
 interface FellowCardProps {
   fellow: Fellow;
@@ -151,7 +151,7 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
               target="_blank"
               rel="noopener noreferrer"
             >
-              <Twitter className="h-5 w-5 text-white" />
+              <SiX className="h-5 w-5 text-white" />
             </a>
           </Button>
         )}

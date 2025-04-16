@@ -3,8 +3,8 @@ import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal, Video } from "lucide-react";
-import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Linkedin, Twitter } from 'lucide-react';
+import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
+import { Linkedin } from 'lucide-react';
 import { Fellow } from "@/types/fellow";
 
 interface FellowProfileDetailsProps {
@@ -175,7 +175,7 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
                   asChild
                 >
                   <a href={fellow.x_url} target="_blank" rel="noopener noreferrer">
-                    <Twitter className="w-5 h-5" />
+                    <SiX className="w-5 h-5" />
                   </a>
                 </Button>
               )}
