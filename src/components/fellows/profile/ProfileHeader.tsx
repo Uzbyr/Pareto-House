@@ -86,7 +86,6 @@ const ProfileHeader = ({
       {/* Add nationality with flag */}
       {nationality && (
         <div className="flex items-center gap-2 mt-1">
-          <Flag className="h-4 w-4 text-gray-400" />
           <FlagEmoji 
             nationality={nationality} 
             size="1.2em" 
