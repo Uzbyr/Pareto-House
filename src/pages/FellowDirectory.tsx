@@ -61,7 +61,8 @@ const FellowDirectory = () => {
         website_url: record.website_url,
         about: record.about,
         competition_results: record.competition_results,
-        competitive_profiles: record.competitive_profiles
+        competitive_profiles: record.competitive_profiles,
+        video_url: record.video_url
       }));
 
       setFellows(mappedData);
