@@ -92,11 +92,12 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
             <Button
               variant="outline"
               className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
-              onClick={() => navigate("/fellowship/profile")}
-              type="button" 
+              asChild
             >
-              <User className="h-4 w-4 mr-2" />
-              Profile
+              <Link to="/fellowship/profile" className="flex items-center justify-center">
+                <User className="h-4 w-4 mr-2" />
+                Profile
+              </Link>
             </Button>
             <Button
               variant="outline"

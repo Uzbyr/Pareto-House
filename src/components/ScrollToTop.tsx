@@ -1,3 +1,4 @@
+
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
@@ -5,7 +6,11 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    // Use a more gentle scroll that doesn't force a page reload
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth"
+    });
   }, [pathname]);
 
   return null;
