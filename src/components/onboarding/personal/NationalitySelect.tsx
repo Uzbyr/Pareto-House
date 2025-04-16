@@ -9,8 +9,6 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { nationalities } from "@/utils/formConstants";
-import ReactCountryFlag from "react-country-flag";
-import { getCountryCodeFromNationality } from "@/utils/flagUtils";
 
 interface NationalitySelectProps {
   value: string;
@@ -30,38 +28,15 @@ const NationalitySelect: React.FC<NationalitySelectProps> = ({
       >
         <SelectTrigger className="bg-zinc-800 border-zinc-700">
           <SelectValue placeholder="Select your nationality">
-            {value && (
-              <div className="flex items-center gap-2">
-                {getCountryCodeFromNationality(value) && (
-                  <ReactCountryFlag
-                    countryCode={getCountryCodeFromNationality(value) || ""}
-                    svg
-                    style={{ width: '1em', height: '1em', borderRadius: '2px' }}
-                  />
-                )}
-                {value}
-              </div>
-            )}
+            {value}
           </SelectValue>
         </SelectTrigger>
         <SelectContent>
-          {nationalities.map((nationality) => {
-            const countryCode = getCountryCodeFromNationality(nationality);
-            return (
-              <SelectItem key={nationality} value={nationality}>
-                <div className="flex items-center gap-2">
-                  {countryCode && (
-                    <ReactCountryFlag
-                      countryCode={countryCode}
-                      svg
-                      style={{ width: '1em', height: '1em', borderRadius: '2px' }}
-                    />
-                  )}
-                  {nationality}
-                </div>
-              </SelectItem>
-            );
-          })}
+          {nationalities.map((nationality) => (
+            <SelectItem key={nationality} value={nationality}>
+              {nationality}
+            </SelectItem>
+          ))}
         </SelectContent>
       </Select>
     </div>
@@ -69,3 +44,4 @@ const NationalitySelect: React.FC<NationalitySelectProps> = ({
 };
 
 export default NationalitySelect;
+
