@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -16,7 +15,7 @@ import Perks from "./pages/Perks";
 import TechPartners from "./pages/TechPartners";
 import NotFound from "./pages/NotFound";
 import AdminLayout from "./components/AdminLayout";
-import AdminLogin from "./pages/AdminLogin";
+import Login from "./pages/Login";  // Updated import path
 import ChangePassword from "./pages/ChangePassword";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
@@ -36,7 +35,6 @@ import FellowOpportunities from "./pages/FellowOpportunities";
 
 const queryClient = new QueryClient();
 
-// Create route groups with appropriate providers
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark">
@@ -46,7 +44,6 @@ const App = () => (
           <Toaster />
           <Sonner />
           <Routes>
-            {/* Public Routes - No Auth/Profile Providers */}
             <Route 
               path="/" 
               element={<Index />} 
@@ -76,16 +73,13 @@ const App = () => (
               element={<TechPartners />} 
             />
             
-            {/* Auth Required Routes */}
             <Route element={<AuthProvider />}>
               <Route 
                 path="/login" 
-                element={<AdminLogin />} 
+                element={<Login />}  // Updated component name
               />
 
-              {/* Routes that require both Auth and Profile */}
               <Route element={<ProfileProvider />}>
-                {/* Onboarding Route */}
                 <Route
                   path="/onboarding"
                   element={
@@ -95,7 +89,6 @@ const App = () => (
                   }
                 />
 
-                {/* Password Change Route */}
                 <Route
                   path="/change-password"
                   element={
@@ -105,7 +98,6 @@ const App = () => (
                   }
                 />
 
-                {/* Admin Routes */}
                 <Route
                   path="/admin/dashboard"
                   element={
@@ -167,7 +159,6 @@ const App = () => (
                   }
                 />
 
-                {/* Fellow Routes - Completely separate from admin routes */}
                 <Route
                   path="/fellowship"
                   element={
@@ -229,7 +220,6 @@ const App = () => (
                   }
                 />
 
-                {/* Alumni Routes */}
                 <Route
                   path="/alumni"
                   element={
@@ -243,7 +233,6 @@ const App = () => (
               </Route>
             </Route>
 
-            {/* Catch-all route */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </TooltipProvider>

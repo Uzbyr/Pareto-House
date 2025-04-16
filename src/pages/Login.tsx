@@ -8,7 +8,7 @@ import { Input } from "@/components/ui/input";
 import { hasAdminPrivileges } from "@/utils/authUtils";
 import { toast } from "sonner";
 
-const AdminLogin = () => {
+const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isLoading, setIsLoading] = useState(false);
@@ -17,7 +17,7 @@ const AdminLogin = () => {
   const location = useLocation();
 
   // Get the redirect path from location state or use default paths based on role
-  const from = (location.state as any)?.from?.pathname || "/admin/dashboard";
+  const from = (location.state as any)?.from?.pathname || "/";
 
   // If user is already authenticated, redirect based on role
   if (isAuthenticated && user) {
@@ -45,9 +45,11 @@ const AdminLogin = () => {
           navigate("/fellowship", { replace: true });
         } else if (user?.role === "alumni") {
           navigate("/alumni", { replace: true });
-        } else {
-          // Admin or super_admin
+        } else if (hasAdminPrivileges(user?.role)) {
           navigate("/admin/dashboard", { replace: true });
+        } else {
+          // Fallback redirect if no specific role match
+          navigate(from, { replace: true });
         }
       } else {
         toast.error("Invalid email or password");
@@ -134,4 +136,4 @@ const AdminLogin = () => {
   );
 };
 
-export default AdminLogin;
+export default Login;
