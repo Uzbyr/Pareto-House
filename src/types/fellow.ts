@@ -12,4 +12,6 @@ export interface Fellow {
   github_url: string | null;
   website_url: string | null;
   about: string | null;
+  competition_results: string | null;
+  competitive_profiles: string[] | null;
 }

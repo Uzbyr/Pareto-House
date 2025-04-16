@@ -3,7 +3,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe } from "lucide-react";
+import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal } from "lucide-react";
 import { Fellow } from "@/types/fellow";
 
 interface FellowDetailsModalProps {
@@ -85,6 +85,48 @@ const FellowDetailsModal = ({ fellow, isOpen, onClose }: FellowDetailsModalProps
                 <h3 className="text-lg font-medium mb-2">About</h3>
                 <p className="text-gray-300 whitespace-pre-wrap">{fellow.about}</p>
               </div>
+            )}
+            
+            {/* Competition Results Section */}
+            {fellow.competition_results && (
+              <>
+                <Separator className="bg-zinc-700 my-4" />
+                <div>
+                  <h3 className="text-lg font-medium mb-2 flex items-center gap-2">
+                    <Award className="h-5 w-5 text-pareto-pink" />
+                    Competition Results
+                  </h3>
+                  <p className="text-gray-300 whitespace-pre-wrap">{fellow.competition_results}</p>
+                </div>
+              </>
+            )}
+            
+            {/* Competitive Profiles Section */}
+            {fellow.competitive_profiles && fellow.competitive_profiles.length > 0 && (
+              <>
+                <Separator className="bg-zinc-700 my-4" />
+                <div>
+                  <h3 className="text-lg font-medium mb-2 flex items-center gap-2">
+                    <Medal className="h-5 w-5 text-pareto-pink" />
+                    Competitive Profiles
+                  </h3>
+                  <ul className="space-y-2">
+                    {fellow.competitive_profiles.map((profile, index) => (
+                      <li key={index} className="flex items-center gap-2">
+                        <ExternalLink className="h-4 w-4 text-gray-400" />
+                        <a 
+                          href={profile.startsWith('http') ? profile : `https://${profile}`} 
+                          target="_blank" 
+                          rel="noopener noreferrer"
+                          className="text-blue-400 hover:underline"
+                        >
+                          {profile}
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              </>
             )}
             
             <Separator className="bg-zinc-700 my-4" />
