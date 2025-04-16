@@ -34,6 +34,7 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
         />
         
         <SocialLinks
+          email={fellow.email}
           linkedinUrl={fellow.linkedin_url}
           githubUrl={fellow.github_url}
           xUrl={fellow.x_url}

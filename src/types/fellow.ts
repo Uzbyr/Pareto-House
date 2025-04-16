@@ -17,4 +17,5 @@ export interface Fellow {
   video_url: string | null;
   x_url: string | null;
   nationality: string | null;
+  email: string | null;
 }

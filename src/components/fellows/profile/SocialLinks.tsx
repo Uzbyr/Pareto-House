@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { Globe } from "lucide-react";
+import { Globe, Mail } from "lucide-react";
 import { Linkedin } from 'lucide-react';
 import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
 
@@ -10,6 +10,7 @@ interface SocialLinksProps {
   githubUrl: string | null;
   xUrl: string | null;
   websiteUrl: string | null;
+  email: string | null;
 }
 
 const SocialLinks = ({
@@ -17,8 +18,9 @@ const SocialLinks = ({
   githubUrl,
   xUrl,
   websiteUrl,
+  email,
 }: SocialLinksProps) => {
-  if (!linkedinUrl && !githubUrl && !xUrl && !websiteUrl) {
+  if (!linkedinUrl && !githubUrl && !xUrl && !websiteUrl && !email) {
     return null;
   }
 
@@ -28,6 +30,19 @@ const SocialLinks = ({
       <div>
         <h3 className="text-lg font-medium mb-2">Connect</h3>
         <div className="flex flex-wrap gap-3">
+          {email && (
+            <Button
+              variant="outline"
+              size="icon"
+              className="rounded-full bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
+              asChild
+            >
+              <a href={`mailto:${email}`} rel="noopener noreferrer">
+                <Mail className="w-5 h-5" />
+              </a>
+            </Button>
+          )}
+          
           {linkedinUrl && (
             <Button
               variant="outline"

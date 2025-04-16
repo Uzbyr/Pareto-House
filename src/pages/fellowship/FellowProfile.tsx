@@ -34,7 +34,8 @@ const FellowProfile = () => {
     competitive_profiles: profile.competitive_profiles,
     video_url: profile.video_url,
     x_url: profile.x_url,
-    nationality: profile.nationality
+    nationality: profile.nationality,
+    email: profile.email
   } : null;
 
   if (profileLoading) {
