@@ -1,9 +1,10 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Fellow } from "@/types/fellow";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Linkedin, Globe } from 'lucide-react';
+import { Linkedin, Globe, Twitter } from 'lucide-react';
 
 interface FellowCardProps {
   fellow: Fellow;
@@ -134,6 +135,23 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
               rel="noopener noreferrer"
             >
               <SiGithub className="w-5 h-5 text-white" />
+            </a>
+          </Button>
+        )}
+        {fellow.x_url && (
+          <Button
+            variant="outline"
+            size="icon"
+            className="h-8 w-8 rounded-full bg-zinc-700 hover:bg-zinc-600"
+            asChild
+            onClick={(e) => e.stopPropagation()}
+          >
+            <a
+              href={fellow.x_url}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <Twitter className="h-5 w-5 text-white" />
             </a>
           </Button>
         )}
