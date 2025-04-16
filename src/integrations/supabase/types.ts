@@ -110,6 +110,7 @@ export type Database = {
       }
       profiles: {
         Row: {
+          about: string | null
           building_company: string
           category_of_interest: string | null
           company_context: string | null
@@ -141,6 +142,7 @@ export type Database = {
           x_url: string | null
         }
         Insert: {
+          about?: string | null
           building_company: string
           category_of_interest?: string | null
           company_context?: string | null
@@ -172,6 +174,7 @@ export type Database = {
           x_url?: string | null
         }
         Update: {
+          about?: string | null
           building_company?: string
           category_of_interest?: string | null
           company_context?: string | null

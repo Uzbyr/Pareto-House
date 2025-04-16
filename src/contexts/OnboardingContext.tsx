@@ -32,6 +32,7 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
     student_societies: profile?.student_societies || "",
     preparatory_classes: profile?.preparatory_classes || "",
     competitive_profiles: profile?.competitive_profiles || [],
+    about: profile?.about || "", // Added the about field
   };
 
   // Use our custom hook for form handling

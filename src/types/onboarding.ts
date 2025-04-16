@@ -21,6 +21,7 @@ export interface OnboardingFormData {
   student_societies?: string;
   preparatory_classes?: string;
   competitive_profiles: string[];
+  about: string; // Added the about field
 }
 
 export interface OnboardingContextType {

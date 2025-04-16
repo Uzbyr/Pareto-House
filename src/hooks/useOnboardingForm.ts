@@ -71,6 +71,12 @@ export const useOnboardingForm = (initialData: OnboardingFormData) => {
         toast.error("Please provide your first and last name");
         return;
       }
+      
+      // Add validation for the about field
+      if (!formData.about || formData.about.length < 100) {
+        toast.error("Please provide a detailed description about yourself (minimum 100 characters)");
+        return;
+      }
     } else if (step === 2) {
       if (formData.education_level === "university") {
         if (!formData.university || !formData.major || !formData.graduation_year) {
@@ -131,6 +137,7 @@ export const useOnboardingForm = (initialData: OnboardingFormData) => {
         student_societies: formData.student_societies,
         preparatory_classes: formData.preparatory_classes,
         competitive_profiles: formData.competitive_profiles,
+        about: formData.about, // Include the about field in the update
       };
       
       // Handle university field separately

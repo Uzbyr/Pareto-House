@@ -15,6 +15,7 @@ import {
 } from "@/components/ui/select";
 import { countries } from "@/components/application/utils/formUtils";
 import { nationalities } from "@/utils/formConstants";
+import AboutTextarea from "./about/AboutTextarea";
 
 const PersonalInfoStep = () => {
   const { 
@@ -69,6 +70,12 @@ const PersonalInfoStep = () => {
           />
         </div>
       </div>
+
+      {/* Add About Textarea right after the profile picture section */}
+      <AboutTextarea 
+        value={formData.about || ""} 
+        onChange={handleInputChange} 
+      />
 
       <div className="flex flex-col sm:flex-row gap-4">
         <div className="w-full">
