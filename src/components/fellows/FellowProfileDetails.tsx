@@ -1,11 +1,10 @@
-
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal } from "lucide-react";
-import { Fellow } from "@/types/fellow";
+import { SiGithub } from "@icons-pack/react-simple-icons";
 import { Linkedin } from 'lucide-react';
-import { SiGithub} from "@icons-pack/react-simple-icons";
+import { Fellow } from "@/types/fellow";
 
 interface FellowProfileDetailsProps {
   fellow: Fellow;
@@ -130,8 +129,8 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
               {fellow.linkedin_url && (
                 <Button
                   variant="outline"
-                  size="sm"
-                  className="bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
+                  size="icon"
+                  className="rounded-full bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
                   asChild
                 >
                   <a href={fellow.linkedin_url} target="_blank" rel="noopener noreferrer">
@@ -143,8 +142,8 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
               {fellow.github_url && (
                 <Button
                   variant="outline"
-                  size="sm"
-                  className="bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
+                  size="icon"
+                  className="rounded-full bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
                   asChild
                 >
                   <a href={fellow.github_url} target="_blank" rel="noopener noreferrer">
@@ -156,8 +155,8 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
               {fellow.website_url && (
                 <Button
                   variant="outline"
-                  size="sm"
-                  className="bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
+                  size="icon"
+                  className="rounded-full bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
                   asChild
                 >
                   <a href={fellow.website_url} target="_blank" rel="noopener noreferrer">
