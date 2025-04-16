@@ -1,4 +1,3 @@
-
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
@@ -37,7 +36,7 @@ interface Profile {
   x_url?: string | null;
   profile_picture_url?: string | null;
   onboarding_completed?: boolean;
-  about?: string | null; // Added the about field to the Profile interface
+  about?: string | null;
 }
 
 interface ProfileContextType {
@@ -70,7 +69,6 @@ export const ProfileProvider = ({
 
     try {
       setLoading(true);
-      // Fix: remove the type assertion that was causing the infinite type instantiation
       const { data, error: queryError } = await supabase
         .from("profiles")
         .select("*")
@@ -98,7 +96,6 @@ export const ProfileProvider = ({
 
     try {
       setLoading(true);
-      // Only update fields that are provided in the updates object
       const { data, error: updateError } = await supabase
         .from("profiles")
         .update(updates)
