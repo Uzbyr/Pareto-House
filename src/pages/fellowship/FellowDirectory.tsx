@@ -65,7 +65,8 @@ const FellowDirectory = () => {
         competitive_profiles: record.competitive_profiles,
         video_url: record.video_url,
         x_url: record.x_url,
-        nationality: record.nationality // Adding the missing nationality field
+        nationality: record.nationality,
+        email: record.email // Adding the missing email field
       }));
 
       setFellows(mappedData);
