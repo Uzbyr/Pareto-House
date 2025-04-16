@@ -174,7 +174,8 @@ const FellowProfile = () => {
         }
       }
 
-      const dataToUpdate = {
+      // Make sure university is included in the type definition
+      const dataToUpdate: Partial<typeof profile & { university: string }> = {
         first_name: formData.first_name,
         last_name: formData.last_name,
         education_level: formData.education_level,
