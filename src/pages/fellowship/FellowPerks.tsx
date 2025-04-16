@@ -125,15 +125,8 @@ const FellowPerks = () => {
         </p>
       </div>
 
-      {/* Perks Overview Section */}
-      <div className="mb-12">
-        <FellowshipPerks />
-      </div>
-
       {/* Claim Perks Section */}
       <div className="mt-16">
-        <h2 className="text-2xl font-bold text-white mb-6">Claim Your Perks</h2>
-        
         <div className="bg-zinc-800/50 p-4 rounded-lg mb-10 flex flex-col sm:flex-row items-start sm:items-center gap-4">
           <div className="text-3xl">🎯</div>
           <div>
