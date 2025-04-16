@@ -55,6 +55,11 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
           email: currentSession.user.email || "",
           role: role,
         });
+
+        // Check if user needs to change password
+        const requireChange =
+          currentSession.user.user_metadata?.require_password_change === true;
+        setRequirePasswordChange(requireChange);
       }
     };
 
@@ -62,13 +67,12 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, currentSession) => {
-      if (session?.user?.id == currentSession?.user?.id) return;
-      console.log('event', event, currentSession);
+    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
+      setSession(currentSession);
+      setIsAuthenticated(!!currentSession);
 
-      if (currentSession && (event === 'SIGNED_IN' || event === 'TOKEN_REFRESHED')) {
-        setSession(session);
-        setIsAuthenticated(!!currentSession);
+      if (currentSession?.user) {
+        console.log("Auth state changed for user:", currentSession.user.id);
         // Use setTimeout to avoid potential recursion issues with RLS policies
         setTimeout(async () => {
           // Get user role from database
@@ -79,7 +83,15 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
             email: currentSession.user.email || "",
             role: role,
           });
+
+          // Check if user needs to change password
+          const requireChange =
+            currentSession.user.user_metadata?.require_password_change === true;
+          setRequirePasswordChange(requireChange);
         }, 0);
+      } else {
+        setUser(null);
+        setRequirePasswordChange(false);
       }
     });
 

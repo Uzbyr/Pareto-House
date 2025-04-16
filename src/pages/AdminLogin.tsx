@@ -38,7 +38,6 @@ const AdminLogin = () => {
 
       if (success) {
         toast.success("Login successful!");
-        console.log('success', success);
 
         // Redirect based on user role
         if (user?.role === "fellow") {
