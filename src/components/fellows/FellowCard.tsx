@@ -5,6 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Fellow } from "@/types/fellow";
 import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
 import { Linkedin, Globe } from 'lucide-react';
+import FlagEmoji from "@/components/ui/flag-emoji";
 
 interface FellowCardProps {
   fellow: Fellow;
@@ -88,6 +89,15 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
         
         <div className="text-center">
           <h3 className="text-lg font-semibold text-white mb-0.5">
+            {fellow.nationality && (
+              <span className="mr-2">
+                <FlagEmoji 
+                  nationality={fellow.nationality} 
+                  size="1em" 
+                  showName={false} 
+                />
+              </span>
+            )}
             {getFullName()}
           </h3>
           {getEducationInfo() && (
@@ -178,3 +188,4 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
 };
 
 export default FellowCard;
+
