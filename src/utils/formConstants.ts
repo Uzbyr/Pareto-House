@@ -1,5 +1,5 @@
 
-// List of nationalities for dropdown
+// Export nationalities for use in select components
 export const nationalities = [
   "Afghan",
   "Albanian",

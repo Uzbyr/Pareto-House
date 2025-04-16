@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -24,9 +25,15 @@ import LinkedInInput from "@/components/onboarding/online-presence/LinkedInInput
 import VideoUrlInput from "@/components/onboarding/online-presence/VideoUrlInput";
 import SocialProfileInputs from "@/components/onboarding/online-presence/SocialProfileInputs";
 import CompetitiveProfiles from "@/components/onboarding/online-presence/CompetitiveProfiles";
+import EducationLevelSelect from "@/components/onboarding/education/EducationLevelSelect";
+import CountrySelect from "@/components/onboarding/personal/CountrySelect";
+import NationalitySelect from "@/components/onboarding/personal/NationalitySelect";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Eye, EyeOff, ShieldCheck } from "lucide-react";
+import { countries } from "@/components/application/utils/formUtils";
+import { nationalities } from "@/utils/formConstants";
+import { useUniversityData } from "@/hooks/useUniversityData";
 
 const FellowProfile = () => {
   const {
@@ -41,6 +48,8 @@ const FellowProfile = () => {
   
   const { profilePicture, setProfilePicture, uploadProfilePicture } = 
     useProfilePictureUpload(session?.user?.id, profile?.profile_picture_url);
+    
+  const { universities, checkPreparatoryQuestion } = useUniversityData();
 
   const [formData, setFormData] = useState({
     first_name: "",
@@ -216,6 +225,9 @@ const FellowProfile = () => {
     }));
   };
 
+  const showPreparatoryQuestion = 
+    formData.university && checkPreparatoryQuestion(formData.university);
+
   const handleSave = async () => {
     setLoading(true);
     try {
@@ -317,19 +329,6 @@ const FellowProfile = () => {
     return "bg-green-500";
   };
 
-  const universities = [
-    "MIT",
-    "Harvard",
-    "Stanford",
-    "Berkeley",
-    "Cambridge University",
-    "Princeton University",
-    "University of Pennsylvania",
-    "Oxford University",
-    "Yale University",
-    "Other"
-  ];
-
   if (profileLoading) {
     return (
       <div className="flex justify-center items-center h-full">
@@ -403,48 +402,60 @@ const FellowProfile = () => {
                 <AboutTextarea value={formData.about} onChange={handleInputChange} />
 
                 <div className="grid grid-cols-2 gap-4">
-                  <div>
-                    <Label htmlFor="country">Country</Label>
-                    <Input
-                      id="country"
-                      name="country"
-                      value={formData.country}
-                      onChange={handleInputChange}
-                      className="bg-zinc-800 border-zinc-700"
-                    />
-                  </div>
+                  <CountrySelect
+                    value={formData.country}
+                    onValueChange={(value) => handleSelectChange("country", value)}
+                  />
 
-                  <div>
-                    <Label htmlFor="nationality">Nationality</Label>
-                    <Input
-                      id="nationality"
-                      name="nationality"
-                      onChange={handleInputChange}
-                      value={formData.nationality}
-                      className="bg-zinc-800 border-zinc-700"
-                    />
-                  </div>
+                  <NationalitySelect
+                    value={formData.nationality}
+                    onValueChange={(value) => handleSelectChange("nationality", value)}
+                  />
                 </div>
 
                 <h3 className="text-lg font-medium text-white border-b border-zinc-700 pb-2 mt-8">Education</h3>
                 
-                <UniversitySelect 
-                  university={formData.university}
-                  otherUniversity={formData.otherUniversity}
-                  onSelectUniversity={(value) => handleSelectChange("university", value)}
-                  onOtherUniversityChange={handleInputChange}
-                  universities={universities}
+                <EducationLevelSelect 
+                  value={formData.education_level}
+                  onValueChange={(value) => handleSelectChange("education_level", value)}
                 />
 
-                <div className="grid grid-cols-2 gap-4">
-                  <MajorInput value={formData.major} onChange={handleInputChange} />
-                  <GraduationYearSelect 
-                    value={formData.graduation_year}
-                    onValueChange={(value) => handleSelectChange("graduation_year", value)} 
-                  />
-                </div>
+                {(formData.education_level === "university" || !formData.education_level) && (
+                  <>
+                    <UniversitySelect 
+                      university={formData.university}
+                      otherUniversity={formData.otherUniversity}
+                      onSelectUniversity={(value) => handleSelectChange("university", value)}
+                      onOtherUniversityChange={handleInputChange}
+                      universities={universities}
+                    />
 
-                <HighSchoolInput value={formData.high_school} onChange={handleInputChange} />
+                    {showPreparatoryQuestion && (
+                      <PreparatoryClassesSelect 
+                        value={formData.preparatory_classes}
+                        onValueChange={(value) => handleSelectChange("preparatory_classes", value)}
+                      />
+                    )}
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <MajorInput value={formData.major} onChange={handleInputChange} />
+                      <GraduationYearSelect 
+                        value={formData.graduation_year}
+                        onValueChange={(value) => handleSelectChange("graduation_year", value)} 
+                      />
+                    </div>
+                  </>
+                )}
+
+                {formData.education_level === "highSchool" && (
+                  <>
+                    <HighSchoolInput value={formData.high_school} onChange={handleInputChange} />
+                    <GraduationYearSelect 
+                      value={formData.graduation_year}
+                      onValueChange={(value) => handleSelectChange("graduation_year", value)} 
+                    />
+                  </>
+                )}
                 
                 <StudentSocietiesTextarea 
                   value={formData.student_societies} 
