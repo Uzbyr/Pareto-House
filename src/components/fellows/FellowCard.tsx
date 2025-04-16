@@ -1,4 +1,5 @@
 
+import React from 'react';
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -90,15 +91,16 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
         <div className="text-center">
           <h3 className="text-lg font-semibold text-white mb-0.5">
             {fellow.nationality && (
-              <span className="mr-2">
+              <div className="flex items-center justify-center space-x-1 mb-1">
                 <FlagEmoji 
                   nationality={fellow.nationality} 
                   size="1em" 
                   showName={false} 
                 />
-              </span>
+                <span>{getFullName()}</span>
+              </div>
             )}
-            {getFullName()}
+            {!fellow.nationality && getFullName()}
           </h3>
           {getEducationInfo() && (
             <p className="text-sm text-gray-300 mb-0.5">
@@ -188,4 +190,3 @@ const FellowCard = ({ fellow, onClick }: FellowCardProps) => {
 };
 
 export default FellowCard;
-
