@@ -47,11 +47,7 @@ export const AuthProvider = () => {
       setIsAuthenticated(!!currentSession);
 
       if (currentSession?.user) {
-        console.log("Setting up auth for user:", currentSession.user.id);
-        console.log("currentSession", currentSession);
-        // Get user role from database
         const role = await getUserRole(currentSession.user.id);
-        console.log("User role from getUserRole:", role);
 
         setUser({
           email: currentSession.user.email || "",
@@ -69,31 +65,26 @@ export const AuthProvider = () => {
 
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, currentSession) => {
-      setSession(currentSession);
-      setIsAuthenticated(!!currentSession);
-
-      if (currentSession?.user) {
-        console.log("Auth state changed for user:", currentSession.user.id);
-        // Use setTimeout to avoid potential recursion issues with RLS policies
+    } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      if (event === "SIGNED_IN") {
+        if (session?.access_token === currentSession?.access_token) {
+          return;
+        }
         setTimeout(async () => {
-          // Get user role from database
           const role = await getUserRole(currentSession.user.id);
-          console.log("User role from onAuthStateChange:", role);
-
+          setSession(currentSession);
+          setIsAuthenticated(true);
           setUser({
             email: currentSession.user.email || "",
             role: role,
           });
-
-          // Check if user needs to change password
-          const requireChange =
-            currentSession.user.user_metadata?.require_password_change === true;
-          setRequirePasswordChange(requireChange);
         }, 0);
-      } else {
+      }
+
+      if (event === "SIGNED_OUT") {
+        setSession(null);
+        setIsAuthenticated(false);
         setUser(null);
-        setRequirePasswordChange(false);
       }
     });
 
