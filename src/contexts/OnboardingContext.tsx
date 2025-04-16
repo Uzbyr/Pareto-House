@@ -204,13 +204,34 @@ export const OnboardingProvider = ({ children }: { children: React.ReactNode }) 
         }
       }
 
+      // Prepare data for update, excluding the otherUniversity field
       const dataToUpdate: any = {
-        ...formData,
+        first_name: formData.first_name,
+        last_name: formData.last_name,
+        major: formData.major,
+        graduation_year: formData.graduation_year,
+        country: formData.country,
+        nationality: formData.nationality,
+        video_url: formData.video_url,
+        linkedin_url: formData.linkedin_url,
+        github_url: formData.github_url,
+        x_url: formData.x_url,
         profile_picture_url: pictureUrl,
+        education_level: formData.education_level,
+        high_school: formData.high_school,
+        category_of_interest: formData.category_of_interest,
+        has_competition_experience: formData.has_competition_experience,
+        competition_results: formData.competition_results,
+        student_societies: formData.student_societies,
+        preparatory_classes: formData.preparatory_classes,
+        competitive_profiles: formData.competitive_profiles,
       };
       
+      // Handle university field separately
       if (formData.university === "Other" && formData.otherUniversity) {
         dataToUpdate.university = formData.otherUniversity;
+      } else {
+        dataToUpdate.university = formData.university;
       }
 
       await updateProfile(dataToUpdate);
