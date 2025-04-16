@@ -6,7 +6,7 @@ const ScrollToTop = () => {
   const { pathname } = useLocation();
 
   useEffect(() => {
-    // Use a more gentle scroll that doesn't force a page reload
+    // Only scroll to top when a path changes, not when focus changes
     window.scrollTo({
       top: 0,
       behavior: "smooth"

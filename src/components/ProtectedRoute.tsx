@@ -1,3 +1,4 @@
+
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/auth";
@@ -15,22 +16,11 @@ const ProtectedRoute = ({
   requireOnboarding = true,
 }: ProtectedRouteProps) => {
   const { isAuthenticated, user } = useAuth();
-  const { profile, loading } = useProfile();
+  const { profile } = useProfile();
   const location = useLocation();
 
-  if (!isAuthenticated) {
-    // Redirect to login if not authenticated
-    return <Navigate to="/login" state={{ from: location }} replace />;
-  }
-
-  // If still loading the profile, show a loading state
-  if (loading) {
-    return (
-      <div className="flex items-center justify-center h-screen bg-zinc-900">
-        <div className="text-xl text-white">Loading...</div>
-      </div>
-    );
-  }
+  // No need to check isAuthenticated since AuthContext already wraps this component
+  // and would redirect to login if not authenticated
 
   // Check if onboarding is required and not completed
   if (

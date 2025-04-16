@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -35,27 +36,55 @@ import FellowOpportunities from "./pages/FellowOpportunities";
 
 const queryClient = new QueryClient();
 
+// Create route groups with appropriate providers
 const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider defaultTheme="dark">
-      <AuthProvider>
-        <ProfileProvider>
-          <TooltipProvider>
-            <Toaster />
-            <Sonner />
-            <BrowserRouter>
-              <ScrollToTop />
-              <Routes>
-                {/* Public Routes */}
-                <Route path="/" element={<Index />} />
-                <Route path="/apply" element={<Apply />} />
-                <Route path="/mentors" element={<Mentors />} />
-                <Route path="/mentor-finder" element={<MentorFinder />} />
-                <Route path="/perks" element={<Perks />} />
-                <Route path="/faq" element={<FAQ />} />
-                <Route path="/tech-partners" element={<TechPartners />} />
-                <Route path="/login" element={<AdminLogin />} />
+      <BrowserRouter>
+        <ScrollToTop />
+        <TooltipProvider>
+          <Toaster />
+          <Sonner />
+          <Routes>
+            {/* Public Routes - No Auth/Profile Providers */}
+            <Route 
+              path="/" 
+              element={<Index />} 
+            />
+            <Route 
+              path="/apply" 
+              element={<Apply />} 
+            />
+            <Route 
+              path="/mentors" 
+              element={<Mentors />} 
+            />
+            <Route 
+              path="/mentor-finder" 
+              element={<MentorFinder />} 
+            />
+            <Route 
+              path="/perks" 
+              element={<Perks />} 
+            />
+            <Route 
+              path="/faq" 
+              element={<FAQ />} 
+            />
+            <Route 
+              path="/tech-partners" 
+              element={<TechPartners />} 
+            />
+            
+            {/* Auth Required Routes */}
+            <Route element={<AuthProvider />}>
+              <Route 
+                path="/login" 
+                element={<AdminLogin />} 
+              />
 
+              {/* Routes that require both Auth and Profile */}
+              <Route element={<ProfileProvider />}>
                 {/* Onboarding Route */}
                 <Route
                   path="/onboarding"
@@ -211,14 +240,14 @@ const App = () => (
                     </ProtectedRoute>
                   }
                 />
+              </Route>
+            </Route>
 
-                {/* Catch-all route */}
-                <Route path="*" element={<NotFound />} />
-              </Routes>
-            </BrowserRouter>
-          </TooltipProvider>
-        </ProfileProvider>
-      </AuthProvider>
+            {/* Catch-all route */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </TooltipProvider>
+      </BrowserRouter>
     </ThemeProvider>
   </QueryClientProvider>
 );

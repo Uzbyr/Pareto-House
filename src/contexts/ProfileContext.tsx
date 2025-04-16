@@ -1,7 +1,9 @@
+
 import React, { createContext, useContext, useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useAuth } from "./AuthContext";
 import { toast } from "sonner";
+import { Outlet } from "react-router-dom";
 
 interface Profile {
   building_company: string;
@@ -50,11 +52,7 @@ interface ProfileContextType {
 
 const ProfileContext = createContext<ProfileContextType | undefined>(undefined);
 
-export const ProfileProvider = ({
-  children,
-}: {
-  children: React.ReactNode;
-}) => {
+export const ProfileProvider = () => {
   const { user, isAuthenticated, session } = useAuth();
   const [profile, setProfile] = useState<Profile | null>(null);
   const [loading, setLoading] = useState(true);
@@ -140,8 +138,14 @@ export const ProfileProvider = ({
     refreshProfile,
   };
 
+  if (loading && isAuthenticated) {
+    return <div className="flex items-center justify-center h-screen bg-zinc-900">Loading profile...</div>;
+  }
+
   return (
-    <ProfileContext.Provider value={value}>{children}</ProfileContext.Provider>
+    <ProfileContext.Provider value={value}>
+      <Outlet />
+    </ProfileContext.Provider>
   );
 };
 

@@ -1,14 +1,16 @@
-import React, { createContext, useContext, useEffect } from "react";
+
+import React, { createContext, useContext, useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { AuthContextType } from "@/types/auth";
 import { getUserRole } from "@/utils/authUtils";
 import { useAuthService } from "@/hooks/useAuthService";
 import { useMetricsService } from "@/hooks/useMetricsService";
 import { useVisitorTracking } from "@/hooks/useVisitorTracking";
+import { Outlet } from "react-router-dom";
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
-export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
+export const AuthProvider = () => {
   // Use our custom hooks to manage state and functionality
   const {
     isAuthenticated,
@@ -100,7 +102,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   // Loading state replaced with early return of a loading component
   if (!user && isAuthenticated) {
-    return <div>Loading...</div>;
+    return <div className="flex items-center justify-center h-screen bg-zinc-900">Loading...</div>;
   }
 
   // Provide the complete auth context
@@ -122,7 +124,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
         trackPageVisit,
       }}
     >
-      {children}
+      <Outlet />
     </AuthContext.Provider>
   );
 };
