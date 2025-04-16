@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -54,6 +53,7 @@ const FellowProfile = () => {
     about: "",
     competition_results: "",
     competitive_profiles: [] as string[],
+    video_url: "",
   });
 
   useEffect(() => {
@@ -77,11 +77,11 @@ const FellowProfile = () => {
         about: profile.about || "",
         competition_results: profile.competition_results || "",
         competitive_profiles: profile.competitive_profiles || [],
+        video_url: profile.video_url || "",
       });
     }
   }, [profile]);
 
-  // Convert profile to Fellow type for the shared component
   const profileAsFellow = profile ? {
     id: profile.id || "",
     first_name: profile.first_name,
@@ -99,6 +99,7 @@ const FellowProfile = () => {
     about: profile.about,
     competition_results: profile.competition_results,
     competitive_profiles: profile.competitive_profiles,
+    video_url: profile.video_url,
   } as Fellow : null;
 
   const handleInputChange = (
@@ -426,6 +427,18 @@ const FellowProfile = () => {
                 <h3 className="text-lg font-medium text-white">
                   Additional Information
                 </h3>
+
+                <div>
+                  <Label htmlFor="video_url">Presentation Video URL</Label>
+                  <Input
+                    id="video_url"
+                    name="video_url"
+                    value={formData.video_url}
+                    onChange={handleInputChange}
+                    className="bg-zinc-700 border-zinc-600"
+                    placeholder="https://youtube.com/watch?v=..."
+                  />
+                </div>
 
                 <div>
                   <Label htmlFor="preparatory_classes">

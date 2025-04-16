@@ -1,7 +1,8 @@
+
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal } from "lucide-react";
+import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal, Video } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
 import { Linkedin } from 'lucide-react';
 import { Fellow } from "@/types/fellow";
@@ -68,6 +69,20 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
         )}
         
         {getEducationInfo()}
+
+        {fellow.video_url && (
+          <Button
+            variant="outline"
+            size="sm"
+            className="mt-4 bg-zinc-700 hover:bg-zinc-600 border-zinc-600"
+            asChild
+          >
+            <a href={fellow.video_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
+              <Video className="h-4 w-4" />
+              Presentation Video
+            </a>
+          </Button>
+        )}
       </div>
       
       <div className="md:col-span-2 space-y-4">
