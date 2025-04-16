@@ -2,10 +2,11 @@
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal, Video } from "lucide-react";
+import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal, Video, Flag } from "lucide-react";
 import { SiGithub, SiX } from "@icons-pack/react-simple-icons";
 import { Linkedin } from 'lucide-react';
 import { Fellow } from "@/types/fellow";
+import FlagEmoji from "@/components/ui/flag-emoji";
 
 interface FellowProfileDetailsProps {
   fellow: Fellow;
@@ -69,6 +70,17 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
         )}
         
         {getEducationInfo()}
+
+        {/* Add nationality with flag */}
+        {fellow.nationality && (
+          <div className="flex items-center gap-2 mt-1">
+            <Flag className="h-4 w-4 text-gray-400" />
+            <FlagEmoji 
+              nationality={fellow.nationality} 
+              size="1.2em" 
+            />
+          </div>
+        )}
 
         {fellow.video_url && (
           <Button
