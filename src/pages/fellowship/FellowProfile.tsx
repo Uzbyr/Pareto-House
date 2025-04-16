@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from "react";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -40,7 +39,6 @@ const FellowProfile = () => {
   const [loading, setLoading] = useState(false);
   const [passwordLoading, setPasswordLoading] = useState(false);
   
-  // Using session?.user.id instead of user.id
   const { profilePicture, setProfilePicture, uploadProfilePicture } = 
     useProfilePictureUpload(session?.user?.id, profile?.profile_picture_url);
 
@@ -71,7 +69,6 @@ const FellowProfile = () => {
     video_url: "",
   });
 
-  // Password state
   const [passwordData, setPasswordData] = useState({
     currentPassword: "",
     newPassword: "",
@@ -79,7 +76,6 @@ const FellowProfile = () => {
   });
   const [showPassword, setShowPassword] = useState(false);
   
-  // Password strength state
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
     isStrong: false,
@@ -121,25 +117,20 @@ const FellowProfile = () => {
     }
   }, [profile]);
 
-  // Check password strength
   useEffect(() => {
     const { newPassword } = passwordData;
     const hasMinLength = newPassword.length >= 8;
     const hasUppercase = /[A-Z]/.test(newPassword);
     const hasLowercase = /[a-z]/.test(newPassword);
     const hasNumber = /[0-9]/.test(newPassword);
-    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
 
-    // Calculate score
     let score = 0;
     if (hasMinLength) score += 1;
     if (hasUppercase) score += 1;
     if (hasLowercase) score += 1;
     if (hasNumber) score += 1;
-    if (hasSpecial) score += 1;
 
-    // Password is strong if it meets at least 4 criteria
-    const isStrong = score >= 4;
+    const isStrong = score >= 3;
 
     setPasswordStrength({
       score,
@@ -148,7 +139,7 @@ const FellowProfile = () => {
       hasUppercase,
       hasLowercase,
       hasNumber,
-      hasSpecial,
+      hasSpecial: false,
     });
   }, [passwordData.newPassword]);
 
@@ -171,7 +162,7 @@ const FellowProfile = () => {
     competitive_profiles: profile.competitive_profiles,
     video_url: profile.video_url,
     x_url: profile.x_url,
-  } as Fellow : null;
+  } : null;
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
@@ -236,7 +227,6 @@ const FellowProfile = () => {
         }
       }
 
-      // Make sure university is included in the type definition
       const dataToUpdate: Partial<typeof profile & { university: string }> = {
         first_name: formData.first_name,
         last_name: formData.last_name,
@@ -261,7 +251,6 @@ const FellowProfile = () => {
         about: formData.about,
       };
 
-      // Handle university field separately
       if (formData.university === "Other" && formData.otherUniversity) {
         dataToUpdate.university = formData.otherUniversity;
       } else {
@@ -283,7 +272,6 @@ const FellowProfile = () => {
   const handleChangePassword = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    // Validate passwords
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       toast.error("New passwords do not match");
       return;
@@ -300,7 +288,6 @@ const FellowProfile = () => {
       
       if (success) {
         toast.success("Password changed successfully");
-        // Reset the form
         setPasswordData({
           currentPassword: "",
           newPassword: "",
@@ -324,14 +311,12 @@ const FellowProfile = () => {
     return user?.email ? user.email[0].toUpperCase() : "P";
   };
 
-  // Progress bar color based on strength
   const getStrengthColor = () => {
-    if (passwordStrength.score <= 2) return "bg-red-500";
-    if (passwordStrength.score === 3) return "bg-yellow-500";
+    if (passwordStrength.score <= 1) return "bg-red-500";
+    if (passwordStrength.score === 2) return "bg-yellow-500";
     return "bg-green-500";
   };
 
-  // Get list of universities for the select component
   const universities = [
     "MIT",
     "Harvard",
@@ -388,7 +373,6 @@ const FellowProfile = () => {
             />
 
             <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-              {/* Personal Information Section */}
               <div className="space-y-6">
                 <h3 className="text-lg font-medium text-white border-b border-zinc-700 pb-2">Personal Information</h3>
                 
@@ -442,7 +426,6 @@ const FellowProfile = () => {
                   </div>
                 </div>
 
-                {/* Education Section */}
                 <h3 className="text-lg font-medium text-white border-b border-zinc-700 pb-2 mt-8">Education</h3>
                 
                 <UniversitySelect 
@@ -469,9 +452,7 @@ const FellowProfile = () => {
                 />
               </div>
 
-              {/* Right Column */}
               <div className="space-y-6">
-                {/* Competition Section */}
                 <h3 className="text-lg font-medium text-white border-b border-zinc-700 pb-2">Competition Experience</h3>
                 
                 <CompetitionSection 
@@ -489,7 +470,6 @@ const FellowProfile = () => {
                   onRemove={removeCompetitiveProfile}
                 />
 
-                {/* Online Presence Section */}
                 <h3 className="text-lg font-medium text-white border-b border-zinc-700 pb-2 mt-8">Online Presence</h3>
                 
                 <VideoUrlInput value={formData.video_url} onChange={handleInputChange} />
@@ -572,7 +552,6 @@ const FellowProfile = () => {
                   />
                 </div>
 
-                {/* Password strength meter */}
                 {passwordData.newPassword && (
                   <div className="mt-2">
                     <div className="flex justify-between text-xs text-zinc-400 mb-1">
@@ -585,14 +564,14 @@ const FellowProfile = () => {
                         }
                       >
                         {passwordStrength.score > 0
-                          ? `${passwordStrength.score}/5`
+                          ? `${passwordStrength.score}/4`
                           : "Very weak"}
                       </span>
                     </div>
                     <div className="h-1 w-full bg-zinc-700 rounded">
                       <div
                         className={`h-full rounded ${getStrengthColor()}`}
-                        style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
+                        style={{ width: `${(passwordStrength.score / 4) * 100}%` }}
                       ></div>
                     </div>
 
@@ -628,14 +607,6 @@ const FellowProfile = () => {
                           {passwordStrength.hasNumber ? "✓" : "○"}
                         </div>
                         Number (0-9)
-                      </li>
-                      <li
-                        className={`flex items-center ${passwordStrength.hasSpecial ? "text-green-400" : "text-zinc-400"}`}
-                      >
-                        <div className="mr-1">
-                          {passwordStrength.hasSpecial ? "✓" : "○"}
-                        </div>
-                        Special character (!@#$%^&*...)
                       </li>
                     </ul>
                   </div>

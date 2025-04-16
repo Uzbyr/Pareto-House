@@ -15,7 +15,7 @@ const ChangePassword = () => {
   const { changePassword, user, requirePasswordChange } = useAuth();
   const navigate = useNavigate();
 
-  // Password strength state
+  // Password strength state - modified to remove special character requirement
   const [passwordStrength, setPasswordStrength] = useState({
     score: 0,
     isStrong: false,
@@ -37,13 +37,12 @@ const ChangePassword = () => {
     }
   }, [requirePasswordChange, user, navigate]);
 
-  // Check password strength
+  // Check password strength - modified to remove special character requirement
   useEffect(() => {
     const hasMinLength = newPassword.length >= 8;
     const hasUppercase = /[A-Z]/.test(newPassword);
     const hasLowercase = /[a-z]/.test(newPassword);
     const hasNumber = /[0-9]/.test(newPassword);
-    const hasSpecial = /[!@#$%^&*(),.?":{}|<>]/.test(newPassword);
 
     // Calculate score
     let score = 0;
@@ -51,10 +50,9 @@ const ChangePassword = () => {
     if (hasUppercase) score += 1;
     if (hasLowercase) score += 1;
     if (hasNumber) score += 1;
-    if (hasSpecial) score += 1;
 
-    // Password is strong if it meets at least 4 criteria
-    const isStrong = score >= 4;
+    // Password is strong if it meets at least 3 criteria (changed from 4)
+    const isStrong = score >= 3;
 
     setPasswordStrength({
       score,
@@ -63,7 +61,7 @@ const ChangePassword = () => {
       hasUppercase,
       hasLowercase,
       hasNumber,
-      hasSpecial,
+      hasSpecial: false, // We still keep this in the state but don't use it for validation
     });
   }, [newPassword]);
 
@@ -105,10 +103,10 @@ const ChangePassword = () => {
     }
   };
 
-  // Progress bar color based on strength
+  // Progress bar color based on strength - adjusted for 4 criteria total
   const getStrengthColor = () => {
-    if (passwordStrength.score <= 2) return "bg-red-500";
-    if (passwordStrength.score === 3) return "bg-yellow-500";
+    if (passwordStrength.score <= 1) return "bg-red-500";
+    if (passwordStrength.score === 2) return "bg-yellow-500";
     return "bg-green-500";
   };
 
@@ -173,14 +171,14 @@ const ChangePassword = () => {
                     }
                   >
                     {passwordStrength.score > 0
-                      ? `${passwordStrength.score}/5`
+                      ? `${passwordStrength.score}/4`
                       : "Very weak"}
                   </span>
                 </div>
                 <div className="h-1 w-full bg-zinc-700 rounded">
                   <div
                     className={`h-full rounded ${getStrengthColor()}`}
-                    style={{ width: `${(passwordStrength.score / 5) * 100}%` }}
+                    style={{ width: `${(passwordStrength.score / 4) * 100}%` }}
                   ></div>
                 </div>
 
@@ -216,14 +214,6 @@ const ChangePassword = () => {
                       {passwordStrength.hasNumber ? "✓" : "○"}
                     </div>
                     Number (0-9)
-                  </li>
-                  <li
-                    className={`flex items-center ${passwordStrength.hasSpecial ? "text-green-400" : "text-zinc-400"}`}
-                  >
-                    <div className="mr-1">
-                      {passwordStrength.hasSpecial ? "✓" : "○"}
-                    </div>
-                    Special character (!@#$%^&*...)
                   </li>
                 </ul>
               </div>
