@@ -1,13 +1,15 @@
+
 import {
   AuthContextType,
   SiteMetrics,
   Application,
   UserRole,
+  AuthUser,
 } from "@/types/auth";
 import { Session } from "@supabase/supabase-js";
 
 // Export relevant types for use in our auth-related files
-export type { AuthContextType, SiteMetrics, Application, UserRole };
+export type { AuthContextType, SiteMetrics, Application, UserRole, AuthUser };
 
 export interface AuthState {
   isAuthenticated: boolean;
@@ -17,7 +19,7 @@ export interface AuthState {
 }
 
 export interface AuthActions {
-  login: (email: string, password: string) => Promise<boolean>;
+  login: (email: string, password: string) => Promise<AuthUser | null>;
   logout: () => Promise<void>;
   changePassword: (newPassword: string) => Promise<boolean>;
   isPareto20Email: (email: string) => boolean;

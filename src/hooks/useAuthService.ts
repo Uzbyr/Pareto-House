@@ -44,9 +44,11 @@ export const useAuthService = (): AuthState &
         console.error("Login error:", error.message);
         return null;
       }
+
+      return null;
     } catch (error) {
       console.error("Login error:", error);
-      return false;
+      return null;
     }
   };
 

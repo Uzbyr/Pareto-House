@@ -97,7 +97,6 @@ export const AuthProvider = () => {
       value={{
         isAuthenticated,
         user,
-        setUser,
         session,
         requirePasswordChange,
         login,
