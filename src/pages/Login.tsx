@@ -35,17 +35,17 @@ const Login = () => {
     setIsLoading(true);
 
     try {
-      const success = await login(email, password);
+      const authUser = await login(email, password);
 
-      if (success) {
+      if (authUser) {
         toast.success("Login successful!");
 
         // Redirect based on user role
-        if (user?.role === "fellow") {
+        if (authUser?.role === "fellow") {
           navigate("/fellowship", { replace: true });
-        } else if (user?.role === "alumni") {
+        } else if (authUser?.role === "alumni") {
           navigate("/alumni", { replace: true });
-        } else if (hasAdminPrivileges(user?.role)) {
+        } else if (hasAdminPrivileges(authUser?.role)) {
           navigate("/admin/dashboard", { replace: true });
         } else {
           // Fallback redirect if no specific role match

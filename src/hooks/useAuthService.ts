@@ -1,7 +1,9 @@
 
 import { useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { AuthUser } from "@/types/auth";
 import { Session } from "@supabase/supabase-js";
+import { getUserRole } from "@/utils/authUtils";
 import {
   AuthState,
   AuthActions,
@@ -17,19 +19,31 @@ export const useAuthService = (): AuthState &
   const [requirePasswordChange, setRequirePasswordChange] =
     useState<boolean>(false);
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const login = async (email: string, password: string): Promise<AuthUser | null> => {
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password,
       });
 
-      if (error) {
-        console.error("Login error:", error.message);
-        return false;
+      if (data) {
+        const role = await getUserRole(data.user.id)
+
+        const authUser = {
+          email: data.user.email || "",
+          role: role,
+        }
+
+        setIsAuthenticated(true);
+        setSession(data.session);
+        setUser(authUser);
+        return authUser;
       }
 
-      return true;
+      if (error) {
+        console.error("Login error:", error.message);
+        return null;
+      }
     } catch (error) {
       console.error("Login error:", error);
       return false;
@@ -53,7 +67,6 @@ export const useAuthService = (): AuthState &
       setIsAuthenticated(false);
       setUser(null);
       setSession(null);
-      setRequirePasswordChange(false);
     }
   };
 

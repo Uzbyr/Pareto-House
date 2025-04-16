@@ -15,6 +15,7 @@ export const AuthProvider = () => {
   const {
     isAuthenticated,
     user,
+    setUser,
     session,
     requirePasswordChange,
     login,
@@ -22,7 +23,6 @@ export const AuthProvider = () => {
     changePassword,
     isPareto20Email,
     setIsAuthenticated,
-    setUser,
     setSession,
     setRequirePasswordChange,
   } = useAuthService();
@@ -53,42 +53,37 @@ export const AuthProvider = () => {
           email: currentSession.user.email || "",
           role: role,
         });
-
-        // Check if user needs to change password
-        const requireChange =
-          currentSession.user.user_metadata?.require_password_change === true;
-        setRequirePasswordChange(requireChange);
       }
     };
 
     setupAuth();
 
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((event, currentSession) => {
-      if (event === "SIGNED_IN") {
-        if (session?.access_token === currentSession?.access_token) {
-          return;
-        }
-        setTimeout(async () => {
-          const role = await getUserRole(currentSession.user.id);
-          setSession(currentSession);
-          setIsAuthenticated(true);
-          setUser({
-            email: currentSession.user.email || "",
-            role: role,
-          });
-        }, 0);
-      }
+    // const {
+    //   data: { subscription },
+    // } = supabase.auth.onAuthStateChange((event, currentSession) => {
+      // if (event === "SIGNED_IN") {
+      //   if (session?.access_token === currentSession?.access_token) {
+      //     return;
+      //   }
+      //   setTimeout(async () => {
+      //     const role = await getUserRole(currentSession.user.id);
+      //     setSession(currentSession);
+      //     setIsAuthenticated(true);
+      //     setUser({
+      //       email: currentSession.user.email || "",
+      //       role: role,
+      //     });
+      //   }, 0);
+      // }
 
-      if (event === "SIGNED_OUT") {
-        setSession(null);
-        setIsAuthenticated(false);
-        setUser(null);
-      }
-    });
+      // if (event === "SIGNED_OUT") {
+      //   setSession(null);
+      //   setIsAuthenticated(false);
+      //   setUser(null);
+      // }
+    // });
 
-    return () => subscription.unsubscribe();
+    // return () => subscription.unsubscribe();
   }, []);
 
   // Loading state replaced with early return of a loading component
@@ -102,6 +97,7 @@ export const AuthProvider = () => {
       value={{
         isAuthenticated,
         user,
+        setUser,
         session,
         requirePasswordChange,
         login,
