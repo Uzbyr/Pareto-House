@@ -9,7 +9,6 @@ import {
   Users,
   Award,
   MessageCircle,
-  Settings,
   LogOut,
   User,
 } from "lucide-react";
@@ -45,8 +44,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
       label: "Discussions",
       path: "/fellowship/discussions",
       icon: MessageCircle,
-    },
-    { label: "Settings", path: "/fellowship/settings", icon: Settings },
+    }
   ];
 
   return (
