@@ -15,4 +15,5 @@ export interface Fellow {
   competition_results: string | null;
   competitive_profiles: string[] | null;
   video_url: string | null;
+  x_url: string | null;
 }

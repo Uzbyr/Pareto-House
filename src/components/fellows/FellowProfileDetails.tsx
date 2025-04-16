@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
 import { ExternalLink, Briefcase, GraduationCap, School, MapPin, Globe, Award, Medal, Video } from "lucide-react";
 import { SiGithub } from "@icons-pack/react-simple-icons";
-import { Linkedin } from 'lucide-react';
+import { Linkedin, Twitter } from 'lucide-react';
 import { Fellow } from "@/types/fellow";
 
 interface FellowProfileDetailsProps {
@@ -137,7 +137,7 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
         
         <Separator className="bg-zinc-700 my-4" />
         
-        {(fellow.linkedin_url || fellow.github_url || fellow.website_url) && (
+        {(fellow.linkedin_url || fellow.github_url || fellow.website_url || fellow.x_url) && (
           <div>
             <h3 className="text-lg font-medium mb-2">Connect</h3>
             <div className="flex flex-wrap gap-3">
@@ -163,6 +163,19 @@ const FellowProfileDetails = ({ fellow, isCompact = false }: FellowProfileDetail
                 >
                   <a href={fellow.github_url} target="_blank" rel="noopener noreferrer">
                     <SiGithub className="w-5 h-5" />
+                  </a>
+                </Button>
+              )}
+              
+              {fellow.x_url && (
+                <Button
+                  variant="outline"
+                  size="icon"
+                  className="rounded-full bg-zinc-700 hover:bg-zinc-600 border-zinc-600 p-2"
+                  asChild
+                >
+                  <a href={fellow.x_url} target="_blank" rel="noopener noreferrer">
+                    <Twitter className="w-5 h-5" />
                   </a>
                 </Button>
               )}
