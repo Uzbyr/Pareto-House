@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -92,6 +93,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
               variant="outline"
               className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
               onClick={() => navigate("/fellowship/profile")}
+              type="button" 
             >
               <User className="h-4 w-4 mr-2" />
               Profile
@@ -100,6 +102,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
               variant="outline"
               className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
               onClick={handleLogout}
+              type="button"
             >
               <LogOut className="h-4 w-4 mr-2" />
               Sign Out

@@ -1,7 +1,7 @@
-import { useState } from "react";
+
+import { Link } from "react-router-dom"; 
 import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
-import { useNavigate } from "react-router-dom";
 import {
   Calendar as CalendarIcon,
   BookOpen,
@@ -13,7 +13,6 @@ import { Button } from "@/components/ui/button";
 
 const FellowDashboard = () => {
   const { user } = useAuth();
-  const navigate = useNavigate();
 
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
@@ -40,10 +39,12 @@ const FellowDashboard = () => {
             <Button
               variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate("/fellowship/directory")}
+              asChild
             >
-              View Directory
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/fellowship/directory" className="flex items-center justify-center">
+                View Directory
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </Card>
@@ -62,10 +63,12 @@ const FellowDashboard = () => {
             <Button
               variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate("/fellowship/events")}
+              asChild
             >
-              View Calendar
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/fellowship/events" className="flex items-center justify-center">
+                View Calendar
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </Card>
@@ -86,10 +89,12 @@ const FellowDashboard = () => {
             <Button
               variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate("/fellowship/opportunities")}
+              asChild
             >
-              View Opportunities
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/fellowship/opportunities" className="flex items-center justify-center">
+                View Opportunities
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </Card>
@@ -108,10 +113,12 @@ const FellowDashboard = () => {
             <Button
               variant="outline"
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              onClick={() => navigate("/fellowship/resources")}
+              asChild
             >
-              Browse Resources
-              <ArrowRight className="ml-2 h-4 w-4" />
+              <Link to="/fellowship/resources" className="flex items-center justify-center">
+                Browse Resources
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
             </Button>
           </div>
         </Card>
