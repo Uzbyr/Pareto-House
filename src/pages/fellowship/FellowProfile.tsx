@@ -24,11 +24,12 @@ const FellowProfile = () => {
     loading: profileLoading,
     refreshProfile,
   } = useProfile();
-  const { user } = useAuth();
+  const { user, session } = useAuth();
   const [loading, setLoading] = useState(false);
   
+  // Using session?.user.id instead of user.id
   const { profilePicture, setProfilePicture, uploadProfilePicture } = 
-    useProfilePictureUpload(user?.id, profile?.profile_picture_url);
+    useProfilePictureUpload(session?.user?.id, profile?.profile_picture_url);
 
   const [formData, setFormData] = useState({
     first_name: "",
