@@ -52,15 +52,15 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
 
   const navItems = [
     { label: "Dashboard", path: "/fellowship", icon: Home },
-    { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
-    { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
-    { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
-    { label: "Perks", path: "/fellowship/perks", icon: Gift },
     {
       label: "Discussions",
       path: "/fellowship/discussions",
       icon: MessageCircle,
-    }
+    },
+    { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
+    { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
+    { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
+    { label: "Perks", path: "/fellowship/perks", icon: Gift },
   ];
 
   const NavigationContent = () => (
