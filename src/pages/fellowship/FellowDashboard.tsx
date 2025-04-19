@@ -4,7 +4,6 @@ import { Card } from "@/components/ui/card";
 import { useAuth } from "@/contexts/AuthContext";
 import {
   Calendar as CalendarIcon,
-  BookOpen,
   Users,
   Award,
   ArrowRight,
@@ -94,30 +93,6 @@ const FellowDashboard = () => {
             >
               <Link to="/fellowship/opportunities" className="flex items-center justify-center">
                 View Opportunities
-                <ArrowRight className="ml-2 h-4 w-4" />
-              </Link>
-            </Button>
-          </div>
-        </Card>
-
-        {/* Resource Library */}
-        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
-          <div className="flex items-center mb-4">
-            <BookOpen className="h-6 w-6 text-pareto-pink mr-2" />
-            <h2 className="text-xl font-bold text-white">Resource Library</h2>
-          </div>
-          <p className="text-gray-400 mb-4">
-            Curated content and tools from our mentors. Access educational
-            resources and expert guidance materials.
-          </p>
-          <div className="mt-auto">
-            <Button
-              variant="outline"
-              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
-              asChild
-            >
-              <Link to="/fellowship/resources" className="flex items-center justify-center">
-                Browse Resources
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>

@@ -1,11 +1,9 @@
-
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   Home,
   Calendar,
-  BookOpen,
   Users,
   Award,
   MessageCircle,
@@ -57,7 +55,6 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
     { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
     { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
     { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
-    { label: "Resources", path: "/fellowship/resources", icon: BookOpen },
     { label: "Perks", path: "/fellowship/perks", icon: Gift },
     {
       label: "Discussions",
