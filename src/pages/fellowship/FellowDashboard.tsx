@@ -8,6 +8,7 @@ import {
   Award,
   ArrowRight,
   Gift,
+  MessageCircle,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
@@ -25,15 +26,14 @@ const FellowDashboard = () => {
 
       {/* Main sections */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-8">
-        {/* Fellows Directory */}
+        {/* Discussions */}
         <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
           <div className="flex items-center mb-4">
-            <Users className="h-6 w-6 text-pareto-pink mr-2" />
-            <h2 className="text-xl font-bold text-white">Fellows Directory</h2>
+            <MessageCircle className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Discussions</h2>
           </div>
           <p className="text-gray-400 mb-4">
-            Connect with your cohort and explore fellow members' profiles. Build
-            your network within the Pareto community.
+            Join our WhatsApp group to connect with fellow members and participate in discussions.
           </p>
           <div className="mt-auto">
             <Button
@@ -41,8 +41,8 @@ const FellowDashboard = () => {
               className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
               asChild
             >
-              <Link to="/fellowship/directory" className="flex items-center justify-center">
-                View Directory
+              <Link to="/fellowship/discussions" className="flex items-center justify-center">
+                View Discussions
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -67,6 +67,30 @@ const FellowDashboard = () => {
             >
               <Link to="/fellowship/events" className="flex items-center justify-center">
                 View Calendar
+                <ArrowRight className="ml-2 h-4 w-4" />
+              </Link>
+            </Button>
+          </div>
+        </Card>
+
+        {/* Fellows Directory */}
+        <Card className="bg-zinc-800 border-zinc-700 p-6 flex flex-col h-full">
+          <div className="flex items-center mb-4">
+            <Users className="h-6 w-6 text-pareto-pink mr-2" />
+            <h2 className="text-xl font-bold text-white">Fellows Directory</h2>
+          </div>
+          <p className="text-gray-400 mb-4">
+            Connect with your cohort and explore fellow members' profiles. Build
+            your network within the Pareto community.
+          </p>
+          <div className="mt-auto">
+            <Button
+              variant="outline"
+              className="w-full text-gray-300 border-zinc-700 hover:bg-zinc-700 mt-4"
+              asChild
+            >
+              <Link to="/fellowship/directory" className="flex items-center justify-center">
+                View Directory
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Link>
             </Button>
@@ -127,3 +151,4 @@ const FellowDashboard = () => {
 };
 
 export default FellowDashboard;
+
