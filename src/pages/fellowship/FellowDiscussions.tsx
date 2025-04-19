@@ -1,7 +1,7 @@
 
 import { Button } from "@/components/ui/button";
-import { Whatsapp } from "lucide-react";
 import { Card } from "@/components/ui/card";
+import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 
 const FellowDiscussions = () => {
   const handleJoinGroup = () => {
@@ -19,7 +19,7 @@ const FellowDiscussions = () => {
       </div>
 
       <Card className="bg-zinc-800 border-zinc-700 p-8 max-w-md mx-auto text-center">
-        <Whatsapp className="w-16 h-16 mx-auto mb-4 text-[#25D366]" />
+        <SiWhatsapp className="w-16 h-16 mx-auto mb-4 text-[#25D366]" />
         <h2 className="text-xl font-semibold text-white mb-4">Join our Fellowship WhatsApp Group</h2>
         <p className="text-gray-400 mb-6">
           Connect with other fellows, share resources, and stay updated with important announcements
@@ -29,7 +29,7 @@ const FellowDiscussions = () => {
           className="bg-[#25D366] hover:bg-[#20BD5A] text-white"
           size="lg"
         >
-          <Whatsapp className="w-5 h-5 mr-2" />
+          <SiWhatsapp className="w-5 h-5 mr-2" />
           Join WhatsApp Group
         </Button>
       </Card>
