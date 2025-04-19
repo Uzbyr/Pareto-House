@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -33,6 +32,7 @@ import FellowDirectory from "./pages/fellowship/FellowDirectory";
 import FellowEvents from "./pages/fellowship/FellowEvents";
 import FellowOpportunities from "./pages/fellowship/FellowOpportunities";
 import FellowPerks from "./pages/fellowship/FellowPerks";
+import FellowDiscussions from "./pages/fellowship/FellowDiscussions";
 
 const queryClient = new QueryClient();
 
@@ -217,6 +217,16 @@ const App = () => (
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
                         <FellowDashboard />
+                      </FellowLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/fellowship/discussions"
+                  element={
+                    <ProtectedRoute requiredRoles={["fellow", "admin"]}>
+                      <FellowLayout>
+                        <FellowDiscussions />
                       </FellowLayout>
                     </ProtectedRoute>
                   }
