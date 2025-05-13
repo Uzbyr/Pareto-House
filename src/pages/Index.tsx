@@ -24,44 +24,47 @@ const Index = () => {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Fellowship Perks Section */}
-      <FellowshipPerks />
+      {/* Content that will scroll over the hero section */}
+      <div className="relative z-20 mt-[100vh]"> {/* Start after the hero section height */}
+        {/* Fellowship Perks Section */}
+        <FellowshipPerks />
 
-      {/* Scrolling Mentors Banner */}
-      <div className="py-20 bg-black border-t border-black/10 dark:border-white/10">
-        <div className="max-w-7xl mx-auto px-6">
-          <ScrollingMentors />
+        {/* Scrolling Mentors Banner */}
+        <div className="py-20 bg-black border-t border-black/10 dark:border-white/10">
+          <div className="max-w-7xl mx-auto px-6">
+            <ScrollingMentors />
+          </div>
         </div>
-      </div>
 
-      {/* Backed Undergrads Section */}
-      <BackedUndergrads />
+        {/* Backed Undergrads Section */}
+        <BackedUndergrads />
 
-      {/*
-      <div className="max-w-7xl mx-auto px-6">
-        <TopInvestors />
-      </div>
-      */}
-
-      {/* Final CTA Section */}
-      <FinalCTA />
-
-      {/* Footer */}
-      <Footer />
-
-      {/* Login Button */}
-      <div className="border-t border-black/10 dark:border-white/10 py-6">
+        {/*
         <div className="max-w-7xl mx-auto px-6">
-          <div className="flex justify-end">
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
-              onClick={handleLogin}
-            >
-              <Lock className="w-4 h-4 mr-2" />
-              Login
-            </Button>
+          <TopInvestors />
+        </div>
+        */}
+
+        {/* Final CTA Section */}
+        <FinalCTA />
+
+        {/* Footer */}
+        <Footer />
+
+        {/* Login Button */}
+        <div className="border-t border-black/10 dark:border-white/10 py-6">
+          <div className="max-w-7xl mx-auto px-6">
+            <div className="flex justify-end">
+              <Button
+                variant="ghost"
+                size="sm"
+                className="text-white/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
+                onClick={handleLogin}
+              >
+                <Lock className="w-4 h-4 mr-2" />
+                Login
+              </Button>
+            </div>
           </div>
         </div>
       </div>
