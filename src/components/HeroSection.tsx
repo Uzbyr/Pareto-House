@@ -45,7 +45,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none font-figtree"
+            className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-none font-figtree tracking-[-0.02em]"
           >
             Pareto<br />Fellowship
           </motion.h1>
