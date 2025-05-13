@@ -18,7 +18,11 @@ const Navigation = () => {
         <div className="flex justify-between items-center">
           {/* PF Logo */}
           <Link to="/" className="shrink-0">
-            <span className="text-white font-figtree text-3xl font-bold">PF</span>
+            <img 
+              src="/lovable-uploads/c2e2e244-a9c9-47b3-80a9-5630048ad561.png" 
+              alt="Pareto Fellowship" 
+              className="h-8 w-auto"
+            />
           </Link>
 
           {/* Navigation Links */}
