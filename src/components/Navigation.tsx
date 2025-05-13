@@ -20,7 +20,7 @@ const Navigation = () => {
           <div className="w-[120px] flex items-center">
             <Link to="/" className="shrink-0">
               <img 
-                src="/lovable-uploads/1792e043-4953-42f3-8051-52c40608fc6d.png" 
+                src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png" 
                 alt="Pareto Fellowship" 
                 className="h-8 w-auto"
               />
