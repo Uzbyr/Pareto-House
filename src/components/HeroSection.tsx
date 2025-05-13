@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 
 const HeroSection = () => {
   return (
-    <section className="relative h-[90vh] bg-black flex flex-col justify-between overflow-hidden">
+    <section className="relative h-[90vh] bg-black flex flex-col justify-between overflow-hidden mt-16">
       {/* Top part - Pareto link */}
       <div className="absolute top-0 left-0 p-8">
         <a 
@@ -45,7 +45,7 @@ const HeroSection = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ delay: 0.3, duration: 0.7 }}
-            className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none"
+            className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none font-figtree"
           >
             Pareto<br />Fellowship
           </motion.h1>
@@ -56,7 +56,7 @@ const HeroSection = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.7 }}
-          className="text-right"
+          className="text-right font-figtree"
         >
           <div className="text-white/80 text-lg md:text-xl">
             [ The most ambitious<br />
@@ -69,7 +69,7 @@ const HeroSection = () => {
       <div className="absolute top-8 right-8">
         <Link
           to="/apply"
-          className="inline-flex items-center gap-2 px-6 py-2 border border-white/20 text-white hover:bg-white/10 transition-colors duration-300 text-sm font-medium"
+          className="inline-flex items-center gap-2 px-6 py-2 border border-white/20 text-white hover:bg-white/10 transition-colors duration-300 text-sm font-medium font-figtree"
         >
           APPLY NOW <ArrowRight className="w-4 h-4" />
         </Link>

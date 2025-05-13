@@ -18,7 +18,7 @@ const Index = () => {
     navigate("/login");
   };
   return (
-    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
+    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-figtree">
       <Navigation />
 
       {/* Hero Section */}
