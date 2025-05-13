@@ -30,7 +30,7 @@ const Navigation = () => {
           {/* Navigation Links */}
           <div className="flex-grow flex justify-center">
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center space-x-12">
+            <div className="hidden md:flex items-center space-x-6">
               <Link
                 to="/"
                 className={`text-[17px] font-figtree font-medium transition-colors ${
