@@ -10,6 +10,7 @@ import FinalCTA from "../components/FinalCTA";
 // import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
+import HeroSection from "../components/HeroSection";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
       <Navigation />
+
+      {/* Hero Section */}
+      <HeroSection />
 
       {/* Fellowship Perks Section */}
       <FellowshipPerks />

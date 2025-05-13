@@ -1,0 +1,81 @@
+
+import { motion } from "framer-motion";
+import { ArrowRight } from "lucide-react";
+import { Link } from "react-router-dom";
+
+const HeroSection = () => {
+  return (
+    <section className="relative h-[90vh] bg-black flex flex-col justify-between overflow-hidden">
+      {/* Top part - Pareto link */}
+      <div className="absolute top-0 left-0 p-8">
+        <a 
+          href="https://pareto20.com" 
+          target="_blank" 
+          rel="noopener noreferrer"
+          className="text-white/70 hover:text-white flex items-center transition-colors"
+        >
+          PARETO.COM <ArrowRight className="ml-2 w-4 h-4" />
+        </a>
+      </div>
+      
+      {/* Center content - 3D logo placeholder */}
+      <div className="flex-1 flex items-center justify-center">
+        <motion.div 
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1 }}
+          className="relative w-64 h-64 md:w-96 md:h-96"
+        >
+          {/* This is a placeholder for the 3D logo/video */}
+          <div className="w-full h-full flex items-center justify-center">
+            <img 
+              src="/lovable-uploads/2855374d-5472-4eba-9fcb-6c8edb0b9ae7.png" 
+              alt="Pareto Fellowship 3D Logo" 
+              className="max-w-full max-h-full object-contain"
+            />
+          </div>
+        </motion.div>
+      </div>
+      
+      {/* Bottom part - Title and tagline in a flex container */}
+      <div className="flex justify-between items-end p-8 md:p-12">
+        <div>
+          {/* Left aligned title */}
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3, duration: 0.7 }}
+            className="text-5xl md:text-7xl font-bold text-white tracking-tight leading-none"
+          >
+            Pareto<br />Fellowship
+          </motion.h1>
+        </div>
+        
+        {/* Right aligned tagline */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.6, duration: 0.7 }}
+          className="text-right"
+        >
+          <div className="text-white/80 text-lg md:text-xl">
+            [ The most ambitious<br />
+            undergraduate community ]
+          </div>
+        </motion.div>
+      </div>
+      
+      {/* Apply Now button - positioned absolutely */}
+      <div className="absolute top-8 right-8">
+        <Link
+          to="/apply"
+          className="inline-flex items-center gap-2 px-6 py-2 border border-white/20 text-white hover:bg-white/10 transition-colors duration-300 text-sm font-medium"
+        >
+          APPLY NOW <ArrowRight className="w-4 h-4" />
+        </Link>
+      </div>
+    </section>
+  );
+};
+
+export default HeroSection;
