@@ -29,7 +29,7 @@ const Index = () => {
 
       {/* Scrolling Mentors Banner */}
       <div className="py-20 bg-white dark:bg-pareto-black border-t border-black/10 dark:border-white/10">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-6">
           <ScrollingMentors />
         </div>
       </div>
@@ -38,7 +38,7 @@ const Index = () => {
       <BackedUndergrads />
 
       {/*
-      <div className="container mx-auto px-4">
+      <div className="max-w-7xl mx-auto px-6">
         <TopInvestors />
       </div>
       */}
@@ -51,7 +51,7 @@ const Index = () => {
 
       {/* Login Button */}
       <div className="border-t border-black/10 dark:border-white/10 py-6">
-        <div className="container mx-auto px-4">
+        <div className="max-w-7xl mx-auto px-6">
           <div className="flex justify-end">
             <Button
               variant="ghost"
