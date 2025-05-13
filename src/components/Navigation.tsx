@@ -14,16 +14,18 @@ const Navigation = () => {
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
-      <div className="container mx-auto px-6 py-3">
+      <div className="container mx-auto px-35 py-15">
         <div className="flex justify-between items-center">
           {/* PF Logo */}
-          <Link to="/" className="shrink-0">
-            <img 
-              src="/lovable-uploads/c2e2e244-a9c9-47b3-80a9-5630048ad561.png" 
-              alt="Pareto Fellowship" 
-              className="h-8 w-auto"
-            />
-          </Link>
+          <div className="w-[140px] flex items-center">
+            <Link to="/" className="shrink-0">
+              <img 
+                src="/lovable-uploads/c2e2e244-a9c9-47b3-80a9-5630048ad561.png" 
+                alt="Pareto Fellowship" 
+                className="h-8 w-auto"
+              />
+            </Link>
+          </div>
 
           {/* Navigation Links */}
           <div className="flex-grow flex justify-center">
@@ -63,13 +65,15 @@ const Navigation = () => {
             </div>
 
             {/* Apply Now Button */}
-            <Link
-              to="/apply"
-              className="group hidden md:inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
-            >
-              APPLY NOW
-              <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
-            </Link>
+            <div className="w-[140px] flex justify-end">
+              <Link
+                to="/apply"
+                className="group hidden md:inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
+              >
+                APPLY NOW
+                <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+              </Link>
+            </div>
           </div>
         </div>
       </div>

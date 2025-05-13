@@ -36,6 +36,10 @@ export default {
         inter: ["Inter", "sans-serif"],
         figtree: ["Figtree", "sans-serif"],
       },
+      padding: {
+        '15': '15px',
+        '35': '35px',
+      },
       animation: {
         "fade-up": "fadeUp 0.5s ease-out forwards",
         "fade-in": "fadeIn 0.5s ease-out forwards",
