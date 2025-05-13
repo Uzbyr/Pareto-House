@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -31,7 +30,7 @@ const MobileNav = () => {
       
       {/* Mobile menu overlay */}
       {isOpen && (
-        <div className="fixed inset-0 top-16 bg-black/90 backdrop-blur-lg z-50 flex flex-col p-6">
+        <div className="fixed inset-0 top-16 bg-black/30 backdrop-blur-[47px] z-50 flex flex-col p-6">
           <div className="flex flex-col gap-8 items-center mt-12">
             <Link
               to="/"
