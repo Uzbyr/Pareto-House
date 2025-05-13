@@ -1,64 +1,77 @@
+
 import { Link, useLocation } from "react-router-dom";
-import { Menu } from "lucide-react";
-import { useIsMobile } from "@/hooks/use-mobile";
-import {
-  Drawer,
-  DrawerContent,
-  DrawerTrigger,
-  DrawerClose,
-} from "@/components/ui/drawer";
-import { Button } from "@/components/ui/button";
+import { Menu, X } from "lucide-react";
+import { useState } from "react";
 
 const MobileNav = () => {
   const location = useLocation();
+  const [isOpen, setIsOpen] = useState(false);
 
   const isActive = (path: string) => {
     return location.pathname === path;
   };
 
+  const toggleMenu = () => {
+    setIsOpen(!isOpen);
+  };
+
   return (
     <div className="flex items-center md:hidden">
-      <Drawer>
-        <DrawerTrigger asChild>
-          <Button variant="ghost" className="p-2">
-            <Menu className="h-6 w-6" />
-          </Button>
-        </DrawerTrigger>
-        <DrawerContent className="h-[60vh] pt-10">
-          <nav className="flex flex-col gap-6 px-4">
+      <button 
+        className="p-2 text-white" 
+        onClick={toggleMenu}
+        aria-label="Toggle mobile menu"
+      >
+        {isOpen ? (
+          <X className="h-6 w-6" />
+        ) : (
+          <Menu className="h-6 w-6" />
+        )}
+      </button>
+      
+      {/* Mobile menu overlay */}
+      {isOpen && (
+        <div className="fixed inset-0 top-16 bg-black/95 z-50 flex flex-col p-6">
+          <div className="flex flex-col gap-8 items-center mt-12">
             <Link
               to="/"
-              className={`text-xl py-4 border-b ${
-                isActive("/")
-                  ? "text-pareto-pink font-medium border-pareto-pink"
-                  : "text-black/80 dark:text-white/80 border-black/10 dark:border-white/10"
+              className={`text-[17px] font-figtree font-medium ${
+                isActive("/") ? "text-white" : "text-white/80"
               }`}
+              onClick={toggleMenu}
             >
-              Home
+              ABOUT
             </Link>
             <Link
               to="/mentors"
-              className={`text-xl py-4 border-b ${
-                isActive("/mentors")
-                  ? "text-pareto-pink font-medium border-pareto-pink"
-                  : "text-black/80 dark:text-white/80 border-black/10 dark:border-white/10"
+              className={`text-[17px] font-figtree font-medium ${
+                isActive("/mentors") ? "text-white" : "text-white/80"
               }`}
+              onClick={toggleMenu}
             >
-              Mentors
+              MENTORS
             </Link>
             <Link
               to="/faq"
-              className={`text-xl py-4 border-b ${
-                isActive("/faq")
-                  ? "text-pareto-pink font-medium border-pareto-pink"
-                  : "text-black/80 dark:text-white/80 border-black/10 dark:border-white/10"
+              className={`text-[17px] font-figtree font-medium ${
+                isActive("/faq") ? "text-white" : "text-white/80"
               }`}
+              onClick={toggleMenu}
             >
               FAQ
             </Link>
-          </nav>
-        </DrawerContent>
-      </Drawer>
+            
+            {/* Mobile Apply Now Button */}
+            <Link
+              to="/apply"
+              className="mt-6 inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors text-[17px] font-figtree font-medium"
+              onClick={toggleMenu}
+            >
+              APPLY NOW
+            </Link>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

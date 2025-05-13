@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -12,47 +13,57 @@ const Navigation = () => {
   };
 
   return (
-    <nav className="fixed w-full top-0 z-50 bg-white/80 dark:bg-pareto-black/80 backdrop-blur-md border-b border-black/10 dark:border-white/10 min-h-16">
-      <div className="container mx-auto px-4 py-3">
+    <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
+      <div className="container mx-auto px-6 py-3">
         <div className="flex justify-between items-center">
-          <Link to="/">
-            <img src="/logo.png" alt="Pareto Logo" className="w-36 md:w-44" />
+          {/* PF Logo */}
+          <Link to="/" className="shrink-0">
+            <span className="text-white font-figtree text-3xl font-bold">PF</span>
           </Link>
 
-          <div className="flex items-center gap-2">
+          {/* Navigation Links */}
+          <div className="flex-grow flex justify-center">
             {/* Desktop Navigation */}
-            <div className="hidden md:flex items-center gap-2">
+            <div className="hidden md:flex items-center space-x-12">
               <Link
-                to="/mentors"
-                className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                  isActive("/mentors")
-                    ? "text-pareto-pink font-medium border-b-2 border-pareto-pink"
-                    : "text-black/80 dark:text-white/80"
+                to="/"
+                className={`text-[17px] font-figtree font-medium transition-colors ${
+                  isActive("/") ? "text-white" : "text-white/80 hover:text-white"
                 }`}
               >
-                Mentors
+                ABOUT
+              </Link>
+              <Link
+                to="/mentors"
+                className={`text-[17px] font-figtree font-medium transition-colors ${
+                  isActive("/mentors") ? "text-white" : "text-white/80 hover:text-white"
+                }`}
+              >
+                MENTORS
               </Link>
               <Link
                 to="/faq"
-                className={`text-lg hover:text-pareto-pink transition-all duration-300 px-4 py-2 ${
-                  isActive("/faq")
-                    ? "text-pareto-pink font-medium border-b-2 border-pareto-pink"
-                    : "text-black/80 dark:text-white/80"
+                className={`text-[17px] font-figtree font-medium transition-colors ${
+                  isActive("/faq") ? "text-white" : "text-white/80 hover:text-white"
                 }`}
               >
                 FAQ
               </Link>
             </div>
+          </div>
 
+          <div className="flex items-center">
             {/* Mobile Navigation */}
-            <MobileNav />
+            <div className="md:hidden">
+              <MobileNav />
+            </div>
 
-            {/* Apply Now Button - Always visible */}
+            {/* Apply Now Button */}
             <Link
               to="/apply"
-              className="group ml-2 inline-flex items-center gap-2 px-6 py-2 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-colors duration-300 text-md font-semibold rounded-sm"
+              className="group hidden md:inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
             >
-              Apply Now
+              APPLY NOW
               <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
             </Link>
           </div>

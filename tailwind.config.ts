@@ -1,3 +1,4 @@
+
 import type { Config } from "tailwindcss";
 
 export default {
@@ -33,6 +34,7 @@ export default {
       },
       fontFamily: {
         inter: ["Inter", "sans-serif"],
+        figtree: ["Figtree", "sans-serif"],
       },
       animation: {
         "fade-up": "fadeUp 0.5s ease-out forwards",
