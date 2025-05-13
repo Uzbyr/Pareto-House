@@ -18,7 +18,7 @@ const Index = () => {
     navigate("/login");
   };
   return (
-    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-figtree">
+    <div className="min-h-screen bg-black dark:bg-black text-black dark:text-white font-figtree">
       <Navigation />
 
       {/* Hero Section */}
@@ -28,7 +28,7 @@ const Index = () => {
       <FellowshipPerks />
 
       {/* Scrolling Mentors Banner */}
-      <div className="py-20 bg-white dark:bg-pareto-black border-t border-black/10 dark:border-white/10">
+      <div className="py-20 bg-black dark:bg-black border-t border-black/10 dark:border-white/10">
         <div className="max-w-7xl mx-auto px-6">
           <ScrollingMentors />
         </div>
@@ -56,7 +56,7 @@ const Index = () => {
             <Button
               variant="ghost"
               size="sm"
-              className="text-black/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
+              className="text-white/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
               onClick={handleLogin}
             >
               <Lock className="w-4 h-4 mr-2" />

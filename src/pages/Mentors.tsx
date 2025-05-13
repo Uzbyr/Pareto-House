@@ -1,3 +1,4 @@
+
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -65,7 +66,7 @@ const Mentors = () => {
   };
 
   return (
-    <div className="min-h-screen bg-white dark:bg-pareto-black text-black dark:text-white font-inter">
+    <div className="min-h-screen bg-black dark:bg-black text-white dark:text-white font-inter">
       <Navigation />
       <div className="container mx-auto px-4 py-12 pt-36">
         <motion.div
@@ -75,7 +76,7 @@ const Mentors = () => {
         >
           <h1 className="text-4xl md:text-5xl font-bold mb-8">Our Mentors</h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-16">
-            <p className="text-xl text-black/80 dark:text-white/80 max-w-2xl">
+            <p className="text-xl text-white/80 dark:text-white/80 max-w-2xl">
               Meet our exceptional mentors who are leaders in their fields,
               ready to share their knowledge and experience with the next
               generation of entrepreneurs.
@@ -106,7 +107,7 @@ const Mentors = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-black/5 dark:bg-white/5 rounded-lg p-6 hover:bg-black/10 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                className="bg-white/5 dark:bg-white/5 rounded-lg p-6 hover:bg-white/10 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer"
                 onClick={() => handleMentorClick(mentor)}
               >
                 <div className="flex items-start gap-4">
