@@ -140,7 +140,7 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black dark:bg-black text-white dark:text-white font-inter">
+    <div className="min-h-screen bg-black text-white font-inter">
       <Navigation />
 
       <div className="container mx-auto px-4 py-12 pt-36">
@@ -154,7 +154,7 @@ const FAQ = () => {
             Frequently Asked Questions
           </h1>
 
-          <p className="text-xl text-white/80 dark:text-white/80 mb-12">
+          <p className="text-xl text-white/80 mb-12">
             Find answers to common questions about the Pareto Fellowship.
           </p>
 
@@ -169,12 +169,12 @@ const FAQ = () => {
                     <AccordionItem
                       key={itemIndex}
                       value={`item-${index}-${itemIndex}`}
-                      className="border border-white/10 dark:border-white/10 rounded-lg px-4"
+                      className="border border-white/10 rounded-lg px-4"
                     >
                       <AccordionTrigger className="text-lg font-medium hover:text-pareto-pink">
                         {item.question}
                       </AccordionTrigger>
-                      <AccordionContent className="text-white/80 dark:text-white/80 leading-relaxed whitespace-pre-line">
+                      <AccordionContent className="text-white/80 leading-relaxed whitespace-pre-line">
                         {item.answer}
                       </AccordionContent>
                     </AccordionItem>
