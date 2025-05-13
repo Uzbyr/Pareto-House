@@ -14,7 +14,7 @@ const Navigation = () => {
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
-      <div className="container mx-auto px-4 md:px-8 py-4">
+      <div className="container mx-auto px-3 md:px-6 py-3">
         <div className="flex justify-between items-center">
           {/* PF Logo */}
           <div className="w-[120px] flex items-center">
