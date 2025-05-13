@@ -1,3 +1,4 @@
+
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -15,7 +16,7 @@ const MobileNav = () => {
   };
 
   return (
-    <div className="flex items-center md:hidden">
+    <div className="md:hidden">
       <button 
         className="p-2 text-white" 
         onClick={toggleMenu}
