@@ -68,7 +68,7 @@ const Navigation = () => {
             <div className="w-[140px] flex justify-end">
               <Link
                 to="/apply"
-                className="group hidden md:inline-flex items-center gap-2 px-5 py-2.5 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
+                className="group hidden md:inline-flex items-center gap-2 px-5 py-1.5 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
               >
                 APPLY NOW
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
