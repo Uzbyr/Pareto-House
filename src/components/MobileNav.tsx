@@ -64,7 +64,7 @@ const MobileNav = () => {
             {/* Mobile Apply Now Button */}
             <Link
               to="/apply"
-              className="mt-6 whitespace-nowrap inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors text-[15px] font-figtree font-medium"
+              className="mt-6 whitespace-nowrap inline-flex items-center gap-2 px-6 py-2 text-white border border-white hover:bg-white/10 transition-colors text-[17px] font-figtree font-medium"
               onClick={toggleMenu}
             >
               APPLY NOW
