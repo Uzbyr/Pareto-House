@@ -14,13 +14,13 @@ const Navigation = () => {
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
-      <div className="container mx-auto px-35 py-15">
+      <div className="container mx-auto px-4 md:px-8 py-4">
         <div className="flex justify-between items-center">
           {/* PF Logo */}
-          <div className="w-[140px] flex items-center">
+          <div className="w-[120px] flex items-center">
             <Link to="/" className="shrink-0">
               <img 
-                src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png" 
+                src="/lovable-uploads/1792e043-4953-42f3-8051-52c40608fc6d.png" 
                 alt="Pareto Fellowship" 
                 className="h-8 w-auto"
               />
@@ -68,7 +68,7 @@ const Navigation = () => {
             <div className="w-[140px] flex justify-end">
               <Link
                 to="/apply"
-                className="group hidden md:inline-flex items-center gap-2 px-5 py-1.5 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
+                className="group hidden md:inline-flex items-center gap-2 px-6 py-2 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[15px] font-figtree font-medium"
               >
                 APPLY NOW
                 <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
