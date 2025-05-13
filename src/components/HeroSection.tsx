@@ -64,16 +64,6 @@ const HeroSection = () => {
           </div>
         </motion.div>
       </div>
-      
-      {/* Apply Now button - positioned absolutely */}
-      <div className="absolute top-8 right-8">
-        <Link
-          to="/apply"
-          className="inline-flex items-center gap-2 px-6 py-2 border border-white/20 text-white hover:bg-white/10 transition-colors duration-300 text-sm font-medium font-figtree"
-        >
-          APPLY NOW <ArrowRight className="w-4 h-4" />
-        </Link>
-      </div>
     </section>
   );
 };
