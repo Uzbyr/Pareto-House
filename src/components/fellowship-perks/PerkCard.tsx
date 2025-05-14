@@ -34,7 +34,7 @@ const PerkCard: React.FC<PerkCardProps> = ({
         duration: 0.6,
         delay: index * 0.1,
       }}
-      className="bg-white p-8 rounded-lg"
+      className="bg-white p-8"
     >
       <h3 className="text-xl font-semibold mb-3 text-black font-figtree">
         {title}
