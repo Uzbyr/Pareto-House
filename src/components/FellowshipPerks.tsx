@@ -33,7 +33,7 @@ const FellowshipPerks = () => {
   ];
 
   return (
-    <div className="bg-black py-32">
+    <div className="bg-black py-20">
       <PageContainer>
         <div className="mb-4">
           <h2 className="text-[17px] text-[#828282] font-figtree uppercase tracking-widest text-left">

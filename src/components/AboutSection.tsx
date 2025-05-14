@@ -20,7 +20,7 @@ const Stat = ({ value, label }: StatProps) => {
 
 const AboutSection = () => {
   return (
-    <section className="py-24 bg-black border-t border-white/5 font-figtree">
+    <section className="py-20 bg-black border-t border-white/5 font-figtree">
       <PageContainer>
         <div className="text-center mb-16">
           <motion.h2 
