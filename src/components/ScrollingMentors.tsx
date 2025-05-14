@@ -47,7 +47,7 @@ const ScrollingMentors = () => {
   }, [isAutoScrolling, scrollSpeed]);
 
   return (
-    <div className="relative overflow-hidden py-16">
+    <div className="relative overflow-hidden">
       <ScrollArea
         viewportRef={viewportRef}
         className="w-full"
