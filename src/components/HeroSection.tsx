@@ -1,9 +1,17 @@
+
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import PageContainer from "./PageContainer";
+import { Skeleton } from "./ui/skeleton";
+
 const HeroSection = () => {
-  return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
+  const [videoLoaded, setVideoLoaded] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
+
+  return (
+    <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
       <PageContainer>
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
@@ -15,16 +23,26 @@ const HeroSection = () => {
       
       {/* Center content - 3D logo video */}
       <div className="flex-1 flex items-center justify-center">
-        <motion.div initial={{
-        opacity: 0
-      }} animate={{
-        opacity: 1
-      }} transition={{
-        duration: 1
-      }} className="relative w-64 h-64 md:w-96 md:h-96">
-          {/* Replaced image with video */}
+        <motion.div 
+          initial={{ opacity: 0 }} 
+          animate={{ opacity: 1 }} 
+          transition={{ duration: 1 }} 
+          className="relative w-64 h-64 md:w-96 md:h-96"
+        >
+          {/* Video with loading state */}
           <div className="w-full h-full flex items-center justify-center">
-            <video autoPlay muted loop playsInline className="max-w-full max-h-full object-contain" src="/lovable-uploads/pareto.mp4" />
+            {!videoLoaded && (
+              <Skeleton className="absolute inset-0 bg-zinc-800/50 w-full h-full rounded-xl" />
+            )}
+            <video 
+              autoPlay 
+              muted 
+              loop 
+              playsInline 
+              className={`max-w-full max-h-full object-contain transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
+              src="/lovable-uploads/pareto.mp4"
+              onLoadedData={() => setVideoLoaded(true)}
+            />
           </div>
         </motion.div>
       </div>
@@ -34,31 +52,23 @@ const HeroSection = () => {
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
             {/* Left aligned title - Updated font size to 95px and line height to 83% for medium screens */}
-            <motion.h1 initial={{
-            opacity: 0,
-            y: 20
-          }} animate={{
-            opacity: 1,
-            y: 0
-          }} transition={{
-            delay: 0.3,
-            duration: 0.7
-          }} className="text-5xl md:text-[95px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]">
+            <motion.h1 
+              initial={{ opacity: 0, y: 20 }} 
+              animate={{ opacity: 1, y: 0 }} 
+              transition={{ delay: 0.3, duration: 0.7 }} 
+              className="text-5xl md:text-[95px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]"
+            >
               Pareto<br />Fellowship
             </motion.h1>
           </div>
           
           {/* Right aligned tagline */}
-          <motion.div initial={{
-          opacity: 0,
-          y: 20
-        }} animate={{
-          opacity: 1,
-          y: 0
-        }} transition={{
-          delay: 0.6,
-          duration: 0.7
-        }} className="text-right font-figtree">
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.6, duration: 0.7 }} 
+            className="text-right font-figtree"
+          >
             <div className="text-[19px] text-[#828282]">
               [ The most ambitious<br />
               undergraduate community ]
@@ -66,6 +76,8 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </PageContainer>
-    </section>;
+    </section>
+  );
 };
+
 export default HeroSection;

@@ -2,12 +2,15 @@
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
+import { useState, useEffect } from "react";
 import MobileNav from "./MobileNav";
 import PageContainer from "./PageContainer";
+import { Skeleton } from "./ui/skeleton";
 
 const Navigation = () => {
   const location = useLocation();
   const isMobile = useIsMobile();
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   const isActive = (path: string) => {
     return location.pathname === path;
@@ -17,13 +20,17 @@ const Navigation = () => {
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
       <PageContainer className="py-3">
         <div className="flex justify-between items-center">
-          {/* PF Logo */}
+          {/* PF Logo with loading state */}
           <div className="flex items-center">
-            <Link to="/" className="shrink-0">
+            <Link to="/" className="shrink-0 relative">
+              {!logoLoaded && (
+                <Skeleton className="h-8 w-40 bg-zinc-800/50" />
+              )}
               <img 
                 src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png" 
                 alt="Pareto Fellowship" 
-                className="h-8 w-auto"
+                className={`h-8 w-auto transition-opacity duration-300 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                onLoad={() => setLogoLoaded(true)}
               />
             </Link>
           </div>
