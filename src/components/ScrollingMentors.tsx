@@ -11,13 +11,16 @@ const ScrollingMentors = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const scrollDirection = useRef<number>(1);
+  const [isHovering, setIsHovering] = useState(false);
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
+    setIsHovering(true);
   };
 
   const handleInteractionEnd = () => {
     setIsAutoScrolling(true);
+    setIsHovering(false);
   };
 
   useEffect(() => {
@@ -127,10 +130,12 @@ const ScrollingMentors = () => {
             </a>
           ))}
         </div>
-        <ScrollBar
-          orientation="horizontal"
-          className="bg-black/10 dark:bg-white/10"
-        />
+        {!isHovering && (
+          <ScrollBar
+            orientation="horizontal"
+            className="bg-black/10 dark:bg-white/10"
+          />
+        )}
       </ScrollArea>
     </div>
   );
