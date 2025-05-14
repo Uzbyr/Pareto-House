@@ -11,6 +11,7 @@ import FinalCTA from "../components/FinalCTA";
 import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
 import HeroSection from "../components/HeroSection";
+import AboutSection from "../components/AboutSection";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -26,6 +27,11 @@ const Index = () => {
 
       {/* Content that will scroll over the hero section */}
       <div className="relative z-20 mt-[100vh]"> {/* Start after the hero section height */}
+        {/* About Section */}
+        <div className="bg-black">
+          <AboutSection />
+        </div>
+        
         {/* Fellowship Perks Section */}
         <div className="bg-black">
           <FellowshipPerks />
