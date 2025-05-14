@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
@@ -58,7 +57,7 @@ const ScrollingMentors = () => {
         <h2 className="text-sm uppercase tracking-widest mb-3 text-pareto-pink">
           OUR MENTORS
         </h2>
-        <h3 className="text-3xl md:text-[35px] font-medium mb-4 max-w-[80%] mx-auto leading-tight">
+        <h3 className="text-3xl md:text-4xl font-bold mb-4">
           Learn from the Best
         </h3>
         <p className="text-black/60 dark:text-white/60 text-lg max-w-2xl mx-auto">
