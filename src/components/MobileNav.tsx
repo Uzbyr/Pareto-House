@@ -36,7 +36,7 @@ const MobileNav = () => {
             <Link
               to="/"
               className={`text-[17px] font-figtree font-medium ${
-                isActive("/") ? "text-white" : "text-white/80"
+                isActive("/") ? "text-white" : "text-[#828282]"
               }`}
               onClick={toggleMenu}
             >
@@ -45,7 +45,7 @@ const MobileNav = () => {
             <Link
               to="/mentors"
               className={`text-[17px] font-figtree font-medium ${
-                isActive("/mentors") ? "text-white" : "text-white/80"
+                isActive("/mentors") ? "text-white" : "text-[#828282]"
               }`}
               onClick={toggleMenu}
             >
@@ -54,7 +54,7 @@ const MobileNav = () => {
             <Link
               to="/faq"
               className={`text-[17px] font-figtree font-medium ${
-                isActive("/faq") ? "text-white" : "text-white/80"
+                isActive("/faq") ? "text-white" : "text-[#828282]"
               }`}
               onClick={toggleMenu}
             >

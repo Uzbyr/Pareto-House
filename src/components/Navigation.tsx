@@ -32,7 +32,7 @@ const Navigation = () => {
             <Link
               to="/"
               className={`text-[17px] font-figtree font-medium transition-colors ${
-                isActive("/") ? "text-white" : "text-white/80 hover:text-white"
+                isActive("/") ? "text-white" : "text-[#828282] hover:text-white"
               }`}
             >
               ABOUT
@@ -40,7 +40,7 @@ const Navigation = () => {
             <Link
               to="/mentors"
               className={`text-[17px] font-figtree font-medium transition-colors ${
-                isActive("/mentors") ? "text-white" : "text-white/80 hover:text-white"
+                isActive("/mentors") ? "text-white" : "text-[#828282] hover:text-white"
               }`}
             >
               MENTORS
@@ -48,7 +48,7 @@ const Navigation = () => {
             <Link
               to="/faq"
               className={`text-[17px] font-figtree font-medium transition-colors ${
-                isActive("/faq") ? "text-white" : "text-white/80 hover:text-white"
+                isActive("/faq") ? "text-white" : "text-[#828282] hover:text-white"
               }`}
             >
               FAQ

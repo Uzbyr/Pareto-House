@@ -11,7 +11,7 @@ const Stat = ({ value, label }: StatProps) => {
   return (
     <div className="flex flex-col items-center">
       <div className="text-5xl md:text-7xl font-semibold mb-2">{value}</div>
-      <div className="text-sm text-white/60 uppercase tracking-wider">
+      <div className="text-[17px] text-[#828282] uppercase tracking-wider">
         <span>{label}</span>
       </div>
     </div>
@@ -28,7 +28,7 @@ const AboutSection = () => {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
             viewport={{ once: true }}
-            className="text-sm text-gray-400 uppercase tracking-widest mb-4">
+            className="text-[17px] text-[#828282] uppercase tracking-widest mb-4">
             ABOUT
           </motion.h2>
           <motion.p 

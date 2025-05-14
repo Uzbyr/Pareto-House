@@ -8,7 +8,7 @@ const HeroSection = () => {
       {/* Top part - Pareto link */}
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
-          <a href="https://pareto20.com" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white flex items-center transition-colors">
+          <a href="https://pareto20.com" target="_blank" rel="noopener noreferrer" className="text-[17px] text-[#828282] hover:text-white flex items-center transition-colors">
             PARETO20.COM <ArrowRight className="ml-2 w-4 h-4" />
           </a>
         </div>
@@ -67,7 +67,7 @@ const HeroSection = () => {
           delay: 0.6,
           duration: 0.7
         }} className="text-right font-figtree">
-            <div className="text-white/80 text-lg md:text-xl">
+            <div className="text-[17px] text-[#828282]">
               [ The most ambitious<br />
               undergraduate community ]
             </div>
