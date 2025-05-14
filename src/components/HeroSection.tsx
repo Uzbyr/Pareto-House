@@ -1,6 +1,8 @@
+
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+
 const HeroSection = () => {
   return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
@@ -12,7 +14,7 @@ const HeroSection = () => {
         </div>
       </div>
       
-      {/* Center content - 3D logo placeholder */}
+      {/* Center content - 3D logo video */}
       <div className="flex-1 flex items-center justify-center">
         <motion.div initial={{
         opacity: 0
@@ -21,9 +23,16 @@ const HeroSection = () => {
       }} transition={{
         duration: 1
       }} className="relative w-64 h-64 md:w-96 md:h-96">
-          {/* This is a placeholder for the 3D logo/video */}
+          {/* Replaced image with video */}
           <div className="w-full h-full flex items-center justify-center">
-            <img alt="Pareto Fellowship 3D Logo" className="max-w-full max-h-full object-contain" src="/lovable-uploads/5907cdd5-ce88-499f-8e60-cd4184dfb58f.png" />
+            <video 
+              autoPlay 
+              muted 
+              loop 
+              playsInline
+              className="max-w-full max-h-full object-contain"
+              src="/lovable-uploads/pareto.mp4"
+            />
           </div>
         </motion.div>
       </div>
@@ -67,4 +76,5 @@ const HeroSection = () => {
       </div>
     </section>;
 };
+
 export default HeroSection;
