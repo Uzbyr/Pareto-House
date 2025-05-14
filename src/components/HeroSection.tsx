@@ -1,11 +1,8 @@
-
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-
 const HeroSection = () => {
-  return (
-    <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
+  return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
@@ -17,25 +14,16 @@ const HeroSection = () => {
       
       {/* Center content - 3D logo placeholder */}
       <div className="flex-1 flex items-center justify-center">
-        <motion.div 
-          initial={{
-            opacity: 0
-          }} 
-          animate={{
-            opacity: 1
-          }} 
-          transition={{
-            duration: 1
-          }} 
-          className="relative w-64 h-64 md:w-96 md:h-96"
-        >
+        <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        duration: 1
+      }} className="relative w-64 h-64 md:w-96 md:h-96">
           {/* This is a placeholder for the 3D logo/video */}
           <div className="w-full h-full flex items-center justify-center">
-            <img 
-              alt="Pareto Fellowship 3D Logo" 
-              className="max-w-full max-h-full object-contain" 
-              src="/lovable-uploads/5907cdd5-ce88-499f-8e60-cd4184dfb58f.png" 
-            />
+            <img alt="Pareto Fellowship 3D Logo" className="max-w-full max-h-full object-contain" src="/lovable-uploads/5907cdd5-ce88-499f-8e60-cd4184dfb58f.png" />
           </div>
         </motion.div>
       </div>
@@ -45,41 +33,31 @@ const HeroSection = () => {
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
             {/* Left aligned title */}
-            <motion.h1 
-              initial={{
-                opacity: 0,
-                y: 20
-              }} 
-              animate={{
-                opacity: 1,
-                y: 0
-              }} 
-              transition={{
-                delay: 0.3,
-                duration: 0.7
-              }} 
-              className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[75%] font-figtree tracking-[-0.02em]"
-            >
+            <motion.h1 initial={{
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            delay: 0.3,
+            duration: 0.7
+          }} className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[90%] font-figtree tracking-[-0.02em]">
               Pareto<br />Fellowship
             </motion.h1>
           </div>
           
           {/* Right aligned tagline */}
-          <motion.div 
-            initial={{
-              opacity: 0,
-              y: 20
-            }} 
-            animate={{
-              opacity: 1,
-              y: 0
-            }} 
-            transition={{
-              delay: 0.6,
-              duration: 0.7
-            }} 
-            className="text-right font-figtree"
-          >
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          delay: 0.6,
+          duration: 0.7
+        }} className="text-right font-figtree">
             <div className="text-white/80 text-lg md:text-xl">
               [ The most ambitious<br />
               undergraduate community ]
@@ -87,8 +65,6 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </div>
-    </section>
-  );
+    </section>;
 };
-
 export default HeroSection;
