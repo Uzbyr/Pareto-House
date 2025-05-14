@@ -54,19 +54,6 @@ const ScrollingMentors = () => {
 
   return (
     <div className="relative overflow-hidden py-16">
-      <div className="text-center mb-8">
-        <h2 className="text-sm uppercase tracking-widest mb-3 text-pareto-pink">
-          OUR MENTORS
-        </h2>
-        <h3 className="text-5xl font-bold mb-4">
-          Learn from the Best
-        </h3>
-        <p className="text-[19px] text-black/60 dark:text-white/60 max-w-2xl mx-auto">
-          Wisdom from leaders who have collectively built companies worth over
-          $50 billion and invested in thousands of startups
-        </p>
-      </div>
-
       <ScrollArea
         viewportRef={viewportRef}
         className="w-full"
@@ -145,23 +132,6 @@ const ScrollingMentors = () => {
           className="bg-black/10 dark:bg-white/10"
         />
       </ScrollArea>
-
-      <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
-        <p className="text-[19px] text-black/70 dark:text-white/70 italic">
-          Wisdom from leaders who have collectively built companies worth over
-          $50 billion and invested in thousands of startups
-        </p>
-      </div>
-
-      <div className="text-center mt-8">
-        <Link
-          to="/mentors"
-          className="inline-flex items-center gap-2 px-6 py-3 bg-black/10 dark:bg-white/10 hover:bg-black/20 dark:hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm"
-        >
-          Meet All Mentors
-          <ArrowRight className="w-5 h-5" />
-        </Link>
-      </div>
     </div>
   );
 };
