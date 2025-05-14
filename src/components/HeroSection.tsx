@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -33,7 +34,7 @@ const HeroSection = () => {
       <PageContainer>
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
-            {/* Left aligned title */}
+            {/* Left aligned title - Updated font size to 95px and line height to 83% for medium screens */}
             <motion.h1 initial={{
             opacity: 0,
             y: 20
@@ -43,7 +44,7 @@ const HeroSection = () => {
           }} transition={{
             delay: 0.3,
             duration: 0.7
-          }} className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[87%] font-figtree tracking-[-0.02em]">
+          }} className="text-5xl md:text-[95px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]">
               Pareto<br />Fellowship
             </motion.h1>
           </div>
