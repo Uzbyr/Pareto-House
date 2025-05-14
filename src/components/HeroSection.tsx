@@ -1,9 +1,7 @@
-
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import PageContainer from "./PageContainer";
-
 const HeroSection = () => {
   return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
@@ -26,14 +24,7 @@ const HeroSection = () => {
       }} className="relative w-64 h-64 md:w-96 md:h-96">
           {/* Replaced image with video */}
           <div className="w-full h-full flex items-center justify-center">
-            <video 
-              autoPlay 
-              muted 
-              loop 
-              playsInline
-              className="max-w-full max-h-full object-contain"
-              src="/lovable-uploads/pareto.mp4"
-            />
+            <video autoPlay muted loop playsInline className="max-w-full max-h-full object-contain" src="/lovable-uploads/pareto.mp4" />
           </div>
         </motion.div>
       </div>
@@ -52,7 +43,7 @@ const HeroSection = () => {
           }} transition={{
             delay: 0.3,
             duration: 0.7
-          }} className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[90%] font-figtree tracking-[-0.02em]">
+          }} className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[87%] font-figtree tracking-[-0.02em]">
               Pareto<br />Fellowship
             </motion.h1>
           </div>
@@ -77,5 +68,4 @@ const HeroSection = () => {
       </PageContainer>
     </section>;
 };
-
 export default HeroSection;
