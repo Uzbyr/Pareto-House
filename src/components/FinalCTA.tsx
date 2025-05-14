@@ -2,11 +2,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import PageContainer from "./PageContainer";
 
 const FinalCTA = () => {
   return (
     <div className="py-32 bg-black">
-      <div className="container mx-auto px-4 text-center">
+      <PageContainer className="text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -31,7 +32,7 @@ const FinalCTA = () => {
             </Link>
           </div>
         </motion.div>
-      </div>
+      </PageContainer>
     </div>
   );
 };

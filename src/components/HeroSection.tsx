@@ -2,17 +2,18 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import PageContainer from "./PageContainer";
 
 const HeroSection = () => {
   return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
-      <div className="max-w-7xl mx-auto px-6 w-full">
+      <PageContainer>
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
           <a href="https://pareto20.com" target="_blank" rel="noopener noreferrer" className="text-[17px] text-[#828282] hover:text-white flex items-center transition-colors">
             PARETO20.COM <ArrowRight className="ml-2 w-4 h-4" />
           </a>
         </div>
-      </div>
+      </PageContainer>
       
       {/* Center content - 3D logo video */}
       <div className="flex-1 flex items-center justify-center">
@@ -38,7 +39,7 @@ const HeroSection = () => {
       </div>
       
       {/* Bottom part - Title and tagline in a flex container */}
-      <div className="max-w-7xl mx-auto px-6 w-full">
+      <PageContainer>
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
             {/* Left aligned title */}
@@ -73,7 +74,7 @@ const HeroSection = () => {
             </div>
           </motion.div>
         </div>
-      </div>
+      </PageContainer>
     </section>;
 };
 

@@ -3,6 +3,7 @@ import { useState } from "react";
 import { motion } from "framer-motion";
 import PerkCard from "./fellowship-perks/PerkCard";
 import UniversitiesDialog from "./fellowship-perks/UniversitiesDialog";
+import PageContainer from "./PageContainer";
 
 const FellowshipPerks = () => {
   const [showUniversities, setShowUniversities] = useState(false);
@@ -33,7 +34,7 @@ const FellowshipPerks = () => {
 
   return (
     <div className="bg-black py-32">
-      <div className="container mx-auto px-4">
+      <PageContainer>
         <div className="mb-4">
           <h2 className="text-[17px] text-[#828282] font-figtree uppercase tracking-widest text-left">
             FELLOWSHIP PERKS
@@ -55,7 +56,7 @@ const FellowshipPerks = () => {
             />
           ))}
         </div>
-      </div>
+      </PageContainer>
 
       <UniversitiesDialog
         open={showUniversities}

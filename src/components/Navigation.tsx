@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
 import MobileNav from "./MobileNav";
+import PageContainer from "./PageContainer";
 
 const Navigation = () => {
   const location = useLocation();
@@ -14,7 +15,7 @@ const Navigation = () => {
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 py-3">
+      <PageContainer className="py-3">
         <div className="flex justify-between items-center">
           {/* PF Logo */}
           <div className="flex items-center">
@@ -71,7 +72,7 @@ const Navigation = () => {
             </div>
           </div>
         </div>
-      </div>
+      </PageContainer>
     </nav>
   );
 };

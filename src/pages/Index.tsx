@@ -13,6 +13,7 @@ import BackedUndergrads from "../components/BackedUndergrads";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
 import MentorSection from "../components/MentorSection";
+import PageContainer from "../components/PageContainer";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -66,7 +67,7 @@ const Index = () => {
 
         {/* Login Button */}
         <div className="bg-black border-t border-black/10 dark:border-white/10 py-6">
-          <div className="max-w-7xl mx-auto px-6">
+          <PageContainer>
             <div className="flex justify-end">
               <Button
                 variant="ghost"
@@ -78,7 +79,7 @@ const Index = () => {
                 Login
               </Button>
             </div>
-          </div>
+          </PageContainer>
         </div>
       </div>
     </div>

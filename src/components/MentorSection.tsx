@@ -2,11 +2,12 @@
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import ScrollingMentors from "./ScrollingMentors";
+import PageContainer from "./PageContainer";
 
 const MentorSection = () => {
   return (
     <div className="py-32 bg-black">
-      <div className="max-w-7xl mx-auto px-6">
+      <PageContainer>
         <div className="flex flex-col items-start">
           <h2 className="text-[17px] text-[#828282] uppercase tracking-widest mb-3 font-figtree">
             OUR MENTORS
@@ -21,7 +22,7 @@ const MentorSection = () => {
             $50 billion and invested in thousands of startups
           </p>
         </div>
-      </div>
+      </PageContainer>
       
       {/* Add the ScrollingMentors component below the intro text */}
       <ScrollingMentors />
