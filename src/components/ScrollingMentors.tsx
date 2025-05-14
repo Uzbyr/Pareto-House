@@ -6,8 +6,8 @@ import { mentors } from "@/data/mentors";
 const ScrollingMentors = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const scrollDirection = useRef<number>(1);
   const [isHovering, setIsHovering] = useState(false);
+  const scrollSpeed = 1; // reduced speed for smoother scrolling
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
@@ -26,19 +26,14 @@ const ScrollingMentors = () => {
       if (isAutoScrolling && viewportRef.current) {
         const el = viewportRef.current;
         const maxScrollLeft = el.scrollWidth - el.clientWidth;
-        const currentScrollLeft = el.scrollLeft;
-        const speed = 2; // adjust speed as desired
-
-        // If we've hit the right edge, switch to negative direction
-        if (currentScrollLeft >= maxScrollLeft) {
-          scrollDirection.current = -1;
+        
+        // Move scroll position right
+        el.scrollLeft += scrollSpeed;
+        
+        // If we've reached the end, reset to beginning (loop effect)
+        if (el.scrollLeft >= maxScrollLeft) {
+          el.scrollLeft = 0;
         }
-        // If we've hit the left edge, switch to positive direction
-        else if (currentScrollLeft <= 0) {
-          scrollDirection.current = 1;
-        }
-
-        el.scrollLeft += scrollDirection.current * speed;
       }
 
       frameId = requestAnimationFrame(step);
@@ -49,7 +44,7 @@ const ScrollingMentors = () => {
     }
 
     return () => cancelAnimationFrame(frameId);
-  }, [isAutoScrolling]);
+  }, [isAutoScrolling, scrollSpeed]);
 
   return (
     <div className="relative overflow-hidden py-16">
