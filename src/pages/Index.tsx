@@ -12,6 +12,7 @@ import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
+import MentorSection from "../components/MentorSection";
 
 const Index = () => {
   const navigate = useNavigate();
@@ -37,7 +38,10 @@ const Index = () => {
           <FellowshipPerks />
         </div>
 
-        {/* Removing Scrolling Mentors Banner */}
+        {/* Mentor Section */}
+        <div className="bg-black">
+          <MentorSection />
+        </div>
 
         {/* Backed Undergrads Section */}
         <div className="bg-black">
