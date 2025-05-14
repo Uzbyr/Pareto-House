@@ -9,7 +9,7 @@ const HeroSection = () => {
       <div className="max-w-7xl mx-auto px-6 w-full">
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
           <a href="https://pareto20.com" target="_blank" rel="noopener noreferrer" className="text-white/70 hover:text-white flex items-center transition-colors">
-            PARETO.COM <ArrowRight className="ml-2 w-4 h-4" />
+            PARETO20.COM <ArrowRight className="ml-2 w-4 h-4" />
           </a>
         </div>
       </div>
