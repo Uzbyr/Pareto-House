@@ -14,7 +14,7 @@ const FinalCTA = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6 tracking-tight">
+          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
             Ready to Join the Elite?
           </h2>
           <p className="text-xl md:text-2xl text-black/70 dark:text-white/70 mb-12">
