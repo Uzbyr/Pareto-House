@@ -28,8 +28,8 @@ const Navigation = () => {
             </Link>
           </div>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex items-center space-x-9">
+          {/* Navigation Links - centered on all screen sizes */}
+          <div className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-9">
             <Link
               to="/"
               className={`text-[17px] font-figtree font-medium transition-colors ${
