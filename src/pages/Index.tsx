@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import FellowshipPerks from "../components/FellowshipPerks";
-// import ScrollingMentors from "../components/ScrollingMentors";
+import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
 // import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";

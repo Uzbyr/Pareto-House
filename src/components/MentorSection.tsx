@@ -1,6 +1,7 @@
 
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import ScrollingMentors from "./ScrollingMentors";
 
 const MentorSection = () => {
   return (
@@ -21,6 +22,9 @@ const MentorSection = () => {
           </p>
         </div>
       </div>
+      
+      {/* Add the ScrollingMentors component below the intro text */}
+      <ScrollingMentors />
     </div>
   );
 };
