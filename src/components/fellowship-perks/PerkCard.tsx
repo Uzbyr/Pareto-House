@@ -25,7 +25,7 @@ const PerkCard: React.FC<PerkCardProps> = ({
     duration: 0.6,
     delay: index * 0.1
   }} className="bg-white p-6 h-[300px]">
-      <h3 className="text-[35px] font-medium mb-3 text-black font-figtree leading-[90%] min-h-[84px]">
+      <h3 className="text-[35px] font-medium mb-3 text-black font-figtree leading-[90%] min-h-[8px]">
         {title}
       </h3>
       {isPeerNetwork ? <div>
