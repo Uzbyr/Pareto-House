@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
 import FellowshipPerks from "../components/FellowshipPerks";
-import ScrollingMentors from "../components/ScrollingMentors";
+// import ScrollingMentors from "../components/ScrollingMentors";
 import FinalCTA from "../components/FinalCTA";
 // import TopInvestors from "../components/TopInvestors";
 import Navigation from "../components/Navigation";
@@ -37,12 +37,7 @@ const Index = () => {
           <FellowshipPerks />
         </div>
 
-        {/* Scrolling Mentors Banner */}
-        <div className="py-20 bg-black border-t border-black/10 dark:border-white/10">
-          <div className="max-w-7xl mx-auto px-6">
-            <ScrollingMentors />
-          </div>
-        </div>
+        {/* Removing Scrolling Mentors Banner */}
 
         {/* Backed Undergrads Section */}
         <div className="bg-black">
