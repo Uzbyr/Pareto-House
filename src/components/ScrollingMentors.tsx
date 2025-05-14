@@ -1,10 +1,6 @@
 
-import { ArrowRight } from "lucide-react";
-import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
-import { ExternalLink } from "lucide-react";
-import { Button } from "./ui/button";
 import { mentors } from "@/data/mentors";
 
 const ScrollingMentors = () => {
@@ -76,22 +72,19 @@ const ScrollingMentors = () => {
               className="flex-shrink-0 group"
             >
               <div className="flex flex-col items-center w-48">
-                <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
+                <div className="h-48 w-48 aspect-square rounded-none overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
                   {mentor.imageUrl && (
                     <img
                       src={mentor.imageUrl}
                       alt={mentor.name}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 transition-all"
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-lg text-center mb-1">
-                    {mentor.name}
-                  </h4>
-                  <ExternalLink className="h-4 w-4 text-gray-500" />
-                </div>
-                <p className="text-black/60 dark:text-white/60 text-sm text-center">
+                <h4 className="font-figtree font-semibold text-lg text-center mb-1">
+                  {mentor.name}
+                </h4>
+                <p className="font-figtree text-black/60 dark:text-white/60 text-sm text-center">
                   {mentor.description}
                 </p>
               </div>
@@ -108,22 +101,19 @@ const ScrollingMentors = () => {
               className="flex-shrink-0 group"
             >
               <div className="flex flex-col items-center w-48">
-                <div className="h-48 w-48 rounded-full overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
+                <div className="h-48 w-48 aspect-square rounded-none overflow-hidden mb-4 group-hover:shadow-lg transition-all duration-300">
                   {mentor.imageUrl && (
                     <img
                       src={mentor.imageUrl}
                       alt={mentor.name}
-                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105"
+                      className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 transition-all"
                     />
                   )}
                 </div>
-                <div className="flex items-center gap-2">
-                  <h4 className="font-semibold text-lg text-center mb-1">
-                    {mentor.name}
-                  </h4>
-                  <ExternalLink className="h-4 w-4 text-gray-500" />
-                </div>
-                <p className="text-black/60 dark:text-white/60 text-sm text-center">
+                <h4 className="font-figtree font-semibold text-lg text-center mb-1">
+                  {mentor.name}
+                </h4>
+                <p className="font-figtree text-black/60 dark:text-white/60 text-sm text-center">
                   {mentor.description}
                 </p>
               </div>
