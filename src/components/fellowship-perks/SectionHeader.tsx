@@ -27,10 +27,10 @@ const SectionHeader: React.FC<SectionHeaderProps> = ({
       }}
       className="mb-16 text-center"
     >
-      <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
+      <h2 className="text-5xl font-bold mb-4 tracking-tight">
         {title}
       </h2>
-      <p className="text-lg md:text-xl text-black/70 dark:text-white/70 max-w-2xl mx-auto">
+      <p className="text-[19px] text-black/70 dark:text-white/70 max-w-2xl mx-auto">
         {description}
       </p>
     </motion.div>

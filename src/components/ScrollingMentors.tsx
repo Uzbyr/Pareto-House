@@ -1,3 +1,4 @@
+
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { useRef, useEffect, useState } from "react";
@@ -57,12 +58,12 @@ const ScrollingMentors = () => {
         <h2 className="text-sm uppercase tracking-widest mb-3 text-pareto-pink">
           OUR MENTORS
         </h2>
-        <h3 className="text-3xl md:text-4xl font-bold mb-4">
+        <h3 className="text-5xl font-bold mb-4">
           Learn from the Best
         </h3>
-        <p className="text-black/60 dark:text-white/60 text-lg max-w-2xl mx-auto">
-          Decacorn and unicorn founders, tier 1 investors, top operators, public
-          figures, and more
+        <p className="text-[19px] text-black/60 dark:text-white/60 max-w-2xl mx-auto">
+          Wisdom from leaders who have collectively built companies worth over
+          $50 billion and invested in thousands of startups
         </p>
       </div>
 
@@ -146,7 +147,7 @@ const ScrollingMentors = () => {
       </ScrollArea>
 
       <div className="text-center mt-6 mb-12 max-w-3xl mx-auto">
-        <p className="text-lg text-black/70 dark:text-white/70 italic">
+        <p className="text-[19px] text-black/70 dark:text-white/70 italic">
           Wisdom from leaders who have collectively built companies worth over
           $50 billion and invested in thousands of startups
         </p>

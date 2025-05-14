@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -74,9 +73,12 @@ const Mentors = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">Our Mentors</h1>
+          <h2 className="text-sm uppercase tracking-widest mb-3 text-pareto-pink">
+            OUR MENTORS
+          </h2>
+          <h1 className="text-5xl font-bold mb-4">Our Mentors</h1>
           <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-16">
-            <p className="text-xl text-white/80 dark:text-white/80 max-w-2xl">
+            <p className="text-[19px] text-white/80 dark:text-white/80 max-w-2xl">
               Meet our exceptional mentors who are leaders in their fields,
               ready to share their knowledge and experience with the next
               generation of entrepreneurs.
