@@ -19,14 +19,6 @@ const MentorSection = () => {
             Wisdom from leaders who have collectively built companies worth over 
             $50 billion and invested in thousands of startups
           </p>
-          
-          <Link
-            to="/mentors"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-white/10 hover:bg-white/20 transition-colors duration-300 text-lg font-medium rounded-sm"
-          >
-            Meet All Mentors
-            <ArrowRight className="w-5 h-5" />
-          </Link>
         </div>
       </div>
     </div>
