@@ -1,3 +1,4 @@
+
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { useRef, useState, useEffect } from "react";
 
@@ -130,7 +131,7 @@ const BackedUndergrads = () => {
   }, [isAutoScrolling]);
 
   return (
-    <div className="bg-black/5 dark:bg-white/5 py-20">
+    <div className="bg-black py-20">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-sm uppercase tracking-widest mb-3 text-pareto-pink">

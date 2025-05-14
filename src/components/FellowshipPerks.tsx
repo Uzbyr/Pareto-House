@@ -1,3 +1,4 @@
+
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -11,7 +12,7 @@ const FellowshipPerks = () => {
   const [showUniversities, setShowUniversities] = useState(false);
 
   return (
-    <div className="bg-black/5 dark:bg-white/5 py-32">
+    <div className="bg-black py-32">
       <div className="container mx-auto px-4">
         <SectionHeader
           title="Fellowship Perks"

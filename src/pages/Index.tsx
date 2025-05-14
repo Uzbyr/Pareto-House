@@ -27,7 +27,9 @@ const Index = () => {
       {/* Content that will scroll over the hero section */}
       <div className="relative z-20 mt-[100vh]"> {/* Start after the hero section height */}
         {/* Fellowship Perks Section */}
-        <FellowshipPerks />
+        <div className="bg-black">
+          <FellowshipPerks />
+        </div>
 
         {/* Scrolling Mentors Banner */}
         <div className="py-20 bg-black border-t border-black/10 dark:border-white/10">
@@ -37,7 +39,9 @@ const Index = () => {
         </div>
 
         {/* Backed Undergrads Section */}
-        <BackedUndergrads />
+        <div className="bg-black">
+          <BackedUndergrads />
+        </div>
 
         {/*
         <div className="max-w-7xl mx-auto px-6">
@@ -46,13 +50,17 @@ const Index = () => {
         */}
 
         {/* Final CTA Section */}
-        <FinalCTA />
+        <div className="bg-black">
+          <FinalCTA />
+        </div>
 
         {/* Footer */}
-        <Footer />
+        <div className="bg-black">
+          <Footer />
+        </div>
 
         {/* Login Button */}
-        <div className="border-t border-black/10 dark:border-white/10 py-6">
+        <div className="bg-black border-t border-black/10 dark:border-white/10 py-6">
           <div className="max-w-7xl mx-auto px-6">
             <div className="flex justify-end">
               <Button

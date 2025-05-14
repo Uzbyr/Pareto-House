@@ -1,10 +1,11 @@
+
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 
 const FinalCTA = () => {
   return (
-    <div className="py-32 bg-gradient-to-b from-transparent to-black/5 dark:to-white/5">
+    <div className="py-32 bg-black">
       <div className="container mx-auto px-4 text-center">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
