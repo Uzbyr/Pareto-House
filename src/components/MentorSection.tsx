@@ -7,7 +7,7 @@ const MentorSection = () => {
     <div className="py-32 bg-black">
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex flex-col items-start">
-          <h2 className="text-sm uppercase tracking-widest mb-3 text-[#828282] font-figtree">
+          <h2 className="text-[17px] text-[#828282] uppercase tracking-widest mb-3 font-figtree">
             OUR MENTORS
           </h2>
           
