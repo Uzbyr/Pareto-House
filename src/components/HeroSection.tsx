@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { AspectRatio } from "./ui/aspect-ratio";
 
 const HeroSection = () => {
   return <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
@@ -17,23 +16,24 @@ const HeroSection = () => {
       
       {/* Center content - 3D logo video */}
       <div className="flex-1 flex items-center justify-center">
-        <motion.div 
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ duration: 1 }}
-          className="relative w-full max-w-[85%] md:max-w-[70%] lg:max-w-[60%] aspect-square"
-        >
-          {/* Video container with aspect ratio */}
-          <AspectRatio ratio={1} className="w-full">
+        <motion.div initial={{
+        opacity: 0
+      }} animate={{
+        opacity: 1
+      }} transition={{
+        duration: 1
+      }} className="relative w-64 h-64 md:w-96 md:h-96">
+          {/* Replaced image with video */}
+          <div className="w-full h-full flex items-center justify-center">
             <video 
               autoPlay 
               muted 
               loop 
               playsInline
-              className="w-full h-full object-cover"
+              className="max-w-full max-h-full object-contain"
               src="/lovable-uploads/pareto.mp4"
             />
-          </AspectRatio>
+          </div>
         </motion.div>
       </div>
       
@@ -42,23 +42,31 @@ const HeroSection = () => {
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
             {/* Left aligned title */}
-            <motion.h1 
-              initial={{ opacity: 0, y: 20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ delay: 0.3, duration: 0.7 }}
-              className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[90%] font-figtree tracking-[-0.02em]"
-            >
+            <motion.h1 initial={{
+            opacity: 0,
+            y: 20
+          }} animate={{
+            opacity: 1,
+            y: 0
+          }} transition={{
+            delay: 0.3,
+            duration: 0.7
+          }} className="text-5xl md:text-7xl font-semibold text-white tracking-tight leading-[90%] font-figtree tracking-[-0.02em]">
               Pareto<br />Fellowship
             </motion.h1>
           </div>
           
           {/* Right aligned tagline */}
-          <motion.div 
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ delay: 0.6, duration: 0.7 }}
-            className="text-right font-figtree"
-          >
+          <motion.div initial={{
+          opacity: 0,
+          y: 20
+        }} animate={{
+          opacity: 1,
+          y: 0
+        }} transition={{
+          delay: 0.6,
+          duration: 0.7
+        }} className="text-right font-figtree">
             <div className="text-white/80 text-lg md:text-xl">
               [ The most ambitious<br />
               undergraduate community ]
