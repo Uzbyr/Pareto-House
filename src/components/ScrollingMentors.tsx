@@ -48,6 +48,9 @@ const ScrollingMentors = () => {
 
   return (
     <div className="relative overflow-hidden">
+      {/* Left gradient overlay */}
+      <div className="absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
+      
       <ScrollArea
         viewportRef={viewportRef}
         className="w-full"
@@ -56,7 +59,7 @@ const ScrollingMentors = () => {
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
       >
-        <div className={`flex space-x-12 px-4 py-6`}>
+        <div className={`flex space-x-12 px-4`}>
           {/* First set of mentors */}
           {mentors.concat(mentors).map((mentor, index) => (
             <a
@@ -122,6 +125,9 @@ const ScrollingMentors = () => {
           />
         )}
       </ScrollArea>
+      
+      {/* Right gradient overlay */}
+      <div className="absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
     </div>
   );
 };
