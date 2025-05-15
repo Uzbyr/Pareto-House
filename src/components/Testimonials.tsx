@@ -44,6 +44,20 @@ const testimonials: Testimonial[] = [
 const Testimonials = () => {
   const [maxHeight, setMaxHeight] = useState<number>(0);
   const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+  const carouselApi = useRef<any>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+  
+  // Set up auto-rotation for the carousel
+  useEffect(() => {
+    const autoRotate = setInterval(() => {
+      if (carouselApi.current) {
+        const nextIndex = (activeIndex + 1) % testimonials.length;
+        carouselApi.current.scrollTo(nextIndex);
+      }
+    }, 2000); // Auto-rotate every 2 seconds
+    
+    return () => clearInterval(autoRotate);
+  }, [activeIndex]);
 
   // Calculate and set the maximum height whenever content changes
   useEffect(() => {
@@ -76,14 +90,20 @@ const Testimonials = () => {
 
   return (
     <div className="py-16 relative">
-      {/* Add gradient overlays for the peeking effect */}
-      <div className="absolute top-0 bottom-0 left-0 w-1/6 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div className="absolute top-0 bottom-0 right-0 w-1/6 bg-gradient-to-l from-black to-transparent z-10"></div>
+      {/* Add gradient overlays that position relative to the carousel content */}
+      <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
       
       <Carousel
         opts={{
           align: "center",
           loop: true,
+        }}
+        onSelect={(api) => {
+          setActiveIndex(api.selectedScrollSnap());
+        }}
+        setApi={(api) => {
+          carouselApi.current = api;
         }}
         className="max-w-5xl mx-auto"
       >
@@ -98,7 +118,7 @@ const Testimonials = () => {
                 className="h-full"
               >
                 <Card 
-                  className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col"
+                  className="bg-[#1B1B1B] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col border-0"
                   ref={el => cardsRef.current[index] = el}
                 >
                   <div className="p-8 flex flex-col h-full">
@@ -107,11 +127,17 @@ const Testimonials = () => {
                     </p>
                     <div className="flex items-center gap-4 mt-auto">
                       <div className="relative">
-                        <Avatar className="h-14 w-14">
-                          <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                          <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
+                        <Avatar className="h-14 w-14 rounded-none">
+                          <AvatarImage 
+                            src={testimonial.image} 
+                            alt={testimonial.name}
+                            className="rounded-none" 
+                          />
+                          <AvatarFallback className="rounded-none">
+                            {testimonial.name.substring(0, 2)}
+                          </AvatarFallback>
                         </Avatar>
-                        <div className="absolute -inset-1 rounded-full bg-white/5 blur-md -z-10"></div>
+                        <div className="absolute -inset-1 bg-white/5 blur-md -z-10"></div>
                       </div>
                       <div>
                         <h4 className="text-white font-medium text-lg">{testimonial.name}</h4>
