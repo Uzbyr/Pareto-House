@@ -90,74 +90,80 @@ const Testimonials = () => {
 
   return (
     <div className="py-16 relative">
-      {/* Add gradient overlays that position relative to the carousel content */}
-      <div className="absolute top-0 bottom-0 left-0 w-24 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div className="absolute top-0 bottom-0 right-0 w-24 bg-gradient-to-l from-black to-transparent z-10"></div>
-      
-      <Carousel
-        opts={{
-          align: "center",
-          loop: true,
-        }}
-        onSelect={(api) => {
-          if (api && typeof api.selectedScrollSnap === 'function') {
-            setActiveIndex(api.selectedScrollSnap());
-          }
-        }}
-        setApi={(api) => {
-          carouselApi.current = api;
-        }}
-        className="max-w-5xl mx-auto"
-      >
-        <CarouselContent>
-          {testimonials.map((testimonial, index) => (
-            <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-4/5 lg:basis-4/5 pl-4">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-                style={{ height: maxHeight > 0 ? `${maxHeight}px` : 'auto' }}
-                className="h-full"
-              >
-                <Card 
-                  className="bg-[#1B1B1B] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col border-0"
-                  ref={el => cardsRef.current[index] = el}
+      {/* Position gradients relative to the carousel container rather than the screen edges */}
+      <div className="max-w-5xl mx-auto relative">
+        {/* Left gradient moved to inside the carousel container */}
+        <div className="absolute top-0 bottom-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
+        {/* Right gradient moved to inside the carousel container */}
+        <div className="absolute top-0 bottom-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10"></div>
+        
+        <Carousel
+          opts={{
+            align: "center",
+            loop: true,
+          }}
+          onSelect={(api) => {
+            // Fix TypeScript error by properly typing the event
+            // This expects api to be the carousel API object, not an event
+            if (api && typeof api.selectedScrollSnap === 'function') {
+              setActiveIndex(api.selectedScrollSnap());
+            }
+          }}
+          setApi={(api) => {
+            carouselApi.current = api;
+          }}
+          className="w-full"
+        >
+          <CarouselContent>
+            {testimonials.map((testimonial, index) => (
+              <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-4/5 lg:basis-4/5 pl-4">
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  whileInView={{ opacity: 1 }}
+                  transition={{ duration: 0.6 }}
+                  style={{ height: maxHeight > 0 ? `${maxHeight}px` : 'auto' }}
+                  className="h-full"
                 >
-                  <div className="p-8 flex flex-col h-full">
-                    <p className="text-white text-base leading-relaxed mb-8 flex-grow">
-                      {testimonial.testimonial}
-                    </p>
-                    <div className="flex items-center gap-4 mt-auto">
-                      <div className="relative">
-                        <Avatar className="h-14 w-14 rounded-none">
-                          <AvatarImage 
-                            src={testimonial.image} 
-                            alt={testimonial.name}
-                            className="rounded-none" 
-                          />
-                          <AvatarFallback className="rounded-none">
-                            {testimonial.name.substring(0, 2)}
-                          </AvatarFallback>
-                        </Avatar>
-                        <div className="absolute -inset-1 bg-white/5 blur-md -z-10"></div>
-                      </div>
-                      <div>
-                        <h4 className="text-white font-medium text-lg">{testimonial.name}</h4>
-                        <p className="text-zinc-400 text-sm">{testimonial.university}</p>
-                        <p className="text-zinc-500 text-sm">{testimonial.position}</p>
+                  <Card 
+                    className="bg-[#1B1B1B] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col border-0"
+                    ref={el => cardsRef.current[index] = el}
+                  >
+                    <div className="p-8 flex flex-col h-full">
+                      <p className="text-white text-base leading-relaxed mb-8 flex-grow">
+                        {testimonial.testimonial}
+                      </p>
+                      <div className="flex items-center gap-4 mt-auto">
+                        <div className="relative">
+                          <Avatar className="h-14 w-14 rounded-none">
+                            <AvatarImage 
+                              src={testimonial.image} 
+                              alt={testimonial.name}
+                              className="rounded-none" 
+                            />
+                            <AvatarFallback className="rounded-none">
+                              {testimonial.name.substring(0, 2)}
+                            </AvatarFallback>
+                          </Avatar>
+                          <div className="absolute -inset-1 bg-white/5 blur-md -z-10"></div>
+                        </div>
+                        <div>
+                          <h4 className="text-white font-medium text-lg">{testimonial.name}</h4>
+                          <p className="text-zinc-400 text-sm">{testimonial.university}</p>
+                          <p className="text-zinc-500 text-sm">{testimonial.position}</p>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </Card>
-              </motion.div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <div className="flex justify-center gap-2 mt-8">
-          <CarouselPrevious className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
-          <CarouselNext className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
-        </div>
-      </Carousel>
+                  </Card>
+                </motion.div>
+              </CarouselItem>
+            ))}
+          </CarouselContent>
+          <div className="flex justify-center gap-2 mt-8">
+            <CarouselPrevious className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
+            <CarouselNext className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
+          </div>
+        </Carousel>
+      </div>
     </div>
   );
 };
