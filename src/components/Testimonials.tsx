@@ -47,30 +47,34 @@ const testimonials: Testimonial[] = [
 
 const Testimonials = () => {
   return (
-    <div className="py-16">
+    <div className="py-16 relative">
+      {/* Add gradient overlays for the peeking effect */}
+      <div className="absolute top-0 bottom-0 left-0 w-1/6 bg-gradient-to-r from-black to-transparent z-10"></div>
+      <div className="absolute top-0 bottom-0 right-0 w-1/6 bg-gradient-to-l from-black to-transparent z-10"></div>
+      
       <Carousel
         opts={{
-          align: "start",
+          align: "center",
           loop: true,
         }}
         className="max-w-5xl mx-auto"
       >
         <CarouselContent>
           {testimonials.map((testimonial) => (
-            <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-3/4 lg:basis-2/3">
+            <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-4/5 lg:basis-4/5 pl-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
               >
-                <Card className="bg-[#121212] border border-[#222222] rounded-xl overflow-hidden shadow-lg">
+                <Card className="bg-[#121212] rounded-xl overflow-hidden shadow-lg">
                   <div className="p-8">
                     <p className="text-white text-lg md:text-xl leading-relaxed mb-8">
                       {testimonial.testimonial}
                     </p>
                     <div className="flex items-center gap-4">
                       <div className="relative">
-                        <Avatar className="h-16 w-16 border-2 border-zinc-800">
+                        <Avatar className="h-16 w-16">
                           <AvatarImage src={testimonial.image} alt={testimonial.name} />
                           <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
                         </Avatar>
