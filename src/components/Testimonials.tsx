@@ -100,7 +100,9 @@ const Testimonials = () => {
           loop: true,
         }}
         onSelect={(api) => {
-          setActiveIndex(api.selectedScrollSnap());
+          if (api && typeof api.selectedScrollSnap === 'function') {
+            setActiveIndex(api.selectedScrollSnap());
+          }
         }}
         setApi={(api) => {
           carouselApi.current = api;
