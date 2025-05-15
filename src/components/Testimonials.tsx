@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Card } from "./ui/card";
@@ -42,6 +42,38 @@ const testimonials: Testimonial[] = [
 ];
 
 const Testimonials = () => {
+  const [maxHeight, setMaxHeight] = useState<number>(0);
+  const cardsRef = useRef<(HTMLDivElement | null)[]>([]);
+
+  // Calculate and set the maximum height whenever content changes
+  useEffect(() => {
+    const calculateMaxHeight = () => {
+      // Reset refs array to match current testimonials length
+      cardsRef.current = cardsRef.current.slice(0, testimonials.length);
+      
+      // Calculate the maximum height among all cards
+      const heights = cardsRef.current
+        .filter(Boolean)
+        .map(card => card?.offsetHeight || 0);
+      
+      const newMaxHeight = Math.max(...heights, 0);
+      
+      if (newMaxHeight > 0 && newMaxHeight !== maxHeight) {
+        setMaxHeight(newMaxHeight);
+      }
+    };
+
+    // Initial calculation
+    calculateMaxHeight();
+    
+    // Recalculate on window resize
+    window.addEventListener('resize', calculateMaxHeight);
+    
+    return () => {
+      window.removeEventListener('resize', calculateMaxHeight);
+    };
+  }, [testimonials, maxHeight]);
+
   return (
     <div className="py-16 relative">
       {/* Add gradient overlays for the peeking effect */}
@@ -56,20 +88,24 @@ const Testimonials = () => {
         className="max-w-5xl mx-auto"
       >
         <CarouselContent>
-          {testimonials.map((testimonial) => (
+          {testimonials.map((testimonial, index) => (
             <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-4/5 lg:basis-4/5 pl-4">
               <motion.div
                 initial={{ opacity: 0 }}
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
+                style={{ height: maxHeight > 0 ? `${maxHeight}px` : 'auto' }}
+                className="h-full"
               >
-                <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
-                  <div className="p-8">
-                    {/* Text sized per user's request */}
-                    <p className="text-white text-base leading-relaxed mb-8">
+                <Card 
+                  className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col"
+                  ref={el => cardsRef.current[index] = el}
+                >
+                  <div className="p-8 flex flex-col h-full">
+                    <p className="text-white text-base leading-relaxed mb-8 flex-grow">
                       {testimonial.testimonial}
                     </p>
-                    <div className="flex items-center gap-4">
+                    <div className="flex items-center gap-4 mt-auto">
                       <div className="relative">
                         <Avatar className="h-14 w-14">
                           <AvatarImage src={testimonial.image} alt={testimonial.name} />
