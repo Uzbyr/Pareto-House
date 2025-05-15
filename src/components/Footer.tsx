@@ -1,95 +1,107 @@
 
 import { Link } from "react-router-dom";
-import { Linkedin, Lock } from "lucide-react";
+import { Linkedin, ArrowRight } from "lucide-react";
 import { SiX } from "@icons-pack/react-simple-icons";
 import PageContainer from "./PageContainer";
-import { Button } from "./ui/button";
-import { useNavigate } from "react-router-dom";
+import { useIsMobile } from "@/hooks/use-mobile";
 
 const Footer = () => {
-  const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/login");
-  };
+  const isMobile = useIsMobile();
 
   return (
-    <footer className="bg-pareto-black py-12 border-t border-white/10">
+    <footer className="bg-black py-16 border-t border-white/10">
       <PageContainer>
-        {/* Main footer content with three columns */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
-          {/* Column 1: Logo and tagline */}
-          <div className="flex flex-col items-start">
-            <Link to="/" className="mb-4">
-              <img src="/logo.png" alt="Pareto Logo" className="w-36" />
+        {isMobile ? (
+          // Mobile footer layout (centered)
+          <div className="flex flex-col items-center justify-center text-center space-y-8">
+            {/* Logo */}
+            <Link to="/" className="mb-2">
+              <img 
+                src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png"
+                alt="Pareto Logo" 
+                className="w-48"
+              />
             </Link>
-            <a
-              href="https://www.youtube.com/watch?v=lc8ourcIe10"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-white/60 hover:text-pareto-pink transition-colors duration-300"
-            >
+            
+            {/* Tagline */}
+            <div className="text-xl font-medium text-white mb-10">
               Build brutally or don't
-            </a>
-          </div>
-          
-          {/* Column 2: Navigation links */}
-          <div className="grid grid-cols-2 gap-2">
-            <Link to="/" className="text-white/60 hover:text-pareto-pink transition-colors duration-300">
-              Home
-            </Link>
-            <Link to="/mentors" className="text-white/60 hover:text-pareto-pink transition-colors duration-300">
-              Mentors
-            </Link>
-            <Link to="/perks" className="text-white/60 hover:text-pareto-pink transition-colors duration-300">
-              Perks
-            </Link>
-            <Link to="/faq" className="text-white/60 hover:text-pareto-pink transition-colors duration-300">
-              FAQ
-            </Link>
-            <Link to="/apply" className="text-white/60 hover:text-pareto-pink transition-colors duration-300">
-              Apply
-            </Link>
-            <Button
-              variant="ghost"
-              size="sm"
-              className="text-white/60 hover:text-pareto-pink justify-start p-0 h-auto"
-              onClick={handleLogin}
-            >
-              <Lock className="w-3.5 h-3.5 mr-1.5" />
-              Login
-            </Button>
-          </div>
-          
-          {/* Column 3: Social links */}
-          <div className="flex flex-col items-start md:items-end">
-            <div className="text-sm text-white/60 mb-3">Connect with us</div>
-            <div className="flex gap-4">
-              <a
-                href="https://x.com/paretoholdings"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
-              >
-                <SiX className="w-5 h-5" />
-              </a>
+            </div>
+            
+            {/* Social links */}
+            <div className="flex items-center justify-center space-x-6 mb-8">
               <a
                 href="https://www.linkedin.com/company/pareto-fellowship"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="text-white/60 hover:text-pareto-pink transition-colors duration-300"
+                className="uppercase text-white/70 hover:text-white transition-colors duration-300 text-sm tracking-wide"
               >
-                <Linkedin className="w-5 h-5" />
+                LinkedIn
+              </a>
+              <a
+                href="https://x.com/paretoholdings"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="uppercase text-white/70 hover:text-white transition-colors duration-300 text-sm tracking-wide"
+              >
+                X
               </a>
             </div>
+            
+            {/* Login button */}
+            <Link
+              to="/login"
+              className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 transition-colors duration-300 text-white"
+            >
+              LOG IN <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
-        </div>
-        
-        {/* Copyright section */}
-        <div className="border-t border-white/10 pt-6 flex flex-col md:flex-row justify-between items-center">
-          <div className="text-sm text-white/40 mb-4 md:mb-0">
-            © {new Date().getFullYear()} Pareto Fellowship. All rights reserved.
+        ) : (
+          // Desktop/medium screen layout (horizontal)
+          <div className="flex items-center justify-between">
+            {/* Left section with logo */}
+            <div className="flex-shrink-0">
+              <Link to="/" className="mb-4">
+                <img 
+                  src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png"
+                  alt="Pareto Logo" 
+                  className="w-48"
+                />
+              </Link>
+            </div>
+            
+            {/* Middle section with tagline */}
+            <div className="text-xl font-medium text-white">
+              Build brutally or don't
+            </div>
+            
+            {/* Right section with social links and login */}
+            <div className="flex items-center space-x-7">
+              <a
+                href="https://www.linkedin.com/company/pareto-fellowship"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="uppercase text-white/70 hover:text-white transition-colors duration-300 text-sm tracking-wide"
+              >
+                LinkedIn
+              </a>
+              <a
+                href="https://x.com/paretoholdings"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="uppercase text-white/70 hover:text-white transition-colors duration-300 text-sm tracking-wide"
+              >
+                X
+              </a>
+              <Link
+                to="/login"
+                className="inline-flex items-center gap-2 px-6 py-3 bg-zinc-800 hover:bg-zinc-700 transition-colors duration-300 text-white"
+              >
+                LOG IN <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
           </div>
-        </div>
+        )}
       </PageContainer>
     </footer>
   );
