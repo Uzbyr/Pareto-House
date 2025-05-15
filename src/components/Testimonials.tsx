@@ -94,7 +94,7 @@ const Testimonials = () => {
                     
                     <div className="md:w-2/3 space-y-4">
                       <p className="text-white text-lg leading-relaxed italic">
-                        "{testimonial.testimonial}"
+                        {testimonial.testimonial}
                       </p>
                       <p className="text-zinc-400 leading-relaxed">
                         {testimonial.bio}
