@@ -128,9 +128,9 @@ const Testimonials = () => {
     <div className="py-16 relative">
       <div className="max-w-5xl mx-auto relative">
         {/* Left gradient - adjusted width for mobile */}
-        <div className="absolute top-0 bottom-0 left-0 w-8 md:w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
+        <div className="absolute top-0 bottom-0 left-0 w-6 md:w-12 bg-gradient-to-r from-black to-transparent z-10"></div>
         {/* Right gradient - adjusted width for mobile */}
-        <div className="absolute top-0 bottom-0 right-0 w-8 md:w-16 bg-gradient-to-l from-black to-transparent z-10"></div>
+        <div className="absolute top-0 bottom-0 right-0 w-6 md:w-12 bg-gradient-to-l from-black to-transparent z-10"></div>
         
         <Carousel
           opts={{
@@ -152,7 +152,7 @@ const Testimonials = () => {
             {testimonials.map((testimonial, index) => (
               <CarouselItem 
                 key={testimonial.id} 
-                className="sm:basis-11/12 md:basis-4/5 pl-4"
+                className="sm:basis-10/12 md:basis-3/4 pl-4"
               >
                 <motion.div
                   initial={{ opacity: 0 }}
@@ -167,11 +167,11 @@ const Testimonials = () => {
                     className="bg-[#1B1B1B] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)] h-full flex flex-col border-0"
                     ref={el => cardsRef.current[index] = el}
                   >
-                    <div className="p-4 md:p-8 flex flex-col h-full">
+                    <div className="p-4 md:p-6 flex flex-col h-full">
                       {/* User information */}
-                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-6">
-                        <div className="relative mb-3 sm:mb-0">
-                          <Avatar className="h-14 w-14 rounded-none">
+                      <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4 mb-4">
+                        <div className="relative mb-2 sm:mb-0">
+                          <Avatar className="h-12 w-12 sm:h-14 sm:w-14 rounded-none">
                             <AvatarImage 
                               src={testimonial.image} 
                               alt={testimonial.name}
@@ -191,7 +191,7 @@ const Testimonials = () => {
                       </div>
                       
                       {/* Testimonial text */}
-                      <p className="text-white text-sm md:text-base leading-relaxed flex-grow">
+                      <p className="text-white text-sm md:text-base leading-relaxed flex-grow max-w-full break-words">
                         {testimonial.testimonial}
                       </p>
                     </div>
@@ -200,7 +200,7 @@ const Testimonials = () => {
               </CarouselItem>
             ))}
           </CarouselContent>
-          <div className="flex justify-center gap-2 mt-8">
+          <div className="flex justify-center gap-2 mt-6 sm:mt-8">
             <CarouselPrevious 
               className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" 
               onClick={() => handleManualNavigation('prev')}
