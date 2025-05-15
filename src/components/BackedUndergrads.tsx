@@ -1,10 +1,15 @@
+
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
 import ScrollingUniversities from "./ScrollingUniversities";
+import SuccessStories from "./SuccessStories";
 
 const BackedUndergrads = () => {
   return (
     <div className="py-20 bg-black">
+      {/* Success Stories Section */}
+      <SuccessStories />
+      
       <PageContainer>
         <div className="text-center mb-16">
           <motion.h2
