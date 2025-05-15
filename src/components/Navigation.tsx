@@ -29,7 +29,7 @@ const Navigation = () => {
               <img 
                 src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png" 
                 alt="Pareto Fellowship" 
-                className={`h-8 w-auto transition-opacity duration-300 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
+                className={`md:h-8 h-6 w-auto transition-opacity duration-300 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
                 onLoad={() => setLogoLoaded(true)}
               />
             </Link>
