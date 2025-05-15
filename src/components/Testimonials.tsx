@@ -70,9 +70,9 @@ const Testimonials = () => {
               >
                 <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
                   <div className="p-8 flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/3">
+                    <div className="md:w-1/4">
                       <div className="mb-4">
-                        <AspectRatio ratio={1} className="overflow-hidden">
+                        <AspectRatio ratio={1} className="overflow-hidden w-24 h-24 mx-auto md:mx-0">
                           <Avatar className="h-full w-full">
                             <AvatarImage 
                               src={testimonial.image} 
@@ -83,7 +83,7 @@ const Testimonials = () => {
                           </Avatar>
                         </AspectRatio>
                       </div>
-                      <div className="space-y-2">
+                      <div className="space-y-2 text-center md:text-left">
                         <h3 className="text-xl font-semibold text-white">{testimonial.name}</h3>
                         <p className="text-zinc-400">{testimonial.university}</p>
                         <div className="bg-zinc-800 text-zinc-300 px-3 py-1 inline-block text-sm">
@@ -92,7 +92,7 @@ const Testimonials = () => {
                       </div>
                     </div>
                     
-                    <div className="md:w-2/3 space-y-4">
+                    <div className="md:w-3/4 space-y-4">
                       <p className="text-zinc-400 leading-relaxed">
                         {testimonial.bio}
                       </p>
