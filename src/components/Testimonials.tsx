@@ -63,7 +63,7 @@ const Testimonials = () => {
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
               >
-                <Card className="bg-[#121212] rounded-xl overflow-hidden shadow-lg">
+                <Card className="bg-[#121212] rounded-xl overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
                   <div className="p-8">
                     <p className="text-white text-lg md:text-xl leading-relaxed mb-8">
                       {testimonial.testimonial}
@@ -74,7 +74,7 @@ const Testimonials = () => {
                           <AvatarImage src={testimonial.image} alt={testimonial.name} />
                           <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
                         </Avatar>
-                        <div className="absolute -inset-1 rounded-full bg-zinc-800/20 blur-md -z-10"></div>
+                        <div className="absolute -inset-1 rounded-full bg-white/5 blur-md -z-10"></div>
                       </div>
                       <div>
                         <h4 className="text-white font-medium text-lg">{testimonial.name}</h4>
@@ -89,8 +89,8 @@ const Testimonials = () => {
           ))}
         </CarouselContent>
         <div className="flex justify-center gap-2 mt-8">
-          <CarouselPrevious className="relative inset-0 translate-y-0 bg-zinc-900 border-zinc-700 hover:bg-zinc-800 text-white" />
-          <CarouselNext className="relative inset-0 translate-y-0 bg-zinc-900 border-zinc-700 hover:bg-zinc-800 text-white" />
+          <CarouselPrevious className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
+          <CarouselNext className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
         </div>
       </Carousel>
     </div>
