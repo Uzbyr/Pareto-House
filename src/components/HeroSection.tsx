@@ -5,6 +5,7 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import PageContainer from "./PageContainer";
 import { Skeleton } from "./ui/skeleton";
+import { Separator } from "./ui/separator";
 
 const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
@@ -100,6 +101,9 @@ const HeroSection = () => {
           </motion.div>
         </div>
       </PageContainer>
+      
+      {/* Separator line */}
+      <Separator className="bg-[#222222] h-[1px] w-full" />
     </section>
   );
 };
