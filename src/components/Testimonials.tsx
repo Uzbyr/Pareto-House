@@ -17,10 +17,10 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Alex Chen",
-    university: "Stanford University",
-    position: "Founder at Quantum AI",
-    testimonial: "Joining the fellowship has been a transformative experience. The collaboration, innovative spirit, and support I've found here are unmatched. Every day, I feel empowered to bring my best ideas to life while growing as an entrepreneur.",
+    name: "Joseph",
+    university: "Yale University",
+    position: "Founder of Ventr",
+    testimonial: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
     image: "/lovable-uploads/carlos-eduardo.jpeg"
   },
   {
@@ -65,12 +65,13 @@ const Testimonials = () => {
               >
                 <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
                   <div className="p-8">
-                    <p className="text-white text-lg md:text-xl leading-relaxed mb-8">
+                    {/* Text sized per user's request */}
+                    <p className="text-white text-base leading-relaxed mb-8">
                       {testimonial.testimonial}
                     </p>
                     <div className="flex items-center gap-4">
                       <div className="relative">
-                        <Avatar className="h-16 w-16">
+                        <Avatar className="h-14 w-14">
                           <AvatarImage src={testimonial.image} alt={testimonial.name} />
                           <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
                         </Avatar>
