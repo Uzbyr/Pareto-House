@@ -123,7 +123,7 @@ const Testimonials = () => {
   }, [testimonials, maxHeight]);
 
   return (
-    <div className="py-8 md:py-16 relative">
+    <div className="pt-0 pb-8 md:pb-16 relative">
       <div className="max-w-5xl mx-auto relative">
         {/* Left gradient positioned relative to the carousel */}
         <div className="absolute top-0 bottom-0 left-0 w-8 md:w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
