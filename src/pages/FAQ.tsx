@@ -10,6 +10,7 @@ import {
 import BackToHomeButton from "../components/application/BackToHomeButton";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
+import PageContainer from "../components/PageContainer";
 
 const FAQ = () => {
   const faqSections = [
@@ -28,7 +29,7 @@ const FAQ = () => {
               The fellowship is named after Pareto because it's managed and
               funded by{" "}
               <a
-                className="text-pareto-pink underline"
+                className="text-white underline"
                 target="_blank"
                 href="https://pareto20.com?ref=pareto-fellowship"
               >
@@ -54,9 +55,9 @@ const FAQ = () => {
           answer: (
             <div>
               Applications can be submitted through this very website. You will
-              need to provide details about your background, achievements a nd
+              need to provide details about your background, achievements and
               interests. You can apply{" "}
-              <Link to="/apply" className="text-pareto-pink underline">
+              <Link to="/apply" className="text-white underline">
                 {" "}
                 here
               </Link>
@@ -97,7 +98,7 @@ const FAQ = () => {
         {
           question: "What specific benefits do fellows receive?",
           answer:
-            "Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and “lifetime membership” in our community.",
+            "Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and "lifetime membership" in our community.",
         },
         {
           question: "Is there an orientation or training provided?",
@@ -120,14 +121,14 @@ const FAQ = () => {
             <div>
               We're here to help! For any inquiries, please contact Jules at{" "}
               <a
-                className="text-pareto-pink underline"
+                className="text-white underline"
                 href="mailto:jules@pareto20.com"
               >
                 jules@pareto20.com
               </a>{" "}
               or{" "}
               <a
-                className="text-pareto-pink underline"
+                className="text-white underline"
                 href="https://wa.me/33777002975"
               >
                 +33777002975
@@ -140,50 +141,52 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white font-inter">
+    <div className="min-h-screen bg-black text-white font-figtree">
       <Navigation />
 
-      <div className="container mx-auto px-4 py-12 pt-36">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-3xl mx-auto"
-        >
-          <h1 className="text-4xl md:text-5xl font-bold mb-8">
-            Frequently Asked Questions
-          </h1>
+      <div className="pt-36 pb-20">
+        <PageContainer>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+            className="max-w-3xl mx-auto"
+          >
+            <h1 className="text-4xl md:text-5xl font-medium mb-8 tracking-[-0.02em]">
+              Frequently Asked Questions
+            </h1>
 
-          <p className="text-xl text-white/80 mb-12">
-            Find answers to common questions about the Pareto Fellowship.
-          </p>
+            <p className="text-[19px] text-white/60 mb-12">
+              Find answers to common questions about the Pareto Fellowship.
+            </p>
 
-          <div className="space-y-8">
-            {faqSections.map((section, index) => (
-              <div key={index} className="space-y-4">
-                <h2 className="text-2xl font-semibold text-pareto-pink">
-                  {section.title}
-                </h2>
-                <Accordion type="multiple" className="space-y-4">
-                  {section.items.map((item, itemIndex) => (
-                    <AccordionItem
-                      key={itemIndex}
-                      value={`item-${index}-${itemIndex}`}
-                      className="border border-white/10 rounded-lg px-4"
-                    >
-                      <AccordionTrigger className="text-lg font-medium hover:text-pareto-pink">
-                        {item.question}
-                      </AccordionTrigger>
-                      <AccordionContent className="text-white/80 leading-relaxed whitespace-pre-line">
-                        {item.answer}
-                      </AccordionContent>
-                    </AccordionItem>
-                  ))}
-                </Accordion>
-              </div>
-            ))}
-          </div>
-        </motion.div>
+            <div className="space-y-8">
+              {faqSections.map((section, index) => (
+                <div key={index} className="space-y-4">
+                  <h2 className="text-2xl font-medium text-white tracking-[-0.02em]">
+                    {section.title}
+                  </h2>
+                  <Accordion type="multiple" className="space-y-4">
+                    {section.items.map((item, itemIndex) => (
+                      <AccordionItem
+                        key={itemIndex}
+                        value={`item-${index}-${itemIndex}`}
+                        className="border border-white/10 rounded-lg px-4"
+                      >
+                        <AccordionTrigger className="text-lg font-medium hover:text-white">
+                          {item.question}
+                        </AccordionTrigger>
+                        <AccordionContent className="text-white/60 leading-relaxed whitespace-pre-line">
+                          {item.answer}
+                        </AccordionContent>
+                      </AccordionItem>
+                    ))}
+                  </Accordion>
+                </div>
+              ))}
+            </div>
+          </motion.div>
+        </PageContainer>
       </div>
       <Footer />
     </div>
