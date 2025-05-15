@@ -1,9 +1,12 @@
+
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
+
 interface StatProps {
   value: string;
   label: string;
 }
+
 const Stat = ({
   value,
   label
@@ -15,8 +18,9 @@ const Stat = ({
       </div>
     </div>;
 };
+
 const AboutSection = () => {
-  return <section className="py-20 bg-black border-t border-white/5 font-figtree">
+  return <section id="about-section" className="py-20 bg-black border-t border-white/5 font-figtree">
       <PageContainer>
         <div className="text-center mb-16">
           <motion.h2 initial={{
@@ -68,4 +72,5 @@ const AboutSection = () => {
       </PageContainer>
     </section>;
 };
+
 export default AboutSection;

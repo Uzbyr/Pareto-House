@@ -15,6 +15,17 @@ const MobileNav = () => {
     setIsOpen(!isOpen);
   };
 
+  const handleSmoothScroll = (elementId: string) => {
+    // Only perform smooth scroll if we're on the homepage
+    if (location.pathname === "/") {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+        setIsOpen(false); // Close mobile menu after clicking
+      }
+    }
+  };
+
   return (
     <div className="md:hidden">
       <button 
@@ -33,24 +44,43 @@ const MobileNav = () => {
       {isOpen && (
         <div className="fixed inset-0 top-16 bg-black/90 backdrop-blur-[47px] z-50 flex flex-col p-6">
           <div className="flex flex-col gap-8 items-center mt-12">
-            <Link
-              to="/"
-              className={`text-[17px] font-figtree font-medium ${
-                isActive("/") ? "text-white" : "text-[#828282]"
-              }`}
-              onClick={toggleMenu}
-            >
-              ABOUT
-            </Link>
-            <Link
-              to="/mentors"
-              className={`text-[17px] font-figtree font-medium ${
-                isActive("/mentors") ? "text-white" : "text-[#828282]"
-              }`}
-              onClick={toggleMenu}
-            >
-              MENTORS
-            </Link>
+            {location.pathname === "/" ? (
+              <>
+                <button
+                  onClick={() => handleSmoothScroll("about-section")}
+                  className="text-[17px] font-figtree font-medium text-[#828282]"
+                >
+                  ABOUT
+                </button>
+                <button
+                  onClick={() => handleSmoothScroll("mentor-section")}
+                  className="text-[17px] font-figtree font-medium text-[#828282]"
+                >
+                  MENTORS
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/"
+                  className={`text-[17px] font-figtree font-medium ${
+                    isActive("/") ? "text-white" : "text-[#828282]"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  ABOUT
+                </Link>
+                <Link
+                  to="/mentors"
+                  className={`text-[17px] font-figtree font-medium ${
+                    isActive("/mentors") ? "text-white" : "text-[#828282]"
+                  }`}
+                  onClick={toggleMenu}
+                >
+                  MENTORS
+                </Link>
+              </>
+            )}
             <Link
               to="/faq"
               className={`text-[17px] font-figtree font-medium ${

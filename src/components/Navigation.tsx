@@ -16,6 +16,16 @@ const Navigation = () => {
     return location.pathname === path;
   };
 
+  const handleSmoothScroll = (elementId: string) => {
+    // Only perform smooth scroll if we're on the homepage
+    if (location.pathname === "/") {
+      const element = document.getElementById(elementId);
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth" });
+      }
+    }
+  };
+
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
       <PageContainer className="py-3">
@@ -37,22 +47,41 @@ const Navigation = () => {
 
           {/* Navigation Links - centered on all screen sizes */}
           <div className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-9">
-            <Link
-              to="/"
-              className={`text-[17px] font-figtree font-medium transition-colors ${
-                isActive("/") ? "text-white" : "text-[#828282] hover:text-white"
-              }`}
-            >
-              ABOUT
-            </Link>
-            <Link
-              to="/mentors"
-              className={`text-[17px] font-figtree font-medium transition-colors ${
-                isActive("/mentors") ? "text-white" : "text-[#828282] hover:text-white"
-              }`}
-            >
-              MENTORS
-            </Link>
+            {location.pathname === "/" ? (
+              <>
+                <button
+                  onClick={() => handleSmoothScroll("about-section")}
+                  className={`text-[17px] font-figtree font-medium transition-colors text-[#828282] hover:text-white`}
+                >
+                  ABOUT
+                </button>
+                <button
+                  onClick={() => handleSmoothScroll("mentor-section")}
+                  className={`text-[17px] font-figtree font-medium transition-colors text-[#828282] hover:text-white`}
+                >
+                  MENTORS
+                </button>
+              </>
+            ) : (
+              <>
+                <Link
+                  to="/"
+                  className={`text-[17px] font-figtree font-medium transition-colors ${
+                    isActive("/") ? "text-white" : "text-[#828282] hover:text-white"
+                  }`}
+                >
+                  ABOUT
+                </Link>
+                <Link
+                  to="/mentors"
+                  className={`text-[17px] font-figtree font-medium transition-colors ${
+                    isActive("/mentors") ? "text-white" : "text-[#828282] hover:text-white"
+                  }`}
+                >
+                  MENTORS
+                </Link>
+              </>
+            )}
             <Link
               to="/faq"
               className={`text-[17px] font-figtree font-medium transition-colors ${
