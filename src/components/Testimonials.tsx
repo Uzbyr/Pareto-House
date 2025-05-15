@@ -63,7 +63,7 @@ const Testimonials = () => {
                 whileInView={{ opacity: 1 }}
                 transition={{ duration: 0.6 }}
               >
-                <Card className="bg-[#121212] rounded-xl overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
+                <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
                   <div className="p-8">
                     <p className="text-white text-lg md:text-xl leading-relaxed mb-8">
                       {testimonial.testimonial}
