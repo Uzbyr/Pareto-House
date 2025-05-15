@@ -15,7 +15,7 @@ const FinalCTA = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-5xl md:text-[70px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]">
+          <h2 className="text-5xl md:text-[70px] font-semibold text-white tracking-tight leading-[87%] md:leading-[90%] font-figtree tracking-[-0.02em] mb-6">
             Ready to join<br className="hidden sm:block" /> the elite?
           </h2>
           <p className="text-lg md:text-xl text-white/60 mb-12">
