@@ -3,7 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "@/components/ui/avatar";
 import { Card } from "@/components/ui/card";
-import { Quote } from "lucide-react";
+import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { 
   Carousel,
   CarouselContent,
@@ -65,25 +65,30 @@ const Testimonials = () => {
           <CarouselContent>
             {testimonials.map((testimonial, index) => (
               <CarouselItem key={index} className="md:basis-1/1">
-                <Card className="bg-black border border-white/10 p-8 rounded-lg">
-                  <div className="flex flex-col md:flex-row items-start gap-8">
+                <Card className="bg-black border border-white/10 p-6 rounded-lg shadow-[0_0_15px_rgba(255,255,255,0.05)]">
+                  <div className="flex flex-col md:flex-row gap-8">
                     <div className="md:w-1/4 flex flex-col items-center md:items-start">
-                      <Avatar className="h-32 w-32 rounded-full border-2 border-white/20">
-                        <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                        <AvatarFallback className="text-xl">
-                          {testimonial.name.split(' ').map(n => n[0]).join('')}
-                        </AvatarFallback>
-                      </Avatar>
-                      <div className="mt-6 text-center md:text-left">
-                        <h3 className="text-xl font-medium text-white">{testimonial.name}</h3>
-                        <p className="text-gray-400">{testimonial.university}</p>
-                        <p className="text-gray-400">{testimonial.position}</p>
+                      <div className="relative">
+                        <div className="absolute inset-0 bg-gradient-to-br from-pareto-pink/30 to-purple-600/30 rounded-full blur-xl opacity-50 -z-10"></div>
+                        <AspectRatio ratio={1/1} className="w-32 h-32">
+                          <Avatar className="h-full w-full rounded-full border-2 border-white/20">
+                            <AvatarImage src={testimonial.image} alt={testimonial.name} className="object-cover" />
+                            <AvatarFallback className="text-xl">
+                              {testimonial.name.split(' ').map(n => n[0]).join('')}
+                            </AvatarFallback>
+                          </Avatar>
+                        </AspectRatio>
+                      </div>
+                      
+                      <div className="mt-6 text-center md:text-left space-y-1">
+                        <h3 className="text-lg font-semibold text-white">{testimonial.name}</h3>
+                        <p className="text-sm text-gray-400">{testimonial.university}</p>
+                        <p className="text-xs text-pareto-pink">{testimonial.position}</p>
                       </div>
                     </div>
                     
-                    <div className="md:w-3/4 relative">
-                      <Quote className="absolute -top-6 -left-2 text-white/10 h-12 w-12" />
-                      <p className="text-lg md:text-xl leading-relaxed text-gray-200 italic mt-4">
+                    <div className="md:w-3/4">
+                      <p className="text-lg leading-relaxed text-gray-300 md:text-xl">
                         "{testimonial.testimonial}"
                       </p>
                     </div>
