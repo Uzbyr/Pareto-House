@@ -65,7 +65,7 @@ const Testimonials = () => {
           const nextIndex = (activeIndex + 1) % testimonials.length;
           carouselApi.current.scrollTo(nextIndex);
         }
-      }, 2000); // Auto-rotate every 2 seconds
+      }, 5000); // Auto-rotate every 5 seconds instead of 2 seconds
     };
     
     startAutoRotation();
