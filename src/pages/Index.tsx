@@ -23,7 +23,7 @@ const Index = () => {
       <HeroSection />
 
       {/* Content that will scroll over the hero section */}
-      <div className="relative z-20 mt-[100vh]"> {/* Start after the hero section height */}
+      <div className="relative z-20 mt-[70vh] md:mt-[80vh] lg:mt-[100vh]"> {/* Adjusted margin based on hero height */}
         {/* About Section */}
         <div className="bg-black">
           <AboutSection />
@@ -43,12 +43,6 @@ const Index = () => {
         <div className="bg-black">
           <BackedUndergrads />
         </div>
-
-        {/*
-        <div className="max-w-7xl mx-auto px-6">
-          <TopInvestors />
-        </div>
-        */}
 
         {/* Final CTA Section */}
         <div className="bg-black">

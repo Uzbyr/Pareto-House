@@ -11,7 +11,7 @@ const HeroSection = () => {
   const [logoLoaded, setLogoLoaded] = useState(false);
 
   return (
-    <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
+    <section className="fixed top-0 left-0 w-full h-[70vh] md:h-[80vh] lg:h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
       <PageContainer>
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
