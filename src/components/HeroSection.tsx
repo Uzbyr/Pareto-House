@@ -51,12 +51,12 @@ const HeroSection = () => {
       <PageContainer>
         <div className="flex justify-between items-end pb-8 md:pb-12">
           <div>
-            {/* Left aligned title - Updated font size to 95px and line height to 83% for medium screens */}
+            {/* Left aligned title - Updated font size to 70px for medium screens */}
             <motion.h1 
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: 0.3, duration: 0.7 }} 
-              className="text-5xl md:text-[95px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]"
+              className="text-5xl md:text-[70px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]"
             >
               Pareto<br />Fellowship
             </motion.h1>
