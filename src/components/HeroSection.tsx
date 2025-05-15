@@ -2,15 +2,16 @@
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import PageContainer from "./PageContainer";
 import { Skeleton } from "./ui/skeleton";
 
 const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
+  const [logoLoaded, setLogoLoaded] = useState(false);
 
   return (
-    <section className="w-full bg-black flex flex-col justify-between min-h-screen">
+    <section className="fixed top-0 left-0 w-full h-screen bg-black flex flex-col justify-between overflow-hidden z-10">
       {/* Top part - Pareto link */}
       <PageContainer>
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
