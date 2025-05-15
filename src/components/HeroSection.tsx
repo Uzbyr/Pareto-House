@@ -49,14 +49,39 @@ const HeroSection = () => {
       
       {/* Bottom part - Title and tagline in a flex container */}
       <PageContainer>
-        <div className="flex justify-between items-end pb-8 md:pb-12">
+        {/* Mobile layout: title and tagline stacked vertically */}
+        <div className="md:hidden flex flex-col pb-8">
+          <motion.h1 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.3, duration: 0.7 }} 
+            className="text-[55px] font-semibold text-white tracking-tight leading-[87%] font-figtree tracking-[-0.02em] mb-6"
+          >
+            Pareto<br />Fellowship
+          </motion.h1>
+          
+          <motion.div 
+            initial={{ opacity: 0, y: 20 }} 
+            animate={{ opacity: 1, y: 0 }} 
+            transition={{ delay: 0.6, duration: 0.7 }} 
+            className="font-figtree"
+          >
+            <div className="text-[19px] text-[#828282]">
+              [ The most ambitious<br />
+              undergraduate community ]
+            </div>
+          </motion.div>
+        </div>
+        
+        {/* Desktop layout: title and tagline side by side */}
+        <div className="hidden md:flex justify-between items-end pb-12">
           <div>
-            {/* Left aligned title - Updated font size to 70px for medium screens */}
+            {/* Left aligned title */}
             <motion.h1 
               initial={{ opacity: 0, y: 20 }} 
               animate={{ opacity: 1, y: 0 }} 
               transition={{ delay: 0.3, duration: 0.7 }} 
-              className="text-5xl md:text-[70px] font-semibold text-white tracking-tight leading-[87%] md:leading-[83%] font-figtree tracking-[-0.02em]"
+              className="text-[70px] font-semibold text-white tracking-tight leading-[83%] font-figtree tracking-[-0.02em]"
             >
               Pareto<br />Fellowship
             </motion.h1>
