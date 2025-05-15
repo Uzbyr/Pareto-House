@@ -6,14 +6,14 @@ import PageContainer from "./PageContainer";
 
 const MentorSection = () => {
   return (
-    <div id="mentor-section" className="py-20 bg-black">
+    <div className="py-20 bg-black">
       <PageContainer>
         <div className="flex flex-col items-start">
-          <h2 className="text-[17px] text-[#828282] uppercase tracking-widest mb-3 font-figtree tracking-[-0.02em]">
+          <h2 className="text-[17px] text-[#828282] uppercase tracking-widest mb-3 font-figtree">
             OUR MENTORS
           </h2>
           
-          <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium max-w-4xl leading-tight text-left mb-4 tracking-[-0.02em]">
+          <h3 className="text-3xl md:text-4xl lg:text-5xl font-medium max-w-4xl leading-tight text-left mb-4">
             Learn from the best
           </h3>
           

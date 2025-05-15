@@ -15,18 +15,6 @@ const Navigation = () => {
   const isActive = (path: string) => {
     return location.pathname === path;
   };
-  
-  const scrollToSection = (sectionId: string) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: "smooth", block: "start" });
-    } else if (sectionId === "faq") {
-      // If on homepage, navigate to FAQ page
-      window.location.href = "/faq";
-    }
-  };
-
-  const isHomePage = location.pathname === "/";
 
   return (
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
@@ -49,22 +37,22 @@ const Navigation = () => {
 
           {/* Navigation Links - centered on all screen sizes */}
           <div className="hidden md:flex items-center justify-center absolute left-1/2 transform -translate-x-1/2 space-x-9">
-            <button
-              onClick={() => isHomePage ? scrollToSection("about-section") : window.location.href = "/"}
+            <Link
+              to="/"
               className={`text-[17px] font-figtree font-medium transition-colors ${
                 isActive("/") ? "text-white" : "text-[#828282] hover:text-white"
               }`}
             >
               ABOUT
-            </button>
-            <button
-              onClick={() => isHomePage ? scrollToSection("mentor-section") : window.location.href = "/mentors"}
+            </Link>
+            <Link
+              to="/mentors"
               className={`text-[17px] font-figtree font-medium transition-colors ${
                 isActive("/mentors") ? "text-white" : "text-[#828282] hover:text-white"
               }`}
             >
               MENTORS
-            </button>
+            </Link>
             <Link
               to="/faq"
               className={`text-[17px] font-figtree font-medium transition-colors ${

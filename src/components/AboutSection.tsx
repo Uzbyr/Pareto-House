@@ -1,26 +1,22 @@
-
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
-
 interface StatProps {
   value: string;
   label: string;
 }
-
 const Stat = ({
   value,
   label
 }: StatProps) => {
   return <div className="flex flex-col items-center">
       <div className="text-4xl md:text-6xl font-semibold mb-2">{value}</div>
-      <div className="text-[14px] text-[#828282] uppercase tracking-wider">
+      <div className="text-[15px] text-[#828282] uppercase tracking-wider">
         <span className="text-center">{label}</span>
       </div>
     </div>;
 };
-
 const AboutSection = () => {
-  return <section id="about-section" className="py-20 bg-black border-t border-white/5 font-figtree">
+  return <section className="py-20 bg-black border-t border-white/5 font-figtree">
       <PageContainer>
         <div className="text-center mb-16">
           <motion.h2 initial={{
@@ -72,5 +68,4 @@ const AboutSection = () => {
       </PageContainer>
     </section>;
 };
-
 export default AboutSection;
