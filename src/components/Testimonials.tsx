@@ -3,6 +3,7 @@ import React from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Card } from "./ui/card";
+import { AspectRatio } from "./ui/aspect-ratio";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
 
 interface Testimonial {
@@ -11,16 +12,18 @@ interface Testimonial {
   university: string;
   position: string;
   testimonial: string;
+  bio: string;
   image: string;
 }
 
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Alex Chen",
-    university: "Stanford University",
-    position: "Founder at Quantum AI",
-    testimonial: "Joining the fellowship has been a transformative experience. The collaboration, innovative spirit, and support I've found here are unmatched. Every day, I feel empowered to bring my best ideas to life while growing as an entrepreneur.",
+    name: "Marieliesse Gouilliard",
+    university: "University of Chicago",
+    position: "Tech Founder & ML Engineer",
+    testimonial: "Joining the fellowship has been a transformative experience. The collaboration, innovative spirit, and support I've found here are unmatched.",
+    bio: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills.",
     image: "/lovable-uploads/carlos-eduardo.jpeg"
   },
   {
@@ -28,7 +31,8 @@ const testimonials: Testimonial[] = [
     name: "Sophia Williams",
     university: "MIT",
     position: "CTO at BlockSync",
-    testimonial: "The mentorship and network I gained through this program accelerated my startup's growth beyond what I thought possible. The connections I made have been invaluable for fundraising and product development.",
+    testimonial: "The mentorship and network I gained through this program accelerated my startup's growth beyond what I thought possible.",
+    bio: "Combining her computer science expertise with blockchain technology to revolutionize data security for enterprise applications. With guidance from Pareto mentors, she secured seed funding and built a diverse engineering team focused on solving complex technical challenges in the cybersecurity space.",
     image: "/lovable-uploads/herve-bredin.jpeg"
   },
   {
@@ -36,7 +40,8 @@ const testimonials: Testimonial[] = [
     name: "Michael Johnson",
     university: "Harvard University",
     position: "Co-founder at NexGen Health",
-    testimonial: "Being part of this fellowship gave me access to resources and mentors that completely changed my entrepreneurial journey. I was able to validate my ideas faster and connect with investors who truly believed in our vision.",
+    testimonial: "Being part of this fellowship gave me access to resources and mentors that completely changed my entrepreneurial journey.",
+    bio: "Using his background in biomedical engineering to create accessible healthcare solutions for underserved communities. Through the Pareto fellowship, he gained critical insights on product market fit and connected with healthcare industry leaders who provided invaluable guidance on regulatory navigation and Go-To-Market strategy.",
     image: "/lovable-uploads/christian-reber.jpeg"
   }
 ];
@@ -64,23 +69,36 @@ const Testimonials = () => {
                 transition={{ duration: 0.6 }}
               >
                 <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
-                  <div className="p-8">
-                    <p className="text-white text-lg md:text-xl leading-relaxed mb-8">
-                      {testimonial.testimonial}
-                    </p>
-                    <div className="flex items-center gap-4">
-                      <div className="relative">
-                        <Avatar className="h-16 w-16">
-                          <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                          <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
-                        </Avatar>
-                        <div className="absolute -inset-1 rounded-full bg-white/5 blur-md -z-10"></div>
+                  <div className="p-8 flex flex-col md:flex-row gap-8">
+                    <div className="md:w-1/3">
+                      <div className="mb-4">
+                        <AspectRatio ratio={1} className="overflow-hidden">
+                          <Avatar className="h-full w-full">
+                            <AvatarImage 
+                              src={testimonial.image} 
+                              alt={testimonial.name} 
+                              className="object-cover"
+                            />
+                            <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
+                          </Avatar>
+                        </AspectRatio>
                       </div>
-                      <div>
-                        <h4 className="text-white font-medium text-lg">{testimonial.name}</h4>
-                        <p className="text-zinc-400 text-sm">{testimonial.university}</p>
-                        <p className="text-zinc-500 text-sm">{testimonial.position}</p>
+                      <div className="space-y-2">
+                        <h3 className="text-xl font-semibold text-white">{testimonial.name}</h3>
+                        <p className="text-zinc-400">{testimonial.university}</p>
+                        <div className="bg-zinc-800 text-zinc-300 px-3 py-1 inline-block text-sm">
+                          {testimonial.position}
+                        </div>
                       </div>
+                    </div>
+                    
+                    <div className="md:w-2/3 space-y-4">
+                      <p className="text-white text-lg leading-relaxed italic">
+                        "{testimonial.testimonial}"
+                      </p>
+                      <p className="text-zinc-400 leading-relaxed">
+                        {testimonial.bio}
+                      </p>
                     </div>
                   </div>
                 </Card>
