@@ -1,6 +1,5 @@
 
-import { useNavigate } from "react-router-dom";
-import { ArrowRight, Lock } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
 import { Button } from "../components/ui/button";
@@ -16,10 +15,6 @@ import MentorSection from "../components/MentorSection";
 import PageContainer from "../components/PageContainer";
 
 const Index = () => {
-  const navigate = useNavigate();
-  const handleLogin = () => {
-    navigate("/login");
-  };
   return (
     <div className="min-h-screen bg-black text-black dark:text-white font-figtree">
       <Navigation />
@@ -63,23 +58,6 @@ const Index = () => {
         {/* Footer */}
         <div className="bg-black">
           <Footer />
-        </div>
-
-        {/* Login Button */}
-        <div className="bg-black border-t border-black/10 dark:border-white/10 py-6">
-          <PageContainer>
-            <div className="flex justify-end">
-              <Button
-                variant="ghost"
-                size="sm"
-                className="text-white/60 dark:text-white/60 hover:text-pareto-pink dark:hover:text-pareto-pink"
-                onClick={handleLogin}
-              >
-                <Lock className="w-4 h-4 mr-2" />
-                Login
-              </Button>
-            </div>
-          </PageContainer>
         </div>
       </div>
     </div>
