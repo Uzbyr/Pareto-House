@@ -22,8 +22,8 @@ const Index = () => {
       {/* Hero Section */}
       <HeroSection />
 
-      {/* Content that will scroll over the hero section */}
-      <div className="relative z-20 mt-[100vh]"> {/* Start after the hero section height */}
+      {/* Content sections */}
+      <div className="relative">
         {/* About Section */}
         <div className="bg-black">
           <AboutSection />
