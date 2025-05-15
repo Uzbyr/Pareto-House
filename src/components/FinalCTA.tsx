@@ -24,10 +24,10 @@ const FinalCTA = () => {
 
           <Link
             to="/apply"
-            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black hover:bg-pareto-pink transition-colors duration-300 font-medium rounded-sm"
+            className="group inline-flex items-center gap-2 px-6 py-2 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
           >
             APPLY NOW
-            <ArrowRight className="w-5 h-5" />
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
           </Link>
         </motion.div>
       </PageContainer>
