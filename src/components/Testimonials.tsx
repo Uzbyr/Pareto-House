@@ -93,9 +93,6 @@ const Testimonials = () => {
                     </div>
                     
                     <div className="md:w-2/3 space-y-4">
-                      <p className="text-white text-lg leading-relaxed italic">
-                        {testimonial.testimonial}
-                      </p>
                       <p className="text-zinc-400 leading-relaxed">
                         {testimonial.bio}
                       </p>
