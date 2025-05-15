@@ -15,22 +15,20 @@ const FinalCTA = () => {
           transition={{ duration: 0.6 }}
           className="max-w-3xl mx-auto"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-4 tracking-tight">
-            Ready to Join the Elite?
+          <h2 className="text-5xl md:text-6xl font-bold mb-6 tracking-tighter text-white">
+            Ready to join<br className="hidden sm:block" /> the elite?
           </h2>
-          <p className="text-xl md:text-2xl text-black/70 dark:text-white/70 mb-12">
-            Applications for the next cohort close soon
+          <p className="text-lg md:text-xl text-white/60 mb-12">
+            Applications for next cohort close soon
           </p>
 
-          <div className="space-y-12">
-            <Link
-              to="/apply"
-              className="group inline-flex items-center gap-2 px-8 py-4 bg-pareto-pink text-black hover:bg-white dark:hover:bg-white transition-all duration-300 text-lg font-semibold rounded-sm transform hover:-translate-y-1"
-            >
-              Apply Now
-              <ArrowRight className="w-5 h-5 transition-transform group-hover:translate-x-1" />
-            </Link>
-          </div>
+          <Link
+            to="/apply"
+            className="inline-flex items-center gap-2 px-8 py-4 bg-white text-black hover:bg-pareto-pink transition-colors duration-300 font-medium rounded-sm"
+          >
+            APPLY NOW
+            <ArrowRight className="w-5 h-5" />
+          </Link>
         </motion.div>
       </PageContainer>
     </div>
