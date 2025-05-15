@@ -161,10 +161,8 @@ const Testimonials = () => {
                     ref={el => cardsRef.current[index] = el}
                   >
                     <div className="p-8 flex flex-col h-full">
-                      <p className="text-white text-base leading-relaxed mb-8 flex-grow">
-                        {testimonial.testimonial}
-                      </p>
-                      <div className="flex items-center gap-4 mt-auto">
+                      {/* User information (moved to the top) */}
+                      <div className="flex items-center gap-4 mb-8">
                         <div className="relative">
                           <Avatar className="h-14 w-14 rounded-none">
                             <AvatarImage 
@@ -184,6 +182,11 @@ const Testimonials = () => {
                           <p className="text-zinc-500 text-sm">{testimonial.position}</p>
                         </div>
                       </div>
+                      
+                      {/* Testimonial text (moved to the bottom) */}
+                      <p className="text-white text-base leading-relaxed flex-grow">
+                        {testimonial.testimonial}
+                      </p>
                     </div>
                   </Card>
                 </motion.div>
