@@ -1,6 +1,8 @@
+
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
 import ScrollingUniversities from "./ScrollingUniversities";
+import TestimonialSection from "./TestimonialSection";
 
 const BackedUndergrads = () => {
   return (
@@ -27,6 +29,9 @@ const BackedUndergrads = () => {
           </motion.p>
         </div>
       </PageContainer>
+      
+      {/* Testimonial section */}
+      <TestimonialSection />
       
       {/* Universities logos */}
       <ScrollingUniversities />
