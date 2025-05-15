@@ -1,10 +1,11 @@
 
-import React from "react";
-import { motion } from "framer-motion";
+import React, { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
 import { Card } from "./ui/card";
 import { AspectRatio } from "./ui/aspect-ratio";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./ui/carousel";
+import { ChevronLeft, ChevronRight } from "lucide-react";
+import { Button } from "./ui/button";
 
 interface Testimonial {
   id: number;
@@ -47,67 +48,120 @@ const testimonials: Testimonial[] = [
 ];
 
 const Testimonials = () => {
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [isAnimating, setIsAnimating] = useState(false);
+  
+  const nextTestimonial = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setActiveIndex((prev) => (prev + 1) % testimonials.length);
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+
+  const prevTestimonial = () => {
+    if (isAnimating) return;
+    setIsAnimating(true);
+    setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
+    setTimeout(() => setIsAnimating(false), 500);
+  };
+  
+  useEffect(() => {
+    // Auto-rotate testimonials every 5 seconds
+    const interval = setInterval(() => {
+      nextTestimonial();
+    }, 5000);
+    
+    return () => clearInterval(interval);
+  }, []);
+
   return (
     <div className="py-16 relative">
-      {/* Add gradient overlays for the peeking effect */}
-      <div className="absolute top-0 bottom-0 left-0 w-1/6 bg-gradient-to-r from-black to-transparent z-10"></div>
-      <div className="absolute top-0 bottom-0 right-0 w-1/6 bg-gradient-to-l from-black to-transparent z-10"></div>
-      
-      <Carousel
-        opts={{
-          align: "center",
-          loop: true,
-        }}
-        className="max-w-5xl mx-auto"
-      >
-        <CarouselContent>
-          {testimonials.map((testimonial) => (
-            <CarouselItem key={testimonial.id} className="sm:basis-4/5 md:basis-4/5 lg:basis-4/5 pl-4">
-              <motion.div
-                initial={{ opacity: 0 }}
-                whileInView={{ opacity: 1 }}
-                transition={{ duration: 0.6 }}
-              >
-                <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
-                  <div className="p-8 flex flex-col md:flex-row gap-8">
-                    <div className="md:w-1/4">
-                      <div className="mb-4">
-                        <AspectRatio ratio={1} className="overflow-hidden w-24 h-24 mx-auto md:mx-0">
-                          <Avatar className="h-full w-full">
-                            <AvatarImage 
-                              src={testimonial.image} 
-                              alt={testimonial.name} 
-                              className="object-cover"
-                            />
-                            <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
-                          </Avatar>
-                        </AspectRatio>
-                      </div>
-                      <div className="space-y-2 text-center md:text-left">
-                        <h3 className="text-xl font-semibold text-white">{testimonial.name}</h3>
-                        <p className="text-zinc-400">{testimonial.university}</p>
-                        <div className="bg-zinc-800 text-zinc-300 px-3 py-1 inline-block text-sm">
-                          {testimonial.position}
+      <div className="max-w-4xl mx-auto px-4 relative">
+        {/* Stack of cards */}
+        <div className="relative h-[360px] md:h-[320px] perspective-[1000px]">
+          <AnimatePresence>
+            {testimonials.map((testimonial, index) => {
+              // Calculate position in the stack relative to the active card
+              const position = (index - activeIndex + testimonials.length) % testimonials.length;
+              
+              return (
+                <motion.div
+                  key={testimonial.id}
+                  className="absolute w-full"
+                  initial={{ 
+                    opacity: index === activeIndex ? 1 : 0.6,
+                    scale: 1 - (position * 0.05),
+                    y: position * 15,
+                    zIndex: testimonials.length - position,
+                    rotateX: position * -2,
+                  }}
+                  animate={{ 
+                    opacity: index === activeIndex ? 1 : 0.6 - (position * 0.1),
+                    scale: 1 - (position * 0.05),
+                    y: position * 15,
+                    zIndex: testimonials.length - position,
+                    rotateX: position * -2,
+                  }}
+                  exit={{ opacity: 0, y: -30, scale: 0.9 }}
+                  transition={{ duration: 0.5 }}
+                >
+                  <Card className="bg-[#121212] overflow-hidden shadow-[0_0_25px_rgba(255,255,255,0.05)]">
+                    <div className="p-6 md:p-8 flex flex-col md:flex-row gap-6 md:gap-8">
+                      <div className="md:w-1/4">
+                        <div className="mb-4">
+                          <AspectRatio ratio={1} className="overflow-hidden w-20 h-20 mx-auto md:mx-0">
+                            <Avatar className="h-full w-full">
+                              <AvatarImage 
+                                src={testimonial.image} 
+                                alt={testimonial.name} 
+                                className="object-cover"
+                              />
+                              <AvatarFallback>{testimonial.name.substring(0, 2)}</AvatarFallback>
+                            </Avatar>
+                          </AspectRatio>
+                        </div>
+                        <div className="space-y-2 text-center md:text-left">
+                          <h3 className="text-xl font-semibold text-white">{testimonial.name}</h3>
+                          <p className="text-zinc-400 text-sm">{testimonial.university}</p>
+                          <div className="bg-zinc-800 text-zinc-300 px-3 py-1 inline-block text-sm">
+                            {testimonial.position}
+                          </div>
                         </div>
                       </div>
+                      
+                      <div className="md:w-3/4 space-y-4">
+                        <p className="text-zinc-400 leading-relaxed text-sm md:text-base">
+                          {testimonial.bio}
+                        </p>
+                      </div>
                     </div>
-                    
-                    <div className="md:w-3/4 space-y-4">
-                      <p className="text-zinc-400 leading-relaxed">
-                        {testimonial.bio}
-                      </p>
-                    </div>
-                  </div>
-                </Card>
-              </motion.div>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <div className="flex justify-center gap-2 mt-8">
-          <CarouselPrevious className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
-          <CarouselNext className="relative inset-0 translate-y-0 bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]" />
+                  </Card>
+                </motion.div>
+              );
+            })}
+          </AnimatePresence>
         </div>
-      </Carousel>
+      
+        {/* Navigation controls */}
+        <div className="flex justify-center gap-4 mt-12">
+          <Button 
+            onClick={prevTestimonial} 
+            className="bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]"
+            size="icon"
+            disabled={isAnimating}
+          >
+            <ChevronLeft className="h-4 w-4" />
+          </Button>
+          <Button 
+            onClick={nextTestimonial} 
+            className="bg-zinc-900 border-none hover:bg-zinc-800 text-white shadow-[0_0_15px_rgba(255,255,255,0.07)]"
+            size="icon"
+            disabled={isAnimating}
+          >
+            <ChevronRight className="h-4 w-4" />
+          </Button>
+        </div>
+      </div>
     </div>
   );
 };
