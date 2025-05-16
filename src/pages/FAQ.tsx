@@ -10,7 +10,6 @@ import {
 import BackToHomeButton from "../components/application/BackToHomeButton";
 import Navigation from "../components/Navigation";
 import Footer from "../components/Footer";
-import PageContainer from "../components/PageContainer";
 
 const FAQ = () => {
   const faqSections = [
@@ -98,7 +97,7 @@ const FAQ = () => {
         {
           question: "What specific benefits do fellows receive?",
           answer:
-            'Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and "lifetime membership" in our community.',
+            "Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and “lifetime membership” in our community.",
         },
         {
           question: "Is there an orientation or training provided?",
@@ -141,52 +140,50 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-black text-white font-figtree">
+    <div className="min-h-screen bg-black text-white font-inter">
       <Navigation />
 
       <div className="container mx-auto px-4 py-12 pt-36">
-        <PageContainer>
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="max-w-4xl mx-auto"
-          >
-            <h1 className="text-4xl md:text-5xl font-bold mb-8 tracking-[-0.02em]">
-              Frequently Asked Questions
-            </h1>
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+          className="max-w-3xl mx-auto"
+        >
+          <h1 className="text-4xl md:text-5xl font-bold mb-8">
+            Frequently Asked Questions
+          </h1>
 
-            <p className="text-xl text-white/80 mb-12 tracking-[-0.02em]">
-              Find answers to common questions about the Pareto Fellowship.
-            </p>
+          <p className="text-xl text-white/80 mb-12">
+            Find answers to common questions about the Pareto Fellowship.
+          </p>
 
-            <div className="space-y-12">
-              {faqSections.map((section, index) => (
-                <div key={index} className="space-y-4">
-                  <h2 className="text-2xl font-semibold text-pareto-pink tracking-[-0.02em] border-b border-white/10 pb-2">
-                    {section.title}
-                  </h2>
-                  <Accordion type="multiple" className="space-y-6">
-                    {section.items.map((item, itemIndex) => (
-                      <AccordionItem
-                        key={itemIndex}
-                        value={`item-${index}-${itemIndex}`}
-                        className="border border-white/10 rounded-lg px-6 py-2 hover:border-white/20 transition-all"
-                      >
-                        <AccordionTrigger className="text-lg font-medium hover:text-pareto-pink py-4">
-                          {item.question}
-                        </AccordionTrigger>
-                        <AccordionContent className="text-white/80 leading-relaxed whitespace-pre-line pt-2 pb-6">
-                          {item.answer}
-                        </AccordionContent>
-                      </AccordionItem>
-                    ))}
-                  </Accordion>
-                </div>
-              ))}
-            </div>
-          </motion.div>
-        </PageContainer>
+          <div className="space-y-8">
+            {faqSections.map((section, index) => (
+              <div key={index} className="space-y-4">
+                <h2 className="text-2xl font-semibold text-pareto-pink">
+                  {section.title}
+                </h2>
+                <Accordion type="multiple" className="space-y-4">
+                  {section.items.map((item, itemIndex) => (
+                    <AccordionItem
+                      key={itemIndex}
+                      value={`item-${index}-${itemIndex}`}
+                      className="border border-white/10 rounded-lg px-4"
+                    >
+                      <AccordionTrigger className="text-lg font-medium hover:text-pareto-pink">
+                        {item.question}
+                      </AccordionTrigger>
+                      <AccordionContent className="text-white/80 leading-relaxed whitespace-pre-line">
+                        {item.answer}
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </div>
+            ))}
+          </div>
+        </motion.div>
       </div>
       <Footer />
     </div>
