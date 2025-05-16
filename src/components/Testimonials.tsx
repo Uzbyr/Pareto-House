@@ -17,27 +17,67 @@ interface Testimonial {
 const testimonials: Testimonial[] = [
   {
     id: 1,
-    name: "Joseph",
-    university: "Yale University",
-    position: "Founder of Ventr",
-    testimonial: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
+    name: "Elias Fizesan",
+    university: "Columbia University",
+    position: "Co-Founder at Canopy Labs",
+    testimonial: "Pareto has been a force of nature when it comes to supporting founders after partnering with them. They've truly had an immeasurable impact on our company, which is rare to find among investors. From assisting with hiring and network expansion to GTM strategy and customer acquisition, Pareto has you covered in every way!",
     image: "/lovable-uploads/carlos-eduardo.jpeg"
   },
   {
     id: 2,
-    name: "Sophia Williams",
-    university: "MIT",
-    position: "CTO at BlockSync",
-    testimonial: "The mentorship and network I gained through this program accelerated my startup's growth beyond what I thought possible. The connections I made have been invaluable for fundraising and product development.",
+    name: "Marieliesse Gouilliard",
+    university: "University of Chicago",
+    position: "Tech Founder & ML Engineer",
+    testimonial: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills.",
     image: "/lovable-uploads/herve-bredin.jpeg"
   },
   {
     id: 3,
-    name: "Michael Johnson",
-    university: "Harvard University",
-    position: "Co-founder at NexGen Health",
-    testimonial: "Being part of this fellowship gave me access to resources and mentors that completely changed my entrepreneurial journey. I was able to validate my ideas faster and connect with investors who truly believed in our vision.",
+    name: "Chan Woo Kim",
+    university: "Williams College",
+    position: "Co-founder & CEO at Theta One",
+    testimonial: "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space.",
     image: "/lovable-uploads/christian-reber.jpeg"
+  },
+  {
+    id: 4,
+    name: "Joseph Jojoe",
+    university: "Columbia University",
+    position: "Founder at Ventr",
+    testimonial: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
+    image: "/lovable-uploads/carlos-eduardo.jpeg"
+  },
+  {
+    id: 5,
+    name: "Shadi Elaridi",
+    university: "Stanford University",
+    position: "Founder & CEO at Swish Robotics",
+    testimonial: "Pareto has been instrumental in building Swish, providing invaluable support - whether through investor and partner introductions, GTM strategy discussions, or connecting us with like-minded founders. The team is engaged, genuine, and truly invested in our success - we're proud to call them our partners.",
+    image: "/lovable-uploads/herve-bredin.jpeg"
+  },
+  {
+    id: 6,
+    name: "Zilin Dong",
+    university: "Vanderbilt University",
+    position: "Founder of Stealth Startup",
+    testimonial: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution.",
+    image: "/lovable-uploads/christian-reber.jpeg"
+  },
+  {
+    id: 7,
+    name: "James (Yuxi) Qian",
+    university: "Stanford University",
+    position: "Founder of Stealth AI Startup",
+    testimonial: "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform.",
+    image: "/lovable-uploads/carlos-eduardo.jpeg"
+  },
+  {
+    id: 8,
+    name: "Kian Sadeghi",
+    university: "University of Pennsylvania",
+    position: "Founder & CEO at Nucleus",
+    testimonial: "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform.",
+    image: "/lovable-uploads/herve-bredin.jpeg"
   }
 ];
 
