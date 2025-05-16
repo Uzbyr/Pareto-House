@@ -98,7 +98,7 @@ const FAQ = () => {
         {
           question: "What specific benefits do fellows receive?",
           answer:
-            "Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and "lifetime membership" in our community.",
+            'Fellows gain access to personalized mentorship from prominent founders, researchers and leaders, extensive networking opportunities, funding support for their projects, and "lifetime membership" in our community.',
         },
         {
           question: "Is there an orientation or training provided?",
