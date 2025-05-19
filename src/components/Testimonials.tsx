@@ -78,6 +78,14 @@ const testimonials: Testimonial[] = [
     position: "Founder & CEO at Nucleus",
     testimonial: "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform.",
     image: "/lovable-uploads/eeb20dcb-6eb8-495b-8ba2-6d36044ebef9.png"
+  },
+  {
+    id: 9,
+    name: "Anu Varma",
+    university: "University of Oxford",
+    position: "Co-Founder at Canopy Labs",
+    testimonial: "As a founder, partnering with Pareto has been one of the best decisions we've made. Their level of involvement goes way beyond typical investors—they've been hands-on in opening doors to helping us raise, shaping our go-to-market approach, and accelerating us in every way. Having Pareto on board feels like having an extension of our own team, genuinely invested in our long-term success.",
+    image: "/lovable-uploads/bb4c16b9-c0bd-4414-b160-5cfc2de0eeec.png"
   }
 ];
 
