@@ -21,7 +21,7 @@ const testimonials: Testimonial[] = [
     university: "Columbia University",
     position: "Co-Founder at Canopy Labs",
     testimonial: "Pareto has been a force of nature when it comes to supporting founders after partnering with them. They've truly had an immeasurable impact on our company, which is rare to find among investors. From assisting with hiring and network expansion to GTM strategy and customer acquisition, Pareto has you covered in every way!",
-    image: "/lovable-uploads/carlos-eduardo.jpeg"
+    image: "/lovable-uploads/b713e628-e079-4ecd-ae45-250fd51f8b75.png"
   },
   {
     id: 2,
