@@ -29,7 +29,7 @@ const testimonials: Testimonial[] = [
     university: "University of Chicago",
     position: "Tech Founder & ML Engineer",
     testimonial: "Leveraging her expertise in Machine Learning and multilingual background to build innovative tech solutions. Through Pareto's network, she connected with leading AI researchers and received mentorship that helped transform her prototype into a scalable product while developing strong leadership skills.",
-    image: "/lovable-uploads/herve-bredin.jpeg"
+    image: "/lovable-uploads/edc8c4d8-8477-4a2e-9b32-31c5cd2c8022.png"
   },
   {
     id: 3,
@@ -37,7 +37,7 @@ const testimonials: Testimonial[] = [
     university: "Williams College",
     position: "Co-founder & CEO at Theta One",
     testimonial: "Building innovative generative AI tools for language learning, focusing on the Korean market. Through Pareto's extensive network, Chan secured strategic partnerships and mentorship that helped him raise $2M in pre-seed funding and grants, while developing a deep understanding of product-market fit in the EdTech space.",
-    image: "/lovable-uploads/christian-reber.jpeg"
+    image: "/lovable-uploads/1b5b93dd-9470-44e6-9562-7f5b07dea786.png"
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ const testimonials: Testimonial[] = [
     university: "Columbia University",
     position: "Founder at Ventr",
     testimonial: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
-    image: "/lovable-uploads/carlos-eduardo.jpeg"
+    image: "/lovable-uploads/314dd570-2849-43b6-98b3-91f9f3f847f5.png"
   },
   {
     id: 5,
@@ -53,7 +53,7 @@ const testimonials: Testimonial[] = [
     university: "Stanford University",
     position: "Founder & CEO at Swish Robotics",
     testimonial: "Pareto has been instrumental in building Swish, providing invaluable support - whether through investor and partner introductions, GTM strategy discussions, or connecting us with like-minded founders. The team is engaged, genuine, and truly invested in our success - we're proud to call them our partners.",
-    image: "/lovable-uploads/herve-bredin.jpeg"
+    image: "/lovable-uploads/42cfa80b-53c6-461b-8e9e-c025c6ffc29f.png"
   },
   {
     id: 6,
@@ -61,7 +61,7 @@ const testimonials: Testimonial[] = [
     university: "Vanderbilt University",
     position: "Founder of Stealth Startup",
     testimonial: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution.",
-    image: "/lovable-uploads/christian-reber.jpeg"
+    image: "/lovable-uploads/204adfe5-24f7-4700-8a9e-7181a25aca5a.png"
   },
   {
     id: 7,
@@ -69,7 +69,7 @@ const testimonials: Testimonial[] = [
     university: "Stanford University",
     position: "Founder of Stealth AI Startup",
     testimonial: "Developing cutting-edge AI technology with applications in computer vision and natural language processing. With Pareto's support, James secured seed funding from top Silicon Valley investors and gained access to a network of technical advisors who helped refine the product architecture and go-to-market strategy for his revolutionary AI platform.",
-    image: "/lovable-uploads/carlos-eduardo.jpeg"
+    image: "/lovable-uploads/270f2e1d-f4a1-4f0b-b958-8cf7f9865fb5.png"
   },
   {
     id: 8,
@@ -77,7 +77,7 @@ const testimonials: Testimonial[] = [
     university: "University of Pennsylvania",
     position: "Founder & CEO at Nucleus",
     testimonial: "Building Nucleus, the consumer health platform that's ushering in a new era of preventive healthcare based on whole-genome sequencing. Through Pareto's network, Kian connected with key biotech investors and mentors who helped him secure funding from Founders Fund, 776, and other top investors, while providing strategic guidance for scaling his innovative healthcare platform.",
-    image: "/lovable-uploads/herve-bredin.jpeg"
+    image: "/lovable-uploads/eeb20dcb-6eb8-495b-8ba2-6d36044ebef9.png"
   }
 ];
 
