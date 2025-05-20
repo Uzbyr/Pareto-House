@@ -26,7 +26,14 @@ const Footer = () => {
             
             {/* Tagline */}
             <div className="text-xl font-medium text-white">
-              Build brutally or don't
+              <a 
+                href="https://www.youtube.com/watch?v=lc8ourcIe10" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="hover:underline transition-all"
+              >
+                Build brutally or don't
+              </a>
             </div>
             
             {/* Social links */}
@@ -74,7 +81,14 @@ const Footer = () => {
             {/* Middle section with tagline and social links */}
             <div className="flex flex-col items-center">
               <div className="text-xl font-medium text-white mb-4">
-                Build brutally or don't
+                <a 
+                  href="https://www.youtube.com/watch?v=lc8ourcIe10" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="hover:underline transition-all"
+                >
+                  Build brutally or don't
+                </a>
               </div>
               <div className="flex items-center space-x-6">
                 <a
