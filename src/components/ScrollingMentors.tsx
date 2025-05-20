@@ -7,12 +7,32 @@ const ScrollingMentors = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
-  const scrollSpeed = 1; // reduced speed for smoother scrolling
+  const scrollSpeed = 0.8; // slightly reduced speed for smoother scrolling
   
   // Track mouse position and drag state
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
   const [scrollLeft, setScrollLeft] = useState(0);
+  const [transitionActive, setTransitionActive] = useState(false);
+  const autoScrollTimeoutRef = useRef<number | null>(null);
+
+  const resumeAutoScroll = () => {
+    if (autoScrollTimeoutRef.current) {
+      window.clearTimeout(autoScrollTimeoutRef.current);
+    }
+    
+    // Add a small delay before resuming auto-scrolling for a smoother transition
+    autoScrollTimeoutRef.current = window.setTimeout(() => {
+      setTransitionActive(true);
+      // Fade in the auto-scrolling effect
+      setTimeout(() => {
+        setIsAutoScrolling(true);
+        setTimeout(() => {
+          setTransitionActive(false);
+        }, 500);
+      }, 100);
+    }, 2000); // Reduced from 3s to 2s for better responsiveness
+  };
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
@@ -20,21 +40,30 @@ const ScrollingMentors = () => {
   };
 
   const handleInteractionEnd = () => {
-    setIsAutoScrolling(true);
     setIsHovering(false);
+    if (!isDragging) {
+      resumeAutoScroll();
+    }
   };
 
-  // Handle mouse down event to start dragging
+  // Handle mouse down event to start dragging with improved feedback
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     if (viewportRef.current) {
+      e.preventDefault(); // Prevent text selection during drag
       setIsDragging(true);
       setStartX(e.pageX - viewportRef.current.offsetLeft);
       setScrollLeft(viewportRef.current.scrollLeft);
       setIsAutoScrolling(false);
+      
+      // Clear any pending auto-scroll resumption
+      if (autoScrollTimeoutRef.current) {
+        window.clearTimeout(autoScrollTimeoutRef.current);
+        autoScrollTimeoutRef.current = null;
+      }
     }
   };
 
-  // Handle mouse move event for dragging
+  // Enhanced mouse move handler for smoother dragging
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging || !viewportRef.current) return;
     
@@ -43,87 +72,109 @@ const ScrollingMentors = () => {
     
     // Calculate how far the mouse has moved
     const x = e.pageX - viewportRef.current.offsetLeft;
-    const walk = (x - startX) * 1.5; // Multiply for faster scroll
+    const walk = (x - startX) * 1.8; // Slightly increased for better responsiveness
     
-    // Update scroll position
-    viewportRef.current.scrollLeft = scrollLeft - walk;
+    // Apply smooth scrolling with requestAnimationFrame for better performance
+    requestAnimationFrame(() => {
+      if (viewportRef.current) {
+        viewportRef.current.scrollLeft = scrollLeft - walk;
+      }
+    });
   };
 
-  // Handle mouse up event to stop dragging
+  // Improved mouse up handler
   const handleMouseUp = () => {
     setIsDragging(false);
     
-    // Resume auto-scrolling after a delay
-    const timer = setTimeout(() => {
-      setIsAutoScrolling(true);
-    }, 3000); // Resume auto-scrolling after 3 seconds
-    
-    return () => clearTimeout(timer);
+    // Resume auto-scrolling after drag ends
+    resumeAutoScroll();
   };
 
-  // Handle wheel events for horizontal scrolling
+  // Handle wheel events for horizontal scrolling with improved behavior
   const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
     if (viewportRef.current) {
       // Prevent the default vertical scroll
       e.preventDefault();
       
-      // Scroll horizontally based on the vertical wheel delta
-      viewportRef.current.scrollLeft += e.deltaY;
+      // Enhanced horizontal scrolling with variable speed based on delta
+      const scrollAmount = e.deltaY * 1.2;
+      
+      // Apply smooth scrolling
+      viewportRef.current.scrollLeft += scrollAmount;
       
       // Temporarily stop auto-scrolling when manually scrolling
       setIsAutoScrolling(false);
       
-      // Resume auto-scrolling after a delay
-      const timer = setTimeout(() => {
-        setIsAutoScrolling(true);
-      }, 3000); // Resume auto-scrolling after 3 seconds of inactivity
-      
-      return () => clearTimeout(timer);
+      // Resume auto-scrolling after a delay with smoother transition
+      resumeAutoScroll();
     }
   };
 
+  // Auto-scrolling effect with improved smoothness
   useEffect(() => {
     let frameId: number;
-
-    const step = () => {
+    let lastTimestamp: number | null = null;
+    
+    const step = (timestamp: number) => {
       if (isAutoScrolling && viewportRef.current) {
         const el = viewportRef.current;
         const maxScrollLeft = el.scrollWidth - el.clientWidth;
         
-        // Move scroll position right
-        el.scrollLeft += scrollSpeed;
-        
-        // If we've reached the end, reset to beginning (loop effect)
-        if (el.scrollLeft >= maxScrollLeft) {
-          el.scrollLeft = 0;
+        // Calculate time-based scroll for consistent speed
+        if (lastTimestamp) {
+          const delta = timestamp - lastTimestamp;
+          const pixelsToScroll = (scrollSpeed * delta) / 16; // Normalize to 60fps
+          
+          // Move scroll position right
+          el.scrollLeft += pixelsToScroll;
+          
+          // If we've reached the end, reset to beginning (loop effect)
+          if (el.scrollLeft >= maxScrollLeft - 5) {
+            el.scrollLeft = 0;
+          }
         }
+        
+        lastTimestamp = timestamp;
+      } else {
+        lastTimestamp = null;
       }
 
       frameId = requestAnimationFrame(step);
     };
 
-    if (isAutoScrolling) {
-      frameId = requestAnimationFrame(step);
-    }
+    frameId = requestAnimationFrame(step);
 
-    return () => cancelAnimationFrame(frameId);
+    return () => {
+      if (autoScrollTimeoutRef.current) {
+        window.clearTimeout(autoScrollTimeoutRef.current);
+      }
+      cancelAnimationFrame(frameId);
+    };
   }, [isAutoScrolling, scrollSpeed]);
 
-  // Add mouse leave event to stop dragging
+  // Improved mouse leave event handling
   useEffect(() => {
     const handleMouseLeaveWindow = () => {
       if (isDragging) {
         setIsDragging(false);
-        // Resume auto-scrolling after a delay
-        setTimeout(() => {
-          setIsAutoScrolling(true);
-        }, 3000);
+        resumeAutoScroll();
       }
     };
 
-    window.addEventListener('mouseup', handleMouseLeaveWindow);
+    // Add enhanced drag end detection
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        resumeAutoScroll();
+      }
+    };
+
+    window.addEventListener('mouseup', handleGlobalMouseUp);
+    window.addEventListener('mouseleave', handleMouseLeaveWindow);
+    
     return () => {
-      window.removeEventListener('mouseup', handleMouseLeaveWindow);
+      window.removeEventListener('mouseup', handleGlobalMouseUp);
+      window.removeEventListener('mouseleave', handleMouseLeaveWindow);
     };
   }, [isDragging]);
 
@@ -134,7 +185,7 @@ const ScrollingMentors = () => {
       
       <ScrollArea
         viewportRef={viewportRef}
-        className={`w-full ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
+        className={`w-full transition-all duration-300 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${transitionActive ? 'transition-all duration-500' : ''}`}
         onMouseEnter={handleInteraction}
         onTouchStart={handleInteraction}
         onMouseLeave={handleInteractionEnd}
@@ -144,7 +195,7 @@ const ScrollingMentors = () => {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
       >
-        <div className={`flex space-x-12 px-4`}>
+        <div className={`flex space-x-12 px-4 ${transitionActive ? 'transition-transform duration-500' : ''}`}>
           {/* First set of mentors */}
           {mentors.concat(mentors).map((mentor, index) => (
             <a
@@ -161,6 +212,7 @@ const ScrollingMentors = () => {
                       src={mentor.imageUrl}
                       alt={mentor.name}
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 transition-all"
+                      draggable="false" // Prevent image dragging interfering with scroll behavior
                     />
                   )}
                 </div>
@@ -190,6 +242,7 @@ const ScrollingMentors = () => {
                       src={mentor.imageUrl}
                       alt={mentor.name}
                       className="h-full w-full object-cover transition-transform duration-300 group-hover:scale-105 grayscale group-hover:grayscale-0 transition-all"
+                      draggable="false" // Prevent image dragging interfering with scroll behavior
                     />
                   )}
                 </div>
@@ -203,7 +256,7 @@ const ScrollingMentors = () => {
             </a>
           ))}
         </div>
-        {!isHovering && (
+        {!isHovering && !isDragging && (
           <ScrollBar
             orientation="horizontal"
             className="bg-black/10 dark:bg-white/10"
