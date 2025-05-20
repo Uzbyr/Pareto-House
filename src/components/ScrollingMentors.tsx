@@ -181,6 +181,14 @@ const ScrollingMentors = () => {
       {/* Left gradient overlay */}
       <div className="absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
       
+      {/* DRAG indicator text */}
+      <div className={`absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 
+        transition-opacity duration-300 font-figtree font-medium tracking-widest text-white/40
+        rounded-full px-4 py-2 border border-white/10 backdrop-blur-sm bg-black/30
+        ${isHovering && !isDragging ? 'opacity-100' : 'opacity-0'}`}>
+        [DRAG]
+      </div>
+      
       <ScrollArea
         viewportRef={viewportRef}
         className={`w-full transition-all duration-300 ${isDragging ? 'cursor-grabbing' : 'cursor-grab'} ${transitionActive ? 'transition-all duration-500' : ''}`}
