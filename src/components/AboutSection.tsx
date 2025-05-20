@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
 
@@ -13,7 +12,7 @@ const Stat = ({
 }: StatProps) => {
   return <div className="flex flex-col items-center w-36">
       <div className="text-4xl md:text-6xl font-semibold mb-2">{value}</div>
-      <div className="text-[15px] text-[#828282] uppercase tracking-wider">
+      <div className="text-[15px] text-[#828282] uppercase tracking-wider whitespace-nowrap">
         <span className="text-center">{label}</span>
       </div>
     </div>;
