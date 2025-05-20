@@ -19,6 +19,27 @@ const ScrollingMentors = () => {
     setIsHovering(false);
   };
 
+  // Handle wheel events for horizontal scrolling
+  const handleWheel = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (viewportRef.current) {
+      // Prevent the default vertical scroll
+      e.preventDefault();
+      
+      // Scroll horizontally based on the vertical wheel delta
+      viewportRef.current.scrollLeft += e.deltaY;
+      
+      // Temporarily stop auto-scrolling when manually scrolling
+      setIsAutoScrolling(false);
+      
+      // Resume auto-scrolling after a delay
+      const timer = setTimeout(() => {
+        setIsAutoScrolling(true);
+      }, 3000); // Resume auto-scrolling after 3 seconds of inactivity
+      
+      return () => clearTimeout(timer);
+    }
+  };
+
   useEffect(() => {
     let frameId: number;
 
@@ -58,6 +79,7 @@ const ScrollingMentors = () => {
         onTouchStart={handleInteraction}
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
+        onWheel={handleWheel} // Add wheel event handler
       >
         <div className={`flex space-x-12 px-4`}>
           {/* First set of mentors */}
