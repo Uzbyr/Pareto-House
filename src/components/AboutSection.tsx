@@ -11,7 +11,7 @@ const Stat = ({
   value,
   label
 }: StatProps) => {
-  return <div className="flex flex-col items-center">
+  return <div className="flex flex-col items-center w-36">
       <div className="text-4xl md:text-6xl font-semibold mb-2">{value}</div>
       <div className="text-[15px] text-[#828282] uppercase tracking-wider">
         <span className="text-center">{label}</span>
@@ -63,7 +63,7 @@ const AboutSection = () => {
         delay: 0.4
       }} viewport={{
         once: true
-      }} className="grid grid-cols-2 md:grid-cols-3 gap-4 md:gap-2 mt-16">
+      }} className="flex flex-wrap justify-center gap-8 md:gap-12 mt-16 max-w-2xl mx-auto">
           <Stat value="50" label="FELLOWS PER BATCH" />
           <Stat value="30+" label="UNIVERSITIES" />
           <Stat value="30+" label="MENTORS" />
