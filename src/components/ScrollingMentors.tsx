@@ -21,17 +21,15 @@ const ScrollingMentors = () => {
       window.clearTimeout(autoScrollTimeoutRef.current);
     }
     
-    // Add a small delay before resuming auto-scrolling for a smoother transition
-    autoScrollTimeoutRef.current = window.setTimeout(() => {
-      setTransitionActive(true);
-      // Fade in the auto-scrolling effect
+    // Remove delay entirely - immediately restart auto-scrolling
+    setTransitionActive(true);
+    // Fade in the auto-scrolling effect
+    setTimeout(() => {
+      setIsAutoScrolling(true);
       setTimeout(() => {
-        setIsAutoScrolling(true);
-        setTimeout(() => {
-          setTransitionActive(false);
-        }, 500);
-      }, 100);
-    }, 2000); // Reduced from 3s to 2s for better responsiveness
+        setTransitionActive(false);
+      }, 500);
+    }, 100);
   };
 
   const handleInteraction = () => {
@@ -86,7 +84,7 @@ const ScrollingMentors = () => {
   const handleMouseUp = () => {
     setIsDragging(false);
     
-    // Resume auto-scrolling after drag ends
+    // Resume auto-scrolling immediately after drag ends
     resumeAutoScroll();
   };
 
@@ -105,7 +103,7 @@ const ScrollingMentors = () => {
       // Temporarily stop auto-scrolling when manually scrolling
       setIsAutoScrolling(false);
       
-      // Resume auto-scrolling after a delay with smoother transition
+      // Resume auto-scrolling immediately
       resumeAutoScroll();
     }
   };
