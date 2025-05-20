@@ -30,7 +30,7 @@ const Footer = () => {
                 href="https://www.youtube.com/watch?v=lc8ourcIe10" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="hover:underline transition-all"
+                className="hover:text-white/70 transition-colors"
               >
                 Build brutally or don't
               </a>
@@ -85,7 +85,7 @@ const Footer = () => {
                   href="https://www.youtube.com/watch?v=lc8ourcIe10" 
                   target="_blank" 
                   rel="noopener noreferrer"
-                  className="hover:underline transition-all"
+                  className="hover:text-white/70 transition-colors"
                 >
                   Build brutally or don't
                 </a>
