@@ -1,3 +1,4 @@
+
 import { motion } from "framer-motion";
 import PageContainer from "./PageContainer";
 
@@ -63,7 +64,7 @@ const AboutSection = () => {
       }} viewport={{
         once: true
       }} className="flex flex-wrap justify-center gap-8 md:gap-12 mt-16 max-w-2xl mx-auto">
-          <Stat value="50" label="FELLOWS PER BATCH" />
+          <Stat value="25" label="FELLOWS PER BATCH" />
           <Stat value="30+" label="UNIVERSITIES" />
           <Stat value="30+" label="MENTORS" />
         </motion.div>
