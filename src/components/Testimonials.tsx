@@ -96,6 +96,7 @@ const Testimonials = () => {
   const [activeIndex, setActiveIndex] = useState(0);
   const autoRotateTimerRef = useRef<NodeJS.Timeout | null>(null);
   const manualInteractionTimeRef = useRef<number>(0);
+  const carouselWrapperRef = useRef<HTMLDivElement>(null);
   
   // Initialize auto-rotation for the carousel
   useEffect(() => {
@@ -122,6 +123,42 @@ const Testimonials = () => {
     return () => {
       if (autoRotateTimerRef.current) {
         clearInterval(autoRotateTimerRef.current);
+      }
+    };
+  }, [activeIndex]);
+
+  // Add wheel event handler for horizontal scrolling
+  useEffect(() => {
+    const handleWheel = (e: WheelEvent) => {
+      if (!carouselApi.current || !carouselWrapperRef.current) return;
+      
+      // Record the time of wheel interaction
+      manualInteractionTimeRef.current = Date.now();
+      
+      // Prevent default scrolling behavior to avoid page scrolling
+      e.preventDefault();
+      
+      // Determine scroll direction and amount
+      const scrollAmount = e.deltaY;
+      const direction = scrollAmount > 0 ? 1 : -1;
+      
+      // Calculate new index based on current active index and direction
+      const totalItems = testimonials.length;
+      const newIndex = (activeIndex + direction + totalItems) % totalItems;
+      
+      // Scroll to the new index
+      carouselApi.current.scrollTo(newIndex);
+    };
+    
+    const carouselElement = carouselWrapperRef.current;
+    
+    if (carouselElement) {
+      carouselElement.addEventListener('wheel', handleWheel, { passive: false });
+    }
+    
+    return () => {
+      if (carouselElement) {
+        carouselElement.removeEventListener('wheel', handleWheel);
       }
     };
   }, [activeIndex]);
@@ -172,7 +209,7 @@ const Testimonials = () => {
 
   return (
     <div className="pt-0 pb-8 md:pb-16 relative">
-      <div className="max-w-5xl mx-auto relative">
+      <div className="max-w-5xl mx-auto relative" ref={carouselWrapperRef}>
         {/* Left gradient positioned relative to the carousel */}
         <div className="absolute top-0 bottom-0 left-0 w-8 md:w-16 bg-gradient-to-r from-black to-transparent z-10"></div>
         {/* Right gradient positioned relative to the carousel */}
