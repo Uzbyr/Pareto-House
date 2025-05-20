@@ -63,11 +63,10 @@ const AboutSection = () => {
         delay: 0.4
       }} viewport={{
         once: true
-      }} className="grid grid-cols-2 md:grid-cols-4 gap-8 md:gap-4 mt-16">
+      }} className="grid grid-cols-2 md:grid-cols-3 gap-8 md:gap-4 mt-16">
           <Stat value="50" label="FELLOWS PER BATCH" />
           <Stat value="30+" label="UNIVERSITIES" />
-          <Stat value="100k" label="POTENTIAL CHECK" />
-          <Stat value="50+" label="TECH PARTNERS" />
+          <Stat value="30+" label="MENTORS" />
         </motion.div>
       </PageContainer>
     </section>;
