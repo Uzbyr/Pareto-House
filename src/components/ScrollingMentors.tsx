@@ -8,6 +8,11 @@ const ScrollingMentors = () => {
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
   const [isHovering, setIsHovering] = useState(false);
   const scrollSpeed = 1; // reduced speed for smoother scrolling
+  
+  // Track mouse position and drag state
+  const [isDragging, setIsDragging] = useState(false);
+  const [startX, setStartX] = useState(0);
+  const [scrollLeft, setScrollLeft] = useState(0);
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
@@ -17,6 +22,43 @@ const ScrollingMentors = () => {
   const handleInteractionEnd = () => {
     setIsAutoScrolling(true);
     setIsHovering(false);
+  };
+
+  // Handle mouse down event to start dragging
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (viewportRef.current) {
+      setIsDragging(true);
+      setStartX(e.pageX - viewportRef.current.offsetLeft);
+      setScrollLeft(viewportRef.current.scrollLeft);
+      setIsAutoScrolling(false);
+    }
+  };
+
+  // Handle mouse move event for dragging
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!isDragging || !viewportRef.current) return;
+    
+    // Prevent default behavior like text selection
+    e.preventDefault();
+    
+    // Calculate how far the mouse has moved
+    const x = e.pageX - viewportRef.current.offsetLeft;
+    const walk = (x - startX) * 1.5; // Multiply for faster scroll
+    
+    // Update scroll position
+    viewportRef.current.scrollLeft = scrollLeft - walk;
+  };
+
+  // Handle mouse up event to stop dragging
+  const handleMouseUp = () => {
+    setIsDragging(false);
+    
+    // Resume auto-scrolling after a delay
+    const timer = setTimeout(() => {
+      setIsAutoScrolling(true);
+    }, 3000); // Resume auto-scrolling after 3 seconds
+    
+    return () => clearTimeout(timer);
   };
 
   // Handle wheel events for horizontal scrolling
@@ -67,6 +109,24 @@ const ScrollingMentors = () => {
     return () => cancelAnimationFrame(frameId);
   }, [isAutoScrolling, scrollSpeed]);
 
+  // Add mouse leave event to stop dragging
+  useEffect(() => {
+    const handleMouseLeaveWindow = () => {
+      if (isDragging) {
+        setIsDragging(false);
+        // Resume auto-scrolling after a delay
+        setTimeout(() => {
+          setIsAutoScrolling(true);
+        }, 3000);
+      }
+    };
+
+    window.addEventListener('mouseup', handleMouseLeaveWindow);
+    return () => {
+      window.removeEventListener('mouseup', handleMouseLeaveWindow);
+    };
+  }, [isDragging]);
+
   return (
     <div className="relative overflow-hidden">
       {/* Left gradient overlay */}
@@ -74,12 +134,15 @@ const ScrollingMentors = () => {
       
       <ScrollArea
         viewportRef={viewportRef}
-        className="w-full"
+        className={`w-full ${isDragging ? 'cursor-grabbing' : 'cursor-grab'}`}
         onMouseEnter={handleInteraction}
         onTouchStart={handleInteraction}
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
-        onWheel={handleWheel} // Add wheel event handler
+        onWheel={handleWheel} 
+        onMouseDown={handleMouseDown}
+        onMouseMove={handleMouseMove}
+        onMouseUp={handleMouseUp}
       >
         <div className={`flex space-x-12 px-4`}>
           {/* First set of mentors */}
