@@ -86,11 +86,32 @@ const LogoUpload = ({ logoFile, setLogoFile, companyLogoUrl }: LogoUploadProps) 
           </div>
         )}
         
-        <Input 
-          placeholder="Or enter logo URL directly" 
-          value={companyLogoUrl || ""} 
-          readOnly 
-        />
+        {companyLogoUrl && !logoFile && (
+          <div className="mt-3">
+            <p className="text-sm text-gray-400 mb-2">Current logo:</p>
+            <div className="flex items-center space-x-3 p-3 bg-zinc-800 rounded-lg border border-zinc-700">
+              <img
+                src={companyLogoUrl}
+                alt="Company logo"
+                className="w-12 h-12 object-contain rounded-lg bg-white"
+                onError={(e) => {
+                  const target = e.target as HTMLImageElement;
+                  target.style.display = 'none';
+                  target.nextElementSibling?.classList.remove('hidden');
+                }}
+              />
+              <div className="hidden w-12 h-12 bg-zinc-700 rounded-lg flex items-center justify-center">
+                <Upload className="h-5 w-5 text-gray-400" />
+              </div>
+              <div className="flex-1">
+                <p className="text-sm font-medium text-white">Existing logo</p>
+                <p className="text-xs text-gray-400 truncate max-w-xs">
+                  {companyLogoUrl}
+                </p>
+              </div>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
