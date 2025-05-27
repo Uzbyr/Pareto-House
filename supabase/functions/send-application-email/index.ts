@@ -156,7 +156,6 @@ const handler = async (req: Request): Promise<Response> => {
         <p><strong>Fellow:</strong> ${fellowName}</p>
         <p><strong>Position:</strong> ${position}</p>
         <p><strong>Company:</strong> ${company}</p>
-        <p><strong>Opportunity ID:</strong> ${opportunityId}</p>
         
         <h3>Fellow's Message:</h3>
         <div style="background-color: #f5f5f5; padding: 15px; border-radius: 5px; margin: 10px 0;">
