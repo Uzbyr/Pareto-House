@@ -13,6 +13,7 @@ import {
   GraduationCap,
   BookOpen,
   Award,
+  Calendar,
 } from "lucide-react";
 import { toast } from "sonner";
 import { UserRole } from "@/types/auth";
@@ -58,6 +59,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       label: "Opportunities",
       path: "/admin/opportunities",
       icon: Award,
+      role: "admin",
+    },
+    {
+      label: "Events",
+      path: "/admin/events",
+      icon: Calendar,
       role: "admin",
     },
     {
