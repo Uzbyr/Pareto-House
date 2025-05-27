@@ -110,14 +110,16 @@ const EventCard = ({ event }: EventCardProps) => {
         </div>
 
         <div className="flex flex-col sm:flex-row gap-2 lg:ml-6">
-          <Button
-            onClick={addToGoogleCalendar}
-            variant="outline"
-            className="bg-zinc-700 hover:bg-zinc-600 text-white border-zinc-600"
-          >
-            <CalendarPlus className="h-4 w-4 mr-2" />
-            Add to Calendar
-          </Button>
+          {isUpcoming && (
+            <Button
+              onClick={addToGoogleCalendar}
+              variant="outline"
+              className="bg-zinc-700 hover:bg-zinc-600 text-white border-zinc-600"
+            >
+              <CalendarPlus className="h-4 w-4 mr-2" />
+              Add to Calendar
+            </Button>
+          )}
 
           {event.link && isUpcoming && (
             <Button
