@@ -9,6 +9,11 @@ import { Calendar } from "lucide-react";
 const FellowEvents = () => {
   const { data: events, isLoading, error } = useEvents();
 
+  // Sort events by time in descending order (newest first)
+  const sortedEvents = events ? [...events].sort((a, b) => 
+    new Date(b.time).getTime() - new Date(a.time).getTime()
+  ) : [];
+
   if (error) {
     return (
       <div className="max-w-7xl mx-auto px-4 py-8">
@@ -43,9 +48,9 @@ const FellowEvents = () => {
             <Skeleton key={i} className="h-32 bg-zinc-700 w-full" />
           ))}
         </div>
-      ) : events && events.length > 0 ? (
+      ) : sortedEvents && sortedEvents.length > 0 ? (
         <div className="space-y-4">
-          {events.map((event) => (
+          {sortedEvents.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
         </div>
