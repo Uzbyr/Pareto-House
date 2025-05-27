@@ -6,7 +6,7 @@ import { SiWhatsapp } from "@icons-pack/react-simple-icons";
 const FellowDiscussions = () => {
   const handleJoinGroup = () => {
     // Replace this URL with your actual WhatsApp group invitation link
-    window.open('https://chat.whatsapp.com/your-group-invite-link', '_blank');
+    window.open('https://chat.whatsapp.com/Gk4L6lBzVhQLtHJj8ZAr2J', '_blank');
   };
 
   return (
