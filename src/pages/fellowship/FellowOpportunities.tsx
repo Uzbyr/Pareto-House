@@ -16,6 +16,7 @@ const FellowOpportunities = () => {
     applicationModal,
     featuredOpportunities,
     allOpportunities,
+    opportunities,
     isLoading,
     error,
     handleApplyClick,
@@ -43,20 +44,28 @@ const FellowOpportunities = () => {
         </p>
       </div>
 
-      {/* Search and filters */}
-      <OpportunityFilters
-        searchTerm={searchTerm}
-        setSearchTerm={setSearchTerm}
-        selectedTags={selectedTags}
-        setSelectedTags={setSelectedTags}
-      />
-
       {isLoading ? (
         <div className="text-center py-10">
           <p className="text-gray-400">Loading opportunities...</p>
         </div>
+      ) : opportunities.length === 0 ? (
+        <div className="flex flex-col items-center justify-center py-12">
+          <Briefcase className="h-16 w-16 text-gray-500 mb-4" />
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">No opportunities yet</h3>
+          <p className="text-gray-500 text-center max-w-md">
+            Opportunities will appear here once they are posted. Check back soon for exclusive internships, grants, and competitions.
+          </p>
+        </div>
       ) : (
         <>
+          {/* Search and filters */}
+          <OpportunityFilters
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            selectedTags={selectedTags}
+            setSelectedTags={setSelectedTags}
+          />
+
           {/* Featured Opportunities */}
           {featuredOpportunities.length > 0 && (
             <div className="mb-10">
