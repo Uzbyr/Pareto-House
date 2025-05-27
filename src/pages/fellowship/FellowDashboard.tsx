@@ -39,13 +39,13 @@ const FellowDashboard = () => {
       linkTo: "/fellowship/opportunities",
       linkText: "View Opportunities"
     },
-    {
-      icon: Gift,
-      title: "Fellowship Perks",
-      description: "Exclusive benefits and resources for Pareto fellows. Claim your AWS, OpenAI credits and more.",
-      linkTo: "/fellowship/perks",
-      linkText: "View Perks"
-    }
+    // {
+    //   icon: Gift,
+    //   title: "Fellowship Perks",
+    //   description: "Exclusive benefits and resources for Pareto fellows. Claim your AWS, OpenAI credits and more.",
+    //   linkTo: "/fellowship/perks",
+    //   linkText: "View Perks"
+    // }
   ];
 
   return (

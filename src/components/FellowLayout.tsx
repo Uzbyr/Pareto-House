@@ -60,7 +60,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
     { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
     { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
     { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
-    { label: "Perks", path: "/fellowship/perks", icon: Gift },
+    // { label: "Perks", path: "/fellowship/perks", icon: Gift },
   ];
 
   const NavigationContent = () => (
