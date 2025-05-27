@@ -57,9 +57,9 @@ const FellowEvents = () => {
       ) : (
         <div className="flex flex-col items-center justify-center py-12">
           <Calendar className="h-16 w-16 text-gray-500 mb-4" />
-          <h3 className="text-xl font-semibold text-gray-300 mb-2">No events scheduled</h3>
+          <h3 className="text-xl font-semibold text-gray-300 mb-2">No events yet</h3>
           <p className="text-gray-500 text-center max-w-md">
-            There are currently no events scheduled. Check back later for upcoming mentor talks, workshops, and networking events.
+            Events will appear here once they are scheduled. Check back soon for upcoming mentor talks, workshops, and networking opportunities.
           </p>
         </div>
       )}
