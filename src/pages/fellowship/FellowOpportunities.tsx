@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -19,6 +18,8 @@ import {
   Star,
   MapPin,
 } from "lucide-react";
+import ApplicationModal from "@/components/fellowship/ApplicationModal";
+import { useAuth } from "@/contexts/AuthContext";
 
 interface Opportunity {
   id: string;
@@ -54,6 +55,14 @@ const availableTags = [
 const FellowOpportunities = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedTags, setSelectedTags] = useState<string[]>([]);
+  const [applicationModal, setApplicationModal] = useState<{
+    isOpen: boolean;
+    opportunity: Opportunity | null;
+  }>({
+    isOpen: false,
+    opportunity: null,
+  });
+  const { user } = useAuth();
 
   // Fetch opportunities from Supabase
   const { data: opportunities = [], isLoading, error } = useQuery({
@@ -92,6 +101,20 @@ const FellowOpportunities = () => {
 
   const featuredOpportunities = filteredOpportunities.filter((opp) => opp.featured);
   const allOpportunities = filteredOpportunities;
+
+  const handleApplyClick = (opportunity: Opportunity) => {
+    setApplicationModal({
+      isOpen: true,
+      opportunity,
+    });
+  };
+
+  const closeApplicationModal = () => {
+    setApplicationModal({
+      isOpen: false,
+      opportunity: null,
+    });
+  };
 
   if (error) {
     return (
@@ -162,7 +185,11 @@ const FellowOpportunities = () => {
               </h2>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 {featuredOpportunities.map((opportunity) => (
-                  <OpportunityCard key={opportunity.id} opportunity={opportunity} />
+                  <OpportunityCard 
+                    key={opportunity.id} 
+                    opportunity={opportunity} 
+                    onApply={handleApplyClick}
+                  />
                 ))}
               </div>
             </div>
@@ -177,7 +204,11 @@ const FellowOpportunities = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {allOpportunities.length > 0 ? (
                 allOpportunities.map((opportunity) => (
-                  <OpportunityCard key={opportunity.id} opportunity={opportunity} />
+                  <OpportunityCard 
+                    key={opportunity.id} 
+                    opportunity={opportunity} 
+                    onApply={handleApplyClick}
+                  />
                 ))
               ) : (
                 <div className="col-span-2 text-center py-10">
@@ -200,6 +231,16 @@ const FellowOpportunities = () => {
           </div>
         </>
       )}
+
+      {/* Application Modal */}
+      {applicationModal.opportunity && (
+        <ApplicationModal
+          isOpen={applicationModal.isOpen}
+          onClose={closeApplicationModal}
+          opportunity={applicationModal.opportunity}
+          fellowName={`${user?.user_metadata?.first_name || ''} ${user?.user_metadata?.last_name || ''}`.trim() || 'Fellow'}
+        />
+      )}
     </div>
   );
 };
@@ -207,9 +248,10 @@ const FellowOpportunities = () => {
 // Opportunity Card Component
 interface OpportunityCardProps {
   opportunity: Opportunity;
+  onApply: (opportunity: Opportunity) => void;
 }
 
-const OpportunityCard = ({ opportunity }: OpportunityCardProps) => {
+const OpportunityCard = ({ opportunity, onApply }: OpportunityCardProps) => {
   return (
     <Card className="bg-zinc-800 border-zinc-700 overflow-hidden">
       <CardHeader>
@@ -280,7 +322,10 @@ const OpportunityCard = ({ opportunity }: OpportunityCardProps) => {
         )}
       </CardContent>
       <CardFooter className="border-t border-zinc-700 pt-4">
-        <Button className="w-full bg-pareto-pink text-black hover:bg-pareto-pink/80">
+        <Button 
+          className="w-full bg-pareto-pink text-black hover:bg-pareto-pink/80"
+          onClick={() => onApply(opportunity)}
+        >
           Apply Now
         </Button>
       </CardFooter>

@@ -37,3 +37,6 @@ verify_jwt = true
 
 [functions.create-approved-user]
 verify_jwt = true
+
+[functions.send-application-email]
+verify_jwt = true
