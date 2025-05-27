@@ -1,129 +1,28 @@
-import React, { useState } from "react";
-import { useQuery } from "@tanstack/react-query";
-import { supabase } from "@/integrations/supabase/client";
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardDescription,
-  CardContent,
-  CardFooter,
-} from "@/components/ui/card";
+
+import React from "react";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Badge } from "@/components/ui/badge";
-import {
-  Search,
-  Briefcase,
-  Star,
-  MapPin,
-} from "lucide-react";
+import { Briefcase, Star } from "lucide-react";
 import ApplicationModal from "@/components/fellowship/ApplicationModal";
-import { useAuth } from "@/contexts/AuthContext";
-
-interface Opportunity {
-  id: string;
-  position: string | null;
-  company: string | null;
-  company_logo: string | null;
-  location: string | null;
-  description: string | null;
-  requirements: string | null;
-  tags: string[] | null;
-  featured: boolean | null;
-  created_at: string;
-  updated_at: string | null;
-}
-
-// Available filter tags (can be expanded based on actual data)
-const availableTags = [
-  "AI",
-  "Machine Learning",
-  "Software Engineering",
-  "Data Science",
-  "Design",
-  "Product",
-  "Remote",
-  "Fintech",
-  "Frontend",
-  "Backend",
-  "Full Stack",
-  "Startup",
-  "Big Tech",
-];
+import OpportunityCard from "@/components/fellowship/OpportunityCard";
+import OpportunityFilters from "@/components/fellowship/OpportunityFilters";
+import { useOpportunityManagement } from "@/hooks/useOpportunityManagement";
 
 const FellowOpportunities = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedTags, setSelectedTags] = useState<string[]>([]);
-  const [applicationModal, setApplicationModal] = useState<{
-    isOpen: boolean;
-    opportunity: Opportunity | null;
-  }>({
-    isOpen: false,
-    opportunity: null,
-  });
-  const { user, session } = useAuth();
-
-  // Fetch opportunities from Supabase
-  const { data: opportunities = [], isLoading, error } = useQuery({
-    queryKey: ["fellowship-opportunities"],
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("opportunities")
-        .select("*")
-        .order("created_at", { ascending: false });
-
-      if (error) throw error;
-      return data as Opportunity[];
-    },
-  });
-
-  // Filter opportunities based on search term and tags
-  const filteredOpportunities = opportunities.filter((opp) => {
-    const matchesSearch = !searchTerm || 
-      (opp.company?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       opp.position?.toLowerCase().includes(searchTerm.toLowerCase()) ||
-       opp.description?.toLowerCase().includes(searchTerm.toLowerCase()));
-
-    const matchesTags = selectedTags.length === 0 ||
-      (opp.tags && opp.tags.some((tag) => selectedTags.includes(tag)));
-
-    return matchesSearch && matchesTags;
-  });
-
-  const toggleTag = (tag: string) => {
-    if (selectedTags.includes(tag)) {
-      setSelectedTags(selectedTags.filter((t) => t !== tag));
-    } else {
-      setSelectedTags([...selectedTags, tag]);
-    }
-  };
-
-  const featuredOpportunities = filteredOpportunities.filter((opp) => opp.featured);
-  const allOpportunities = filteredOpportunities;
-
-  const handleApplyClick = (opportunity: Opportunity) => {
-    setApplicationModal({
-      isOpen: true,
-      opportunity,
-    });
-  };
-
-  const closeApplicationModal = () => {
-    setApplicationModal({
-      isOpen: false,
-      opportunity: null,
-    });
-  };
-
-  // Get fellow name from session user metadata
-  const getFellowName = () => {
-    if (session?.user?.user_metadata) {
-      const { first_name, last_name } = session.user.user_metadata;
-      return `${first_name || ''} ${last_name || ''}`.trim() || 'Fellow';
-    }
-    return 'Fellow';
-  };
+  const {
+    searchTerm,
+    setSearchTerm,
+    selectedTags,
+    setSelectedTags,
+    applicationModal,
+    featuredOpportunities,
+    allOpportunities,
+    isLoading,
+    error,
+    handleApplyClick,
+    closeApplicationModal,
+    getFellowName,
+    clearFilters,
+  } = useOpportunityManagement();
 
   if (error) {
     return (
@@ -145,39 +44,12 @@ const FellowOpportunities = () => {
       </div>
 
       {/* Search and filters */}
-      <Card className="bg-zinc-800 border-zinc-700 p-6 mb-8">
-        <div className="flex flex-col space-y-6">
-          <div className="relative">
-            <Search className="absolute left-3 top-2.5 h-5 w-5 text-gray-400" />
-            <Input
-              placeholder="Search opportunities..."
-              className="pl-10 bg-zinc-700 border-zinc-600 text-white"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-            />
-          </div>
-
-          <div>
-            <h3 className="text-white font-medium mb-3">Filter by Tags</h3>
-            <div className="flex flex-wrap gap-2">
-              {availableTags.map((tag) => (
-                <Badge
-                  key={tag}
-                  variant={selectedTags.includes(tag) ? "default" : "outline"}
-                  className={`cursor-pointer ${
-                    selectedTags.includes(tag)
-                      ? "bg-pareto-pink hover:bg-pareto-pink/80 text-black"
-                      : "hover:bg-zinc-700"
-                  }`}
-                  onClick={() => toggleTag(tag)}
-                >
-                  {tag}
-                </Badge>
-              ))}
-            </div>
-          </div>
-        </div>
-      </Card>
+      <OpportunityFilters
+        searchTerm={searchTerm}
+        setSearchTerm={setSearchTerm}
+        selectedTags={selectedTags}
+        setSelectedTags={setSelectedTags}
+      />
 
       {isLoading ? (
         <div className="text-center py-10">
@@ -227,10 +99,7 @@ const FellowOpportunities = () => {
                   <Button
                     variant="outline"
                     className="mt-4 border-zinc-600 text-white hover:bg-zinc-700"
-                    onClick={() => {
-                      setSearchTerm("");
-                      setSelectedTags([]);
-                    }}
+                    onClick={clearFilters}
                   >
                     Clear all filters
                   </Button>
@@ -251,94 +120,6 @@ const FellowOpportunities = () => {
         />
       )}
     </div>
-  );
-};
-
-// Opportunity Card Component
-interface OpportunityCardProps {
-  opportunity: Opportunity;
-  onApply: (opportunity: Opportunity) => void;
-}
-
-const OpportunityCard = ({ opportunity, onApply }: OpportunityCardProps) => {
-  return (
-    <Card className="bg-zinc-800 border-zinc-700 overflow-hidden">
-      <CardHeader>
-        <div className="flex justify-between items-start">
-          <div className="flex-1">
-            <CardTitle className="text-white">
-              {opportunity.position || "Position Not Specified"}
-            </CardTitle>
-            <CardDescription className="text-gray-300 text-lg mt-1 flex items-center">
-              {opportunity.company_logo && (
-                <img
-                  src={opportunity.company_logo}
-                  alt={`${opportunity.company} logo`}
-                  className="w-6 h-6 object-contain rounded mr-2 bg-white"
-                  onError={(e) => {
-                    const target = e.target as HTMLImageElement;
-                    target.style.display = 'none';
-                  }}
-                />
-              )}
-              {opportunity.company || "Company Not Specified"}
-            </CardDescription>
-          </div>
-          {opportunity.featured && (
-            <Badge className="bg-yellow-500/20 text-yellow-300 border-yellow-500/30">
-              <Star className="h-3 w-3 mr-1" /> Featured
-            </Badge>
-          )}
-        </div>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        {opportunity.location && (
-          <div className="flex items-center text-gray-300">
-            <MapPin className="h-4 w-4 mr-2 text-gray-400" />
-            <span>{opportunity.location}</span>
-          </div>
-        )}
-        
-        {opportunity.description && (
-          <p className="text-gray-300 line-clamp-3">
-            {opportunity.description}
-          </p>
-        )}
-
-        {opportunity.requirements && (
-          <div>
-            <h4 className="text-sm font-medium text-gray-400 mb-1">
-              Requirements
-            </h4>
-            <p className="text-gray-300 text-sm line-clamp-2">
-              {opportunity.requirements}
-            </p>
-          </div>
-        )}
-
-        {opportunity.tags && opportunity.tags.length > 0 && (
-          <div className="flex flex-wrap gap-2 pt-2">
-            {opportunity.tags.map((tag, index) => (
-              <Badge
-                key={index}
-                variant="outline"
-                className="border-gray-600 text-gray-300"
-              >
-                {tag}
-              </Badge>
-            ))}
-          </div>
-        )}
-      </CardContent>
-      <CardFooter className="border-t border-zinc-700 pt-4">
-        <Button 
-          className="w-full bg-pareto-pink text-black hover:bg-pareto-pink/80"
-          onClick={() => onApply(opportunity)}
-        >
-          Apply Now
-        </Button>
-      </CardFooter>
-    </Card>
   );
 };
 
