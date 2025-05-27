@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -32,7 +31,8 @@ import {
 } from "@/components/ui/form";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import { Plus, Edit, Trash2, Star } from "lucide-react";
+import { Plus, Edit, Trash2, Star, Upload, X } from "lucide-react";
+import { useLogoUpload } from "@/hooks/useLogoUpload";
 
 interface Opportunity {
   id: string;
@@ -63,6 +63,7 @@ const Opportunities = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [editingOpportunity, setEditingOpportunity] = useState<Opportunity | null>(null);
   const queryClient = useQueryClient();
+  const { logoFile, setLogoFile, uploadLogo, isUploading } = useLogoUpload();
 
   const form = useForm<OpportunityFormData>({
     defaultValues: {
@@ -94,8 +95,18 @@ const Opportunities = () => {
   // Create opportunity mutation
   const createMutation = useMutation({
     mutationFn: async (data: OpportunityFormData) => {
+      // Upload logo if file is selected
+      let logoUrl = data.company_logo;
+      if (logoFile) {
+        const uploadedUrl = await uploadLogo();
+        if (uploadedUrl) {
+          logoUrl = uploadedUrl;
+        }
+      }
+
       const { error } = await supabase.from("opportunities").insert({
         ...data,
+        company_logo: logoUrl,
         tags: data.tags.split(",").map(tag => tag.trim()).filter(tag => tag),
       });
       if (error) throw error;
@@ -105,6 +116,7 @@ const Opportunities = () => {
       toast.success("Opportunity created successfully");
       setIsDialogOpen(false);
       form.reset();
+      setLogoFile(null);
     },
     onError: (error) => {
       toast.error("Failed to create opportunity");
@@ -115,10 +127,20 @@ const Opportunities = () => {
   // Update opportunity mutation
   const updateMutation = useMutation({
     mutationFn: async ({ id, data }: { id: string; data: OpportunityFormData }) => {
+      // Upload logo if file is selected
+      let logoUrl = data.company_logo;
+      if (logoFile) {
+        const uploadedUrl = await uploadLogo();
+        if (uploadedUrl) {
+          logoUrl = uploadedUrl;
+        }
+      }
+
       const { error } = await supabase
         .from("opportunities")
         .update({
           ...data,
+          company_logo: logoUrl,
           tags: data.tags.split(",").map(tag => tag.trim()).filter(tag => tag),
           updated_at: new Date().toISOString(),
         })
@@ -131,6 +153,7 @@ const Opportunities = () => {
       setIsDialogOpen(false);
       setEditingOpportunity(null);
       form.reset();
+      setLogoFile(null);
     },
     onError: (error) => {
       toast.error("Failed to update opportunity");
@@ -174,6 +197,7 @@ const Opportunities = () => {
       tags: opportunity.tags.join(", "),
       featured: opportunity.featured,
     });
+    setLogoFile(null);
     setIsDialogOpen(true);
   };
 
@@ -187,6 +211,28 @@ const Opportunities = () => {
     setIsDialogOpen(false);
     setEditingOpportunity(null);
     form.reset();
+    setLogoFile(null);
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      // Validate file type
+      if (!file.type.startsWith('image/')) {
+        toast.error("Please select an image file");
+        return;
+      }
+      // Validate file size (5MB limit)
+      if (file.size > 5 * 1024 * 1024) {
+        toast.error("File size must be less than 5MB");
+        return;
+      }
+      setLogoFile(file);
+    }
+  };
+
+  const removeSelectedFile = () => {
+    setLogoFile(null);
   };
 
   return (
@@ -244,19 +290,74 @@ const Opportunities = () => {
                     </FormItem>
                   )}
                 />
-                <FormField
-                  control={form.control}
-                  name="company_logo"
-                  render={({ field }) => (
-                    <FormItem>
-                      <FormLabel>Company Logo URL (Optional)</FormLabel>
-                      <FormControl>
-                        <Input {...field} placeholder="https://example.com/logo.png" />
-                      </FormControl>
-                      <FormMessage />
-                    </FormItem>
-                  )}
-                />
+                
+                {/* Company Logo Upload Section */}
+                <div className="space-y-2">
+                  <FormLabel>Company Logo</FormLabel>
+                  <div className="space-y-3">
+                    {logoFile ? (
+                      <div className="flex items-center justify-between p-3 bg-zinc-800 rounded-lg border border-zinc-700">
+                        <div className="flex items-center space-x-3">
+                          <div className="w-12 h-12 bg-zinc-700 rounded-lg flex items-center justify-center">
+                            <Upload className="h-5 w-5 text-gray-400" />
+                          </div>
+                          <div>
+                            <p className="text-sm font-medium text-white">{logoFile.name}</p>
+                            <p className="text-xs text-gray-400">
+                              {(logoFile.size / 1024 / 1024).toFixed(2)} MB
+                            </p>
+                          </div>
+                        </div>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="sm"
+                          onClick={removeSelectedFile}
+                          className="text-gray-400 hover:text-white"
+                        >
+                          <X className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    ) : (
+                      <div className="border-2 border-dashed border-zinc-700 rounded-lg p-6 text-center">
+                        <Upload className="h-8 w-8 text-gray-400 mx-auto mb-2" />
+                        <p className="text-sm text-gray-400 mb-2">
+                          Upload company logo (optional)
+                        </p>
+                        <Input
+                          type="file"
+                          accept="image/*"
+                          onChange={handleFileChange}
+                          className="hidden"
+                          id="logo-upload"
+                        />
+                        <label
+                          htmlFor="logo-upload"
+                          className="cursor-pointer inline-flex items-center px-3 py-2 text-sm font-medium text-gray-300 bg-zinc-800 border border-zinc-600 rounded-md hover:bg-zinc-700"
+                        >
+                          Choose File
+                        </label>
+                        <p className="text-xs text-gray-500 mt-1">
+                          PNG, JPG up to 5MB
+                        </p>
+                      </div>
+                    )}
+                    
+                    <FormField
+                      control={form.control}
+                      name="company_logo"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <Input {...field} placeholder="Or enter logo URL directly" />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </div>
+
                 <FormField
                   control={form.control}
                   name="location"
@@ -345,9 +446,9 @@ const Opportunities = () => {
                   <Button 
                     type="submit" 
                     className="bg-pareto-pink text-black hover:bg-pareto-pink/80"
-                    disabled={createMutation.isPending || updateMutation.isPending}
+                    disabled={createMutation.isPending || updateMutation.isPending || isUploading}
                   >
-                    {editingOpportunity ? "Update" : "Create"} Opportunity
+                    {isUploading ? "Uploading..." : editingOpportunity ? "Update" : "Create"} Opportunity
                   </Button>
                 </div>
               </form>
