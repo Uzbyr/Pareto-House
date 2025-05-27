@@ -212,7 +212,7 @@ const Testimonials = () => {
                       {/* User information */}
                       <div className="flex items-center gap-3 md:gap-4 mb-4 md:mb-8">
                         <div className="relative">
-                          <Avatar className="h-10 w-10 md:h-14 md:w-14 rounded-none">
+                          <Avatar className="h-16 w-16 md:h-24 md:w-24 rounded-none">
                             <AvatarImage 
                               src={testimonial.image} 
                               alt={testimonial.name}
