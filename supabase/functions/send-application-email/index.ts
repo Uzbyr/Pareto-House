@@ -31,7 +31,7 @@ const handler = async (req: Request): Promise<Response> => {
     console.log(`Sending application email for ${fellowName} applying to ${position} at ${company}`);
 
     const emailResponse = await resend.emails.send({
-      from: "Pareto Fellowship <onboarding@resend.dev>",
+      from: "Pareto Fellowship <noreply@transactional.paretofellowship.com>",
       to: ["hello@mrdotb.com"],
       subject: `Fellow ${fellowName} wants to apply to ${position} at ${company}`,
       html: `
