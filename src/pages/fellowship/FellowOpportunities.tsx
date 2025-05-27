@@ -62,7 +62,7 @@ const FellowOpportunities = () => {
     isOpen: false,
     opportunity: null,
   });
-  const { user } = useAuth();
+  const { user, session } = useAuth();
 
   // Fetch opportunities from Supabase
   const { data: opportunities = [], isLoading, error } = useQuery({
@@ -114,6 +114,15 @@ const FellowOpportunities = () => {
       isOpen: false,
       opportunity: null,
     });
+  };
+
+  // Get fellow name from session user metadata
+  const getFellowName = () => {
+    if (session?.user?.user_metadata) {
+      const { first_name, last_name } = session.user.user_metadata;
+      return `${first_name || ''} ${last_name || ''}`.trim() || 'Fellow';
+    }
+    return 'Fellow';
   };
 
   if (error) {
@@ -238,7 +247,7 @@ const FellowOpportunities = () => {
           isOpen={applicationModal.isOpen}
           onClose={closeApplicationModal}
           opportunity={applicationModal.opportunity}
-          fellowName={`${user?.user_metadata?.first_name || ''} ${user?.user_metadata?.last_name || ''}`.trim() || 'Fellow'}
+          fellowName={getFellowName()}
         />
       )}
     </div>
