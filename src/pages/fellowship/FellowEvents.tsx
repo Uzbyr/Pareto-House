@@ -38,13 +38,13 @@ const FellowEvents = () => {
       </div>
 
       {isLoading ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
           {[...Array(6)].map((_, i) => (
-            <Skeleton key={i} className="h-48 bg-zinc-700" />
+            <Skeleton key={i} className="h-32 bg-zinc-700 w-full" />
           ))}
         </div>
       ) : events && events.length > 0 ? (
-        <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div className="space-y-4">
           {events.map((event) => (
             <EventCard key={event.id} event={event} />
           ))}
