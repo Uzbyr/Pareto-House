@@ -3,7 +3,7 @@ import React from "react";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Calendar, Clock, Video, Key, Hash } from "lucide-react";
+import { Calendar, Clock, Video, Key, Hash, ExternalLink } from "lucide-react";
 
 interface Event {
   id: string;
@@ -62,6 +62,20 @@ const EventCard = ({ event }: EventCardProps) => {
             <Clock className="h-4 w-4" />
             <span>{formatTime(eventDate)}</span>
           </div>
+
+          {event.link && (
+            <div className="flex items-center space-x-2 text-gray-300">
+              <ExternalLink className="h-4 w-4" />
+              <a 
+                href={event.link} 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="text-pareto-pink hover:text-pareto-pink/80 underline"
+              >
+                Zoom Meeting Link
+              </a>
+            </div>
+          )}
 
           {event.meeting_id && (
             <div className="flex items-center space-x-2 text-gray-300">
