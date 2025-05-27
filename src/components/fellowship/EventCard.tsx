@@ -118,6 +118,18 @@ const EventCard = ({ event }: EventCardProps) => {
             <CalendarPlus className="h-4 w-4 mr-2" />
             Add to Calendar
           </Button>
+
+          {event.link && isUpcoming && (
+            <Button
+              asChild
+              className="bg-pareto-pink hover:bg-pareto-pink/80 text-black font-semibold"
+            >
+              <a href={event.link} target="_blank" rel="noopener noreferrer">
+                <Video className="h-4 w-4 mr-2" />
+                Join Meeting
+              </a>
+            </Button>
+          )}
         </div>
       </div>
     </Card>

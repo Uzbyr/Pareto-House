@@ -41,7 +41,7 @@ const FellowDirectory = () => {
       const { data, error } = await supabase
         .from("profiles")
         .select("*")
-        .order("id", { ascending: false });
+        .order("last_name", { ascending: true });
 
       if (error) {
         throw error;
@@ -66,7 +66,7 @@ const FellowDirectory = () => {
         video_url: record.video_url,
         x_url: record.x_url,
         nationality: record.nationality,
-        email: record.email
+        email: record.email // Adding the missing email field
       }));
 
       setFellows(mappedData);
