@@ -1,5 +1,5 @@
 
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import {
   DialogContent,
@@ -63,16 +63,43 @@ const OpportunityForm = ({
 
   const form = useForm<OpportunityFormData>({
     defaultValues: {
-      position: editingOpportunity?.position || "",
-      company: editingOpportunity?.company || "",
-      company_logo: editingOpportunity?.company_logo || "",
-      location: editingOpportunity?.location || "",
-      description: editingOpportunity?.description || "",
-      requirements: editingOpportunity?.requirements || "",
-      tags: editingOpportunity?.tags.join(", ") || "",
-      featured: editingOpportunity?.featured || false,
+      position: "",
+      company: "",
+      company_logo: "",
+      location: "",
+      description: "",
+      requirements: "",
+      tags: "",
+      featured: false,
     },
   });
+
+  // Reset form when editingOpportunity changes
+  useEffect(() => {
+    if (editingOpportunity) {
+      form.reset({
+        position: editingOpportunity.position || "",
+        company: editingOpportunity.company || "",
+        company_logo: editingOpportunity.company_logo || "",
+        location: editingOpportunity.location || "",
+        description: editingOpportunity.description || "",
+        requirements: editingOpportunity.requirements || "",
+        tags: editingOpportunity.tags?.join(", ") || "",
+        featured: editingOpportunity.featured || false,
+      });
+    } else {
+      form.reset({
+        position: "",
+        company: "",
+        company_logo: "",
+        location: "",
+        description: "",
+        requirements: "",
+        tags: "",
+        featured: false,
+      });
+    }
+  }, [editingOpportunity, form]);
 
   const handleSubmit = async (data: OpportunityFormData) => {
     // Upload logo if file is selected
