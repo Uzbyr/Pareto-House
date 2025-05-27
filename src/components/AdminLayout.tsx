@@ -1,3 +1,4 @@
+
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -11,6 +12,7 @@ import {
   Users,
   GraduationCap,
   BookOpen,
+  Award,
 } from "lucide-react";
 import { toast } from "sonner";
 import { UserRole } from "@/types/auth";
@@ -50,6 +52,12 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       label: "Applications",
       path: "/admin/applications",
       icon: FileText,
+      role: "admin",
+    },
+    {
+      label: "Opportunities",
+      path: "/admin/opportunities",
+      icon: Award,
       role: "admin",
     },
     {

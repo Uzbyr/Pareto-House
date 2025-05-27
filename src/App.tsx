@@ -18,6 +18,7 @@ import AdminLayout from "./components/AdminLayout";
 import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
+import Opportunities from "./pages/admin/Opportunities";
 import Analytics from "./pages/admin/Analytics";
 import Funnel from "./pages/admin/Funnel";
 import Users from "./pages/admin/Users";
@@ -106,6 +107,16 @@ const App = () => (
                     <ProtectedRoute requiredRoles={["admin"]}>
                       <AdminLayout>
                         <Applications />
+                      </AdminLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/opportunities"
+                  element={
+                    <ProtectedRoute requiredRoles={["admin"]}>
+                      <AdminLayout>
+                        <Opportunities />
                       </AdminLayout>
                     </ProtectedRoute>
                   }

@@ -108,6 +108,48 @@ export type Database = {
         }
         Relationships: []
       }
+      opportunities: {
+        Row: {
+          company: string | null
+          company_logo: string | null
+          created_at: string
+          description: string | null
+          featured: boolean | null
+          id: string
+          location: string | null
+          position: string | null
+          requirements: string | null
+          tags: Json | null
+          updated_at: string | null
+        }
+        Insert: {
+          company?: string | null
+          company_logo?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          location?: string | null
+          position?: string | null
+          requirements?: string | null
+          tags?: Json | null
+          updated_at?: string | null
+        }
+        Update: {
+          company?: string | null
+          company_logo?: string | null
+          created_at?: string
+          description?: string | null
+          featured?: boolean | null
+          id?: string
+          location?: string | null
+          position?: string | null
+          requirements?: string | null
+          tags?: Json | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           about: string | null
