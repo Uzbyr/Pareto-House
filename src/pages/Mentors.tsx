@@ -109,16 +109,16 @@ const Mentors = () => {
               <motion.div
                 key={index}
                 variants={itemVariants}
-                className="bg-white/5 dark:bg-white/5 rounded-lg p-6 hover:bg-white/10 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer"
+                className="bg-white/5 dark:bg-white/5 rounded-lg p-6 hover:bg-white/10 dark:hover:bg-white/10 transition-all duration-300 cursor-pointer group"
                 onClick={() => handleMentorClick(mentor)}
               >
                 <div className="flex items-start gap-4">
                   {mentor.imageUrl ? (
-                    <div className="w-16 h-16 rounded-full overflow-hidden bg-gray-200">
+                    <div className="w-16 h-16 overflow-hidden rounded-md bg-gray-200">
                       <img
                         src={mentor.imageUrl}
                         alt={mentor.name}
-                        className="w-full h-full object-cover"
+                        className="w-full h-full object-cover grayscale duration-300 group-hover:grayscale-0 transition-transform"
                       />
                     </div>
                   ) : (
