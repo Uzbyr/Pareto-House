@@ -1,4 +1,3 @@
-
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -35,7 +34,7 @@ export const useEventManagement = () => {
       const { data, error } = await supabase
         .from("events")
         .select("*")
-        .order("time", { ascending: true });
+        .order("time", { ascending: false });
 
       if (error) throw error;
       return data as Event[];

@@ -120,7 +120,7 @@ const EventForm = ({ isOpen, onClose, onSubmit, event, isLoading }: EventFormPro
               rules={{ required: "Date and time is required" }}
               render={({ field }) => (
                 <FormItem>
-                  <FormLabel>Date & Time</FormLabel>
+                  <FormLabel>Date & Time (UTC)</FormLabel>
                   <FormControl>
                     <Input
                       {...field}
@@ -128,6 +128,9 @@ const EventForm = ({ isOpen, onClose, onSubmit, event, isLoading }: EventFormPro
                       className="bg-zinc-700 border-zinc-600 text-white"
                     />
                   </FormControl>
+                  <p className="text-sm text-gray-400">
+                    Please enter the date and time in UTC timezone
+                  </p>
                   <FormMessage />
                 </FormItem>
               )}
