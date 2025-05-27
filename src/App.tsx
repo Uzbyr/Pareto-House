@@ -1,3 +1,4 @@
+
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -19,6 +20,7 @@ import Login from "./pages/Login";
 import Dashboard from "./pages/admin/Dashboard";
 import Applications from "./pages/admin/Applications";
 import Opportunities from "./pages/admin/Opportunities";
+import Events from "./pages/admin/Events";
 import Analytics from "./pages/admin/Analytics";
 import Funnel from "./pages/admin/Funnel";
 import Users from "./pages/admin/Users";
@@ -117,6 +119,16 @@ const App = () => (
                     <ProtectedRoute requiredRoles={["admin"]}>
                       <AdminLayout>
                         <Opportunities />
+                      </AdminLayout>
+                    </ProtectedRoute>
+                  }
+                />
+                <Route
+                  path="/admin/events"
+                  element={
+                    <ProtectedRoute requiredRoles={["admin"]}>
+                      <AdminLayout>
+                        <Events />
                       </AdminLayout>
                     </ProtectedRoute>
                   }
