@@ -108,6 +108,39 @@ export type Database = {
         }
         Relationships: []
       }
+      events: {
+        Row: {
+          created_at: string
+          id: string
+          link: string | null
+          meeting_id: string | null
+          passcode: string | null
+          time: string
+          topic: string
+          updated_at: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          meeting_id?: string | null
+          passcode?: string | null
+          time: string
+          topic: string
+          updated_at?: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          link?: string | null
+          meeting_id?: string | null
+          passcode?: string | null
+          time?: string
+          topic?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       opportunities: {
         Row: {
           company: string | null
