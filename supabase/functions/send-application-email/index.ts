@@ -149,7 +149,7 @@ const handler = async (req: Request): Promise<Response> => {
 
     const emailResponse = await resend.emails.send({
       from: "Pareto Fellowship <noreply@transactional.paretofellowship.com>",
-      to: ["hello@mrdotb.com"],
+      to: ["jules@pareto20.com"],
       subject: `Fellow ${fellowName} wants to apply to ${position} at ${company}`,
       html: `
         <h2>New Fellowship Application</h2>

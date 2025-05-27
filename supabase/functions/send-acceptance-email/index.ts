@@ -87,7 +87,7 @@ const handler = async (req: Request): Promise<Response> => {
               <li>Temporary Password: ${temporaryPassword}</li>
             </ul>
             
-            <p style="color: #e74c3c;">🔐 <strong>Important:</strong> Please log in and change your password within 48 hours.</p>
+            <p style="color: #e74c3c;">🔐 <strong>Important:</strong> Please log in and change your password.</p>
           </div>
           
           <div style="background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 20px 0;">
