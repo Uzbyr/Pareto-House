@@ -27,6 +27,14 @@ export const mentors: Mentor[] = [
     country: "USA",
   },
   {
+    name: "Anton Osika",
+    linkedIn: "https://www.linkedin.com/in/antonosika",
+    description: "Founder & CEO at Lovable",
+    bio: "Anton Johansson is the founder of Lovable, a company on a mission to make autonomous code generation work. He started Lovable to democratize software creation and unlock human creativity at scale.  Before Lovable, Anton worked in particle physics at CERN, joined Sana Labs as the first engineer—helping it scale to millions of learners and raise $80M+—and co-founded Depict.ai, which powered billions of product recommendations and raised $20M. His career reflects a deep commitment to building ambitious products with real-world impact.",
+    imageUrl: "/lovable-uploads/anton-johansson.jpeg",
+    country: "Sweden",
+  },
+  {
     name: "Abhi Ramesh",
     linkedIn: "https://www.linkedin.com/in/abhiramesh/",
     description: "Founder & CEO at Misfits Market",

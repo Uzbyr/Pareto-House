@@ -54,6 +54,8 @@ const Mentors = () => {
         return { name: "Lithuania", flag: "🇱🇹" };
       case "Germany":
         return { name: "Germany", flag: "🇩🇪" };
+      case "Sweden":
+        return { name: "Sweden", flag: "🇸🇪" };
       default:
         return { name: country, flag: "🏳️" };
     }
