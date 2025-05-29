@@ -26,6 +26,19 @@ const MentorSection = () => {
       
       {/* Add the ScrollingMentors component below the intro text */}
       <ScrollingMentors />
+      
+      {/* Add button to view all mentors */}
+      <PageContainer className="mt-12">
+        <div className="text-center">
+          <Link
+            to="/mentors"
+            className="group inline-flex items-center gap-2 px-6 py-2 whitespace-nowrap text-white border border-white hover:bg-white/10 transition-colors duration-300 text-[17px] font-figtree font-medium"
+          >
+            VIEW ALL MENTORS
+            <ArrowRight className="w-4 h-4 transition-transform group-hover:translate-x-1" />
+          </Link>
+        </div>
+      </PageContainer>
     </div>
   );
 };
