@@ -1,4 +1,3 @@
-
 import { useState, useEffect, useRef } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 
@@ -100,17 +99,14 @@ const universities = [
 const ScrollingUniversities = () => {
   const viewportRef = useRef<HTMLDivElement>(null);
   const [isAutoScrolling, setIsAutoScrolling] = useState(true);
-  const [isHovering, setIsHovering] = useState(false);
-  const scrollSpeed = 1; // reduced speed for smoother scrolling, matching ScrollingMentors
+  const scrollDirection = useRef<number>(1);
 
   const handleInteraction = () => {
     setIsAutoScrolling(false);
-    setIsHovering(true);
   };
 
   const handleInteractionEnd = () => {
     setIsAutoScrolling(true);
-    setIsHovering(false);
   };
 
   useEffect(() => {
@@ -120,14 +116,19 @@ const ScrollingUniversities = () => {
       if (isAutoScrolling && viewportRef.current) {
         const el = viewportRef.current;
         const maxScrollLeft = el.scrollWidth - el.clientWidth;
-        
-        // Move scroll position right
-        el.scrollLeft += scrollSpeed;
-        
-        // If we've reached the end, reset to beginning (loop effect)
-        if (el.scrollLeft >= maxScrollLeft) {
-          el.scrollLeft = 0;
+        const currentScrollLeft = el.scrollLeft;
+        const speed = 1; // adjust speed as desired
+
+        // If we've hit the right edge, switch to negative direction
+        if (currentScrollLeft >= maxScrollLeft) {
+          scrollDirection.current = -1;
         }
+        // If we've hit the left edge, switch to positive direction
+        else if (currentScrollLeft <= 0) {
+          scrollDirection.current = 1;
+        }
+
+        el.scrollLeft += scrollDirection.current * speed;
       }
 
       frameId = requestAnimationFrame(step);
@@ -138,13 +139,10 @@ const ScrollingUniversities = () => {
     }
 
     return () => cancelAnimationFrame(frameId);
-  }, [isAutoScrolling, scrollSpeed]);
+  }, [isAutoScrolling]);
 
   return (
     <div className="relative overflow-hidden py-10">
-      {/* Left gradient overlay */}
-      <div className="absolute top-0 left-0 z-10 h-full w-16 bg-gradient-to-r from-black to-transparent pointer-events-none"></div>
-      
       <ScrollArea
         viewportRef={viewportRef}
         className="w-full"
@@ -153,7 +151,7 @@ const ScrollingUniversities = () => {
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
       >
-        <div className="flex space-x-16 px-4">
+        <div className="flex space-x-16">
           {universities.concat(universities).map((uni, index) => (
             <div
               key={`${uni.name}-${index}`}
@@ -168,33 +166,12 @@ const ScrollingUniversities = () => {
               />
             </div>
           ))}
-
-          {/* Add a third set for smoother infinite scroll */}
-          {universities.map((uni, index) => (
-            <div
-              key={`extra-${uni.name}-${index}`}
-              className="flex items-center justify-center h-28 min-w-[128px]"
-            >
-              <img
-                src={uni.logo}
-                alt={`${uni.name} logo`}
-                className={`h-[85%] w-auto object-contain hover:opacity-80 transition-opacity  ${uni.name === "Polytechnique" ? "brightness-[175%] contrast-125" : ""}
-                  ${uni.name === "Stanford" ? "brightness-125" : ""}
-                  ${uni.name === "Princeton" ? "h-[78%]" : ""}`}
-              />
-            </div>
-          ))}
         </div>
-        {!isHovering && (
-          <ScrollBar
-            orientation="horizontal"
-            className="bg-black/10 dark:bg-white/10"
-          />
-        )}
+        <ScrollBar
+          orientation="horizontal"
+          className="bg-black/10 dark:bg-white/10"
+        />
       </ScrollArea>
-      
-      {/* Right gradient overlay */}
-      <div className="absolute top-0 right-0 z-10 h-full w-16 bg-gradient-to-l from-black to-transparent pointer-events-none"></div>
     </div>
   );
 };
