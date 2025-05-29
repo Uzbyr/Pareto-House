@@ -35,6 +35,14 @@ export const mentors: Mentor[] = [
     country: "Sweden",
   },
   {
+    name: "Arthur Querou",
+    linkedIn: "https://www.linkedin.com/in/arthurquerou/",
+    description: "Founder & CEO at Vibe.com",
+    bio: "Arthur Querou is the founder and CEO of Vibe.co, a company aiming to become the leading TV ad platform by 2025. Vibe.co raised $22.5 million in Series A funding to scale its mission of modernizing TV advertising.",
+    imageUrl: "/lovable-uploads/arthur-q.jpeg",
+    country: "USA",
+  },
+  {
     name: "Abhi Ramesh",
     linkedIn: "https://www.linkedin.com/in/abhiramesh/",
     description: "Founder & CEO at Misfits Market",
