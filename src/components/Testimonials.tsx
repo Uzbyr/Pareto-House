@@ -86,6 +86,14 @@ const testimonials: Testimonial[] = [
     position: "Co-Founder at Canopy Labs",
     testimonial: "As a founder, partnering with Pareto has been one of the best decisions we've made. Their level of involvement goes way beyond typical investors—they've been hands-on in opening doors to helping us raise, shaping our go-to-market approach, and accelerating us in every way. Having Pareto on board feels like having an extension of our own team, genuinely invested in our long-term success.",
     image: "/lovable-uploads/20e4bc52-c410-42d7-a36b-33ba614f0d68.png"
+  },
+  {
+    id: 10,
+    name: "Andrea Filip Tortella ",
+    university: "University College London",
+    position: "Co-Founder at Thrads",
+    testimonial: "Pareto has been a solid partner, opening the right doors at the right moment. They’re responsive and supportive while staying out of founders’ way. Their biggest edge is the community around them—the sheer size of their portfolio means every intro comes with real weight.",
+    image: "/lovable-uploads/andrea-f-t.jpeg"
   }
 ];
 
