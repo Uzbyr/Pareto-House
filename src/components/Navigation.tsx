@@ -32,9 +32,16 @@ const Navigation = () => {
           {/* PH Logo Text */}
           <div className="flex items-center">
             <Link to="/" className="shrink-0">
-              <span className="text-white font-black text-4xl md:text-5xl tracking-tight italic" style={{ fontFamily: 'Futura, "Futura Extra Black", Arial, sans-serif' }}>
-                PH
-              </span>
+              <img
+                src="/PH.png"
+                alt="Pareto House Logo"
+                className="h-12 md:h-8 w-auto object-contain"
+                style={{ display: logoLoaded ? 'block' : 'none' }}
+                onLoad={() => setLogoLoaded(true)}
+              />
+              {!logoLoaded && (
+                <Skeleton className="h-12 md:h-16 w-24 bg-gray-700" />
+              )}
             </Link>
           </div>
 
