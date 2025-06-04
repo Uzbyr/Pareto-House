@@ -1,4 +1,3 @@
-
 import { supabase } from "@/integrations/supabase/client";
 
 /**
@@ -12,7 +11,7 @@ const useEmailNotification = () => {
   ) => {
     try {
       const { error } = await supabase.functions.invoke(
-        "send-confirmation-email",
+        "send-confirmation-email-house",
         {
           body: { firstName, lastName, email },
         },
