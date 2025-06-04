@@ -1,4 +1,3 @@
-
 import { Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
 import { UserRole } from "@/types/auth";
@@ -42,7 +41,7 @@ const ProtectedRoute = ({
   if (user?.role === "admin") {
     return <Navigate to="/admin/dashboard" replace />;
   } else if (user?.role === "fellow") {
-    return <Navigate to="/fellowship" replace />;
+    return <Navigate to="/house" replace />;
   } else if (user?.role === "alumni") {
     return <Navigate to="/alumni" replace />;
   }

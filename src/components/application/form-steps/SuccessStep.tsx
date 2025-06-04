@@ -13,7 +13,7 @@ const SuccessStep = memo(({ onReturnHome }: SuccessStepProps) => (
     </div>
     <h2 className="text-2xl font-bold mb-4">Application Submitted!</h2>
     <p className="text-gray-400 mb-4">
-      Thank you for applying to the Pareto Fellowship. We've received your
+      Thank you for applying to the Pareto House. We've received your
       application and are impressed by your achievements.
     </p>
     <div className="flex items-center justify-center gap-2 text-gray-400 mb-8">

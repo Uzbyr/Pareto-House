@@ -1,4 +1,3 @@
-
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
 import Footer from "../components/Footer";
@@ -11,7 +10,6 @@ import Navigation from "../components/Navigation";
 import BackedUndergrads from "../components/BackedUndergrads";
 import HeroSection from "../components/HeroSection";
 import AboutSection from "../components/AboutSection";
-import MentorSection from "../components/MentorSection";
 import PageContainer from "../components/PageContainer";
 
 const Index = () => {
@@ -32,11 +30,6 @@ const Index = () => {
         {/* Fellowship Perks Section */}
         <div className="bg-black">
           <FellowshipPerks />
-        </div>
-
-        {/* Mentor Section */}
-        <div className="bg-black">
-          <MentorSection />
         </div>
 
         {/* Backed Undergrads Section */}

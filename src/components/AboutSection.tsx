@@ -48,7 +48,7 @@ const AboutSection = () => {
         }} viewport={{
           once: true
         }} className="text-3xl md:text-4xl lg:text-5xl font-medium max-w-4xl mx-auto leading-tight tracking-[-0.02em]">
-            Join a community of the top 0.1% of STEM undergrads worldwide, access unparalleled opportunities, and accelerate your path to the top of the tech ecosystem.
+            Join a hacker house with the best of the best - build 24/7 and launch something big.
           </motion.p>
         </div>
 
@@ -64,8 +64,8 @@ const AboutSection = () => {
       }} viewport={{
         once: true
       }} className="flex flex-wrap justify-center gap-8 md:gap-12 mt-16 max-w-2xl mx-auto">
-          <Stat value="25" label="FELLOWS PER BATCH" />
-          <Stat value="30+" label="UNIVERSITIES" />
+          <Stat value="9" label="HACKERS" />
+          <Stat value="3+" label="MONTHS, RENEWABLE" />
           <Stat value="30+" label="MENTORS" />
         </motion.div>
       </PageContainer>

@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
@@ -27,8 +26,8 @@ const HeroSection = () => {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ duration: 1 }} 
-          className="relative w-64 h-64 md:w-96 md:h-96"
-        >
+          className="relative w-96 h-96 md:w-[900px] md:h-[900px]"
+                  >
           {/* Video with loading state */}
           <div className="w-full h-full flex items-center justify-center">
             {!videoLoaded && (
@@ -40,7 +39,7 @@ const HeroSection = () => {
               loop 
               playsInline 
               className={`max-w-full max-h-full object-contain transition-opacity duration-500 ${videoLoaded ? 'opacity-100' : 'opacity-0'}`}
-              src="/lovable-uploads/pareto.mp4"
+              src="/lovable-uploads/pareto-logo.mp4"
               onLoadedData={() => setVideoLoaded(true)}
             />
           </div>
@@ -57,7 +56,7 @@ const HeroSection = () => {
             transition={{ delay: 0.3, duration: 0.7 }} 
             className="text-[55px] font-semibold text-white tracking-tight leading-[87%] font-figtree tracking-[-0.02em] mb-6"
           >
-            Pareto<br />Fellowship
+            Pareto<br />House
           </motion.h1>
           
           <motion.div 
@@ -67,8 +66,8 @@ const HeroSection = () => {
             className="font-figtree"
           >
             <div className="text-[19px] text-[#828282]">
-              [ The most ambitious<br />
-              undergraduate community ]
+              [ The hacker house<br />
+              for grinders and hustlers ]
             </div>
           </motion.div>
         </div>
@@ -83,7 +82,7 @@ const HeroSection = () => {
               transition={{ delay: 0.3, duration: 0.7 }} 
               className="text-[70px] font-semibold text-white tracking-tight leading-[83%] font-figtree tracking-[-0.02em]"
             >
-              Pareto<br />Fellowship
+              Pareto<br />House
             </motion.h1>
           </div>
           
@@ -95,8 +94,8 @@ const HeroSection = () => {
             className="text-right font-figtree"
           >
             <div className="text-[19px] text-[#828282]">
-              [ The most ambitious<br />
-              undergraduate community ]
+            [ The hacker house<br />
+              for grinders and hustlers ]
             </div>
           </motion.div>
         </div>

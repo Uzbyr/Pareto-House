@@ -35,32 +35,48 @@ const EducationalBackgroundStep = memo(
     requiresPreparatoryQuestion,
   }: EducationalBackgroundStepProps) => (
     <div className="space-y-6">
-      <h2 className="text-2xl font-bold mb-4">Educational Background</h2>
+      <h2 className="text-2xl font-bold mb-4">Background</h2>
 
       <div className="space-y-2">
-        <Label htmlFor="educationLevel">
-          Current Education<span className="text-red-500">*</span>
+        <Label htmlFor="currentSituation">
+          Current Situation<span className="text-red-500">*</span>
         </Label>
         <Select
-          value={formData.educationLevel || "university"}
-          onValueChange={(value) => handleSelectChange("educationLevel", value)}
+          value={formData.currentSituation}
+          onValueChange={(value) => handleSelectChange("currentSituation", value)}
         >
           <SelectTrigger className="bg-zinc-800 border-zinc-700">
-            <SelectValue placeholder="Select your education level" />
+            <SelectValue placeholder="Select your current situation" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="university" className="flex items-center gap-2">
-              <span>University</span>
-            </SelectItem>
-            <SelectItem value="highSchool" className="flex items-center gap-2">
-              <span>High School</span>
-            </SelectItem>
+            <SelectItem value="student">Student</SelectItem>
+            <SelectItem value="employee">Employee</SelectItem>
+            <SelectItem value="founder">Founder</SelectItem>
           </SelectContent>
         </Select>
       </div>
 
-      {(formData.educationLevel === "university" ||
-        !formData.educationLevel) && (
+      <div className="space-y-2">
+        <Label htmlFor="educationBackground">
+          Education Background<span className="text-red-500">*</span>
+        </Label>
+        <Select
+          value={formData.educationBackground}
+          onValueChange={(value) => handleSelectChange("educationBackground", value)}
+        >
+          <SelectTrigger className="bg-zinc-800 border-zinc-700">
+            <SelectValue placeholder="Select your education background" />
+          </SelectTrigger>
+          <SelectContent>
+            <SelectItem value="university">University</SelectItem>
+            <SelectItem value="highSchool">High School</SelectItem>
+            <SelectItem value="graduateSchool">Graduate School</SelectItem>
+            <SelectItem value="other">Other</SelectItem>
+          </SelectContent>
+        </Select>
+      </div>
+
+      {formData.educationBackground === "university" && (
         <>
           {formData.country !== "Other" && (
             <div className="space-y-2">
@@ -147,7 +163,7 @@ const EducationalBackgroundStep = memo(
         </>
       )}
 
-      {formData.educationLevel === "highSchool" && (
+      {formData.educationBackground === "highSchool" && (
         <div className="space-y-2">
           <Label htmlFor="highSchool">
             High School<span className="text-red-500">*</span>
@@ -157,6 +173,56 @@ const EducationalBackgroundStep = memo(
             name="highSchool"
             placeholder="Enter your high school name"
             value={formData.highSchool}
+            onChange={handleInputChange}
+            className="bg-zinc-800 border-zinc-700"
+            required
+          />
+        </div>
+      )}
+
+      {formData.educationBackground === "graduateSchool" && (
+        <>
+          <div className="space-y-2">
+            <Label htmlFor="graduateSchool">
+              Graduate School<span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="graduateSchool"
+              name="graduateSchool"
+              placeholder="Enter your graduate school name"
+              value={formData.graduateSchool}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+              required
+            />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="graduateProgram">
+              Program/Degree<span className="text-red-500">*</span>
+            </Label>
+            <Input
+              id="graduateProgram"
+              name="graduateProgram"
+              placeholder="Enter your program or degree (e.g., PhD in Physics, Master's in CS)"
+              value={formData.graduateProgram}
+              onChange={handleInputChange}
+              className="bg-zinc-800 border-zinc-700"
+              required
+            />
+          </div>
+        </>
+      )}
+
+      {formData.educationBackground === "other" && (
+        <div className="space-y-2">
+          <Label htmlFor="otherEducation">
+            Please specify your education background<span className="text-red-500">*</span>
+          </Label>
+          <Input
+            id="otherEducation"
+            name="otherEducation"
+            placeholder="Describe your education background"
+            value={formData.otherEducation}
             onChange={handleInputChange}
             className="bg-zinc-800 border-zinc-700"
             required
@@ -176,6 +242,11 @@ const EducationalBackgroundStep = memo(
             <SelectValue placeholder="Select year" />
           </SelectTrigger>
           <SelectContent>
+            <SelectItem value="2020">2020</SelectItem>
+            <SelectItem value="2021">2021</SelectItem>
+            <SelectItem value="2022">2022</SelectItem>
+            <SelectItem value="2023">2023</SelectItem>
+            <SelectItem value="2024">2024</SelectItem>
             <SelectItem value="2025">2025</SelectItem>
             <SelectItem value="2026">2026</SelectItem>
             <SelectItem value="2027">2027</SelectItem>
@@ -188,7 +259,7 @@ const EducationalBackgroundStep = memo(
 
       <div className="space-y-2">
         <Label htmlFor="categoryOfInterest">
-          Which category of interest are you interested in?
+          Which category are you most interested in?<span className="text-red-500">*</span>
         </Label>
         <Select
           value={formData.categoryOfInterest}
@@ -200,9 +271,22 @@ const EducationalBackgroundStep = memo(
             <SelectValue placeholder="Select your category of interest" />
           </SelectTrigger>
           <SelectContent>
-            <SelectItem value="math">Mathematics</SelectItem>
+            <SelectItem value="mathematics">Mathematics</SelectItem>
             <SelectItem value="physics">Physics</SelectItem>
-            <SelectItem value="cs">Computer Science</SelectItem>
+            <SelectItem value="computerScience">Computer Science</SelectItem>
+            <SelectItem value="engineering">Engineering</SelectItem>
+            <SelectItem value="artificialIntelligence">Artificial Intelligence</SelectItem>
+            <SelectItem value="dataScience">Data Science</SelectItem>
+            <SelectItem value="robotics">Robotics</SelectItem>
+            <SelectItem value="quantumComputing">Quantum Computing</SelectItem>
+            <SelectItem value="biochemistry">Biochemistry</SelectItem>
+            <SelectItem value="materialScience">Material Science</SelectItem>
+            <SelectItem value="entrepreneurship">Entrepreneurship</SelectItem>
+            <SelectItem value="research">Research</SelectItem>
+            <SelectItem value="fintech">Fintech</SelectItem>
+            <SelectItem value="blockchain">Blockchain/Crypto</SelectItem>
+            <SelectItem value="biotech">Biotech</SelectItem>
+            <SelectItem value="climatetech">Climate Tech</SelectItem>
             <SelectItem value="other">Other</SelectItem>
           </SelectContent>
         </Select>
@@ -252,19 +336,20 @@ const EducationalBackgroundStep = memo(
       )}
 
       <div className="space-y-2">
-        <Label htmlFor="studentSocieties">Student Societies</Label>
+        <Label htmlFor="projects">Projects<span className="text-red-500">*</span></Label>
         <Textarea
-          id="studentSocieties"
-          name="studentSocieties"
-          placeholder="Are you part of any student societies or organizations? Please list them."
-          value={formData.studentSocieties}
+          id="projects"
+          name="projects"
+          placeholder="List and detail the most impressive projects / startups / research you've been working on."
+          value={formData.projects}
           onChange={handleInputChange}
           className="bg-zinc-800 border-zinc-700 min-h-[80px]"
+          required
         />
       </div>
 
       <div className="space-y-2">
-        <Label htmlFor="resumeFile">Resume (PDF)</Label>
+        <Label htmlFor="resumeFile">Resume (PDF)<span className="text-red-500">*</span></Label>
         <Input
           id="resumeFile"
           name="resumeFile"
@@ -272,6 +357,7 @@ const EducationalBackgroundStep = memo(
           accept=".pdf"
           onChange={(e) => handleFileChange(e, "resumeFile")}
           className="bg-zinc-800 border-zinc-700 file:bg-zinc-700 file:text-white file:border-0 file:rounded file:px-3 file:py-1 file:mr-3"
+          required
         />
         {formData.resumeFile && (
           <p className="text-sm text-green-400 flex items-center gap-1 mt-1">

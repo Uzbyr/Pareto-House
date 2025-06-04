@@ -184,7 +184,7 @@ const Perks = () => {
         <motion.div variants={itemVariants} className="max-w-4xl mx-auto">
           <div className="flex items-center gap-3 mb-4">
             <Gift className="w-8 h-8 text-pareto-pink" />
-            <h1 className="text-4xl font-bold">Fellowship Perks</h1>
+            <h1 className="text-4xl font-bold">House Perks</h1>
           </div>
 
           <p className="text-xl text-black/60 dark:text-white/60 mb-6">
@@ -208,7 +208,7 @@ const Perks = () => {
               </p>
               <Link to="/apply">
                 <Button variant="pink">
-                  Apply to the Fellowship
+                  Apply to the House
                   <ExternalLink className="h-4 w-4" />
                 </Button>
               </Link>

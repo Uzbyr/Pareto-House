@@ -11,6 +11,7 @@ import {
   User,
   Gift,
   Menu,
+  MessageSquare,
 } from "lucide-react";
 import { toast } from "sonner";
 import {
@@ -50,27 +51,27 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
     }
   };
 
-  const navItems = [
-    { label: "Dashboard", path: "/fellowship", icon: Home },
+  const navigationItems = [
+    { label: "Dashboard", path: "/house", icon: Home },
     {
       label: "Discussions",
-      path: "/fellowship/discussions",
-      icon: MessageCircle,
+      path: "/house/discussions",
+      icon: MessageSquare,
     },
-    { label: "Events Calendar", path: "/fellowship/events", icon: Calendar },
-    { label: "Fellows Directory", path: "/fellowship/directory", icon: Users },
-    { label: "Opportunities", path: "/fellowship/opportunities", icon: Award },
-    // { label: "Perks", path: "/fellowship/perks", icon: Gift },
+    { label: "Events Calendar", path: "/house/events", icon: Calendar },
+    { label: "Fellows Directory", path: "/house/directory", icon: Users },
+    { label: "Opportunities", path: "/house/opportunities", icon: Award },
+    // { label: "Perks", path: "/house/perks", icon: Gift },
   ];
 
   const NavigationContent = () => (
     <>
       <SidebarHeader className="p-4 border-b border-zinc-700">
-        <h1 className="text-xl font-bold text-pareto-pink">Pareto Fellowship</h1>
+        <h1 className="text-xl font-bold text-pareto-pink">Pareto House</h1>
       </SidebarHeader>
       <SidebarContent className="flex-1 overflow-y-auto py-4">
         <SidebarMenu>
-          {navItems.map((item) => (
+          {navigationItems.map((item) => (
             <SidebarMenuItem key={item.path}>
               <SidebarMenuButton
                 asChild
@@ -101,7 +102,7 @@ const FellowLayout = ({ children }: FellowLayoutProps) => {
             className="flex-1 text-gray-300 border-zinc-700 hover:bg-zinc-700"
             asChild
           >
-            <Link to="/fellowship/profile" className="flex items-center justify-center">
+            <Link to="/house/profile" className="flex items-center justify-center">
               <User className="h-4 w-4 mr-2" />
               Profile
             </Link>

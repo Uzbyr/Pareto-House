@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { supabase } from "@/integrations/supabase/client";
@@ -80,59 +79,43 @@ const useFormSubmission = ({
           memoFilePath = await uploadFile(formData.memoFile, "memos");
         }
 
+        // Build the application data for the new 'houseapplications' table
         const applicationData = {
           first_name: formData.firstName,
           last_name: formData.lastName,
           email: formData.email,
+          current_situation: formData.currentSituation,
+          education_background: formData.educationBackground,
+          university: formData.university,
+          other_university: formData.otherUniversity,
+          high_school: formData.highSchool,
+          graduate_school: formData.graduateSchool,
+          graduate_program: formData.graduateProgram,
+          other_education: formData.otherEducation,
+          major: formData.major,
+          graduation_year: formData.graduationYear,
           country: countryValue,
           nationality: formData.nationality,
-          education_level: formData.educationLevel,
-          university:
-            formData.educationLevel === "university" ? universityValue : null,
-          high_school:
-            formData.educationLevel === "highSchool"
-              ? formData.highSchool
-              : null,
-          major:
-            formData.educationLevel === "university" ? formData.major : null,
-          graduation_year: formData.graduationYear,
-          preparatory_classes:
-            formData.educationLevel === "university" &&
-            checkPreparatoryQuestion()
-              ? formData.preparatoryClasses
-              : null,
-          student_societies: formData.studentSocieties || null,
-          building_company: formData.buildingCompany,
-          company_context:
-            formData.buildingCompany === "yes" ? formData.companyContext : null,
-          website_url:
-            formData.buildingCompany === "yes" ? formData.websiteUrl : null,
-          video_url: formData.videoUrl || null,
-          linkedin_url: formData.linkedInUrl || null,
-          github_url: formData.githubUrl || null,
-          x_url: formData.xUrl || null,
-          resume_file: resumeFilePath,
-          deck_file: deckFilePath,
-          memo_file: memoFilePath,
-          category_of_interest: formData.categoryOfInterest || null,
-          has_competition_experience: formData.hasCompetitionExperience || null,
-          competition_results:
-            formData.hasCompetitionExperience === "yes"
-              ? formData.competitionResults
-              : null,
-          competitive_profiles: formData.competitiveProfiles.filter(
-            (url) => url.trim() !== "",
-          ),
+          category_of_interest: formData.categoryOfInterest,
+          projects: formData.projects,
+          resume_url: resumeFilePath, // uploaded file path
+          has_competition_experience: formData.hasCompetitionExperience,
+          competition_results: formData.competitionResults,
+          preparatory_classes: formData.preparatoryClasses,
+          about: (formData as any).about || '',
+          video_url: formData.videoUrl,
+          linkedin_url: formData.linkedInUrl,
+          github_url: formData.githubUrl,
+          x_url: formData.xUrl,
+          website_url: formData.websiteUrl,
+          competitive_profiles: formData.competitiveProfiles.filter((url) => url.trim() !== ""),
+          // status and created_at are handled by the DB defaults
         };
 
+        // @ts-ignore
         const { error } = await supabase
-          .from("applications")
+          .from("houseapplications")
           .insert([applicationData]);
-
-        if (error) {
-          console.error("Error submitting application:", error);
-          throw new Error(error.message);
-        }
 
         const newApplication = {
           id: Date.now(),
@@ -142,47 +125,28 @@ const useFormSubmission = ({
           email: formData.email,
           country: countryValue,
           nationality: formData.nationality,
-          educationLevel: formData.educationLevel,
-          university:
-            formData.educationLevel === "university" ? universityValue : "N/A",
-          highSchool:
-            formData.educationLevel === "highSchool"
-              ? formData.highSchool
-              : "N/A",
-          major:
-            formData.educationLevel === "university" ? formData.major : "N/A",
+          educationBackground: formData.educationBackground,
+          university: formData.university,
+          otherUniversity: formData.otherUniversity,
+          highSchool: formData.highSchool,
+          graduateSchool: formData.graduateSchool,
+          graduateProgram: formData.graduateProgram,
+          otherEducation: formData.otherEducation,
+          major: formData.major,
           graduationYear: formData.graduationYear,
-          studentSocieties: formData.studentSocieties || "",
-          preparatoryClasses:
-            formData.educationLevel === "university" &&
-            checkPreparatoryQuestion()
-              ? formData.preparatoryClasses
-              : "n/a",
-          buildingCompany: formData.buildingCompany,
-          companyContext:
-            formData.buildingCompany === "yes" ? formData.companyContext : "",
-          resumeFile:
-            resumeFilePath ||
-            (formData.resumeFile ? formData.resumeFile.name : ""),
-          deckFile:
-            deckFilePath || (formData.deckFile ? formData.deckFile.name : ""),
-          memoFile:
-            memoFilePath || (formData.memoFile ? formData.memoFile.name : ""),
-          websiteUrl:
-            formData.buildingCompany === "yes" ? formData.websiteUrl : "",
-          videoUrl: formData.videoUrl || "",
-          linkedInUrl: formData.linkedInUrl || "",
-          githubUrl: formData.githubUrl || "",
-          xUrl: formData.xUrl || "",
-          categoryOfInterest: formData.categoryOfInterest || "",
-          hasCompetitionExperience: formData.hasCompetitionExperience || "",
-          competitionResults:
-            formData.hasCompetitionExperience === "yes"
-              ? formData.competitionResults
-              : "",
-          competitiveProfiles: formData.competitiveProfiles.filter(
-            (url) => url.trim() !== "",
-          ),
+          preparatoryClasses: formData.preparatoryClasses,
+          projects: formData.projects,
+          resumeFile: resumeFilePath || (formData.resumeFile ? formData.resumeFile.name : ""),
+          websiteUrl: formData.websiteUrl,
+          videoUrl: formData.videoUrl,
+          linkedInUrl: formData.linkedInUrl,
+          githubUrl: formData.githubUrl,
+          xUrl: formData.xUrl,
+          categoryOfInterest: formData.categoryOfInterest,
+          hasCompetitionExperience: formData.hasCompetitionExperience,
+          competitionResults: formData.competitionResults,
+          competitiveProfiles: formData.competitiveProfiles.filter((url) => url.trim() !== ""),
+          about: (formData as any).about || '',
           submissionDate: new Date().toISOString(),
           status: "pending",
         };

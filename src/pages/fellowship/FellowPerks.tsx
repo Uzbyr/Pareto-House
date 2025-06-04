@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { ExternalLink, Check } from "lucide-react";
@@ -119,7 +118,7 @@ const FellowPerks = () => {
   return (
     <div className="max-w-7xl mx-auto px-4 py-8">
       <div className="mb-8">
-        <h1 className="text-3xl font-bold text-white">Fellowship Perks</h1>
+        <h1 className="text-3xl font-bold text-white">House Perks</h1>
         <p className="text-gray-400 mt-2">
           Exclusive benefits and resources available to Pareto Fellows
         </p>

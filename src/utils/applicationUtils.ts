@@ -77,7 +77,7 @@ export const handleApplicationApproval = async (
       // Show success message with email confirmation
       toast.success(`Acceptance email sent to ${email}`, {
         description:
-          "The applicant has been notified of their acceptance to the fellowship.",
+          "The applicant has been notified of their acceptance to the house.",
       });
       console.log("Acceptance email response:", emailData);
       return true;

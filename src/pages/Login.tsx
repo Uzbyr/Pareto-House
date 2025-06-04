@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useAuth } from "@/contexts/AuthContext";
@@ -24,7 +23,7 @@ const Login = () => {
     if (hasAdminPrivileges(user.role)) {
       navigate("/admin/dashboard", { replace: true });
     } else if (user.role === "fellow") {
-      navigate("/fellowship", { replace: true });
+      navigate("/house", { replace: true });
     } else if (user.role === "alumni") {
       navigate("/alumni", { replace: true });
     }
@@ -42,7 +41,7 @@ const Login = () => {
 
         // Redirect based on user role
         if (authUser?.role === "fellow") {
-          navigate("/fellowship", { replace: true });
+          navigate("/house", { replace: true });
         } else if (authUser?.role === "alumni") {
           navigate("/alumni", { replace: true });
         } else if (hasAdminPrivileges(authUser?.role)) {
@@ -125,7 +124,7 @@ const Login = () => {
 
         <div className="mt-6 text-center text-sm text-zinc-500">
           <p>
-            Don't have a fellowship account yet?{" "}
+            Don't have a house account yet?{" "}
             <a href="/apply" className="text-pareto-pink hover:underline">
               Apply now
             </a>

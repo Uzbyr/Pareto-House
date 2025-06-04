@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { OnboardingFormData } from "@/types/onboarding";
 import { uploadProfilePicture } from "@/utils/fileUpload";
@@ -153,7 +152,7 @@ export const useOnboardingForm = (initialData: OnboardingFormData) => {
       toast.success("Onboarding completed successfully!");
 
       if (user?.role === "fellow") {
-        navigate("/fellowship");
+        navigate("/house");
       } else if (user?.role === "alumni") {
         navigate("/alumni");
       } else {

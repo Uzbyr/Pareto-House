@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { Menu, X } from "lucide-react";
 import { useState } from "react";
@@ -52,12 +51,6 @@ const MobileNav = () => {
                 >
                   ABOUT
                 </button>
-                <button
-                  onClick={() => handleSmoothScroll("mentor-section")}
-                  className="text-[17px] font-figtree font-medium text-[#828282]"
-                >
-                  MENTORS
-                </button>
               </>
             ) : (
               <>
@@ -69,15 +62,6 @@ const MobileNav = () => {
                   onClick={toggleMenu}
                 >
                   ABOUT
-                </Link>
-                <Link
-                  to="/mentors"
-                  className={`text-[17px] font-figtree font-medium ${
-                    isActive("/mentors") ? "text-white" : "text-[#828282]"
-                  }`}
-                  onClick={toggleMenu}
-                >
-                  MENTORS
                 </Link>
               </>
             )}

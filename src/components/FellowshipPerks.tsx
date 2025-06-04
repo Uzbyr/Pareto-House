@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { motion } from "framer-motion";
 import PerkCard from "./fellowship-perks/PerkCard";
@@ -15,9 +14,9 @@ const FellowshipPerks = () => {
         "Connect with top founders, operators, investors, researchers, public figures who've built successful companies",
     },
     {
-      title: "Elite Peer Network",
+      title: "Elite Founders Network",
       description:
-        "The world's most elite group of young generational talents in Maths Physics, and Computer Science",
+        "The world's most elite group of young generational founders",
       showUniversitiesDialog: true,
     },
     {
@@ -28,7 +27,7 @@ const FellowshipPerks = () => {
     {
       title: "Oppurtunity Accelerator",
       description:
-        "Access to internships at the most competitive startups in Silicon Valley and connections with people who can transform your career trajectory",
+        "Access to a network of the most competitive startups in Silicon Valley and connections with people who can transform your startup trajectory",
     },
   ];
 
@@ -37,11 +36,11 @@ const FellowshipPerks = () => {
       <PageContainer>
         <div className="mb-4">
           <h2 className="text-[17px] text-[#828282] font-figtree uppercase tracking-widest text-left">
-            FELLOWSHIP PERKS
+            HOUSE PERKS
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-16">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mb-1">
           {perksData.map((perk, index) => (
             <PerkCard
               key={perk.title}

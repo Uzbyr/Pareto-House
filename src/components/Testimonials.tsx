@@ -1,4 +1,3 @@
-
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import { Avatar, AvatarImage, AvatarFallback } from "./ui/avatar";
@@ -44,7 +43,7 @@ const testimonials: Testimonial[] = [
     name: "Joseph Jojoe",
     university: "Columbia University",
     position: "Founder at Ventr",
-    testimonial: "Creating entrepreneurship opportunities for college freshmen through Experiential Entrepreneurship Societies (EES). Pareto's fellowship provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community for student entrepreneurs.",
+    testimonial: "Founded one of the largest student organizations at MIT - the Entrepreneurship Societies (EES). Pareto's house provided Joseph with crucial mentorship, funding resources, and a network of campus ambassadors that helped Ventr expand to 10+ top institutions and build a thriving intercollegiate community.",
     image: "/lovable-uploads/314dd570-2849-43b6-98b3-91f9f3f847f5.png"
   },
   {
@@ -60,7 +59,7 @@ const testimonials: Testimonial[] = [
     name: "Zilin Dong",
     university: "Vanderbilt University",
     position: "Founder of Stealth Startup",
-    testimonial: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive fellowship network, Zilin gained access to elite entrepreneurial mentors and venture connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative concept from idea to execution.",
+    testimonial: "Working on a groundbreaking stealth startup with significant market potential. Through Pareto's extensive house network, Zilin gained access to elite entrepreneurial mentors and venture connections that provided both strategic guidance and early-stage funding opportunities, helping transform his innovative vision into a promising venture.",
     image: "/lovable-uploads/204adfe5-24f7-4700-8a9e-7181a25aca5a.png"
   },
   {
@@ -92,7 +91,7 @@ const testimonials: Testimonial[] = [
     name: "Andrea Filip Tortella ",
     university: "University College London",
     position: "Co-Founder at Thrads",
-    testimonial: "Pareto has been a solid partner, opening the right doors at the right moment. They’re responsive and supportive while staying out of founders’ way. Their biggest edge is the community around them—the sheer size of their portfolio means every intro comes with real weight.",
+    testimonial: "Pareto has been a solid partner, opening the right doors at the right moment. They're responsive and supportive while staying out of founders' way. Their biggest edge is the community around them—the sheer size of their portfolio means every intro comes with real weight.",
     image: "/lovable-uploads/andrea-f-t.jpeg"
   }
 ];

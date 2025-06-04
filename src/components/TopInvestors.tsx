@@ -1,4 +1,3 @@
-
 import { motion } from "framer-motion";
 
 const TopInvestors = () => {
@@ -8,7 +7,7 @@ const TopInvestors = () => {
         Backed by Top Investors
       </h3>
       <p className="text-lg md:text-xl text-black/70 dark:text-white/70 max-w-2xl mx-auto text-center">
-        After completing the Pareto Fellowship, many of our fellows go on to
+        After completing the Pareto House, many of our fellows go on to
         raise funding from world-class investors
       </p>
 

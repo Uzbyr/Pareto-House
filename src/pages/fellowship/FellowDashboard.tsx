@@ -1,4 +1,3 @@
-
 import {
   Calendar as CalendarIcon,
   Users,
@@ -15,35 +14,35 @@ const FellowDashboard = () => {
       icon: MessageCircle,
       title: "Discussions",
       description: "Join our WhatsApp group to connect with fellow members and participate in discussions.",
-      linkTo: "/fellowship/discussions",
+      linkTo: "/house/discussions",
       linkText: "View Discussions"
     },
     {
       icon: CalendarIcon,
       title: "Events Calendar",
       description: "All upcoming mentor talks, workshops, and networking events. Never miss an opportunity to learn and connect.",
-      linkTo: "/fellowship/events",
+      linkTo: "/house/events",
       linkText: "View Calendar"
     },
     {
       icon: Users,
       title: "Fellows Directory",
       description: "Connect with your cohort and explore fellow members' profiles. Build your network within the Pareto community.",
-      linkTo: "/fellowship/directory",
+      linkTo: "/house/directory",
       linkText: "View Directory"
     },
     {
       icon: Award,
       title: "Opportunities Board",
       description: "Exclusive internships, grants, and competitions for Pareto fellows. Find your next career-advancing opportunity.",
-      linkTo: "/fellowship/opportunities",
+      linkTo: "/house/opportunities",
       linkText: "View Opportunities"
     },
     // {
     //   icon: Gift,
     //   title: "Fellowship Perks",
     //   description: "Exclusive benefits and resources for Pareto fellows. Claim your AWS, OpenAI credits and more.",
-    //   linkTo: "/fellowship/perks",
+    //   linkTo: "/house/perks",
     //   linkText: "View Perks"
     // }
   ];

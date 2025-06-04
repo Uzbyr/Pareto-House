@@ -1,4 +1,3 @@
-
 import { useAuth } from "@/contexts/AuthContext";
 import { Link, useNavigate, useLocation } from "react-router-dom";
 import { Button } from "@/components/ui/button";
@@ -68,10 +67,9 @@ const AdminLayout = ({ children }: AdminLayoutProps) => {
       role: "admin",
     },
     {
-      label: "Fellowship",
-      path: "/fellowship",
-      icon: GraduationCap,
-      role: "admin",
+      label: "House",
+      path: "/house",
+      icon: Users,
     },
     {
       label: "Alumni Network",

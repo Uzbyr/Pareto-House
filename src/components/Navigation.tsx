@@ -1,4 +1,3 @@
-
 import { Link, useLocation } from "react-router-dom";
 import { ArrowRight } from "lucide-react";
 import { useIsMobile } from "@/hooks/use-mobile";
@@ -30,18 +29,12 @@ const Navigation = () => {
     <nav className="fixed w-full top-0 z-50 bg-black/30 backdrop-blur-[47px] min-h-16">
       <PageContainer className="py-3">
         <div className="flex justify-between items-center">
-          {/* PF Logo with loading state */}
+          {/* PH Logo Text */}
           <div className="flex items-center">
-            <Link to="/" className="shrink-0 relative">
-              {!logoLoaded && (
-                <Skeleton className="h-8 w-40 bg-zinc-800/50" />
-              )}
-              <img 
-                src="/lovable-uploads/1d46541f-98d8-45eb-86ac-7c2f7227058a.png" 
-                alt="Pareto Fellowship" 
-                className={`md:h-8 h-6 w-auto transition-opacity duration-300 ${logoLoaded ? 'opacity-100' : 'opacity-0'}`}
-                onLoad={() => setLogoLoaded(true)}
-              />
+            <Link to="/" className="shrink-0">
+              <span className="text-white font-black text-4xl md:text-5xl tracking-tight italic" style={{ fontFamily: 'Futura, "Futura Extra Black", Arial, sans-serif' }}>
+                PH
+              </span>
             </Link>
           </div>
 
@@ -55,12 +48,6 @@ const Navigation = () => {
                 >
                   ABOUT
                 </button>
-                <button
-                  onClick={() => handleSmoothScroll("mentor-section")}
-                  className={`text-[17px] font-figtree font-medium transition-colors text-[#828282] hover:text-white`}
-                >
-                  MENTORS
-                </button>
               </>
             ) : (
               <>
@@ -71,14 +58,6 @@ const Navigation = () => {
                   }`}
                 >
                   ABOUT
-                </Link>
-                <Link
-                  to="/mentors"
-                  className={`text-[17px] font-figtree font-medium transition-colors ${
-                    isActive("/mentors") ? "text-white" : "text-[#828282] hover:text-white"
-                  }`}
-                >
-                  MENTORS
                 </Link>
               </>
             )}

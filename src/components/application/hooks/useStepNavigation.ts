@@ -1,4 +1,3 @@
-
 import { useCallback } from "react";
 import { toast } from "sonner";
 import { FormDataType } from "../utils/formUtils";
@@ -44,18 +43,26 @@ const useStepNavigation = ({
         return;
       }
     } else if (currentStep === 2) {
-      if (
-        !formData.country ||
-        !formData.nationality ||
-        !formData.graduationYear
-      ) {
-        toast.error("Please fill in all required fields.");
+      // Check basic required fields
+      if (!formData.currentSituation) {
+        toast.error("Please select your current situation.");
+        return;
+      }
+      
+      if (!formData.educationBackground) {
+        toast.error("Please select your education background.");
+        return;
+      }
+      
+      if (!formData.graduationYear) {
+        toast.error("Please select your graduation year.");
         return;
       }
 
-      if (formData.educationLevel === "university") {
+      // Check education-specific required fields
+      if (formData.educationBackground === "university") {
         if (!formData.university || !formData.major) {
-          toast.error("Please fill in all required fields.");
+          toast.error("Please fill in your university and major.");
           return;
         }
 
@@ -68,11 +75,37 @@ const useStepNavigation = ({
           toast.error("Please answer the preparatory classes question.");
           return;
         }
-      } else if (formData.educationLevel === "highSchool") {
+      } else if (formData.educationBackground === "highSchool") {
         if (!formData.highSchool) {
           toast.error("Please enter your high school name.");
           return;
         }
+      } else if (formData.educationBackground === "graduateSchool") {
+        if (!formData.graduateSchool || !formData.graduateProgram) {
+          toast.error("Please fill in your graduate school and program.");
+          return;
+        }
+      } else if (formData.educationBackground === "other") {
+        if (!formData.otherEducation) {
+          toast.error("Please specify your education background.");
+          return;
+        }
+      }
+
+      // Check mandatory fields
+      if (!formData.categoryOfInterest) {
+        toast.error("Please select your category of interest.");
+        return;
+      }
+
+      if (!formData.projects || formData.projects.trim() === "") {
+        toast.error("Please describe your projects, startups, or research.");
+        return;
+      }
+
+      if (!formData.resumeFile) {
+        toast.error("Please upload your resume (PDF).");
+        return;
       }
     }
 

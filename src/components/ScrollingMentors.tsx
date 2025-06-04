@@ -1,4 +1,3 @@
-
 import { useRef, useEffect, useState } from "react";
 import { ScrollArea, ScrollBar } from "@/components/ui/scroll-area";
 import { mentors } from "@/data/mentors";
@@ -61,7 +60,7 @@ const ScrollingMentors = () => {
         onMouseLeave={handleInteractionEnd}
         onTouchEnd={handleInteractionEnd}
       >
-        <div className="flex space-x-12 px-4">
+        <div className="flex space-x-8 px-4">
           {/* First set of mentors */}
           {mentors.concat(mentors).map((mentor, index) => (
             <a
@@ -122,10 +121,6 @@ const ScrollingMentors = () => {
             </a>
           ))}
         </div>
-        <ScrollBar
-          orientation="horizontal"
-          className="bg-black/10 dark:bg-white/10"
-        />
       </ScrollArea>
       
       {/* Right gradient overlay */}

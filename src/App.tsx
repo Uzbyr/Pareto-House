@@ -1,4 +1,3 @@
-
 import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
 import { TooltipProvider } from "@/components/ui/tooltip";
@@ -36,6 +35,8 @@ import FellowEvents from "./pages/fellowship/FellowEvents";
 import FellowOpportunities from "./pages/fellowship/FellowOpportunities";
 import FellowPerks from "./pages/fellowship/FellowPerks";
 import FellowDiscussions from "./pages/fellowship/FellowDiscussions";
+import { useState, useEffect } from 'react';
+import supabase from './utils/supabase';
 
 const queryClient = new QueryClient();
 
@@ -175,7 +176,7 @@ const App = () => (
                 />
 
                 <Route
-                  path="/fellowship"
+                  path="/house"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -185,7 +186,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/profile"
+                  path="/house/profile"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -195,7 +196,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/directory"
+                  path="/house/directory"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -205,7 +206,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/events"
+                  path="/house/events"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -215,7 +216,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/opportunities"
+                  path="/house/opportunities"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -225,7 +226,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/perks"
+                  path="/house/perks"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -235,7 +236,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/discussions"
+                  path="/house/discussions"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -245,7 +246,7 @@ const App = () => (
                   }
                 />
                 <Route
-                  path="/fellowship/:section"
+                  path="/house/:section"
                   element={
                     <ProtectedRoute requiredRoles={["fellow", "admin"]}>
                       <FellowLayout>
@@ -275,5 +276,27 @@ const App = () => (
     </ThemeProvider>
   </QueryClientProvider>
 );
+
+function Page() {
+  const [todos, setTodos] = useState([]);
+
+  useEffect(() => {
+    async function getTodos() {
+      const { data: todos } = await supabase.from('todos').select();
+      if (todos && todos.length > 0) {
+        setTodos(todos);
+      }
+    }
+    getTodos();
+  }, []);
+
+  return (
+    <div>
+      {todos.map((todo, idx) => (
+        <li key={todo.id || idx}>{JSON.stringify(todo)}</li>
+      ))}
+    </div>
+  );
+}
 
 export default App;

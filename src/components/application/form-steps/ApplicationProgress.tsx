@@ -27,7 +27,7 @@ const ApplicationProgress = ({ currentStep }: ApplicationProgressProps) => {
               {step === 1
                 ? "Personal"
                 : step === 2
-                  ? "Education"
+                  ? "Background"
                   : "Additional"}
             </span>
           </div>

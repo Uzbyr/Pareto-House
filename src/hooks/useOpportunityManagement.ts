@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
@@ -34,7 +33,7 @@ export const useOpportunityManagement = () => {
 
   // Fetch opportunities from Supabase
   const { data: opportunities = [], isLoading, error } = useQuery({
-    queryKey: ["fellowship-opportunities"],
+    queryKey: ["house-opportunities"],
     queryFn: async () => {
       const { data, error } = await supabase
         .from("opportunities")
