@@ -42,17 +42,17 @@ const handler = async (req: Request): Promise<Response> => {
     const emailResponse = await resend.emails.send({
       from: "Pareto Fellowship <noreply@transactional.paretofellowship.com>",
       to: [email],
-      subject: "✅ We've Received Your Pareto Fellowship Application",
+      subject: "We've Received Your Pareto House Application",
       html: `
         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; color: #333;">
           <img src="https://paretofellowship.com/logo.png" alt="Pareto Fellowship" style="max-width: 150px; margin-bottom: 20px;">
           <p>Dear ${firstName} ${lastName},</p>
-          <p>Thank you for applying to the Pareto Fellowship. We've received your application and are impressed by your achievements.</p>
-          <p><strong>Next Steps: 👣</strong></p>
+          <p>Thank you for applying to the Pareto House. We've received your application.</p>
+          <p><strong>Next Steps: </strong></p>
           <ul>
             <li>🔍 Our selection committee will review your application shortly</li>
             <li>📞 Shortlisted candidates will be invited for interviews</li>
-            <li>🎉 Final selections will be announced by 05/15/2025</li>
+            <li>🎉 Final selections will be announced by 06/25/2025</li>
           </ul>
           <p>If you have any questions in the meantime, please don't hesitate to reach out.</p>
           <p>Best regards,<br><br>The Pareto team</p>

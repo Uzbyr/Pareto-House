@@ -114,7 +114,7 @@ const useFormSubmission = ({
 
         // @ts-ignore
         const { error } = await supabase
-          .from("houseapplications")
+          .from("applications")
           .insert([applicationData]);
 
         const newApplication = {
