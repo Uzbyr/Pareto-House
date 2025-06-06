@@ -10,7 +10,7 @@ const HeroSection = () => {
   const [videoLoaded, setVideoLoaded] = useState(false);
 
   return (
-    <section className="w-full bg-black flex flex-col justify-between min-h-screen">
+    <section className="w-full bg-black flex flex-col justify-between min-h-[90vh]">
       {/* Top part - Pareto link */}
       <PageContainer>
         <div className="pt-24 md:pt-24"> {/* Increased padding to account for fixed navbar */}
