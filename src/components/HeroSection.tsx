@@ -26,7 +26,8 @@ const HeroSection = () => {
           initial={{ opacity: 0 }} 
           animate={{ opacity: 1 }} 
           transition={{ duration: 1 }} 
-          className="relative w-96 h-96 md:w-[900px] md:h-[900px]"
+          //className="relative w-96 h-96 md:w-[400px] md:h-[400px]"
+          className="relative w-96 h-96 md:w-[28%] md:h-[28%]"
                   >
           {/* Video with loading state */}
           <div className="w-full h-full flex items-center justify-center">
