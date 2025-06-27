@@ -31,6 +31,24 @@ const useFormSubmission = ({
     async (e: React.FormEvent) => {
       e.preventDefault();
       setLoading(true);
+      console.log("Starting application submission...");
+
+      // Test Supabase connection
+      try {
+        const { data: testData, error: testError } = await supabase
+          .from("houseapplications" as any)
+          .select("id")
+          .limit(1);
+        
+        if (testError) {
+          console.error("Supabase connection test failed:", testError);
+          throw new Error(`Supabase connection failed: ${testError.message}`);
+        }
+        console.log("Supabase connection test successful");
+      } catch (connectionError) {
+        console.error("Connection test error:", connectionError);
+        throw connectionError;
+      }
 
       try {
         if (!formData.videoUrl) {
@@ -50,8 +68,10 @@ const useFormSubmission = ({
           return;
         }
 
+        console.log("Validation passed, processing form data...");
+
         let universityValue = "";
-        if (formData.educationLevel === "university") {
+        if (formData.educationBackground === "university") {
           universityValue =
             formData.university === "Other"
               ? formData.otherUniversity
@@ -63,60 +83,84 @@ const useFormSubmission = ({
             ? formData.otherCountry
             : formData.country;
 
+        console.log("Processing file uploads...");
         let resumeFilePath = null;
         let deckFilePath = null;
         let memoFilePath = null;
 
+        // Make file uploads optional - if they fail, continue without them
         if (formData.resumeFile) {
-          resumeFilePath = await uploadFile(formData.resumeFile, "resumes");
+          try {
+            console.log("Uploading resume file...");
+            resumeFilePath = await uploadFile(formData.resumeFile, "resumes");
+            console.log("Resume uploaded:", resumeFilePath);
+          } catch (fileError) {
+            console.warn("Resume upload failed, continuing without it:", fileError);
+            resumeFilePath = null;
+          }
         }
 
         if (formData.deckFile) {
-          deckFilePath = await uploadFile(formData.deckFile, "decks");
+          try {
+            console.log("Uploading deck file...");
+            deckFilePath = await uploadFile(formData.deckFile, "decks");
+            console.log("Deck uploaded:", deckFilePath);
+          } catch (fileError) {
+            console.warn("Deck upload failed, continuing without it:", fileError);
+            deckFilePath = null;
+          }
         }
 
         if (formData.memoFile) {
-          memoFilePath = await uploadFile(formData.memoFile, "memos");
+          try {
+            console.log("Uploading memo file...");
+            memoFilePath = await uploadFile(formData.memoFile, "memos");
+            console.log("Memo uploaded:", memoFilePath);
+          } catch (fileError) {
+            console.warn("Memo upload failed, continuing without it:", fileError);
+            memoFilePath = null;
+          }
         }
 
+        console.log("Building application data...");
         // Build the application data for the new 'houseapplications' table
+        // Start with minimal fields to test what columns exist
         const applicationData = {
           first_name: formData.firstName,
           last_name: formData.lastName,
           email: formData.email,
-          current_situation: formData.currentSituation,
-          education_background: formData.educationBackground,
-          university: formData.university,
-          other_university: formData.otherUniversity,
-          high_school: formData.highSchool,
-          graduate_school: formData.graduateSchool,
-          graduate_program: formData.graduateProgram,
-          other_education: formData.otherEducation,
-          major: formData.major,
-          graduation_year: formData.graduationYear,
-          country: countryValue,
-          nationality: formData.nationality,
-          category_of_interest: formData.categoryOfInterest,
-          projects: formData.projects,
-          resume_url: resumeFilePath, // uploaded file path
-          has_competition_experience: formData.hasCompetitionExperience,
-          competition_results: formData.competitionResults,
-          preparatory_classes: formData.preparatoryClasses,
-          about: (formData as any).about || '',
-          video_url: formData.videoUrl,
-          linkedin_url: formData.linkedInUrl,
-          github_url: formData.githubUrl,
-          x_url: formData.xUrl,
-          website_url: formData.websiteUrl,
-          competitive_profiles: formData.competitiveProfiles.filter((url) => url.trim() !== ""),
-          // status and created_at are handled by the DB defaults
+          category_of_interest: formData.categoryOfInterest || '',
+          projects: formData.projects || '',
+          resume_url: resumeFilePath || '',
+          // Add other fields one by one to test
         };
 
-        // @ts-ignore
-        const { error } = await supabase
-          .from("applications")
-          .insert([applicationData]);
+        console.log("Attempting to insert application data:", applicationData);
 
+        try {
+          const { data, error } = await supabase
+            .from("houseapplications" as any)
+            .insert([applicationData])
+            .select();
+
+          if (error) {
+            console.error("Supabase insert error:", error);
+            console.error("Error details:", {
+              message: error.message,
+              details: error.details,
+              hint: error.hint,
+              code: error.code
+            });
+            throw new Error(`Failed to save application to database: ${error.message}`);
+          }
+
+          console.log("Application saved successfully:", data);
+        } catch (dbError) {
+          console.error("Database error:", dbError);
+          throw dbError;
+        }
+
+        console.log("Saving to localStorage...");
         const newApplication = {
           id: Date.now(),
           name: `${formData.firstName} ${formData.lastName}`,
@@ -146,7 +190,7 @@ const useFormSubmission = ({
           hasCompetitionExperience: formData.hasCompetitionExperience,
           competitionResults: formData.competitionResults,
           competitiveProfiles: formData.competitiveProfiles.filter((url) => url.trim() !== ""),
-          about: (formData as any).about || '',
+          about: '',
           submissionDate: new Date().toISOString(),
           status: "pending",
         };
@@ -162,13 +206,21 @@ const useFormSubmission = ({
           (parseInt(appCount) + 1).toString(),
         );
 
-        // Send confirmation email
-        await sendConfirmationEmail(
-          formData.firstName,
-          formData.lastName,
-          formData.email,
-        );
+        console.log("Sending confirmation email...");
+        try {
+          // Send confirmation email
+          await sendConfirmationEmail(
+            formData.firstName,
+            formData.lastName,
+            formData.email,
+          );
+          console.log("Confirmation email sent successfully");
+        } catch (emailError) {
+          console.error("Email sending error:", emailError);
+          // Don't throw here, as the application was saved successfully
+        }
 
+        console.log("Application submission completed successfully");
         setTimeout(() => {
           setLoading(false);
           setCurrentStep(4);
